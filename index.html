@@ -139,7 +139,7 @@ async function visStrompris() {
     const res = await fetch('https://tresfjording.no/strompris.php', {cache: 'no-store'});
     const data = await res.json();
     document.getElementById('strompris').textContent =
-      data.pris ? `⚡ Strømpris NO3 nå:<b ${data.pris} kr/kWh` : 'Pris ikke tilgjengelig';
+      data.pris ? <b>`⚡ Strømpris NO3 nå: ${data.pris} kr/kWh` <b> 'Pris ikke tilgjengelig';
   } catch (err) {
     document.getElementById('strompris').textContent = 'Feil ved henting';
     console.error(err);
