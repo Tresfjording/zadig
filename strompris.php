@@ -1,9 +1,17 @@
 ﻿<?php
+
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 
+// Dummydata – bytt ut med ekte logikk senere
+echo json_encode(["pris" => "0.52", "feil" => false]);
+
+
+//header("Access-Control-Allow-Origin: *");
+//header("Content-Type: application/json");
+
 // Hent HTML fra nettsiden
-$html = @file_get_contents("https://www.strompriser.no/molde");
+//$html = @file_get_contents("https://www.strompriser.no/molde");
 
 if (!$html) {
     echo json_encode(["pris" => null, "feil" => "Klarte ikke hente HTML"]);
