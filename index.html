@@ -60,7 +60,7 @@
     let highlightIndex = -1;
 
     async function lastKommuner() {
-      const res = await fetch("kommune.json");
+      const res = await fetch("kommuner_soner_slagord.json");
       kommuner = await res.json();
 
       input.addEventListener("input", oppdaterForslag);
