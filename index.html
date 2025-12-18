@@ -2,183 +2,66 @@
 <html lang="no">
 <head>
   <meta charset="UTF-8">
-  <title>Selsomt</title>
+  <title>Strømpris nå</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
- <header>
-<h1>
-  Selsomme fakta og løgner
-  <span id="strompris" style="float:right; font-size:0.6em; color:darkgreen;"></span>
-</h1>
+  <h1>Strømpris nå</h1>
 
-</header>
+  <label for="kommune">Velg kommune:</label>
+  <select id="kommune"></select>
 
-
-  <main>
-    <section class="search-section">
-      <!-- Dropdown fylles automatisk -->
-      <select id="fileSelect"></select>
-
-      <input type="text" id="searchBox" placeholder="Søk etter tekster og facts ...">
-      <button id="searchBtn">Søk</button>
-    </section>
-    <div id="strompris" style="font-size: 1.2em; color: #0077cc;"></div>
-    <section id="results"></section>
-
-  </main>
-
-  <footer>
-    <p>Bygget i fortvilelse🍂</p>
-
-  </footer>
+  <div id="pris">Velg en kommune for å se prisen.</div>
 
   <script>
-async function visStrompris() {
-  try {
-    const res = await fetch('https://www.tresfjording.no/strompris.php', {cache: 'no-store'});
-    const data = await res.json();
-    document.getElementById('strompris').innerHTML =
-      data.pris
-        ? `⚡ Strømpris NO3 nå: <b>${data.pris}</b> kr/kWh`
-        : 'Pris ikke tilgjengelig';
-  } catch (err) {
-    document.getElementById('strompris').textContent = 'Feil ved henting';
-    console.error(err);
-  }
-}
-visStrompris();
-</script>
-</script>
+    async function loadKommuner() {
+      const res = await fetch("kommune.json");
+      const data = await res.json();
+      const select = document.getElementById("kommune");
 
+      for (const navn in data) {
+        const opt = document.createElement("option");
+        opt.value = navn;
+        opt.textContent = navn;
+        select.appendChild(opt);
+      }
 
+      select.addEventListener("change", () => hentPris(data[select.value]));
+    }
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const files = ["facts.json", "djt.json"];
-  const searchBox = document.getElementById("searchBox");
-  const fileSelect = document.getElementById("fileSelect");
-  const resultsContainer = document.getElementById("results");
-  const searchBtn = document.getElementById("searchBtn");
+    async function hentPris(info) {
+      const idag = new Date();
+      const year = idag.getFullYear();
+      const month = String(idag.getMonth() + 1).padStart(2, "0");
+      const day = String(idag.getDate()).padStart(2, "0");
+      const dato = `${year}/${month}-${day}`;
+      const url = `https://www.hvakosterstrommen.no/api/v1/prices/${dato}_${info.prisomrade}.json`;
 
-  // Fyll dropdown
-  const allOption = document.createElement("option");
-  allOption.value = "all";
-  allOption.textContent = "Alle filer";
-  fileSelect.appendChild(allOption);
-  files.forEach(file => {
-    const opt = document.createElement("option");
-
-    opt.value = file;
-    opt.textContent = file;
-    fileSelect.appendChild(opt);
-  });
-
-  async function runSearch(query) {
-  const selectedFile = fileSelect.value;
-  resultsContainer.innerHTML = "";
-
-  // 🔸 Hemmelig regel
-if (query === "øyvind" || query === "øivind") {
-  const compliments = [
-    "Øyvind er en kjerne kar 💪",
-    "Øyvind er en ekte problemløser 🔧",
-    "Øyvind bygger verktøy med stil 🎨",
-    "Øyvind får ting til å funke 🚀",
-    "Øyvind er en mester i Visual Studio 🖥️"
-  ];
-  
-  // Velg et tilfeldig element fra listen
-  const randomIndex = Math.floor(Math.random() * compliments.length);
-  const randomCompliment = compliments[randomIndex];
-  
-  resultsContainer.innerHTML = `<p><strong>${randomCompliment}</strong></p>`;
-  return; // stopper videre søk
-}
-
- 
-
-    const searchFiles = selectedFile === "all" ? files : [selectedFile];
-    let totalMatches = 0;
-
-    for (const file of searchFiles) {
       try {
-        const response = await fetch(file);
-        const data = await response.json();
-        const matches = data.filter(line => line.toLowerCase().includes(query));
+        const res = await fetch(url);
+        const data = await res.json();
 
-        totalMatches += matches.length;
+        const entry = data.find(e => {
+          const start = new Date(e.time_start);
+          return start.getHours() === idag.getHours();
+        });
 
-        if (matches.length > 0) {
-          const fileSection = document.createElement("div");
-          fileSection.classList.add("file-results");
-          fileSection.innerHTML = `<h2>Resultater fra ${file}:</h2>
-                                   <p><strong>${matches.length} treff</strong></p>`;
-          matches.forEach(match => {
-            const p = document.createElement("p");
-            const regex = new RegExp(`(${query})`, "gi");
-            p.innerHTML = match.replace(regex, "<mark>$1</mark>");
-            fileSection.appendChild(p);
-          });
-          resultsContainer.appendChild(fileSection);
+        if (entry) {
+          const pris = (entry.NOK_per_kWh * 100).toFixed(2);
+          document.getElementById("pris").textContent =
+            `Pris nå (${info.prisomrade}): ${pris} øre/kWh`;
+        } else {
+          document.getElementById("pris").textContent =
+            "Fant ikke pris for gjeldende time.";
         }
       } catch (err) {
-        console.error("Feil ved lasting av", file, err);
-      }
-    }
-
-    if (totalMatches > 0) {
-      const summary = document.createElement("p");
-      summary.innerHTML = `<strong>Totalt ${totalMatches} treff funnet.</strong>`;
-      resultsContainer.prepend(summary);
-    } else {
-      resultsContainer.innerHTML = "<p>Ingen treff funnet.</p>";
-    }
-  }
-
-  // Live-søk
-  searchBox.addEventListener("input", () => runSearch(searchBox.value.toLowerCase()));
-
- 
-});
-</script>
-<script>
-  const navn = "Øyvind";
-  console.log("Hei " + navn);
-
-  document.getElementById("searchBtn").addEventListener("click", () => {
-    alert("Øyvind er en intelligent kjernekar!");
-  });
-</script>
-
-</script>
-
- <div id="strompris">Laster strømpris…</div>
-
-  <script>
-    async function visStrompris() {
-      try {
-        const res = await fetch('https://www.tresfjording.no/strompris.php');
-        const data = await res.json();
-        document.getElementById('strompris').innerHTML =
-          data.pris
-            ? `⚡ Strømpris NO3 nå: <b>${data.pris}</b> kr/kWh`
-            : 'Pris ikke tilgjengelig';
-      } catch (err) {
-        document.getElementById('strompris').textContent = 'Feil ved henting';
+        document.getElementById("pris").textContent =
+          "Kunne ikke hente data.";
         console.error(err);
       }
     }
-    visStrompris();
+
+    loadKommuner();
   </script>
-
-
-
-
-  <!-- HTML-innhold -->
-  <script src="/script.js"></script>
-
-
-
 </body>
 </html>
