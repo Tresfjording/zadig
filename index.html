@@ -40,7 +40,7 @@ async function visStrompris() {
     const data = await res.json();
     document.getElementById('strompris').innerHTML =
       data.pris
-        ? `⚡ Strømpris NO3 nå: <b>${data.pris} kr/kWh</b>`
+        ? `⚡ Strømpris NO3 nå: <b>${data.pris}</b> kr/kWh`
         : 'Pris ikke tilgjengelig';
   } catch (err) {
     document.getElementById('strompris').textContent = 'Feil ved henting';
