@@ -4,31 +4,97 @@
   <meta charset="UTF-8">
   <title>Strømpris nå</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    #forslag {
+      border: 1px solid #ccc;
+      max-height: 200px;
+      overflow-y: auto;
+      position: absolute;
+      background: #fff;
+      width: 250px;
+      z-index: 1000;
+    }
+    #forslag div {
+      padding: 6px;
+      cursor: pointer;
+    }
+    #forslag div.highlight {
+      background: #eaf2f8;
+    }
+  </style>
 </head>
 <body>
-  <h1>⚡ Strømpris uten MVA akkurat nå</h1>
+  <h1>⚡ Strømpris nå</h1>
 
-  <label for="kommune">Velg kommune:</label>
-  <select id="kommune">
-    <option disabled selected>Velg...</option>
-  </select>
+  <label for="kommuneInput">Skriv kommune:</label>
+  <input type="text" id="kommuneInput" autocomplete="off">
+  <div id="forslag"></div>
 
   <div id="pris">Ingen kommune valgt.</div>
 
   <script>
+    let kommuner = {};
+    let forslagBox = document.getElementById("forslag");
+    let input = document.getElementById("kommuneInput");
+    let highlightIndex = -1;
+
     async function lastKommuner() {
-      const res = await fetch("kommuner_soner_slagord.json");
-      const data = await res.json();
-      const select = document.getElementById("kommune");
+      const res = await fetch("kommune.json");
+      kommuner = await res.json();
 
-      for (const navn in data) {
-        const opt = document.createElement("option");
-        opt.value = navn;
-        opt.textContent = navn;
-        select.appendChild(opt);
+      input.addEventListener("input", oppdaterForslag);
+      input.addEventListener("keydown", navigerForslag);
+    }
+
+    function oppdaterForslag() {
+      const query = input.value.toLowerCase();
+      forslagBox.innerHTML = "";
+      highlightIndex = -1;
+
+      if (query.length === 0) return;
+
+      const treff = Object.keys(kommuner).filter(navn =>
+        navn.toLowerCase().includes(query)
+      );
+
+      treff.forEach((navn, idx) => {
+        const div = document.createElement("div");
+        div.textContent = navn;
+        div.addEventListener("click", () => velgKommune(navn));
+        forslagBox.appendChild(div);
+      });
+    }
+
+    function navigerForslag(e) {
+      const items = forslagBox.querySelectorAll("div");
+      if (items.length === 0) return;
+
+      if (e.key === "ArrowDown") {
+        highlightIndex = (highlightIndex + 1) % items.length;
+        oppdaterHighlight(items);
+        e.preventDefault();
+      } else if (e.key === "ArrowUp") {
+        highlightIndex = (highlightIndex - 1 + items.length) % items.length;
+        oppdaterHighlight(items);
+        e.preventDefault();
+      } else if (e.key === "Enter") {
+        if (highlightIndex >= 0) {
+          velgKommune(items[highlightIndex].textContent);
+          e.preventDefault();
+        }
       }
+    }
 
-      select.addEventListener("change", () => hentPris(data[select.value], select.value));
+    function oppdaterHighlight(items) {
+      items.forEach((item, idx) => {
+        item.classList.toggle("highlight", idx === highlightIndex);
+      });
+    }
+
+    function velgKommune(navn) {
+      input.value = navn;
+      forslagBox.innerHTML = "";
+      hentPris(kommuner[navn], navn);
     }
 
     async function hentPris(info, kommunenavn) {
@@ -51,7 +117,8 @@
         if (entry) {
           const pris = (entry.NOK_per_kWh * 100).toFixed(2);
           document.getElementById("pris").innerHTML =
-            `⚡ Strømpris i <b>${kommunenavn}</b> (${info.prisomrade}) akkurat nå: <b>${pris} øre/kWh</b>`;
+            `⚡ Strømpris i <b>${kommunenavn}</b> (${info.prisomrade}) akkurat nå: <b>${pris} øre/kWh</b><br>` +
+            `<i>${info.slagord || ""}</i>`;
         } else {
           document.getElementById("pris").textContent =
             "Fant ikke pris for gjeldende time.";
