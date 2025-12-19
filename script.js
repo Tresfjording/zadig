@@ -54,12 +54,12 @@ async function oppdaterInfo(kommuneNavn, data) {
   }
 
   document.getElementById('fylkeDisplay').textContent = entry["fylke"] ?? 'Ukjent';
-  document.getElementById('folketallDisplay').textContent = entry["folketall"]?.toLocaleString('no-NO') ?? '–';
+  document.getElementById('folketallDisplay').textContent = entry["folketall"]?.toLocaleString('no-NO') ?? 'ï¿½';
   document.getElementById('soneDisplay').textContent = entry.sone ?? 'Ukjent';
   document.getElementById('slagordDisplay').textContent = entry.slagord || 'Ingen slagord registrert';
 
   const pris = await hentSpotpris(entry.sone);
-  document.getElementById('prisDisplay').textContent = pris ? `${pris} øre/kWh` : 'Ingen pris tilgjengelig';
+  document.getElementById('prisDisplay').textContent = pris ? `${pris} ï¿½re/kWh` : 'Ingen pris tilgjengelig';
 }
 document.addEventListener('DOMContentLoaded', async () => {
   const data = await hentStederdata();
@@ -73,9 +73,9 @@ document.getElementById('folketallDisplay').textContent = entry["folketall"]?.to
   });
 });
 function visFeilmelding(msg) {
-  document.getElementById('fylkeDisplay').textContent = '–';
-  document.getElementById('folketallDisplay').textContent = '–';
-  document.getElementById('soneDisplay').textContent = '–';
+  document.getElementById('fylkeDisplay').textContent = 'ï¿½';
+  document.getElementById('folketallDisplay').textContent = 'ï¿½';
+  document.getElementById('soneDisplay').textContent = 'ï¿½';
   document.getElementById('slagordDisplay').textContent = msg;
-  document.getElementById('prisDisplay').textContent = '–';
+  document.getElementById('prisDisplay').textContent = 'ï¿½';
 }
