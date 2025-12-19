@@ -68,9 +68,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('visInfoBtn').addEventListener('click', () => {
     const kommune = document.getElementById('kommuneInput').value.trim();
     oppdaterInfo(kommune, data);
-
-    document.getElementById('fylkeDisplay').textContent = entry["Fylke"] ?? 'Ukjent';
-document.getElementById('folketallDisplay').textContent = entry["Folketall"]?.toLocaleString('no-NO') ?? '–';
+document.getElementById('fylkeDisplay').textContent = entry["Fylke"] ?? 'Ukjent';
+document.getElementById('folketallDisplay').textContent = entry["Folketall"]?.toLocaleString();–';
   });
 });
 function visFeilmelding(msg) {
