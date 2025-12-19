@@ -1,20 +1,20 @@
-async function hentKommunedata() {
+async function hentStederdata() {
   try {
     const response = await fetch('steder.json');
     if (!response.ok) throw new Error('Kunne ikke hente JSON');
     return await response.json();
   } catch (error) {
-    console.error('Feil ved henting av kommunedata:', error);
-    return {};
+    console.error('Feil ved henting av stederdata:', error);
+    return [];
   }
 }
 
 function fyllDatalist(data) {
   const datalist = document.getElementById('kommuner');
   datalist.innerHTML = '';
-  Object.keys(data).forEach(kommune => {
+  data.forEach(entry => {
     const option = document.createElement('option');
-    option.value = kommune;
+    option.value = entry["Kommunenavn"];
     datalist.appendChild(option);
   });
 }
@@ -31,10 +31,8 @@ async function hentSpotpris(sone) {
     const response = await fetch(url);
     if (!response.ok) throw new Error("Kunne ikke hente spotpris");
     const data = await response.json();
-
-    // API gir timespriser – vi tar gjennomsnitt
     const priser = data.map(p => p.NOK_per_kWh);
-    const gjennomsnitt = (priser.reduce((a, b) => a + b, 0) / priser.length) * 100; // til øre
+    const gjennomsnitt = (priser.reduce((a, b) => a + b, 0) / priser.length) * 100;
     return gjennomsnitt.toFixed(2);
   } catch (error) {
     console.error("Feil ved henting av spotpris:", error);
@@ -42,8 +40,8 @@ async function hentSpotpris(sone) {
   }
 }
 
-async function oppdaterInfo(kommune, data) {
-  const entry = data[kommune.toLowerCase()];
+async function oppdaterInfo(kommuneNavn, data) {
+  const entry = data.find(x => x["Kommunenavn"].toLowerCase() === kommuneNavn.toLowerCase());
   if (!entry) {
     document.getElementById('soneDisplay').textContent = 'Ukjent';
     document.getElementById('slagordDisplay').textContent = 'Ingen slagord registrert';
@@ -52,14 +50,14 @@ async function oppdaterInfo(kommune, data) {
   }
 
   document.getElementById('soneDisplay').textContent = entry.sone ?? 'Ukjent';
-  document.getElementById('slagordDisplay').textContent = entry.slagord ?? 'Ingen slagord registrert';
+  document.getElementById('slagordDisplay').textContent = entry.slagord || 'Ingen slagord registrert';
 
   const pris = await hentSpotpris(entry.sone);
   document.getElementById('prisDisplay').textContent = pris ? `${pris} øre/kWh` : 'Ingen pris tilgjengelig';
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-  const data = await hentKommunedata();
+  const data = await hentStederdata();
   fyllDatalist(data);
 
   document.getElementById('visInfoBtn').addEventListener('click', () => {
