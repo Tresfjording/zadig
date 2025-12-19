@@ -39,15 +39,15 @@ async function hentSpotpris(sone) {
     return null;
   }
 }
-
 async function oppdaterInfo(kommuneNavn, data) {
-  const entry = data.find(x => x["Kommunenavn"].toLowerCase() === kommuneNavn.toLowerCase());
+  if (!data || data.length === 0) {
+    visFeilmelding("Ingen stededata tilgjengelig.");
+    return;
+  }
+
+  const entry = data.find(x => x["Kommunenavn"]?.toLowerCase() === kommuneNavn.toLowerCase());
   if (!entry) {
-    document.getElementById('fylkeDisplay').textContent = 'Ukjent';
-    document.getElementById('folketallDisplay').textContent = '–';
-    document.getElementById('soneDisplay').textContent = 'Ukjent';
-    document.getElementById('slagordDisplay').textContent = 'Ingen slagord registrert';
-    document.getElementById('prisDisplay').textContent = '–';
+    visFeilmelding("Fant ikke kommunen i stededata.");
     return;
   }
 
@@ -71,3 +71,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 document.getElementById('folketallDisplay').textContent = entry["Folketall"]?.toLocaleString('no-NO') ?? '–';
   });
 });
+function visFeilmelding(msg) {
+  document.getElementById('fylkeDisplay').textContent = '–';
+  document.getElementById('folketallDisplay').textContent = '–';
+  document.getElementById('soneDisplay').textContent = '–';
+  document.getElementById('slagordDisplay').textContent = msg;
+  document.getElementById('prisDisplay').textContent = '–';
+}
