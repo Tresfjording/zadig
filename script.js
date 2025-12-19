@@ -43,19 +43,22 @@ async function hentSpotpris(sone) {
 async function oppdaterInfo(kommuneNavn, data) {
   const entry = data.find(x => x["Kommunenavn"].toLowerCase() === kommuneNavn.toLowerCase());
   if (!entry) {
+    document.getElementById('fylkeDisplay').textContent = 'Ukjent';
+    document.getElementById('folketallDisplay').textContent = '–';
     document.getElementById('soneDisplay').textContent = 'Ukjent';
     document.getElementById('slagordDisplay').textContent = 'Ingen slagord registrert';
     document.getElementById('prisDisplay').textContent = '–';
     return;
   }
 
+  document.getElementById('fylkeDisplay').textContent = entry["Fylke"] ?? 'Ukjent';
+  document.getElementById('folketallDisplay').textContent = entry["Folketall"]?.toLocaleString('no-NO') ?? '–';
   document.getElementById('soneDisplay').textContent = entry.sone ?? 'Ukjent';
   document.getElementById('slagordDisplay').textContent = entry.slagord || 'Ingen slagord registrert';
 
   const pris = await hentSpotpris(entry.sone);
   document.getElementById('prisDisplay').textContent = pris ? `${pris} øre/kWh` : 'Ingen pris tilgjengelig';
 }
-
 document.addEventListener('DOMContentLoaded', async () => {
   const data = await hentStederdata();
   fyllDatalist(data);
@@ -63,5 +66,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('visInfoBtn').addEventListener('click', () => {
     const kommune = document.getElementById('kommuneInput').value.trim();
     oppdaterInfo(kommune, data);
+
+    document.getElementById('fylkeDisplay').textContent = entry["Fylke"] ?? 'Ukjent';
+document.getElementById('folketallDisplay').textContent = entry["Folketall"]?.toLocaleString('no-NO') ?? '–';
   });
 });
