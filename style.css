@@ -88,3 +88,8 @@ button:hover {
     margin: 0.5rem 0;
   }
 }
+.nordic-price {
+  margin-top: 10px;
+  font-size: 1rem;
+  color: #333;
+}

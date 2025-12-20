@@ -85,3 +85,45 @@ function visFeilmelding(msg) {
   document.getElementById('slagordDisplay').textContent = msg;
   document.getElementById('prisDisplay').textContent = '�';
 }
+
+// /api/se3-now.js
+import fetch from "node-fetch";
+import { JSDOM } from "jsdom";
+
+export default async function handler(req, res) {
+  try {
+    const response = await fetch("https://www.elekt.com/no/spotpriser/sverige/se3");
+    const html = await response.text();
+
+    const dom = new JSDOM(html);
+    const doc = dom.window.document;
+
+    // Henter kun nåprisen
+    const now = doc.querySelector(".price-now .value")?.textContent.trim();
+
+    res.status(200).json({
+      now: now || null
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Kunne ikke hente SE3-prisen" });
+  }
+}
+
+async function loadSE3() {
+  try {
+    const res = await fetch("/api/se3-now");
+    const data = await res.json();
+
+    const now = data.now || "—";
+
+    document.getElementById("se3-price").innerHTML = `
+      🇸🇪 Sverige (SE3 – Stockholm): <strong>${now}</strong> øre/kWh akkurat nå
+    `;
+  } catch (e) {
+    document.getElementById("se3-price").innerHTML = `
+      🇸🇪 Sverige (SE3 – Stockholm): ikke tilgjengelig
+    `;
+  }
+}
+
+loadSE3();
