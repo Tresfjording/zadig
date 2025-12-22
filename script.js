@@ -5,12 +5,20 @@ async function hentStederdata() {
   try {
     const response = await fetch('/kommuner_soner_slagord.json');
     if (!response.ok) throw new Error('Kunne ikke hente JSON');
-    return await response.json();
+
+    const dataObj = await response.json();
+    const data = Object.entries(dataObj).map(([kommunenavn, info]) => ({
+      kommunenavn,
+      ...info
+    }));
+
+    return data;
   } catch (error) {
     console.error('Feil ved henting av stederdata:', error);
     return null;
   }
 }
+
 
 function fyllDatalist(data) {
   const datalist = document.getElementById('kommune');
@@ -22,7 +30,17 @@ function fyllDatalist(data) {
   });
 }
 
-console.log("Kommunedata:", data);
+document.addEventListener('DOMContentLoaded', async () => {
+  const data = await hentStederdata();
+  console.log("Kommunedata:", data); // ← flyttet hit
+  fyllDatalist(data);
+
+  document.getElementById('visInfoBtn').addEventListener('click', () => {
+    const kommune = document.getElementById('kommuneInput').value.trim();
+    oppdaterInfo(kommune, data);
+  });
+});
+
 
 
 async function hentSpotpris(sone) {
@@ -112,3 +130,4 @@ async function hentSE3() {
 }
 
 hentSE3();
+console.log("Knapp trykket!");
