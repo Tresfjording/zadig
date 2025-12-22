@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="style.css">
+  <title>Strømpris nå</title>
+</head>
+<body>
+  <h1>Strømprisen akkurat nå</h1>
+
+  <label for="kommuneInput">Velg kommune:</label>
+  <input list="kommune" id="kommuneInput" placeholder="Skriv kommune...">
+  <datalist id="kommune"></datalist>
+
+  <button id="visInfoBtn">Vis info</button>
+
+  <p id="statusDisplay" class="statusGrønn"></p>
+
+  <div id="resultat">
+    <p>Fylke: <span id="fylkeDisplay" class="highlight"></span></p>
+    <p>Folketall: <span id="folketallDisplay" class="highlight"></span></p>
+    <p>Sone: <span id="soneDisplay" class="highlight"></span></p>
+    <p>Slagord: <span id="slagordDisplay" class="highlight"></span></p>
+    <p>Dagens spotpris: <span id="prisDisplay" class="highlight"></span></p>
+  </div>
+
+  <div id="se3-price" class="nordic-price"></div>
+
+  <datalist id="kommune"></datalist>
+<input id="kommuneInput">
+
+  <script src="/script.js"></script>
+</body>
+</html>

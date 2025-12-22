@@ -1,35 +1,27 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="no">
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="style.css">
-  <title>Strømpris nå</title>
-  <style>
-
-  </style>
+  <title>Strømprisen akkurat nå</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/script.js" defer></script>
+  <link rel="icon" href="/favicon.ico">
 </head>
 <body>
   <h1>Strømprisen akkurat nå</h1>
 
   <label for="kommuneInput">Velg kommune:</label>
-  <input list="kommune" id="kommuneInput" placeholder="Skriv kommune...">
+  <input id="kommuneInput" list="kommune" placeholder="Skriv kommunenavn her">
   <datalist id="kommune"></datalist>
-
   <button id="visInfoBtn">Vis info</button>
-  <!--<p id="statusDisplay" class="statusGrønn"✅ Fant data for Molde</p>-->
-  <p id="statusDisplay" class="statusGrønn"></p>
 
+  <div id="statusDisplay"></div>
+  <p><strong>Fylke:</strong> <span id="fylkeDisplay"></span></p>
+  <p><strong>Folketall:</strong> <span id="folketallDisplay"></span></p>
+  <p><strong>Sone:</strong> <span id="soneDisplay"></span></p>
+  <p><strong>Slagord:</strong> <span id="slagordDisplay"></span></p>
+  <p><strong>Dagens spotpris:</strong> <span id="prisDisplay"></span></p>
 
-<div id="resultat">
-  <p>Fylke: <span id="fylkeDisplay" class="highlight"></span></p>
-  <p>Folketall: <span id="folketallDisplay" class="highlight"></span></p>
-  <p>Sone: <span id="soneDisplay" class="highlight"></span></p>
-  <p>Slagord: <span id="slagordDisplay" class="highlight"></span></p>
-  <p>Dagens spotpris: <span id="prisDisplay" class="highlight"></span></p>
-</div>
-
-<div id="se3-price" class="nordic-price"></div
-
-  <script src="script.js"></script>
+  <p id="se3-price"></p>
 </body>
 </html>
