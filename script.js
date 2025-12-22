@@ -1,6 +1,9 @@
+
+console.log("Prøver å hente kommuneliste...");
+
 async function hentStederdata() {
   try {
-    const response = await fetch('/steder.json');
+    const response = await fetch('/kommuner_soner_slagord.json');
     if (!response.ok) throw new Error('Kunne ikke hente JSON');
     return await response.json();
   } catch (error) {
@@ -18,6 +21,9 @@ function fyllDatalist(data) {
     datalist.appendChild(option);
   });
 }
+
+console.log("Kommunedata:", data);
+
 
 async function hentSpotpris(sone) {
   const dato = new Date();
