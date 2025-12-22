@@ -32,7 +32,7 @@ function fyllDatalist(data) {
 
 document.addEventListener('DOMContentLoaded', async () => {
   const data = await hentStederdata();
-  console.log("Kommunedata:", data); // ← flyttet hit
+  //console.log("Kommunedata:", data); // ← flyttet hit
   fyllDatalist(data);
 
   document.getElementById('visInfoBtn').addEventListener('click', () => {
