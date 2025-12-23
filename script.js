@@ -42,7 +42,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 });
 
-
+document.getElementById('kommuneInput').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    document.getElementById('visInfoBtn').click();
+  }
+});
 
 async function hentSpotpris(sone) {
   const dato = new Date();
