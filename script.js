@@ -57,7 +57,9 @@ function oppdaterInfo(entry) {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-  await hentStederdata();
+  await hentStederdata(); // ✅ nå er await lov
+  ...
+});
 
   document.getElementById('søkInput').addEventListener('keydown', (event) => {
     if (event.key === 'Enter') visTettsted();
