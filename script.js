@@ -118,6 +118,11 @@ document.getElementById('språkDisplay').textContent = entry.språk ?? 'Ukjent';
 document.getElementById('k_slagordDisplay').textContent = entry.k_slagord || 'Ingen slagord registrert';
 document.getElementById('f_slagordDisplay').textContent = entry.f_slagord || 'Ingen slagord registrert';
 
+async function init() {
+  steder = await hentStederdata();
+  // videre oppsett
+}
+init();
 
   const pris = await hentSpotpris(entry.sone);
   document.getElementById('prisDisplay').textContent =
