@@ -1,6 +1,6 @@
 /* Generell layout */
 body {
-  align-items: center;  
+  align: center;  
   font-family: 'Segoe UI', Arial, sans-serif;
   background: linear-gradient(135deg, #f0f4f8, #d9e6f2);
   color: #333;
