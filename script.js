@@ -187,4 +187,4 @@ async function hentDK2() {
 hentSE3();   // ← Stockholm
 hentDK2();   // ← København 
 
-console.log('Valgt entry:', entry);
+console.log('Valgt entry:', entry); 
