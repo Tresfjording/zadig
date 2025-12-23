@@ -33,19 +33,21 @@ function fyllDatalist(data) {
 document.addEventListener('DOMContentLoaded', async () => {
   const data = await hentStederdata();
   fyllDatalist(data);
-  visRandomFakta(); // ← ved lasting
+  visRandomFakta();
 
+  // Klikk på knappen
   document.getElementById('visInfoBtn').addEventListener('click', () => {
     const kommune = document.getElementById('kommuneInput').value.trim();
     oppdaterInfo(kommune, data);
-    visRandomFakta(); // ← ved klikk
+    visRandomFakta();
   });
-});
 
-document.getElementById('kommuneInput').addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') {
-    document.getElementById('visInfoBtn').click();
-  }
+  // 👉 ENTER-FUNKSJONEN – lim inn her
+  document.getElementById('kommuneInput').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      document.getElementById('visInfoBtn').click();
+    }
+  });
 });
 
 async function hentSpotpris(sone) {
