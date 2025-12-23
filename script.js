@@ -157,6 +157,8 @@ faktaEl.classList.remove('vis');
 void faktaEl.offsetWidth; // trigger reflow
 faktaEl.classList.add('vis');
 
+
+//hentDK2();
 async function hentDK2() {
   try {
     const url = "https://api.energidataservice.dk/dataset/Elspotprices?filter=%7B%22PriceArea%22%3A%20%22DK2%22%7D&limit=1&sort=HourUTC%20desc";
@@ -176,8 +178,8 @@ async function hentDK2() {
       "🇩🇰 Danmark (DK2 – København): ikke tilgjengelig";
   }
 }
-//hentDK2();
 
+//hentFI();
 async function hentFI() {
   try {
     const url = "https://api.energidataservice.dk/dataset/Elspotprices?filter=%7B%22PriceArea%22%3A%20%22FI%22%7D&limit=1&sort=HourUTC%20desc";
@@ -197,7 +199,6 @@ async function hentFI() {
       "🇫🇮 Finland (FI – Helsinki): ikke tilgjengelig";
   }
 }
-
 hentSE3();   // ← Stockholm
 hentDK2();   // ← København 
 hentFI();   // ← Helsinki
