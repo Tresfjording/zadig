@@ -103,7 +103,7 @@ async function hentSpotpris(sone) {
   }
 
   document.getElementById('statusDisplay').textContent =
-    `☑ Fant data for ${entry.tettsted}`);
+    `☑ Fant data for ${entry.tettsted}`
 
 document.getElementById('k_nrDisplay').textContent = entry.k_nr ?? 'Ukjent';
 document.getElementById('tettstedDisplay').textContent = entry.tettsted ?? 'Ukjent';
@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const kommune = document.getElementById('kommuneInput').value.trim();
     oppdaterInfo(kommune, data);
   });
-
+});
 
 function visFeilmelding(msg) {
   document.getElementById('fylkeDisplay').textContent = ' ';
