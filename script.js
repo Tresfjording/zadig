@@ -73,7 +73,7 @@ function oppdaterInfo(entry) {
     document.getElementById('språkDisplay').textContent = entry.språk ?? 'Ukjent';
     document.getElementById('k_slagordDisplay').textContent = entry.k_slagord || 'Ingen slagord registrert';
     document.getElementById('f_slagordDisplay').textContent = entry.f_slagord || 'Ingen slagord registrert';
-});
+}
 
 // -----------------------------
 // START NÅR SIDEN ER KLAR
