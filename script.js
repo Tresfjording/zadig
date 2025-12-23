@@ -182,19 +182,18 @@ async function hentDK2() {
 //hentFI();
 async function hentFI() {
   try {
-    const url = "https://api.energidataservice.dk/dataset/Elspotprices?filter=%7B%22PriceArea%22%3A%20%22FI%22%7D&limit=1&sort=HourUTC%20desc";
-
-    const res = await fetch(url);
+    const res = await fetch("https://api.energyprices.eu/v1/spot/finland");
     const data = await res.json();
 
-    const eurMWh = data.records[0].SpotPriceEUR;
-    const nokPerKWh = eurMWh * 11.5 / 1000 * 100;
+    const eurPerKWh = data.current.price; // EUR/kWh
+    const nokPerKWh = eurPerKWh * 11.5 * 100; // → øre/kWh
     const avrundet = Math.round(nokPerKWh);
 
     document.getElementById("fi-price").innerHTML =
       `🇫🇮 Finland (FI – Helsinki): <strong>${avrundet}</strong> øre/kWh akkurat nå`;
 
   } catch (e) {
+    console.error("FI-feil:", e);
     document.getElementById("fi-price").innerHTML =
       "🇫🇮 Finland (FI – Helsinki): ikke tilgjengelig";
   }
