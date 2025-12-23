@@ -30,6 +30,7 @@ function fyllDatalist(data) {
   });
 }
 
+
 document.addEventListener('DOMContentLoaded', async () => {
   const data = await hentStederdata();
   fyllDatalist(data);
@@ -84,19 +85,21 @@ async function oppdaterInfo(kommuneNavn, data) {
   }
 
   document.getElementById('statusDisplay').textContent =
-    `✅ Fant data for ${entry.kommunenavn}`;
+    `☑ Fant data for ${entry.tettsted}`;
 
-  document.getElementById('k_nrDisplay').textContent = entry.fylke ?? 'Ukjent';
-  document.getElementById('tettstedDisplay').textContent = entry.folketall?.toLocaleString('no-NO') ?? ' ';
-  document.getElementById('fylkeDisplay').textContent = entry.sone ?? 'Ukjent';
-  document.getElementById('soneDisplay').textContent = entry.slagord || 'Ingen slagord registrert';
-  document.getElementById('antallDisplay').textContent = entry.sone ?? 'Ukjent';
-  document.getElementById('arealDisplay').textContent = entry.sone ?? 'Ukjent';
-  document.getElementById('sysselsatteDisplay').textContent = entry.sone ?? 'Ukjent';
-  document.getElementById('tilskuddDisplay').textContent = entry.sone ?? 'Ukjent';
-  document.getElementById('språkDisplay').textContent = entry.sone ?? 'Ukjent';
-  document.getElementById('k_slagordDisplay').textContent = entry.sone ?? 'Ukjent';
-  document.getElementById('f_slagordDisplay').textContent = entry.sone ?? 'Ukjent';
+document.getElementById('k_nrDisplay').textContent = entry.k_nr ?? 'Ukjent';
+document.getElementById('tettstedDisplay').textContent = entry.tettsted ?? 'Ukjent';
+document.getElementById('fylkeDisplay').textContent = entry.fylke ?? 'Ukjent';
+document.getElementById('soneDisplay').textContent = entry.sone ?? 'Ukjent';
+
+document.getElementById('antallDisplay').textContent = entry.antall ?? 'Ukjent';
+document.getElementById('arealDisplay').textContent = entry.areal?.toLocaleString('no') ?? 'Ukjent';
+document.getElementById('sysselsatteDisplay').textContent = entry.sysselsatte?.toLocaleString('no') ?? 'Ukjent';
+document.getElementById('tilskuddDisplay').textContent = entry.tilskudd ?? 'Ukjent';
+document.getElementById('språkDisplay').textContent = entry.språk ?? 'Ukjent';
+
+document.getElementById('k_slagordDisplay').textContent = entry.k_slagord || 'Ingen slagord registrert';
+document.getElementById('f_slagordDisplay').textContent = entry.f_slagord || 'Ingen slagord registrert';
 
 
   const pris = await hentSpotpris(entry.sone);
