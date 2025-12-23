@@ -58,7 +58,6 @@ function oppdaterInfo(entry) {
 
 document.addEventListener('DOMContentLoaded', async () => {
   await hentStederdata(); // ✅ nå er await lov
-  ...
 });
 
   document.getElementById('søkInput').addEventListener('keydown', (event) => {
