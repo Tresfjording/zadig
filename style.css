@@ -1,6 +1,9 @@
 /* Generell layout */
 body {
-  align: center;  
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;  
   font-family: 'Segoe UI', Arial, sans-serif;
   background: linear-gradient(135deg, #f0f4f8, #d9e6f2);
   color: #333;
@@ -26,12 +29,41 @@ label {
   display: block;
 }
 
+p.uppercase {
+  text-transform: uppercase;
+}
+
+p.lowercase {
+  text-transform: lowercase;
+}
+
+p.capitalize {
+  text-transform: capitalize;
+}
+
 input[list] {
   padding: 0.6rem;
   border: 2px solid #004080;
   border-radius: 6px;
-  width: 250px;
+  width: 100%;
+  max-width: 350px;
   font-size: 1rem;
+}
+
+button {
+  margin-left: 0;
+}
+
+@media (max-width: 600px) {
+  p {
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+}
+
+img, input, button {
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 button {
