@@ -47,35 +47,35 @@ console.log("✅ visTettsted() ble kalt");
   oppdaterInfo(entry);
 
   // hent spotpris
-console.log("Sone som sendes til API:", entry.sone);
-  const pris = await hentSpotpris(entry.sone);
-  document.getElementById('prisDisplay').textContent =
-    pris ? `${(pris * 100).toFixed(2)} øre/kWh inkl. MVA` : 'Ingen pris tilgjengelig';
-}
 async function hentSpotpris(sone) {
-  const url = `https://api.energidataservice.dk/dataset/Elspotprices?filter={"PriceArea":"${sone}"}&limit=1&sort=HourUTC desc`;
-  console.log("Henter norsk spotpris:", url);
-
   try {
-    const response = await fetch(url);
-    const data = await response.json();
+    // Først: prøv Norge
+    const urlNO = `https://api.energidataservice.dk/dataset/Elspotprices?filter={"PriceArea":"${sone}"}&limit=1&sort=HourUTC desc`;
+    const resNO = await fetch(urlNO);
+    const dataNO = await resNO.json();
 
-    if (!data.records || data.records.length === 0) {
-      console.warn("⚠ Ingen data for norsk prisområde:", sone);
-      return null;
+    if (dataNO.records?.length > 0) {
+      return dataNO.records[0].SpotPriceEUR * 11.5 / 1000;
     }
 
-    const eurMWh = data.records[0].SpotPriceEUR;
-    const nokPerKWh = eurMWh * 11.5 / 1000; // NOK/kWh
+    console.warn("Norsk pris feilet, prøver DK2…");
 
-    return nokPerKWh;
+    // Fallback: DK2
+    const urlDK = `https://api.energidataservice.dk/dataset/Elspotprices?filter={"PriceArea":"DK2"}&limit=1&sort=HourUTC desc`;
+    const resDK = await fetch(urlDK);
+    const dataDK = await resDK.json();
 
-  } catch (error) {
-    console.error("🚨 Feil ved henting av norsk spotpris:", error);
+    if (dataDK.records?.length > 0) {
+      return dataDK.records[0].SpotPriceEUR * 11.5 / 1000;
+    }
+
+    return null;
+
+  } catch (e) {
+    console.error("Feil ved henting av spotpris:", e);
     return null;
   }
 }
-
 // -----------------------------
 // VIS FEILMELDING
 // -----------------------------
