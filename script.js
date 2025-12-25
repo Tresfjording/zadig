@@ -32,7 +32,7 @@ function fyllDatalist(data) {
 // -----------------------------
 // VIS TETTSTED
 // -----------------------------
-console.log("Sone som sendes til API:", entry.sone);
+
 async function visTettsted() {
   const søk = document.getElementById('søkInput').value.trim().toLowerCase();
   const entry = steder.find(e => e.tettsted.toLowerCase() === søk);
@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   document.getElementById('visButton').addEventListener('click', visTettsted);
 });
-console.log("URL som brukes:", url);
+
 async function hentSpotpris(sone) {
     const url = `https://www.forbrukerradet.no/strompris/api/spotpris?omrade=${sone}`;
     const response = await fetch(url);
