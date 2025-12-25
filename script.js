@@ -64,7 +64,7 @@ function oppdaterInfo(entry) {
  `☑ Fant data for ${entry.tettsted}`;
 
 //  document.getElementById("valgtKommuneDisplay").textContent = entry.kommune ?? 'Ukjent';
-  document.getElementById('prisDisplay').textContent = entry.prisDisplay ?? 'Ukjent';
+//  document.getElementById('prisDisplay').textContent = entry.prisDisplay ?? 'Ukjent';
   document.getElementById('k_nrDisplay').textContent = entry.k_nr ?? 'Ukjent';
   document.getElementById('tettstedDisplay').textContent = entry.tettsted ?? 'Ukjent';
   document.getElementById('fylkeDisplay').textContent = entry.fylke ?? 'Ukjent';
@@ -184,13 +184,5 @@ async function hentSpotpris(sone) {
     const pris = data[0]?.pris;
 
     return pris; // Pris inkl. MVA
-}
+};
 
-hentSpotpris(entry.sone).then(pris => {
-    if (pris) {
-        document.getElementById("prisDisplay").textContent =
-            `${pris.toFixed(5)} kr/kWh`;
-    } else {
-        document.getElementById("prisDisplay").textContent = "Ukjent";
-    }
-});
