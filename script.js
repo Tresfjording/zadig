@@ -153,6 +153,9 @@ console.log("Første tettsted:", steder[0]?.tettsted);
 document.addEventListener('DOMContentLoaded', () => {
   initApp();
 });
+document.addEventListener('DOMContentLoaded', () => {
+  initApp();
+});
 
 async function initApp() {
   try {
