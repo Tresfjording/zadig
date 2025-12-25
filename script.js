@@ -47,6 +47,11 @@ console.log("✅ visTettsted() ble kalt");
   oppdaterInfo(entry);
 
   // hent spotpris
+console.log("Sone som sendes til API:", entry.sone);
+  const pris = await hentSpotpris(entry.sone);
+  document.getElementById('prisDisplay').textContent =
+    pris ? `${(pris * 100).toFixed(2)} øre/kWh inkl. MVA` : 'Ingen pris tilgjengelig';
+}
 async function hentSpotpris(sone) {
   // Midlertidig: bruk DK2 uansett sone
   const url = `https://api.energidataservice.dk/dataset/Elspotprices?filter={"PriceArea":"DK2"}&limit=1&sort=HourUTC desc`;
