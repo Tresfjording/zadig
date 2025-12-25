@@ -37,7 +37,13 @@ h1 {
   margin-top: 0.2rem;
 }
 
+#søkInput {
+    text-align: center;
+}
 
+#søkInput::placeholder {
+    text-align: center;
+}
 
 /* Input og knapp */
 label {
