@@ -201,4 +201,5 @@ async function hentSpotpris(sone) {
     return pris; // Pris inkl. MVA
 };
 
-document.addEventListener("DOMContentLoaded", initApp);
+document.addEventListener("DOMContentLoaded", initApp)};
+}
