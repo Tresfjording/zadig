@@ -32,6 +32,7 @@ function fyllDatalist(data) {
 // -----------------------------
 // VIS TETTSTED
 // -----------------------------
+console.log("Sone som sendes til API:", entry.sone);
 async function visTettsted() {
   const søk = document.getElementById('søkInput').value.trim().toLowerCase();
   const entry = steder.find(e => e.tettsted.toLowerCase() === søk);
@@ -44,6 +45,7 @@ async function visTettsted() {
   oppdaterInfo(entry);
 
   // hent spotpris
+  console.log("URL som brukes:", url);
   const pris = await hentSpotpris(entry.sone);
   document.getElementById('prisDisplay').textContent =
     pris ? `${(pris * 100).toFixed(2)} øre/kWh inkl. MVA` : 'Ingen pris tilgjengelig';
