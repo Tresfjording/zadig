@@ -62,7 +62,7 @@ function visFeilmelding(msg) {
 function oppdaterInfo(entry) {
   document.getElementById('statusDisplay').textContent =
     `☑ Fant data for ${entry.tettsted}`;
-
+document.getElementById("valgtKommuneDisplay").textContent = entry.kommune;
   document.getElementById('k_nrDisplay').textContent = entry.k_nr ?? 'Ukjent';
   document.getElementById('tettstedDisplay').textContent = entry.tettsted ?? 'Ukjent';
   document.getElementById('fylkeDisplay').textContent = entry.fylke ?? 'Ukjent';
@@ -74,7 +74,7 @@ function oppdaterInfo(entry) {
   document.getElementById('språkDisplay').textContent = entry.språk ?? 'Ukjent';
   document.getElementById('k_slagordDisplay').textContent = entry.k_slagord || 'Ingen slagord registrert';
   document.getElementById('f_slagordDisplay').textContent = entry.f_slagord || 'Ingen slagord regitrert';
-  document.getElementById("valgtKommuneDisplay").textContent = entry.kommune;
+  
 }
 
 // -----------------------------
