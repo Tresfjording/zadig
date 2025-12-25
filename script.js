@@ -32,7 +32,7 @@ function fyllDatalist(data) {
 // -----------------------------
 // VIS TETTSTED
 // -----------------------------
-console.log("Sone som sendes til API:", entry.sone);
+
 async function visTettsted() {
   const søk = document.getElementById('søkInput').value.trim().toLowerCase();
   const entry = steder.find(e => e.tettsted.toLowerCase() === søk);
@@ -41,7 +41,7 @@ async function visTettsted() {
     visFeilmelding('⚠ Fant ikke kommunenavn');
     return;
   }
-
+console.log("Sone som sendes til API:", entry.sone);
   oppdaterInfo(entry);
 
   // hent spotpris
@@ -142,11 +142,11 @@ async function visRandomFakta() {
 // -----------------------------
 // INIT
 // -----------------------------
-document.addEventListener('DOMContentLoaded', async () => {
+
   await hentStederdata();
   hentSE3();
   hentDK2();
-
+document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('søkInput').addEventListener('keydown', (event) => {
     if (event.key === 'Enter') visTettsted();
   });
