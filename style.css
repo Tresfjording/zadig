@@ -36,6 +36,17 @@ body {
   content: "– ";
 }
 
+.status {
+  margin-top: 1em;
+  font-weight: bold;
+}
+.status-ok {
+  color: green;
+}
+.status-error {
+  color: red;
+}
+
 .dumy {
   height: 100px;
 }   
