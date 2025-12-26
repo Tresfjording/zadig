@@ -25,6 +25,10 @@ body {
   line-height: 1.5;
 }
 
+#map {
+  height: 600px;
+}
+
 h1, h2 {
   margin: 0;
   padding: 0;
