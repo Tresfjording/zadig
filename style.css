@@ -21,6 +21,21 @@ body {
     text-align: center;    /* sentrerer tekst inni */
 }
 
+.info-row strong:empty::before {
+  content: "–";
+  color: #999;
+  font-style: italic;
+}
+
+.info-row strong.mangler {
+  color: #999;
+  font-style: italic;
+}
+
+.info-row strong.mangler::before {
+  content: "– ";
+}
+
 .dumy {
   height: 100px;
 }   
