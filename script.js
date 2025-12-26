@@ -186,36 +186,35 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             // Funksjon: vis kun ett tettsted
-            window.visSoktTettsted = function () {
-                const query = document.getElementById("searchInput").value.trim().toLowerCase();
+          function visSoktTettsted() {
+    const query = document.getElementById("sokInput").value.trim().toLowerCase();
 
-                const entry = data.find(item =>
-                    item.tettsted.toLowerCase() === query
-                );
+    const entry = data.find(item =>
+        item.tettsted.toLowerCase() === query
+    );
 
-                console.log("Søkte etter:", query);
-                console.log("Fant entry:", entry);
+    if (!entry) {
+        alert("Fant ikke tettstedet");
+        return;
+    }
 
-                if (!entry) {
-                    alert("Fant ikke tettstedet");
-                    return;
-                }
+    // Fjern gamle markører
+    map.eachLayer(layer => {
+        if (layer instanceof L.Marker) map.removeLayer(layer);
+    });
 
-                // Fjern gamle markører
-                map.eachLayer(layer => {
-                    if (layer instanceof L.Marker) map.removeLayer(layer);
-                });
+    // Legg til kun dette tettstedet
+    L.marker([entry.lat_decimal, entry.lon_decimal])
+        .addTo(map)
+        .bindPopup(`
+            <strong>${entry.tettsted}</strong><br>
+            ${entry.fylke}<br>
+            ${entry.k_slagord || ""}
+        `)
+        .openPopup();
 
-                // Legg til kun dette tettstedet
-                L.marker([entry.lat_decimal, entry.lon_decimal])
-                    .addTo(map)
-                    .bindPopup(`
-                        <strong>${entry.tettsted}</strong><br>
-                        ${entry.fylke}<br>
-                        ${entry.k_slagord || ""}
-                    `)
-                    .openPopup();
-
+    map.setView([entry.lat_decimal, entry.lon_decimal], 12);
+}
                 // Zoom inn
                 map.setView([entry.lat_decimal, entry.lon_decimal], 12);
             };
