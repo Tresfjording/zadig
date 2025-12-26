@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .catch(err => {
       console.error("Feil ved lasting av tettsteder:", err);
       settStatus("Kunne ikke laste tettsteder.", false);
-    });
+    }); 
 });
 
 

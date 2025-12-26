@@ -47,6 +47,18 @@ body {
   height: 100vh;
 }
 
+.status {
+  margin: 1rem;
+  font-weight: bold;
+  color: #444;
+}
+.status-ok {
+  color: green;
+}
+.status-error {
+  color: red;
+}
+
 h1, h2 {
   margin: 0;
   padding: 0;
