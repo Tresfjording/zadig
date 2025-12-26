@@ -15,6 +15,139 @@ body {
   min-height: 100vh;
 }
 
+/* === GENERELT === */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, sans-serif;
+  background: #f5f5f5;
+  color: #222;
+  line-height: 1.5;
+}
+
+h1, h2 {
+  margin: 0;
+  padding: 0;
+}
+
+/* === CONTAINER === */
+.container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+/* === SØKEBOKS === */
+.search-box {
+  display: flex;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: white;
+  border-radius: 8px;
+  margin: 1rem auto;
+  max-width: 600px;
+}
+
+.search-box input {
+  flex: 1;
+  padding: 0.7rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.search-box button {
+  padding: 0.7rem 1rem;
+  font-size: 1rem;
+  background: #0077cc;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.search-box button:hover {
+  background: #005fa3;
+}
+
+/* === INFO-KORT === */
+.info-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  margin-top: 1rem;
+}
+
+.info-card h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+/* === INFO-RADER === */
+.info-row, .pris-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.info-row span, .pris-row span {
+  color: #555;
+}
+
+.info-row strong, .pris-row strong {
+  font-weight: 600;
+}
+
+/* === STATUSMELDING === */
+.status {
+  margin-top: 1rem;
+  padding: 0.7rem;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.status-ok {
+  background: #e6f7e6;
+  color: #0a7a0a;
+}
+
+.status-error {
+  background: #fdeaea;
+  color: #b30000;
+}
+
+/* === MANGLENDE DATA === */
+.mangler {
+  color: #999;
+  font-style: italic;
+}
+
+/* === RESPONSIVITET === */
+@media (max-width: 600px) {
+  .container {
+    margin: 1rem;
+    padding: 0.5rem;
+  }
+
+  .info-card {
+    padding: 1rem;
+  }
+
+  .search-box {
+    flex-direction: column;
+  }
+
+  .search-box button {
+    width: 100%;
+  }
+
+  .info-card h2 {
+    font-size: 1.5rem;
+  }
+}
+
 #mainWrapper {
     max-width: 600px;      /* eller større hvis du vil */
     margin: 0 auto;        /* sentrerer hele HTML-blokken */
