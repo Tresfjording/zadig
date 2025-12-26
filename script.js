@@ -72,6 +72,7 @@ async function visTettsted() {
   }
 
   oppdaterFelter(entry, pris);
+  visKart(entry);
 }
 
 // === HENT SPOTPRIS FRA hvakosterstrommen.no ===
@@ -152,4 +153,22 @@ function oppdaterFelter(entry, pris) {
       ? "Pris ikke tilgjengelig (helligdag?)"
       : `${(pris * 100).toFixed(2)} øre/kWh (inkl. MVA, ca.)`
   );
+}
+
+function visKart(entry) {
+  if (!entry || !entry.lat || !entry.lon) return;
+
+  const kartDiv = document.getElementById('kartContainer');
+  kartDiv.innerHTML = ""; // tøm tidligere kart
+
+  const map = L.map('kartContainer').setView([entry.lat, entry.lon], 10);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap',
+  }).addTo(map);
+
+  L.marker([entry.lat, entry.lon])
+    .addTo(map)
+    .bindPopup(entry.tettsted)
+    .openPopup();
 }

@@ -128,7 +128,7 @@ h1, h2 {
 @media (max-width: 600px) {
   .container {
     margin: 1rem;
-    padding: 0.5rem;
+    padding: 0.5rem;  
   }
 
   .info-card {

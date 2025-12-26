@@ -5,9 +5,15 @@
   <meta charset="UTF-8">
   <title>selsomt.no – tettsteder og strømpris</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-   
-  </style>
+
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+<script
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+></script>
+
 </head>
 <body>
   <div class="container">
@@ -33,6 +39,8 @@
   <div class="info-row"><span>Språk:</span> <strong id="sprakDisplay">–</strong></div>
   <div class="info-row"><span>Kommuneslagord:</span> <strong id="kSlagordDisplay">–</strong></div>
   <div class="info-row"><span>Fylkesslagord:</span> <strong id="fSlagordDisplay">–</strong></div>
+
+<div id="kartContainer"></div>
 
   <div class="pris-row">
     <span>Strømpris nå:</span>
