@@ -173,18 +173,44 @@ function visKart(entry) {
     .openPopup();
 }
 
-fetch("tettsteder_3.json")
-  .then(r => r.json())
-  .then(data => {
-    data.forEach(item => {
-      if (item.lat_decimal && item.lon_decimal) {
-        L.marker([item.lon_decimal, item.lat_decimal])
-          .addTo(map) 
-          .bindPopup(`
-            <strong>${item.tettsted}</strong><br>
-            ${item.fylke}<br>
-            ${item.k_slagord || ""}
-          `);
+
+function visSoktTettsted() {
+  const query = document.getElementById("searchInput").value.trim().toLowerCase();
+
+  fetch("tettsteder_3.json")
+    .then(r => r.json())
+    .then(data => {
+      const entry = data.find(item =>
+        item.tettsted.toLowerCase() === query
+      );
+
+      if (!entry) {
+        alert("Fant ikke tettstedet");
+        return;
       }
+
+      // Fjern gamle markører
+      map.eachLayer(layer => {
+        if (layer instanceof L.Marker) map.removeLayer(layer);
+      });
+
+      // Legg til kun dette tettstedet
+      L.marker([entry.lat_decimal, entry.lon_decimal])
+        .addTo(map)
+        .bindPopup(`
+          <strong>${entry.tettsted}</strong><br>
+          ${entry.fylke}<br>
+          ${entry.k_slagord || ""}
+        `)
+        .openPopup();
+
+      // Zoom inn
+      map.setView([entry.lat_decimal, entry.lon_decimal], 12);
     });
-  });
+}
+
+document.getElementById("searchInput").addEventListener("keyup", function(e) {
+  if (e.key === "Enter") {
+    visSoktTettsted();
+  }
+});
