@@ -7,6 +7,9 @@ let steder = []; // fylles fra tettsteder.json når siden lastes
 document.addEventListener('DOMContentLoaded', () => {
   console.log("✅ Init startet");
 
+  // koble søkeknappen
+  document.getElementById('visInfoBtn').addEventListener('click', visTettsted);
+
   // last tettsteder
   fetch('tettsteder.json')
     .then(res => res.json())
@@ -19,9 +22,9 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error("🚨 Klarte ikke å laste tettsteder.json:", err);
       settStatus("Klarte ikke å laste tettsted-data.", false);
     });
-
-
 });
+
+
 
 // === HJELPERE ===
 function settStatus(tekst, ok) {
