@@ -175,7 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // Vis alle tettsteder ved oppstart
             data.forEach(item => {
                 if (item.lat_decimal && item.lon_decimal) {
-                    L.marker([item.lat_decimal, item.lon_decimal])
+                    L.marker([item.lon_decimal, item.lat_decimal])
                         .addTo(map)
                         .bindPopup(`
                             <strong>${item.tettsted}</strong><br>
