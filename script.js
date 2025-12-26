@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
   // knapper
-  document.getElementById('visInfoBtn').addEventListener('click', visTettsted);
+ // document.getElementById('visInfoBtn').addEventListener('click', visTettsted);
   document.getElementById('btnValider').addEventListener('click', () => validerSoner(steder));
   document.getElementById('btnAntall').addEventListener('click', () => antallPerSone(steder));
   document.getElementById('btnTestPris').addEventListener('click', testAlleSoner);
