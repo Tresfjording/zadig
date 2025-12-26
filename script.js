@@ -156,72 +156,59 @@ function oppdaterFelter(entry, pris) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("Init startet");
+  console.log("Init startet");
 
-    // Opprett kartet
-    const map = L.map('map').setView([65.0, 15.0], 5);
+  const map = L.map('map').setView([65.0, 15.0], 5);
 
-    // Bakgrunnskart
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
 
-    // Last JSON én gang
-    fetch("tettsteder_3.json")
-        .then(r => r.json())
-        .then(data => {
-            console.log("Lastet tettsteder_3.json –", data.length, "poster");
+  fetch("tettsteder_3.json")
+    .then(r => r.json())
+    .then(data => {
+      console.log("Lastet tettsteder_3.json –", data.length, "poster");
 
-            // Vis alle tettsteder ved oppstart
-            data.forEach(item => {
-                if (item.lat_decimal && item.lon_decimal) {
-                    L.marker([item.lat_decimal, item.lon_decimal])
-                        .addTo(map)
-                        .bindPopup(`
-                            <strong>${item.tettsted}</strong><br>
-                            ${item.fylke}<br>
-                            ${item.k_slagord || ""}
-                        `);
-                }
-            });
+      // Vis alle ved oppstart (valgfritt)
+      data.forEach(item => {
+        if (item.lat_decimal && item.lon_decimal) {
+          L.marker([item.lat_decimal, item.lon_decimal])
+            .addTo(map)
+            .bindPopup(`<strong>${item.tettsted}</strong><br>${item.fylke}<br>${item.k_slagord || ""}`);
+        }
+      });
 
-            // Funksjon: vis kun ett tettsted
-function visSoktTettsted() {
-    const query = document.getElementById("sokInput").value.trim().toLowerCase();
+      // Søkefunksjon koblet til sokInput
+      function visSoktTettsted() {
+        const query = document.getElementById("sokInput").value.trim().toLowerCase();
+        const entry = data.find(item => item.tettsted.toLowerCase() === query);
 
-    const entry = data.find(item =>
-        item.tettsted.toLowerCase() === query
-    );
+        console.log("Søkte etter:", query);
+        console.log("Fant entry:", entry);
 
-    if (!entry) {
-        alert("Fant ikke tettstedet");
-        return;
-    }
+        if (!entry) {
+          alert("Fant ikke tettstedet");
+          return;
+        }
 
-    // Fjern gamle markører
-    map.eachLayer(layer => {
-        if (layer instanceof L.Marker) map.removeLayer(layer);
+        map.eachLayer(layer => {
+          if (layer instanceof L.Marker) map.removeLayer(layer);
+        });
+
+        L.marker([entry.lat_decimal, entry.lon_decimal])
+          .addTo(map)
+          .bindPopup(`<strong>${entry.tettsted}</strong><br>${entry.fylke}<br>${entry.k_slagord || ""}`)
+          .openPopup();
+
+        map.setView([entry.lat_decimal, entry.lon_decimal], 12);
+      }
+
+      // Koble knappen og Enter-tasten
+      document.getElementById("visInfoBtn").addEventListener("click", visSoktTettsted);
+      document.getElementById("sokInput").addEventListener("keyup", function(e) {
+        if (e.key === "Enter") {
+          visSoktTettsted();
+        }
+      });
     });
-
-    // Legg til kun dette tettstedet
-    L.marker([entry.lat_decimal, entry.lon_decimal])
-        .addTo(map)
-        .bindPopup(`
-            <strong>${entry.tettsted}</strong><br>
-            ${entry.fylke}<br>
-            ${entry.k_slagord || ""}
-        `)
-        .openPopup();
-
-    map.setView([entry.lat_decimal, entry.lon_decimal], 12);
-}
-
-            // Koble Enter-tasten til søk
-            document.getElementById("searchInput").addEventListener("keyup", function (e) {
-                if (e.key === "Enter") {
-                    visSoktTettsted();
-                }
-            });
-        })
-        .catch(err => console.error("Feil ved lasting av JSON:", err));
 });
