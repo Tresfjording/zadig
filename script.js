@@ -172,3 +172,19 @@ function visKart(entry) {
     .bindPopup(entry.tettsted)
     .openPopup();
 }
+
+fetch("tettsteder_3.json")
+  .then(r => r.json())
+  .then(data => {
+    data.forEach(item => {
+      if (item.lat_decimal && item.lon_decimal) {
+        L.marker([item.lon_decimal, item.lat_decimal])
+          .addTo(map)
+          .bindPopup(`
+            <strong>${item.tettsted}</strong><br>
+            ${item.fylke}<br>
+            ${item.k_slagord || ""}
+          `);
+      }
+    });
+  });
