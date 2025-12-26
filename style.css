@@ -44,7 +44,7 @@ body {
 
 #map {
   flex: 2;
-  /*height: 100vh;*/
+  height: 100vh;
 }
 
 h1, h2 {
