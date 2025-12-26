@@ -41,7 +41,7 @@ function normaliserTettstedNavn(str) {
   return str.trim().toLowerCase();
 }
 
-// === HOVEDFUNKSJON – vis info om tettsted ===
+// === HOVEDFUNKSJON – vis info om tettsted ===   
 async function visTettsted() {
   console.log("✅ visTettsted() ble kalt");
   const input = document.getElementById('sokInput').value;
