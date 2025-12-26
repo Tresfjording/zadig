@@ -1,7 +1,7 @@
 // === KONFIG ===
 const VALUTAKURS_EUR_TIL_NOK = 11.5; // juster ved behov
 
-let steder = []; // fylles fra tettsteder.json når siden lastes
+let steder = []; // fylles fra tettsteder_3.json når siden lastes
 
 // === STARTUP ===
 document.addEventListener('DOMContentLoaded', () => {
@@ -11,15 +11,15 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('visInfoBtn').addEventListener('click', visTettsted);
 
   // last tettsteder
-  fetch('tettsteder.json')
+  fetch('tettsteder_3.json')
     .then(res => res.json())
     .then(data => {
       steder = data;
       window.steder = data; // gjør tilgjengelig i konsollen
-      console.log(`✅ Lastet tettsteder.json – ${steder.length} poster`);
+      console.log(`✅ Lastet tettsteder_3.json – ${steder.length} poster`);
     })
     .catch(err => {
-      console.error("🚨 Klarte ikke å laste tettsteder.json:", err);
+      console.error("🚨 Klarte ikke å laste tettsteder_3.json:", err);
       settStatus("Klarte ikke å laste tettsted-data.", false);
     });
 });
