@@ -271,7 +271,7 @@ function visPåKart(map, sted) {
     .openPopup();
 
   // Zoom inn
-  map.setView([sted.lat, sted.lon], 2, {
+  map.setView([sted.lat, sted.lon], 4, {
     animate: true,
     duration: 0.6
   });
