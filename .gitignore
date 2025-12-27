@@ -361,3 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Basisdata ignore github
+Basisdata_0000_Norge_4258_stedsnavn_GML.gml
+*.gml
