@@ -265,18 +265,18 @@ function visPåKart(map, sted) {
       `
       <strong>${sted.navn || ""}</strong><br>
       ${sted.fylke || ""}<br> 
-      ${sted.k_slagord || ""
+      ${sted.k_slagord || ""}
     `
     )
     .openPopup();
 
   // Zoom inn
-  map.setView([sted.lat, sted.lon], 6, {
+  map.setView([sted.lat, sted.lon], 4, {
     animate: true,
     duration: 0.6
   });
 }
-  
+
 
 // === HENT SPOTPRIS (HVAKOSTERSTROMMEN) ===
 async function hentSpotpris(sone) {
