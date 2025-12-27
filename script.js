@@ -60,7 +60,7 @@ function oppdaterFelter(entry, pris) {
       prisEl.textContent = `${pris.toFixed(1)} øre/kWh`;
     }
   }
-}
+
 
 // UTM32 → WGS84
 function utm32ToLatLon(northing, easting) {
