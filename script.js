@@ -377,7 +377,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   visInfoBtn.addEventListener("click", () => visTettsted(map));
   sokInput.addEventListener("keyup", e => {
     if (e.key === "Enter") visTettsted(map);
-}); 
+  });
 
   settStatus("Skriv inn et tettsted for å starte.", true);
 });
