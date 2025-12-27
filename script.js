@@ -48,9 +48,6 @@ function oppdaterFelter(entry, pris) {
         return;
     }
 
-    // resten av logikken...
-}
-
   if (tettstedEl) tettstedEl.textContent = entry.tettsted || "–";
   if (kNrEl) kNrEl.textContent = entry.k_nr || "–";
   if (fylkeEl) fylkeEl.textContent = entry.fylke || "–";
@@ -385,3 +382,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   settStatus("Skriv inn et tettsted for å starte.", true);
 });
+
+  const tettstedEl = document.getElementById("tettstedDisplay");
+  const prisEl = document.getElementById("prisDisplay")};
