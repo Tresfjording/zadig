@@ -38,14 +38,18 @@ function oppdaterFelter(entry, pris) {
   const fylkeEl = document.getElementById("fylkeDisplay");
   const soneEl = document.getElementById("soneDisplay");
 }
-  if (!entry) {
-    if (tettstedEl) tettstedEl.textContent = "–";
-    if (prisEl) prisEl.textContent = "–";
-    if (kNrEl) kNrEl.textContent = "–";
-    if (fylkeEl) fylkeEl.textContent = "–";
-    if (soneEl) soneEl.textContent = "–";
-    return;
-  }
+ function oppdaterFelter(entry, pris) {
+    if (!entry) {
+        if (tettstedEl) tettstedEl.textContent = "";
+        if (prisEl) prisEl.textContent = "";
+        if (kNrEl) kNrEl.textContent = "";
+        if (fylkeEl) fylkeEl.textContent = "";
+        if (soneEl) soneEl.textContent = "";
+        return;
+    }
+
+    // resten av logikken...
+}
 
   if (tettstedEl) tettstedEl.textContent = entry.tettsted || "–";
   if (kNrEl) kNrEl.textContent = entry.k_nr || "–";
