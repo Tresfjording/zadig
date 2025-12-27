@@ -139,7 +139,7 @@ async function hentStedFraSSR(sok) {
     if (!resp.ok) throw new Error("SSR-søk feilet");
     const data = await resp.json();
 
-    if (!data?.stedsnavn || data.stedsnavn.length === 0) {
+    if (!data || !data.stedsnavn || data.stedsnavn.length === 0) {
       return null;
     }
 
@@ -159,8 +159,8 @@ async function hentStedFraSSR(sok) {
       k_nr: place.kommunenummer || "",
       kommune: place.kommunenavn || "",
       fylke: place.fylkesnavn || "",
-      lat,
-      lon
+      lat: lat,
+      lon: lon
     };
   } catch (err) {
     console.error("Feil ved henting fra SSR:", err);
