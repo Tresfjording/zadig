@@ -90,11 +90,10 @@ async function lastTettsteder() {
       if (e.k_nr && e.sone) {
         kommuneTilSone[e.k_nr] = e.sone;
       }
-    }
-
+    }  
     try {
       console.log("Lastet tettsteder:", steder.length);
-    } catch (err) {
+    }catch (err) {
       console.error("Feil ved lasting av tettsteder:", err);
       settStatus("Klarte ikke laste lokal tettstedsliste.", false);
     }
@@ -347,7 +346,7 @@ async function visTettsted(map) {
     k_nr: ssr.k_nr || "",
     fylke: ssr.fylke || "",
     sone: sone || "–"
-  };
+  }
 
   oppdaterFelter(entryFraSSR, pris);
 
