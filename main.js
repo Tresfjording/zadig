@@ -216,5 +216,4 @@
 
     hentNowcast(lat, lon);
   }
-}
-)};
+};
