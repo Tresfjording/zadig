@@ -9,6 +9,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 const infobox = document.getElementById("infobox");
 let steder = [];
+let aktivTooltip = null; // husker siste aktive tooltip
 
 // --------------------------
 // LAST TETTSTEDER
@@ -20,14 +21,27 @@ async function lastTettsteder() {
 
     steder.forEach(sted => {
       if (typeof sted.lat_decimal === "number" && typeof sted.lon_decimal === "number") {
-        L.marker([sted.lat_decimal, sted.lon_decimal], { opacity: 0 }) // helt gjennomsiktig
-          .addTo(map)
-          .bindTooltip(sted.tettsted, {
-            permanent: false,   // vises bare ved hover
+        const marker = L.marker([sted.lat_decimal, sted.lon_decimal], { opacity: 0 }).addTo(map);
+
+        marker.on("click", () => {
+          // Fjern tidligere tooltip hvis det finnes
+          if (aktivTooltip) {
+            map.removeLayer(aktivTooltip);
+            aktivTooltip = null;
+          }
+
+          // Lag ny tooltip som blir stående
+          aktivTooltip = L.tooltip({
+            permanent: true,
             direction: "top",
             className: "custom-tooltip"
           })
-          .on("click", () => oppdaterFelter(sted));
+          .setContent(sted.tettsted)
+          .setLatLng([sted.lat_decimal, sted.lon_decimal])
+          .addTo(map);
+
+          oppdaterFelter(sted);
+        });
       }
     });
   } catch (err) {
@@ -104,6 +118,22 @@ async function visTettsted() {
 
   const entry = steder.find(e => normaliser(e.tettsted) === sok);
   if (entry) {
+    // Fjern tidligere tooltip
+    if (aktivTooltip) {
+      map.removeLayer(aktivTooltip);
+      aktivTooltip = null;
+    }
+
+    // Sett ny tooltip
+    aktivTooltip = L.tooltip({
+      permanent: true,
+      direction: "top",
+      className: "custom-tooltip"
+    })
+    .setContent(entry.tettsted)
+    .setLatLng([entry.lat_decimal, entry.lon_decimal])
+    .addTo(map);
+
     await oppdaterFelter(entry);
     map.setView([entry.lat_decimal, entry.lon_decimal], 10);
   } else {
