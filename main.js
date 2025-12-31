@@ -1,3 +1,6 @@
+// --------------------------
+// INIT KART
+// --------------------------
 const map = L.map('map').setView([65.0, 12.0], 5);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -7,6 +10,9 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 const infobox = document.getElementById("infobox");
 let steder = [];
 
+// --------------------------
+// LAST TETTSTEDER
+// --------------------------
 async function lastTettsteder() {
   try {
     const res = await fetch("tettsteder_3.json");
@@ -14,8 +20,13 @@ async function lastTettsteder() {
 
     steder.forEach(sted => {
       if (typeof sted.lat_decimal === "number" && typeof sted.lon_decimal === "number") {
-        L.marker([sted.lat_decimal, sted.lon_decimal])
+        L.marker([sted.lat_decimal, sted.lon_decimal], { opacity: 0 }) // helt gjennomsiktig
           .addTo(map)
+          .bindTooltip(sted.tettsted, {
+            permanent: false,   // vises bare ved hover
+            direction: "top",
+            className: "custom-tooltip"
+          })
           .on("click", () => oppdaterFelter(sted));
       }
     });
@@ -24,6 +35,9 @@ async function lastTettsteder() {
   }
 }
 
+// --------------------------
+// HENT SPOTPRIS
+// --------------------------
 async function hentSpotpris(sone) {
   const today = new Date();
   const year = today.getFullYear();
@@ -44,6 +58,9 @@ async function hentSpotpris(sone) {
   }
 }
 
+// --------------------------
+// OPPDATER INFOBOKS
+// --------------------------
 async function oppdaterFelter(entry) {
   if (!entry) {
     infobox.innerHTML = "<p>Ingen data å vise.</p>";
@@ -70,6 +87,9 @@ async function oppdaterFelter(entry) {
   infobox.innerHTML = html;
 }
 
+// --------------------------
+// SØK
+// --------------------------
 function normaliser(str) {
   return (str || "").trim().toLowerCase();
 }
@@ -91,19 +111,19 @@ async function visTettsted() {
   }
 }
 
+// --------------------------
+// INIT
+// --------------------------
 document.addEventListener("DOMContentLoaded", async () => {
   await lastTettsteder();
 
   const sokInput = document.getElementById("sokInput");
   const visInfoBtn = document.getElementById("visInfoBtn");
 
-  if (!sokInput || !visInfoBtn) {
-    console.error("Fant ikke søkefelt eller knapp i DOM.");
-    return;
+  if (sokInput && visInfoBtn) {
+    visInfoBtn.addEventListener("click", visTettsted);
+    sokInput.addEventListener("keyup", e => {
+      if (e.key === "Enter") visTettsted();
+    });
   }
-
-  visInfoBtn.addEventListener("click", visTettsted);
-  sokInput.addEventListener("keyup", e => {
-    if (e.key === "Enter") visTettsted();
-  });
 });
