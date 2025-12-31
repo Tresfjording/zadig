@@ -1,5 +1,4 @@
-Ren versjon fra Copilot
-
+//Ren versjon fra Copilot
 // --------------------------
 // HOVEDFUNKSJON: VIS TETTSTED / STED
 // --------------------------
