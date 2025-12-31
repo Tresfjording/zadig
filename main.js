@@ -9,7 +9,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 const infobox = document.getElementById("infobox");
 let steder = [];
-let aktivTooltip = null; // husker siste aktive tooltip
+let aktivMarker = null; // husker siste markør
 
 // --------------------------
 // LAST TETTSTEDER
@@ -18,32 +18,6 @@ async function lastTettsteder() {
   try {
     const res = await fetch("tettsteder_3.json");
     steder = await res.json();
-
-    steder.forEach(sted => {
-      if (typeof sted.lat_decimal === "number" && typeof sted.lon_decimal === "number") {
-        const marker = L.marker([sted.lat_decimal, sted.lon_decimal], { opacity: 0 }).addTo(map);
-
-        marker.on("click", () => {
-          // Fjern tidligere tooltip hvis det finnes
-          if (aktivTooltip) {
-            map.removeLayer(aktivTooltip);
-            aktivTooltip = null;
-          }
-
-          // Lag ny tooltip som blir stående
-          aktivTooltip = L.tooltip({
-            permanent: true,
-            direction: "top",
-            className: "custom-tooltip"
-          })
-          .setContent(sted.tettsted)
-          .setLatLng([sted.lat_decimal, sted.lon_decimal])
-          .addTo(map);
-
-          oppdaterFelter(sted);
-        });
-      }
-    });
   } catch (err) {
     infobox.innerHTML = `<p>Feil ved lasting av tettsteder: ${err}</p>`;
   }
@@ -102,40 +76,37 @@ async function oppdaterFelter(entry) {
 }
 
 // --------------------------
+// VIS TETTSTED
+// --------------------------
+async function visTettsted(entry) {
+  // Fjern gammel markør
+  if (aktivMarker) {
+    map.removeLayer(aktivMarker);
+    aktivMarker = null;
+  }
+
+  // Lag ny synlig markør med label
+  aktivMarker = L.marker([entry.lat_decimal, entry.lon_decimal])
+    .addTo(map)
+    .bindTooltip(entry.tettsted, { permanent: true, direction: "top" })
+    .openTooltip();
+
+  await oppdaterFelter(entry);
+  map.setView([entry.lat_decimal, entry.lon_decimal], 10);
+}
+
+// --------------------------
 // SØK
 // --------------------------
 function normaliser(str) {
   return (str || "").trim().toLowerCase();
 }
 
-async function visTettsted() {
-  const inputEl = document.getElementById("sokInput");
-  const sok = normaliser(inputEl.value);
-  if (!sok) {
-    infobox.innerHTML = "<p>Skriv inn et stedsnavn først.</p>";
-    return;
-  }
-
+async function søkTettsted() {
+  const sok = normaliser(document.getElementById("sokInput").value);
   const entry = steder.find(e => normaliser(e.tettsted) === sok);
   if (entry) {
-    // Fjern tidligere tooltip
-    if (aktivTooltip) {
-      map.removeLayer(aktivTooltip);
-      aktivTooltip = null;
-    }
-
-    // Sett ny tooltip
-    aktivTooltip = L.tooltip({
-      permanent: true,
-      direction: "top",
-      className: "custom-tooltip"
-    })
-    .setContent(entry.tettsted)
-    .setLatLng([entry.lat_decimal, entry.lon_decimal])
-    .addTo(map);
-
-    await oppdaterFelter(entry);
-    map.setView([entry.lat_decimal, entry.lon_decimal], 10);
+    visTettsted(entry);
   } else {
     infobox.innerHTML = `<p>Fant ikke "${sok}" i lokal liste.</p>`;
   }
@@ -151,9 +122,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   const visInfoBtn = document.getElementById("visInfoBtn");
 
   if (sokInput && visInfoBtn) {
-    visInfoBtn.addEventListener("click", visTettsted);
+    visInfoBtn.addEventListener("click", søkTettsted);
     sokInput.addEventListener("keyup", e => {
-      if (e.key === "Enter") visTettsted();
+      if (e.key === "Enter") søkTettsted();
     });
   }
 });
