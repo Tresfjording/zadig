@@ -110,19 +110,18 @@ body {
   max-width: 400px;
   max-height: 80vh;
   overflow-y: auto;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255,255,255,0.95); /* synlig bakgrunn */
   border: 1px solid #ccc;
   padding: 1rem;
-  z-index: 1000;
-
-  /* gjør at boksen ser ut som den svever */
-  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  z-index: 1000; /* løfter den over kartet */
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25); /* svevende effekt */
   border-radius: 8px;
 }
 
 #map {
   flex: 2; /* 2/3 bredde */
-  height: 100%; /* viktig! */
+  height: 100vh; /* viktig! */
+  width: 100vh;
   border: 2px solid #ccc;
 }
 
