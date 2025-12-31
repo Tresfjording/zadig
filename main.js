@@ -9,22 +9,40 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 const infobox = document.getElementById("infobox");
 let steder = [];
-let aktivMarker = null; // husker siste markør
+let aktivMarker = null;
+let landssnitt = null;
 
 // --------------------------
-// LAST TETTSTEDER
+// HENT LANDSSNITT
 // --------------------------
-async function lastTettsteder() {
-  try {
-    const res = await fetch("tettsteder_3.json");
-    steder = await res.json();
-  } catch (err) {
-    infobox.innerHTML = `<p>Feil ved lasting av tettsteder: ${err}</p>`;
+async function hentLandssnitt() {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const day = String(today.getDate()).padStart(2, "0");
+
+  const soner = ["NO1","NO2","NO3","NO4","NO5"];
+  let alleVerdier = [];
+
+  for (const sone of soner) {
+    const url = `https://www.hvakosterstrommen.no/api/v1/prices/${year}/${month}-${day}_${sone}.json`;
+    try {
+      const res = await fetch(url);
+      const data = await res.json();
+      alleVerdier.push(...data.map(p => p.NOK_per_kWh));
+    } catch (err) {
+      console.error("Feil ved henting av sone", sone, err);
+    }
+  }
+
+  if (alleVerdier.length > 0) {
+    landssnitt = (alleVerdier.reduce((a,b)=>a+b,0) / alleVerdier.length).toFixed(2);
+    console.log("Landssnitt:", landssnitt);
   }
 }
 
 // --------------------------
-// HENT SPOTPRIS
+// HENT SPOTPRIS FOR SONE
 // --------------------------
 async function hentSpotpris(sone) {
   const today = new Date();
@@ -49,7 +67,7 @@ async function hentSpotpris(sone) {
 // --------------------------
 // OPPDATER INFOBOKS
 // --------------------------
-async function oppdaterFelter(entry) {
+async function oppdaterFelter(entry, pris) {
   if (!entry) {
     infobox.innerHTML = "<p>Ingen data å vise.</p>";
     return;
@@ -63,12 +81,10 @@ async function oppdaterFelter(entry) {
   }
   html += "</ul>";
 
-  if (entry.sone) {
-    const pris = await hentSpotpris(entry.sone);
-    if (pris != null) {
-      html += `<p><strong>Strømpris (${entry.sone}):</strong> ${pris} kr/kWh (snitt i dag)</p>`;
-    } else {
-      html += `<p>Ingen strømpris tilgjengelig for sone ${entry.sone}.</p>`;
+  if (entry.sone && pris != null) {
+    html += `<p><strong>Strømpris (${entry.sone}):</strong> ${pris} kr/kWh (snitt i dag)</p>`;
+    if (landssnitt) {
+      html += `<p><strong>Landssnitt:</strong> ${landssnitt} kr/kWh</p>`;
     }
   }
 
@@ -76,22 +92,33 @@ async function oppdaterFelter(entry) {
 }
 
 // --------------------------
-// VIS TETTSTED
+// VIS TETTSTED MED FARGE
 // --------------------------
 async function visTettsted(entry) {
-  // Fjern gammel markør
   if (aktivMarker) {
     map.removeLayer(aktivMarker);
     aktivMarker = null;
   }
 
-  // Lag ny synlig markør med label
-  aktivMarker = L.marker([entry.lat_decimal, entry.lon_decimal])
-    .addTo(map)
+  const pris = await hentSpotpris(entry.sone);
+  let farge = "blue";
+
+  if (landssnitt && pris) {
+    if (pris < landssnitt) farge = "green";
+    else if (pris > landssnitt) farge = "red";
+    else farge = "orange";
+  }
+
+  aktivMarker = L.circleMarker([entry.lat_decimal, entry.lon_decimal], {
+    radius: 10,
+    color: farge,
+    fillColor: farge,
+    fillOpacity: 0.8
+  }).addTo(map)
     .bindTooltip(entry.tettsted, { permanent: true, direction: "top" })
     .openTooltip();
 
-  await oppdaterFelter(entry);
+  await oppdaterFelter(entry, pris);
   map.setView([entry.lat_decimal, entry.lon_decimal], 10);
 }
 
@@ -116,6 +143,7 @@ async function søkTettsted() {
 // INIT
 // --------------------------
 document.addEventListener("DOMContentLoaded", async () => {
+  await hentLandssnitt();
   await lastTettsteder();
 
   const sokInput = document.getElementById("sokInput");
@@ -128,3 +156,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 });
+
+// --------------------------
+// LAST TETTSTEDER (kun data)
+// --------------------------
+async function lastTettsteder() {
+  try {
+    const res = await fetch("tettsteder_3.json");
+    steder = await res.json();
+  } catch (err) {
+    infobox.innerHTML = `<p>Feil ved lasting av tettsteder: ${err}</p>`;
+  }
+}
