@@ -42,24 +42,27 @@ async function hentLandssnitt() {
 }
 
 // --------------------------
-// HENT SPOTPRIS FOR SONE
+// HENT PRIS FOR NÅVÆRENDE TIME
 // --------------------------
-async function hentSpotpris(sone) {
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, "0");
-  const day = String(today.getDate()).padStart(2, "0");
+async function hentPrisNaa(sone) {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  const hour = now.getHours();
 
   const url = `https://www.hvakosterstrommen.no/api/v1/prices/${year}/${month}-${day}_${sone}.json`;
 
   try {
     const res = await fetch(url);
     const data = await res.json();
-    const values = data.map(p => p.NOK_per_kWh);
-    const avg = (values.reduce((a, b) => a + b, 0) / values.length).toFixed(2);
-    return avg;
+    const entry = data.find(p => {
+      const startHour = new Date(p.time_start).getHours();
+      return startHour === hour;
+    });
+    return entry ? entry.NOK_per_kWh.toFixed(2) : null;
   } catch (err) {
-    console.error("Feil ved henting av strømpris:", err);
+    console.error("Feil ved henting av pris nå:", err);
     return null;
   }
 }
@@ -67,7 +70,7 @@ async function hentSpotpris(sone) {
 // --------------------------
 // OPPDATER INFOBOKS
 // --------------------------
-async function oppdaterFelter(entry, pris) {
+async function oppdaterFelter(entry, prisNaa) {
   if (!entry) {
     infobox.innerHTML = "<p>Ingen data å vise.</p>";
     return;
@@ -81,8 +84,8 @@ async function oppdaterFelter(entry, pris) {
   }
   html += "</ul>";
 
-  if (entry.sone && pris != null) {
-    html += `<p><strong>Strømpris (${entry.sone}):</strong> ${pris} kr/kWh (snitt i dag)</p>`;
+  if (entry.sone && prisNaa != null) {
+    html += `<p><strong>Pris nå (${entry.sone}):</strong> ${prisNaa} kr/kWh</p>`;
     if (landssnitt) {
       html += `<p><strong>Landssnitt:</strong> ${landssnitt} kr/kWh</p>`;
     }
@@ -92,7 +95,7 @@ async function oppdaterFelter(entry, pris) {
 }
 
 // --------------------------
-// VIS TETTSTED MED FARGE
+// VIS TETTSTED MED FARGE + TOOLTIP
 // --------------------------
 async function visTettsted(entry) {
   if (aktivMarker) {
@@ -100,12 +103,12 @@ async function visTettsted(entry) {
     aktivMarker = null;
   }
 
-  const pris = await hentSpotpris(entry.sone);
+  const prisNaa = await hentPrisNaa(entry.sone);
   let farge = "blue";
 
-  if (landssnitt && pris) {
-    if (pris < landssnitt) farge = "green";
-    else if (pris > landssnitt) farge = "red";
+  if (landssnitt && prisNaa) {
+    if (prisNaa < landssnitt) farge = "green";
+    else if (prisNaa > landssnitt) farge = "red";
     else farge = "orange";
   }
 
@@ -115,10 +118,13 @@ async function visTettsted(entry) {
     fillColor: farge,
     fillOpacity: 0.8
   }).addTo(map)
-    .bindTooltip(entry.tettsted, { permanent: true, direction: "top" })
+    .bindTooltip(
+      `${entry.tettsted} – ${prisNaa ? prisNaa + " kr/kWh" : "pris ikke tilgjengelig"}`,
+      { permanent: true, direction: "top" }
+    )
     .openTooltip();
 
-  await oppdaterFelter(entry, pris);
+  await oppdaterFelter(entry, prisNaa);
   map.setView([entry.lat_decimal, entry.lon_decimal], 10);
 }
 
