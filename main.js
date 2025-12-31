@@ -1,6 +1,3 @@
-// --------------------------
-// INIT KART
-// --------------------------
 const map = L.map('map').setView([65.0, 12.0], 5);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -8,10 +5,6 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 const infobox = document.getElementById("infobox");
-
-// --------------------------
-// LAST TETTSTEDER
-// --------------------------
 let steder = [];
 
 async function lastTettsteder() {
@@ -19,22 +12,18 @@ async function lastTettsteder() {
     const res = await fetch("tettsteder_3.json");
     steder = await res.json();
 
-    // Lag markører for alle tettsteder
     steder.forEach(sted => {
       if (typeof sted.lat_decimal === "number" && typeof sted.lon_decimal === "number") {
         L.marker([sted.lat_decimal, sted.lon_decimal])
           .addTo(map)
-          .on("click", () => oppdaterFelter(sted, null));
+          .on("click", () => oppdaterFelter(sted));
       }
     });
   } catch (err) {
-    console.error("Feil ved lasting av tettsteder:", err);
+    infobox.innerHTML = `<p>Feil ved lasting av tettsteder: ${err}</p>`;
   }
 }
 
-// --------------------------
-// HENT SPOTPRIS FRA HVAKOSTERSTROMMEN.NO
-// --------------------------
 async function hentSpotpris(sone) {
   const today = new Date();
   const year = today.getFullYear();
@@ -46,42 +35,33 @@ async function hentSpotpris(sone) {
   try {
     const res = await fetch(url);
     const data = await res.json();
-
     const values = data.map(p => p.NOK_per_kWh);
     const avg = (values.reduce((a, b) => a + b, 0) / values.length).toFixed(2);
-
     return avg;
   } catch (err) {
-    console.error("Feil ved henting av spotpris:", err);
+    console.error("Feil ved henting av strømpris:", err);
     return null;
   }
 }
 
-// --------------------------
-// OPPDATER INFOBOKS
-// --------------------------
-async function oppdaterFelter(entry, pris) {
-  if (!infobox) return;
-
+async function oppdaterFelter(entry) {
   if (!entry) {
     infobox.innerHTML = "<p>Ingen data å vise.</p>";
     return;
   }
 
-  // Bygg HTML med alle felter fra entry
   let html = `<h2>${entry.tettsted || "Ukjent tettsted"}</h2><ul>`;
   for (const key in entry) {
-    if (entry[key] !== undefined && entry[key] !== null) {
+    if (!["lat", "lon", "lat_decimal", "lon_decimal"].includes(key)) {
       html += `<li><strong>${key}:</strong> ${entry[key]}</li>`;
     }
   }
   html += "</ul>";
 
-  // Hent strømpris hvis sone finnes
   if (entry.sone) {
-    const spotpris = await hentSpotpris(entry.sone);
-    if (spotpris != null) {
-      html += `<p><strong>Strømpris (${entry.sone}):</strong> ${spotpris} kr/kWh (snitt i dag)</p>`;
+    const pris = await hentSpotpris(entry.sone);
+    if (pris != null) {
+      html += `<p><strong>Strømpris (${entry.sone}):</strong> ${pris} kr/kWh (snitt i dag)</p>`;
     } else {
       html += `<p>Ingen strømpris tilgjengelig for sone ${entry.sone}.</p>`;
     }
@@ -90,49 +70,40 @@ async function oppdaterFelter(entry, pris) {
   infobox.innerHTML = html;
 }
 
-// --------------------------
-// SØK OG VIS TETTSTED
-// --------------------------
 function normaliser(str) {
   return (str || "").trim().toLowerCase();
 }
 
-async function visTettsted(map) {
+async function visTettsted() {
   const inputEl = document.getElementById("sokInput");
-  if (!inputEl) return;
-
   const sok = normaliser(inputEl.value);
   if (!sok) {
     infobox.innerHTML = "<p>Skriv inn et stedsnavn først.</p>";
     return;
   }
 
-  let entry = steder.find(e => normaliser(e.tettsted) === sok);
-
+  const entry = steder.find(e => normaliser(e.tettsted) === sok);
   if (entry) {
-    await oppdaterFelter(entry, null);
-    if (typeof entry.lat_decimal === "number" && typeof entry.lon_decimal === "number") {
-      L.marker([entry.lat_decimal, entry.lon_decimal]).addTo(map);
-    }
-    return;
+    await oppdaterFelter(entry);
+    map.setView([entry.lat_decimal, entry.lon_decimal], 10);
+  } else {
+    infobox.innerHTML = `<p>Fant ikke "${sok}" i lokal liste.</p>`;
   }
-
-  infobox.innerHTML = `<p>Fant ikke "${sok}" i lokal liste.</p>`;
 }
 
-// --------------------------
-// KOBLE SØK TIL KNAPP
-// --------------------------
 document.addEventListener("DOMContentLoaded", async () => {
   await lastTettsteder();
 
   const sokInput = document.getElementById("sokInput");
   const visInfoBtn = document.getElementById("visInfoBtn");
 
-  if (sokInput && visInfoBtn) {
-    visInfoBtn.addEventListener("click", () => visTettsted(map));
-    sokInput.addEventListener("keyup", e => {
-      if (e.key === "Enter") visTettsted(map);
-    });
+  if (!sokInput || !visInfoBtn) {
+    console.error("Fant ikke søkefelt eller knapp i DOM.");
+    return;
   }
+
+  visInfoBtn.addEventListener("click", visTettsted);
+  sokInput.addEventListener("keyup", e => {
+    if (e.key === "Enter") visTettsted();
+  });
 });

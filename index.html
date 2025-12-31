@@ -1,64 +1,24 @@
 ﻿<!DOCTYPE html>
-<html lang="nb">
+<html lang="no">
 <head>
-  <meta charset="UTF-8">
-  <title>selsomt.no – tettsteder og strømpris</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-
-<!--2025 31.12 - 23:25:37-->
-  
+  <!--2025 31.12 - 23:56:05-->
+  <meta charset="UTF-8" />
+  <title>Strømpris og tettsteder</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <style>
-    html, body { margin: 0; height: 100%; }
-    #map { height: 100vh; width: 100%; }
+    #map { height: 400px; margin-bottom: 1rem; }
+    #infobox { border: 1px solid #ccc; padding: 1rem; background: #f9f9f9; max-width: 600px; }
+    #sokInput { width: 200px; margin-right: 0.5rem; }
   </style>
-</head> 
+</head>
 <body>
-<div class="main-layout">
-  <section id="tettstedInfo" class="info-card">
-
-  <div class="container">
-    <h1>Strømpris</h1>
-  </div>
-
-  <div class="search-box">
-    <input id="sokInput" type="text" placeholder="Søk tettsted...">
-    <button id="visInfoBtn">Vis info</button>
-  </div> 
-
-  <div id="status" class="status">–</div>
-
-  <link rel="stylesheet" href="style.css">
-
-
-<link rel="icon" href="favicon.ico">
-
-
-  <section id="tettstedInfo" class="info-card"> 
-    <h2 id="tettstedDisplay">–</h2>
-    <div class="info-row"><span>Tettsted:</span> <strong id="tettstedDisplay">–</strong></div>
-    <div class="pris-row"><span>Strømpris nå:</span> <strong id="prisDisplay">–</strong></div>
-    <div class="info-row"><span>Kommune nr:</span> <strong id="kNrDisplay">–</strong></div>
-    <div class="info-row"><span>Fylke:</span> <strong id="fylkeDisplay">–</strong></div>
-    <div class="info-row"><span>Prisområde:</span> <strong id="soneDisplay">–</strong></div>
-  </section>
-
-<div id="vaermelding" class="vaer-boks">
-  <!--Henter vær…-->
-</div>
-
-
-
-  </section>
-
+  <h1>Strømpris og tettsteder</h1>
+  <input id="sokInput" placeholder="Søk tettsted" />
+  <button id="visInfoBtn">Vis info</button>
   <div id="map"></div>
-   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-</div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.8.0/proj4.js"></script>
+  <div id="infobox">Klikk på et tettsted eller søk for å vise info.</div>
 
-<script type="module" src="nowcast.js"></script>
-<script type="module" src="main.js"></script>
-
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>
