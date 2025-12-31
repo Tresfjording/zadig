@@ -85,6 +85,30 @@ body {
   font-size: 12px;
 }
 
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+#container {
+  display: flex;
+  flex-direction: row;
+  height: 600px; /* total høyde */
+}
+
+#infobox {
+  flex: 1; /* 1/3 av bredden */
+  border: 1px solid #ccc;
+  padding: 1rem;
+  background: #f9f9f9;
+  overflow-y: auto; /* scroll hvis mye innhold */
+}
+
+#map {
+  flex: 2; /* 2/3 av bredden */
+  border: 2px solid #ccc;
+}
+
 h1, h2 {
   margin: 0;
   padding: 0;
