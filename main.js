@@ -1,219 +1,138 @@
+// --------------------------
+// INIT KART
+// --------------------------
+const map = L.map('map').setView([65.0, 12.0], 5);
 
-  // Last lokal tettstedsliste
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap'
+}).addTo(map);
+
+const infobox = document.getElementById("infobox");
+
+// --------------------------
+// LAST TETTSTEDER
+// --------------------------
+let steder = [];
+
+async function lastTettsteder() {
+  try {
+    const res = await fetch("tettsteder_3.json");
+    steder = await res.json();
+
+    // Lag markører for alle tettsteder
+    steder.forEach(sted => {
+      if (typeof sted.lat_decimal === "number" && typeof sted.lon_decimal === "number") {
+        L.marker([sted.lat_decimal, sted.lon_decimal])
+          .addTo(map)
+          .on("click", () => oppdaterFelter(sted, null));
+      }
+    });
+  } catch (err) {
+    console.error("Feil ved lasting av tettsteder:", err);
+  }
+}
+
+// --------------------------
+// HENT SPOTPRIS FRA HVAKOSTERSTROMMEN.NO
+// --------------------------
+async function hentSpotpris(sone) {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const day = String(today.getDate()).padStart(2, "0");
+
+  const url = `https://www.hvakosterstrommen.no/api/v1/prices/${year}/${month}-${day}_${sone}.json`;
+
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+
+    const values = data.map(p => p.NOK_per_kWh);
+    const avg = (values.reduce((a, b) => a + b, 0) / values.length).toFixed(2);
+
+    return avg;
+  } catch (err) {
+    console.error("Feil ved henting av spotpris:", err);
+    return null;
+  }
+}
+
+// --------------------------
+// OPPDATER INFOBOKS
+// --------------------------
+async function oppdaterFelter(entry, pris) {
+  if (!infobox) return;
+
+  if (!entry) {
+    infobox.innerHTML = "<p>Ingen data å vise.</p>";
+    return;
+  }
+
+  // Bygg HTML med alle felter fra entry
+  let html = `<h2>${entry.tettsted || "Ukjent tettsted"}</h2><ul>`;
+  for (const key in entry) {
+    if (entry[key] !== undefined && entry[key] !== null) {
+      html += `<li><strong>${key}:</strong> ${entry[key]}</li>`;
+    }
+  }
+  html += "</ul>";
+
+  // Hent strømpris hvis sone finnes
+  if (entry.sone) {
+    const spotpris = await hentSpotpris(entry.sone);
+    if (spotpris != null) {
+      html += `<p><strong>Strømpris (${entry.sone}):</strong> ${spotpris} kr/kWh (snitt i dag)</p>`;
+    } else {
+      html += `<p>Ingen strømpris tilgjengelig for sone ${entry.sone}.</p>`;
+    }
+  }
+
+  infobox.innerHTML = html;
+}
+
+// --------------------------
+// SØK OG VIS TETTSTED
+// --------------------------
+function normaliser(str) {
+  return (str || "").trim().toLowerCase();
+}
+
+async function visTettsted(map) {
+  const inputEl = document.getElementById("sokInput");
+  if (!inputEl) return;
+
+  const sok = normaliser(inputEl.value);
+  if (!sok) {
+    infobox.innerHTML = "<p>Skriv inn et stedsnavn først.</p>";
+    return;
+  }
+
+  let entry = steder.find(e => normaliser(e.tettsted) === sok);
+
+  if (entry) {
+    await oppdaterFelter(entry, null);
+    if (typeof entry.lat_decimal === "number" && typeof entry.lon_decimal === "number") {
+      L.marker([entry.lat_decimal, entry.lon_decimal]).addTo(map);
+    }
+    return;
+  }
+
+  infobox.innerHTML = `<p>Fant ikke "${sok}" i lokal liste.</p>`;
+}
+
+// --------------------------
+// KOBLE SØK TIL KNAPP
+// --------------------------
+document.addEventListener("DOMContentLoaded", async () => {
   await lastTettsteder();
 
   const sokInput = document.getElementById("sokInput");
   const visInfoBtn = document.getElementById("visInfoBtn");
 
-  if (!sokInput || !visInfoBtn) {
-    console.error("Fant ikke søkefelt eller knapp i DOM.");
-    return;
-  }
-
-  // Koble søk til visTettsted (ALT A)
-  visInfoBtn.addEventListener("click", () => visTettsted(map));
-  sokInput.addEventListener("keyup", e => {
-    if (e.key === "Enter") visTettsted(map);
-  });
-
-  settStatus("Skriv inn et tettsted for å starte.", true);
-  const tettstedEl = document.getElementById("tettstedDisplay");
-  const prisEl = document.getElementById("prisDisplay");
-
-  // --------------------------
-  // HOVEDFUNKSJON: VIS TETTSTED / STED
-  // --------------------------
-  async function visTettsted(map) {
-  const inputEl = document.getElementById("sokInput");
-  if (!inputEl) return;
-
-  const input = inputEl.value;
-  const sok = normaliser(input);
-
-  console.log("🔍 Start visTettsted");
-  console.log("Input fra bruker:", input);
-  console.log("Normalisert søkestreng:", sok);
-
-  if (!sok) {
-    settStatus("Skriv inn et stedsnavn først.", false);
-    return;
-  }
-
-  if (!Array.isArray(steder) || steder.length === 0) {
-    settStatus("Tettsteder er ikke lastet ennå.", false);
-    return;
-  }
-
-  // ----------------------------------------------------
-  // 1) Prøv lokal liste først
-  // ----------------------------------------------------
-  let entry = steder.find(e => normaliser(e.tettsted || "") === sok);
-
-  if (entry) {
-    console.log("Fant tettsted i lokal liste:", entry);
-
-    // Mangler sone → vis likevel, men uten pris
-    if (!entry.sone) {
-      settStatus(
-        `Fant ${entry.tettsted}, men mangler prisområde (sone).`,
-        false
-      );
-
-      oppdaterFelter(entry, null);
-
-      visPåKart(map, {
-        lat: entry.lat_decimal,
-        lon: entry.lon_decimal,
-        navn: entry.tettsted
-      });
-
-      if (
-        typeof entry.lat_decimal === "number" &&
-        typeof entry.lon_decimal === "number"
-      ) {
-        hentNowcast(entry.lat_decimal, entry.lon_decimal);
-      }
-
-      return;
-    }
-
-    // Har sone → hent pris
-    const pris = await hentSpotpris(entry.sone);
-    console.log("✅ Fant lokalt:", entry.tettsted, "Sone:", entry.sone);
-
-    if (pris == null) {
-      settStatus(
-        `Fant ${entry.tettsted} (lokalt), men ingen strømpris for sone ${entry.sone}.`,
-        false
-      );
-    } else {
-      settStatus(
-        `Fant ${entry.tettsted} (lokalt, sone ${entry.sone}).`,
-        true
-      );
-    }
-
-    oppdaterFelter(entry, pris);
-
-    visPåKart(map, {
-      lat: entry.lat_decimal,
-      lon: entry.lon_decimal,
-      navn: entry.tettsted,
-      fylke: entry.fylke,
-      k_slagord: entry.k_slagord
+  if (sokInput && visInfoBtn) {
+    visInfoBtn.addEventListener("click", () => visTettsted(map));
+    sokInput.addEventListener("keyup", e => {
+      if (e.key === "Enter") visTettsted(map);
     });
-
-    if (
-      typeof entry.lat_decimal === "number" &&
-      typeof entry.lon_decimal === "number"
-    ) {
-      hentNowcast(entry.lat_decimal, entry.lon_decimal);
-    }
-
-    return;
   }
-
-  // ----------------------------------------------------
-  // 2) Ikke funnet lokalt → prøv Kartverket (SSR)
-  // ----------------------------------------------------
-  console.log("Fant ikke i lokal liste, prøver Kartverket (SSR) for:", sok);
-
-  const ssr = await hentStedFraSSR(sok);
-  console.log("Resultat fra SSR:", ssr);
-
-  if (!ssr) {
-    settStatus(
-      `Fant verken lokalt tettsted eller stedsnavn i Kartverket for "${input}".`,
-      false
-    );
-    oppdaterFelter(null, null);
-    return;
-  }
-
-  console.log("Fant stedsnavn via Kartverket:", ssr);
-
-  // ----------------------------------------------------
-  // Finn sone via kommune-nummer
-  // ----------------------------------------------------
-  let sone = null;
-  if (ssr.k_nr && kommuneTilSone[ssr.k_nr]) {
-    sone = kommuneTilSone[ssr.k_nr];
-  }
-
-  let pris = null;
-  if (sone) {
-    pris = await hentSpotpris(sone);
-  }
-
-  // ----------------------------------------------------
-  // Koordinater + fallback
-  // ----------------------------------------------------
-  let lat = ssr.lat;
-  let lon = ssr.lon;
-  let fallbackBrukt = false;
-
-  if (typeof lat !== "number" || typeof lon !== "number") {
-    const fallback = finnFallbackKoordinaterForKommune(ssr.k_nr);
-    if (fallback) {
-      lat = fallback.lat_decimal;
-      lon = fallback.lon_decimal;
-      fallbackBrukt = true;
-      console.log("Bruker kommune-fallback for koordinater:", fallback);
-    }
-  }
-
-  console.log("Koordinater fra SSR:", lat, lon);
-  console.log("Fallback brukt:", fallbackBrukt);
-
-  // ----------------------------------------------------
-  // Status-tekst
-  // ----------------------------------------------------
-  if (!sone && !fallbackBrukt) {
-    settStatus(
-      `Fant "${ssr.navn}" via Kartverket (kommune ${ssr.kommune || "ukjent"}), men mangler prisområde og koordinater.`,
-      false
-    );
-  } else if (!sone && fallbackBrukt) {
-    settStatus(
-      `Fant "${ssr.navn}" via Kartverket – bruker kommunesenter ${ssr.kommune || ""}, men mangler prisområde.`,
-      false
-    );
-  } else if (sone && !fallbackBrukt) {
-    settStatus(
-      `Fant "${ssr.navn}" via Kartverket (kommune ${ssr.kommune || ""}, sone ${sone}).`,
-      true
-    );
-  } else if (sone && fallbackBrukt) {
-    settStatus(
-      `Fant "${ssr.navn}" via Kartverket – bruker kommunesenter ${ssr.kommune || ""} (sone ${sone}).`,
-      true
-    );
-  }
-
-  // ----------------------------------------------------
-  // Oppdater infoboks
-  // ----------------------------------------------------
-  const entryFraSSR = {
-    tettsted: ssr.navn,
-    k_nr: ssr.k_nr || "",
-    fylke: ssr.fylke || "",
-    sone: sone || "–"
-  };
-
-  oppdaterFelter(entryFraSSR, pris);
-
-  // ----------------------------------------------------
-  // Vis på kart + vær
-  // ----------------------------------------------------
-  if (typeof lat === "number" && typeof lon === "number") {
-    visPåKart(map, {
-      lat,
-      lon,
-      navn: ssr.navn,
-      fylke: ssr.fylke,
-      k_slagord: ""
-    });
-
-    hentNowcast(lat, lon);
-  }
-};
+});
