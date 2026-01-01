@@ -85,9 +85,9 @@ async function oppdaterFelter(entry, prisNaa) {
   html += "</ul>";
 
   if (entry.sone && prisNaa != null) {
-    html += `<p><strong>Pris nå (${entry.sone}):</strong> ${prisNaa} kr/kWh inkl. MVA</p>`;
+    html += `<p><strong>Pris nå (${entry.sone}):</strong> ${prisNaa} kr/kWh ekskl. MVA</p>`;
     if (landssnitt) {
-      html += `<p><strong>Landssnitt:</strong> ${landssnitt} kr/kWh innkl. MVA</p>`;
+      html += `<p><strong>Landssnitt:</strong> ${landssnitt} kr/kWh ekskl. MVA</p>`;
     }
   }
 
