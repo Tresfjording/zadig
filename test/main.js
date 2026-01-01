@@ -1,237 +1,101 @@
-// ---------------------------
-// INIT KART
-// ---------------------------
-const map = L.map('map').setView([65.0, 12.0], 5);
+// -----------------------------
+// Global variables
+// -----------------------------
+let map;
+let markers = [];
+let cabinData = [];
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '© OpenStreetMap'
-}).addTo(map);
+// -----------------------------
+// Initialize map
+// -----------------------------
+function initMap() {
+    map = L.map('map').setView([62.566, 7.5], 9);
 
-const infobox = document.getElementById("infobox");
-const sokInput = document.getElementById("sokInput");
-const visInfoBtn = document.getElementById("visInfoBtn");
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+}
 
-let steder = [];
-let aktivMarker = null;
-let landssnitt = null;
-let aktivIndex = -1; // tastaturkontroll
-
-// ---------------------------
-// HENT LANDSSNITT
-// ---------------------------
-async function hentLandssnitt() {
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, "0");
-  const day = String(today.getDate()).padStart(2, "0");
-
-  const soner = ["NO1","NO2","NO3","NO4","NO5"];
-  let alleVerdier = [];
-
-  for (const sone of soner) {
-    const url = `https://www.hvakosterstrommen.no/api/v1/prices/${year}/${month}-${day}_${sone}.json`;
+// -----------------------------
+// Load CSV
+// -----------------------------
+async function loadCSV() {
     try {
-      const res = await fetch(url);
-      const data = await res.json();
-      alleVerdier.push(...data.map(p => p.NOK_per_kWh));
+        const response = await fetch('data/cabins.csv');
+        const text = await response.text();
+
+        const rows = text.split('\n').map(r => r.trim()).filter(r => r.length > 0);
+        const headers = rows[0].split(',');
+
+        cabinData = rows.slice(1).map(row => {
+            const cols = row.split(',');
+            let obj = {};
+            headers.forEach((h, i) => obj[h.trim()] = cols[i]?.trim());
+            return obj;
+        });
+
+        placeMarkers();
     } catch (err) {
-      console.error("Feil ved henting av sone", sone, err);
+        console.error("CSV-feil:", err);
     }
-  }
-
-  if (alleVerdier.length > 0) {
-    landssnitt = (alleVerdier.reduce((a,b)=>a+b,0) / alleVerdier.length).toFixed(2);
-    console.log("Landssnitt:", landssnitt);
-  }
 }
 
-// ---------------------------
-// HENT PRIS FOR NÅVÆRENDE TIME
-// ---------------------------
-async function hentPrisNaa(sone) {
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, "0");
-  const day = String(now.getDate()).padStart(2, "0");
-  const hour = now.getHours();
+// -----------------------------
+// Place markers
+// -----------------------------
+function placeMarkers() {
+    markers.forEach(m => map.removeLayer(m));
+    markers = [];
 
-  const url = `https://www.hvakosterstrommen.no/api/v1/prices/${year}/${month}-${day}_${sone}.json`;
+    cabinData.forEach(cabin => {
+        const lat = parseFloat(cabin.lat);
+        const lon = parseFloat(cabin.lon);
 
-  try {
-    const res = await fetch(url);
-    const data = await res.json();
-    const entry = data.find(p => new Date(p.time_start).getHours() === hour);
-    return entry ? entry.NOK_per_kWh.toFixed(2) : null;
-  } catch (err) {
-    console.error("Feil ved henting av pris nå:", err);
-    return null;
-  }
-}
+        if (isNaN(lat) || isNaN(lon)) return;
 
-// ---------------------------
-// OPPDATER INFOBOKS
-// ---------------------------
-async function oppdaterFelter(entry, prisNaa) {
-  if (!entry) {
-    infobox.innerHTML = "<p>Ingen data å vise.</p>";
-    return;
-  }
+        const marker = L.marker([lat, lon]).addTo(map);
 
-  let html = `<h2>${entry.tettsted || "Ukjent tettsted"}</h2><ul>`;
-  for (const key in entry) {
-    if (!["lat", "lon", "lat_decimal", "lon_decimal"].includes(key)) {
-      html += `<li><strong>${key}:</strong> ${entry[key]}</li>`;
-    }
-  }
-  html += "</ul>";
+        marker.bindPopup(`
+            <strong>${cabin.name || "Ukjent hytte"}</strong><br>
+            Eier: ${cabin.owner || "Ukjent"}<br>
+            Kommune: ${cabin.kommune || "?"}
+        `);
 
-  if (entry.sone && prisNaa != null) {
-    html += `<p><strong>Pris nå (${entry.sone}):</strong> ${prisNaa} kr/kWh</p>`;
-    if (landssnitt) {
-      html += `<p><strong>Landssnitt:</strong> ${landssnitt} kr/kWh</p>`;
-    }
-  }
-
-  infobox.innerHTML = html;
-}
-
-// ---------------------------
-// VIS TETTSTED
-// ---------------------------
-async function visTettsted(entry) {
-  if (aktivMarker) {
-    map.removeLayer(aktivMarker);
-    aktivMarker = null;
-  }
-
-  const prisNaa = await hentPrisNaa(entry.sone);
-  let farge = "blue";
-
-  if (landssnitt && prisNaa) {
-    if (prisNaa < landssnitt) farge = "green";
-    else if (prisNaa > landssnitt) farge = "red";
-    else farge = "orange";
-  }
-
-  aktivMarker = L.circleMarker([entry.lat_decimal, entry.lon_decimal], {
-    radius: 10,
-    color: farge,
-    fillColor: farge,
-    fillOpacity: 0.8
-  }).addTo(map)
-    .bindTooltip(
-      `${entry.tettsted} – ${prisNaa ? prisNaa + " kr/kWh" : "pris ikke tilgjengelig"}`,
-      { permanent: true, direction: "top" }
-    )
-    .openTooltip();
-
-  await oppdaterFelter(entry, prisNaa);
-  map.setView([entry.lat_decimal, entry.lon_decimal], 10);
-}
-
-// ---------------------------
-// SØK
-// ---------------------------
-function normaliser(str) {
-  return (str || "").trim().toLowerCase();
-}
-
-async function søkTettsted() {
-  const sok = normaliser(sokInput.value);
-  const entry = steder.find(e => normaliser(e.tettsted) === sok);
-  if (entry) {
-    visTettsted(entry);
-  } else {
-    infobox.innerHTML = `<p>Fant ikke "${sok}" i lokal liste.</p>`;
-  }
-}
-
-// ---------------------------
-// INIT
-// ---------------------------
-document.addEventListener("DOMContentLoaded", async () => {
-  await hentLandssnitt();
-  await lastTettsteder();
-  console.log("Antall steder lastet:", steder.length);
-
-  if (sokInput && visInfoBtn) {
-    visInfoBtn.addEventListener("click", søkTettsted);
-    sokInput.addEventListener("keyup", e => {
-      if (e.key === "Enter") søkTettsted();
+        markers.push(marker);
     });
-  }
-});
-
-// ---------------------------
-// LAST TETTSTEDER
-// ---------------------------
-async function lastTettsteder() {
-  try {
-    const res = await fetch("tettsteder_3.json");
-    steder = await res.json();
-    // filtrer bort entries uten koordinater
-    steder = steder.filter(e => e.lat_decimal && e.lon_decimal);
-  } catch (err) {
-    infobox.innerHTML = `<p>Feil ved lasting av tettsteder: ${err}</p>`;
-  }
 }
 
-// ---------------------------
-// AUTOCOMPLETE
-// ---------------------------
-const forslagBox = document.createElement("div");
-forslagBox.id = "forslagBox";
-document.body.appendChild(forslagBox);
+// -----------------------------
+// Search
+// -----------------------------
+function setupSearch() {
+    const input = document.getElementById('search');
 
-sokInput.addEventListener("input", () => {
-  const query = sokInput.value.toLowerCase();
-  forslagBox.innerHTML = "";
-  aktivIndex = -1;
+    input.addEventListener('input', () => {
+        const q = input.value.toLowerCase();
 
-  if (query.length > 1) {
-    const treff = steder.filter(e =>
-      e.tettsted.toLowerCase().startsWith(query) ||
-      (e.fylke && e.fylke.toLowerCase().startsWith(query))
-    ).slice(0, 10);
+        markers.forEach((marker, i) => {
+            const cabin = cabinData[i];
+            const match =
+                cabin.name?.toLowerCase().includes(q) ||
+                cabin.owner?.toLowerCase().includes(q) ||
+                cabin.kommune?.toLowerCase().includes(q);
 
-    treff.forEach(e => {
-      const div = document.createElement("div");
-      div.textContent = e.tettsted + (e.fylke ? ` (${e.fylke})` : "");
-      div.className = "forslag";
-      div.onclick = () => {
-        sokInput.value = e.tettsted;
-        forslagBox.innerHTML = "";
-        visTettsted(e);
-      };
-      forslagBox.appendChild(div);
+            if (match) {
+                marker.addTo(map);
+            } else {
+                map.removeLayer(marker);
+            }
+        });
     });
+}
 
-    const rect = sokInput.getBoundingClientRect();
-    forslagBox.style.top = rect.bottom + window.scrollY + "px";
-    forslagBox.style.left = rect.left + window.scrollX + "px";
-    forslagBox.style.width = rect.width + "px";
-  }
+// -----------------------------
+// Init everything
+// -----------------------------
+document.addEventListener('DOMContentLoaded', () => {
+    initMap();
+    loadCSV();
+    setupSearch();
 });
-
-// ---------------------------
-// TASTATURKONTROLL
-// ---------------------------
-sokInput.addEventListener("keydown", (e) => {
-  const forslag = forslagBox.querySelectorAll(".forslag");
-  if (forslag.length === 0) return;
-
-  if (e.key === "ArrowDown") {
-    aktivIndex = (aktivIndex + 1) % forslag.length;
-    oppdaterAktiv(forslag);
-    e.preventDefault();
-  } else if (e.key === "ArrowUp") {
-    aktivIndex = (aktivIndex - 1 + forslag.length) % forslag.length;
-    oppdaterAktiv(forslag);
-    e.preventDefault();
-  } else if (e.key === "Enter" && aktivIndex >= 0) {
-    forslag[aktivIndex].click();
-    e.preventDefault();
-  } else if (e.key === "Escape") {
-    forslagBox.innerHTML = "";
-    aktivIndex = -1;
-  }};
