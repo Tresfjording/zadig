@@ -1,35 +1,58 @@
-/* 2026 01.01  */html, body {
+html, body {
   height: 100%;
   margin: 0;
-  font-family: sans-serif;
+  font-family: Arial, sans-serif;
 }
+
+/* Kartet */
 #map {
   height: 80vh;
   width: 100%;
+  border-top: 1px solid #ccc;
 }
+
+/* Infoboks */
 #infobox {
   padding: 10px;
   background: #f9f9f9;
   border-bottom: 1px solid #ccc;
+  min-height: 60px;
 }
+
+/* Kontroller (søkefelt + knapp) */
+#controls {
+  padding: 10px;
+  background: #eee;
+  border-bottom: 1px solid #ccc;
+}
+
 #sokInput {
-  margin: 10px;
   padding: 5px;
   width: 200px;
+  margin-right: 5px;
 }
+
 #visInfoBtn {
   padding: 5px 10px;
+  cursor: pointer;
 }
+
+/* Autocomplete-boksen */
 #forslagBox {
   position: absolute;
   background: white;
   border: 1px solid #ccc;
   z-index: 1000;
+  max-height: 200px;
+  overflow-y: auto;
 }
+
 .forslag {
   padding: 5px;
   cursor: pointer;
 }
-.forslag:hover, .forslag.aktiv {
+
+.forslag:hover,
+.forslag.aktiv {
   background: #eee;
 }

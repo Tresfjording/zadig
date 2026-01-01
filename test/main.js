@@ -1,15 +1,231 @@
-// 2026 01.01 - 20:27:13
+// ---------------------------
+// INIT KART
+// ---------------------------
+const map = L.map('map').setView([65.0, 12.0], 5);
 
-function main() {
-    // Your code here
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap'
+}).addTo(map);
+
+const infobox = document.getElementById("infobox");
+const sokInput = document.getElementById("sokInput");
+const visInfoBtn = document.getElementById("visInfoBtn");
+
+let steder = [];
+let aktivMarker = null;
+let landssnitt = null;
+let aktivIndex = -1; // tastaturkontroll
+
+// ---------------------------
+// HENT LANDSSNITT
+// ---------------------------
+async function hentLandssnitt() {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const day = String(today.getDate()).padStart(2, "0");
+
+  const soner = ["NO1","NO2","NO3","NO4","NO5"];
+  let alleVerdier = [];
+
+  for (const sone of soner) {
+    const url = `https://www.hvakosterstrommen.no/api/v1/prices/${year}/${month}-${day}_${sone}.json`;
+    try {
+      const res = await fetch(url);
+      const data = await res.json();
+      alleVerdier.push(...data.map(p => p.NOK_per_kWh));
+    } catch (err) {
+      console.error("Feil ved henting av sone", sone, err);
+    }
+  }
+
+  if (alleVerdier.length > 0) {
+    landssnitt = (alleVerdier.reduce((a,b)=>a+b,0) / alleVerdier.length).toFixed(2);
+    console.log("Landssnitt:", landssnitt);
+  }
 }
 
-module.exports = { main };
-I need more context to help you. You've asked about `style.css`, but the file shown is a JavaScript file (`main.js`).
+// ---------------------------
+// HENT PRIS FOR NÅVÆRENDE TIME
+// ---------------------------
+async function hentPrisNaa(sone) {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  const hour = now.getHours();
 
-Could you clarify what you'd like to add? Are you looking to:
-- Import or reference a CSS file in your JavaScript?
-- Create a separate style.css file?
-- Add styling-related code to main.js?
+  const url = `https://www.hvakosterstrommen.no/api/v1/prices/${year}/${month}-${day}_${sone}.json`;
 
-Please provide more details about what you're trying to accomplish.
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    const entry = data.find(p => new Date(p.time_start).getHours() === hour);
+    return entry ? entry.NOK_per_kWh.toFixed(2) : null;
+  } catch (err) {
+    console.error("Feil ved henting av pris nå:", err);
+    return null;
+  }
+}
+
+// ---------------------------
+// OPPDATER INFOBOKS
+// ---------------------------
+async function oppdaterFelter(entry, prisNaa) {
+  if (!entry) {
+    infobox.innerHTML = "<p>Ingen data å vise.</p>";
+    return;
+  }
+
+  let html = `<h2>${entry.tettsted || "Ukjent tettsted"}</h2><ul>`;
+  for (const key in entry) {
+    if (!["lat", "lon", "lat_decimal", "lon_decimal"].includes(key)) {
+      html += `<li><strong>${key}:</strong> ${entry[key]}</li>`;
+    }
+  }
+  html += "</ul>";
+
+  if (entry.sone && prisNaa != null) {
+    html += `<p><strong>Pris nå (${entry.sone}):</strong> ${prisNaa} kr/kWh</p>`;
+    if (landssnitt) {
+      html += `<p><strong>Landssnitt:</strong> ${landssnitt} kr/kWh</p>`;
+    }
+  }
+
+  infobox.innerHTML = html;
+}
+
+// ---------------------------
+// VIS TETTSTED
+// ---------------------------
+async function visTettsted(entry) {
+  if (aktivMarker) {
+    map.removeLayer(aktivMarker);
+    aktivMarker = null;
+  }
+
+  const prisNaa = await hentPrisNaa(entry.sone);
+  let farge = "blue";
+
+  if (landssnitt && prisNaa) {
+    if (prisNaa < landssnitt) farge = "green";
+    else if (prisNaa > landssnitt) farge = "red";
+    else farge = "orange";
+  }
+
+  aktivMarker = L.circleMarker([entry.lat_decimal, entry.lon_decimal], {
+    radius: 10,
+    color: farge,
+    fillColor: farge,
+    fillOpacity: 0.8
+  }).addTo(map)
+    .bindTooltip(
+      `${entry.tettsted} – ${prisNaa ? prisNaa + " kr/kWh" : "pris ikke tilgjengelig"}`,
+      { permanent: true, direction: "top" }
+    )
+    .openTooltip();
+
+  await oppdaterFelter(entry, prisNaa);
+  map.setView([entry.lat_decimal, entry.lon_decimal], 10);
+}
+
+// ---------------------------
+// SØK
+// ---------------------------
+function normaliser(str) {
+  return (str || "").trim().toLowerCase();
+}
+
+async function søkTettsted() {
+  const sok = normaliser(sokInput.value);
+  const entry = steder.find(e => normaliser(e.tettsted) === sok);
+  if (entry) {
+    visTettsted(entry);
+  } else {
+    infobox.innerHTML = `<p>Fant ikke "${sok}" i lokal liste.</p>`;
+  }
+}
+
+// ---------------------------
+// INIT
+// ---------------------------
+document.addEventListener("DOMContentLoaded", async () => {
+  await hentLandssnitt();
+  await lastTettsteder();
+  console.log("Antall steder lastet:", steder.length);
+
+  if (sokInput && visInfoBtn) {
+    visInfoBtn.addEventListener("click", søkTettsted);
+    sokInput.addEventListener("keyup", e => {
+      if (e.key === "Enter") søkTettsted();
+    });
+  }
+});
+
+// ---------------------------
+// LAST TETTSTEDER
+// ---------------------------
+async function lastTettsteder() {
+  try {
+    const res = await fetch("tettsteder_3.json");
+    steder = await res.json();
+    // filtrer bort entries uten koordinater
+    steder = steder.filter(e => e.lat_decimal && e.lon_decimal);
+  } catch (err) {
+    infobox.innerHTML = `<p>Feil ved lasting av tettsteder: ${err}</p>`;
+  }
+}
+
+// ---------------------------
+// AUTOCOMPLETE
+// ---------------------------
+const forslagBox = document.createElement("div");
+forslagBox.id = "forslagBox";
+document.body.appendChild(forslagBox);
+
+sokInput.addEventListener("input", () => {
+  const query = sokInput.value.toLowerCase();
+  forslagBox.innerHTML = "";
+  aktivIndex = -1;
+
+  if (query.length > 1) {
+    const treff = steder.filter(e =>
+      e.tettsted.toLowerCase().startsWith(query) ||
+      (e.fylke && e.fylke.toLowerCase().startsWith(query))
+    ).slice(0, 10);
+
+    treff.forEach(e => {
+      const div = document.createElement("div");
+      div.textContent = e.tettsted + (e.fylke ? ` (${e.fylke})` : "");
+      div.className = "forslag";
+      div.onclick = () => {
+        sokInput.value = e.tettsted;
+        forslagBox.innerHTML = "";
+        visTettsted(e);
+      };
+      forslagBox.appendChild(div);
+    });
+
+    const rect = sokInput.getBoundingClientRect();
+    forslagBox.style.top = rect.bottom + window.scrollY + "px";
+    forslagBox.style.left = rect.left + window.scrollX + "px";
+    forslagBox.style.width = rect.width + "px";
+  }
+});
+
+// ---------------------------
+// TASTATURKONTROLL
+// ---------------------------
+sokInput.addEventListener("keydown", (e) => {
+  const forslag = forslagBox.querySelectorAll(".forslag");
+  if (forslag.length === 0) return;
+
+  if (e.key === "ArrowDown") {
+    aktivIndex = (aktivIndex + 1) % forslag.length;
+    oppdaterAktiv(forslag);
+    e.preventDefault();
+  } else if (e.key === "ArrowUp") {
+    aktivIndex = (aktivIndex - 1 + forslag.length) % forslag.length;
+    oppdaterAktiv(forslag);
+    e.preventDefault();
+  } else if (e.key === "Enter" && aktivIndex >=
