@@ -16,35 +16,28 @@
 
 <script src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"></script>
 <script>
-  Papa.parse("https://tresfjording.no/hytter.csv", {
-    download: true,
-    header: false,
-    complete: function(results) {
-      const features = results.data.map(row => ({
-        type: "Feature",
-        properties: {
-          id: row[0],
-          navn: row[1],
-          forening: row[2],
-          type: row[3],
-          url: row[4]
-        },
-        geometry: {
-          type: "Point",
-          coordinates: [parseFloat(row[6]), parseFloat(row[5])]
-        }
-      }));
+Papa.parse("https://tresfjording.no/dnt_hytter.csv", {
+  download: true,
+  delimiter: ";",     // ← viktig!
+  header: false,      // sett til true hvis du har kolonnenavn
+  complete: function(results) {
+    console.log("CSV-data:", results.data); // ← se i konsollen
 
-      const geojson = { type: "FeatureCollection", features };
+    results.data.forEach(row => {
+      const navn = row[1];
+      const lat = parseFloat(row[5]);
+      const lon = parseFloat(row[6]);
 
-      L.geoJSON(geojson, {
-        onEachFeature: function (feature, layer) {
-          const p = feature.properties;
-          layer.bindPopup(`<b>${p.navn}</b><br>${p.forening}<br>${p.type}<br><a href="${p.url}" target="_blank">Mer info</a>`);
-        }
-      }).addTo(map);
-    }
-  });
+      if (!isNaN(lat) && !isNaN(lon)) {
+        L.marker([lat, lon])
+          .bindPopup(`<b>${navn}</b>`)
+          .addTo(map);
+      } else {
+        console.warn("Ugyldige koordinater:", row);
+      }
+    });
+  }
+});
 </script>
 
 
