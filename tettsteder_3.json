@@ -2092,7 +2092,7 @@
   },
   {
     "k_nr":"3118",
-    "tettsted":"Indre",
+    "tettsted":"Indre Østfold",
     "fylke":"Østfold",
     "sone":"NO1",
     "antall":"47 320",
@@ -2109,7 +2109,7 @@
   },
   {
     "k_nr":"5054",
-    "tettsted":"Indre",
+    "tettsted":"Indre Fosen",
     "fylke":"Trøndelag",
     "sone":"NO4",
     "antall":"10 056",
@@ -3027,7 +3027,7 @@
   },
   {
     "k_nr":"5027",
-    "tettsted":"Midtre",
+    "tettsted":"Midtre Gauldal",
     "fylke":"Trøndelag",
     "sone":"NO4",
     "antall":"6 142",
@@ -3452,7 +3452,7 @@
   },
   {
     "k_nr":"3207",
-    "tettsted":"Nordre",
+    "tettsted":"Nordre Follo",
     "fylke":"Akershus",
     "sone":"NO1",
     "antall":"64 178",
@@ -3469,7 +3469,7 @@
   },
   {
     "k_nr":"3448",
-    "tettsted":"Nordre",
+    "tettsted":"Nordre Follo",
     "fylke":"Innlandet",
     "sone":"NO1",
     "antall":"6 495",
@@ -3503,7 +3503,7 @@
   },
   {
     "k_nr":"3338",
-    "tettsted":"Nore",
+    "tettsted":"Norefjell",
     "fylke":"Buskerud",
     "sone":"NO1",
     "antall":"2 479",
@@ -4812,7 +4812,7 @@
   },
   {
     "k_nr":"3447",
-    "tettsted":"Søndre",
+    "tettsted":"Søndre Land",
     "fylke":"Innlandet",
     "sone":"NO1",
     "antall":"5 638",
@@ -5526,7 +5526,7 @@
   },
   {
     "k_nr":"3443",
-    "tettsted":"Vestre",
+    "tettsted":"Vestre Toten",
     "fylke":"Innlandet",
     "sone":"NO1",
     "antall":"13 675",
@@ -5543,7 +5543,7 @@
   },
   {
     "k_nr":"3452",
-    "tettsted":"Vestre",
+    "tettsted":"Vestre Slidre",
     "fylke":"Innlandet",
     "sone":"NO1",
     "antall":"2 119",
@@ -5815,7 +5815,7 @@
   },
   {
     "k_nr":"3442",
-    "tettsted":"Østre",
+    "tettsted":"Østre Toten",
     "fylke":"Innlandet",
     "sone":"NO1",
     "antall":"14 842",
@@ -5832,7 +5832,7 @@
   },
   {
     "k_nr":"3314",
-    "tettsted":"Øvre",
+    "tettsted":"Øvre Eiker",
     "fylke":"Buskerud",
     "sone":"NO1",
     "antall":"20 844",
@@ -5883,7 +5883,7 @@
   },
   {
     "k_nr":"3453",
-    "tettsted":"Øystre",
+    "tettsted":"Øystre Slidre",
     "fylke":"Innlandet",
     "sone":"NO1",
     "antall":"3 306",
