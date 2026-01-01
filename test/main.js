@@ -56,27 +56,32 @@ function placeMarkers() {
 
         const marker = L.marker([lat, lon]).addTo(map);
 
-        marker.bindPopup(`
-            <strong>${cabin.name || "Ukjent hytte"}</strong><br>
-            Eier: ${cabin.owner || "Ukjent"}<br>
-            Kommune: ${cabin.kommune || "?"}
-        `);
+// legg cabin-objektet direkte på markøren
+marker.cabin = cabin;
 
-        markers.push(marker);
+marker.bindPopup(`
+    <strong>${cabin.name || "Ukjent hytte"}</strong><br>
+    Eier: ${cabin.owner || "Ukjent"}<br>
+    Kommune: ${cabin.kommune || "?"}
+`);
+
+markers.push(marker);
+
     });
 }
 
 // -----------------------------
 // Search
 // -----------------------------
-function setupSearch() {
+ffunction setupSearch() {
     const input = document.getElementById('search');
 
     input.addEventListener('input', () => {
         const q = input.value.toLowerCase();
 
-        markers.forEach((marker, i) => {
-            const cabin = cabinData[i];
+        markers.forEach(marker => {
+            const cabin = marker.cabin;
+
             const match =
                 cabin.name?.toLowerCase().includes(q) ||
                 cabin.owner?.toLowerCase().includes(q) ||
