@@ -1,8 +1,6 @@
 //---------------------------
 // GLOBALE VARIABLER
 //---------------------------
-const sokInput = document.getElementById("sokInput");
-const visInfoBtn = document.getElementById("visInfoBtn");
 
 // --------------------------
 // INIT KART
