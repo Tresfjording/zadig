@@ -175,25 +175,27 @@ async function lastTettsteder() {
   }
 }
 
-// ... resten av main.js
-
-// Autocomplete forslag
-const sokInput = document.getElementById("sokInput");
+// --------------------------
+// AUTOCOMPLETE MED TASTATUR
+// --------------------------
 const forslagBox = document.createElement("div");
 forslagBox.id = "forslagBox";
 document.body.appendChild(forslagBox);
 
+let aktivIndex = -1;
+
 sokInput.addEventListener("input", () => {
   const query = sokInput.value.toLowerCase();
   forslagBox.innerHTML = "";
+  aktivIndex = -1;
 
   if (query.length > 1) {
     const treff = steder.filter(e =>
       e.tettsted.toLowerCase().startsWith(query) ||
       (e.fylke && e.fylke.toLowerCase().startsWith(query))
-    ).slice(0, 10); // maks 10 forslag
+    ).slice(0, 10);
 
-    treff.forEach(e => {
+    treff.forEach((e, idx) => {
       const div = document.createElement("div");
       div.textContent = e.tettsted + (e.fylke ? ` (${e.fylke})` : "");
       div.className = "forslag";
@@ -205,10 +207,35 @@ sokInput.addEventListener("input", () => {
       forslagBox.appendChild(div);
     });
 
-    // plasser boksen under input
     const rect = sokInput.getBoundingClientRect();
     forslagBox.style.top = rect.bottom + window.scrollY + "px";
     forslagBox.style.left = rect.left + window.scrollX + "px";
     forslagBox.style.width = rect.width + "px";
   }
 });
+
+// Tastaturkontroll
+sokInput.addEventListener("keydown", (e) => {
+  const forslag = forslagBox.querySelectorAll(".forslag");
+  if (forslag.length === 0) return;
+
+  if (e.key === "ArrowDown") {
+    aktivIndex = (aktivIndex + 1) % forslag.length;
+    oppdaterAktiv(forslag);
+    e.preventDefault();
+  } else if (e.key === "ArrowUp") {
+    aktivIndex = (aktivIndex - 1 + forslag.length) % forslag.length;
+    oppdaterAktiv(forslag);
+    e.preventDefault();
+  } else if (e.key === "Enter" && aktivIndex >= 0) {
+    forslag[aktivIndex].click();
+    e.preventDefault();
+  }
+});
+
+function oppdaterAktiv(forslag) {
+  forslag.forEach(f => f.classList.remove("aktiv"));
+  if (aktivIndex >= 0) {
+    forslag[aktivIndex].classList.add("aktiv");
+  }
+}
