@@ -228,4 +228,10 @@ sokInput.addEventListener("keydown", (e) => {
     aktivIndex = (aktivIndex - 1 + forslag.length) % forslag.length;
     oppdaterAktiv(forslag);
     e.preventDefault();
-  } else if (e.key === "Enter" && aktivIndex >=
+  } else if (e.key === "Enter" && aktivIndex >= 0) {
+    forslag[aktivIndex].click();
+    e.preventDefault();
+  } else if (e.key === "Escape") {
+    forslagBox.innerHTML = "";
+    aktivIndex = -1;
+  }};
