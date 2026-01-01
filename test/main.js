@@ -74,33 +74,41 @@ function placeMarkers() {
 // Search
 // -----------------------------
 function setupSearch() {
-    const input = document.getElementById('search');
+    const hytteInput = document.getElementById('search-hytte');
+    const stedInput = document.getElementById('search-sted');
 
-    if (!input) {
-        console.error("Fant ikke søkefeltet (#search)");
+    if (!hytteInput || !stedInput) {
+        console.error("Fant ikke én eller begge søkefeltene");
         return;
     }
 
-    input.addEventListener('input', () => {
-        const q = input.value.toLowerCase();
+    function applySearch() {
+        const qHytte = hytteInput.value.toLowerCase();
+        const qSted = stedInput.value.toLowerCase();
 
         markers.forEach(marker => {
             const h = marker.hytte;
 
-            const match =
-                h.name?.toLowerCase().includes(q) ||
-                h.operator?.toLowerCase().includes(q) ||
-                h["dnt:classification"]?.toLowerCase().includes(q);
+            const matchHytte =
+                h.name?.toLowerCase().includes(qHytte) ||
+                h.operator?.toLowerCase().includes(qHytte) ||
+                h["dnt:classification"]?.toLowerCase().includes(qHytte);
 
-            if (match) {
+            const matchSted =
+                h.kommune?.toLowerCase().includes(qSted) ||
+                h.område?.toLowerCase().includes(qSted);
+
+            if (matchHytte && matchSted) {
                 marker.addTo(map);
             } else {
                 map.removeLayer(marker);
             }
         });
-    });
-}
+    }
 
+    hytteInput.addEventListener('input', applySearch);
+    stedInput.addEventListener('input', applySearch);
+}
 // -----------------------------
 // Init everything
 // -----------------------------
