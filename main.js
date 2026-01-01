@@ -1,3 +1,7 @@
+// Globbale variabler
+// Øverst i main.js
+const sokInput = document.getElementById("sokInput");
+
 // --------------------------
 // INIT KART
 // --------------------------
