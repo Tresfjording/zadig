@@ -1,8 +1,7 @@
-/* Generell stil */
 body {
-  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  font-family: Arial, sans-serif;
 }
 
 /* Kartet fyller hele skjermen */
@@ -11,16 +10,15 @@ body {
   width: 100vw;
 }
 
-/* Flytende infoboks */
+/* Infoboksen flytende over kartet */
 #infobox {
   position: absolute;
   top: 20px;
   right: 20px;
-  width: 30%;
-  max-width: 400px;
+  width: 300px;
   max-height: 80vh;
   overflow-y: auto;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255,255,255,0.95);
   border: 1px solid #ccc;
   padding: 1rem;
   z-index: 1000;
@@ -32,7 +30,7 @@ body {
   transition: box-shadow 0.3s ease;
 }
 
-/* Hover-effekt: sterkere skygge */
+/* Hover-effekt */
 #infobox:hover {
   box-shadow: 0 12px 28px rgba(0,0,0,0.35);
 }
@@ -68,9 +66,7 @@ body {
   border-radius: 4px;
 }
 
-/* --------------------------
-   RESPONSIV LAYOUT
-   -------------------------- */
+/* Responsiv layout for mobil */
 @media (max-width: 768px) {
   #map {
     height: 70vh;
@@ -78,11 +74,11 @@ body {
   }
 
   #infobox {
-    position: static;   /* ikke flytende */
-    width: 100%;        /* full bredde */
+    position: static;
+    width: 100%;
     max-width: none;
     max-height: none;
-    box-shadow: none;   /* fjern skygge på mobil */
+    box-shadow: none;
     border-radius: 0;
     border-top: 2px solid #ccc;
   }
