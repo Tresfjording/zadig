@@ -18,18 +18,18 @@ function initMap() {
 }
 
 // -----------------------------
-// Load CSV
+// Load CSV (semicolon-separated)
 // -----------------------------
 async function loadCSV() {
     try {
-        const response = await fetch('data/cabins.csv');
+        const response = await fetch('data/dnt_hytter.csv');
         const text = await response.text();
 
         const rows = text.split('\n').map(r => r.trim()).filter(r => r.length > 0);
-        const headers = rows[0].split(',');
+        const headers = rows[0].split(';');
 
         cabinData = rows.slice(1).map(row => {
-            const cols = row.split(',');
+            const cols = row.split(';');
             let obj = {};
             headers.forEach((h, i) => obj[h.trim()] = cols[i]?.trim());
             return obj;
@@ -48,28 +48,27 @@ function placeMarkers() {
     markers.forEach(m => map.removeLayer(m));
     markers = [];
 
-    cabinData.forEach(cabin => {
-        const lat = parseFloat(cabin.lat);
-        const lon = parseFloat(cabin.lon);
+    cabinData.forEach(hytte => {
+        const lat = parseFloat(hytte['@lat']);
+        const lon = parseFloat(hytte['@lon']);
 
         if (isNaN(lat) || isNaN(lon)) return;
 
         const marker = L.marker([lat, lon]).addTo(map);
 
-        // legg cabin-objektet direkte på markøren
-        marker.cabin = cabin;
+        // koble data til markøren
+        marker.hytte = hytte;
 
         marker.bindPopup(`
-            <strong>${cabin.name || "Ukjent hytte"}</strong><br>
-            Eier: ${cabin.owner || "Ukjent"}<br>
-            Kommune: ${cabin.kommune || "?"}
+            <strong>${hytte.name || "Ukjent hytte"}</strong><br>
+            Operatør: ${hytte.operator || "Ukjent"}<br>
+            Klassifisering: ${hytte["dnt:classification"] || "?"}<br>
+            <a href="${hytte.website}" target="_blank">Nettside</a>
         `);
 
         markers.push(marker);
     });
 }
-
-
 
 // -----------------------------
 // Search
@@ -77,16 +76,21 @@ function placeMarkers() {
 function setupSearch() {
     const input = document.getElementById('search');
 
+    if (!input) {
+        console.error("Fant ikke søkefeltet (#search)");
+        return;
+    }
+
     input.addEventListener('input', () => {
         const q = input.value.toLowerCase();
 
         markers.forEach(marker => {
-            const cabin = marker.cabin;
+            const h = marker.hytte;
 
             const match =
-                cabin.name?.toLowerCase().includes(q) ||
-                cabin.owner?.toLowerCase().includes(q) ||
-                cabin.kommune?.toLowerCase().includes(q);
+                h.name?.toLowerCase().includes(q) ||
+                h.operator?.toLowerCase().includes(q) ||
+                h["dnt:classification"]?.toLowerCase().includes(q);
 
             if (match) {
                 marker.addTo(map);
