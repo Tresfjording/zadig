@@ -152,6 +152,7 @@ async function søkTettsted() {
 document.addEventListener("DOMContentLoaded", async () => {
   await hentLandssnitt();
   await lastTettsteder();
+  console.log("Antall steder lastet:", steder.length);
 
   if (sokInput && visInfoBtn) {
     visInfoBtn.addEventListener("click", søkTettsted);
@@ -190,6 +191,8 @@ sokInput.addEventListener("input", () => {
       e.tettsted.toLowerCase().startsWith(query) ||
       (e.fylke && e.fylke.toLowerCase().startsWith(query))
     ).slice(0, 10);
+
+    console.log("Treff:", treff);
 
     treff.forEach(e => {
       const div = document.createElement("div");
