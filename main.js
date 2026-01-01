@@ -174,3 +174,41 @@ async function lastTettsteder() {
     infobox.innerHTML = `<p>Feil ved lasting av tettsteder: ${err}</p>`;
   }
 }
+
+// ... resten av main.js
+
+// Autocomplete forslag
+const sokInput = document.getElementById("sokInput");
+const forslagBox = document.createElement("div");
+forslagBox.id = "forslagBox";
+document.body.appendChild(forslagBox);
+
+sokInput.addEventListener("input", () => {
+  const query = sokInput.value.toLowerCase();
+  forslagBox.innerHTML = "";
+
+  if (query.length > 1) {
+    const treff = steder.filter(e =>
+      e.tettsted.toLowerCase().startsWith(query) ||
+      (e.fylke && e.fylke.toLowerCase().startsWith(query))
+    ).slice(0, 10); // maks 10 forslag
+
+    treff.forEach(e => {
+      const div = document.createElement("div");
+      div.textContent = e.tettsted + (e.fylke ? ` (${e.fylke})` : "");
+      div.className = "forslag";
+      div.onclick = () => {
+        sokInput.value = e.tettsted;
+        forslagBox.innerHTML = "";
+        visTettsted(e);
+      };
+      forslagBox.appendChild(div);
+    });
+
+    // plasser boksen under input
+    const rect = sokInput.getBoundingClientRect();
+    forslagBox.style.top = rect.bottom + window.scrollY + "px";
+    forslagBox.style.left = rect.left + window.scrollX + "px";
+    forslagBox.style.width = rect.width + "px";
+  }
+});

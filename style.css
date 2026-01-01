@@ -91,3 +91,20 @@ body {
     margin: 10px;
   }
 }
+#forslagBox {
+  position: absolute;
+  background: white;
+  border: 1px solid #ccc;
+  z-index: 2000;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.forslag {
+  padding: 5px;
+  cursor: pointer;
+}
+
+.forslag:hover {
+  background: #eee;
+}
