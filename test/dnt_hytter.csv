@@ -1,0 +1,444 @@
+﻿@id;name;operator;dnt:classification;website;@lat;@lon
+32575877;Svukuriset;DNT Oslo og Omegn;betjent;https://ut.no/hytte/10726/svukuriset;62.2214612;12.0150272
+33786865;Sota Sæter;DNT Oslo og Omegn;betjent;https://ut.no/hytte/sota-saeter;61.8091955;7.7102484
+265777706;Lurfjellhytta;Bodø og Omegns Turistforening;ubetjent;https://ut.no/hytte/lurfjellhytta;67.1173422;14.7458448
+281920558;Røvollen;DNT Oslo og Omegn;selvbetjent;https://ut.no/hytte/roevollen;62.3505942;12.0493414
+287961798;Lille Tømtehytta;DNT Oslo og Omegn;ubetjent;https://ut.no/hytte/10780/lille-tmtehytta;60.0513076;10.7612734
+288156091;Gjendebu;DNT Oslo og Omegn;betjent;https://ut.no/hytte/gjendebu;61.4514077;8.4885665
+289978936;Hallingskeid Turisthytte;Bergen Turlag;selvbetjent;https://hyttebestilling.dnt.no/hytte/10805;60.6681596;7.2486228
+290551735;Nedalshytta;Trondhjems Turistforening;betjent;https://ut.no/hytte/nedalshytta;62.9785400;12.1019098
+291057219;Rondvassbu;DNT Oslo og Omegn;betjent;https://ut.no/hytte/rondvassbu;61.8787483;9.7963376
+291058055;Bjørnhollia;DNT Oslo og Omegn;betjent;https://ut.no/hytte/101110/bjrnhollia;61.8840823;10.0119584
+292351473;Mustadkroken;DNT Oslo og Omegn;ubetjent;https://ut.no/hytte/mustadkroken;59.9720259;10.3716819
+301159257;Svartskogkoia;Hamar og Hedemarken Turistforening;ubetjent;https://ut.no/hytte/svartskogkoia;60.8369901;11.4660816
+309020349;Eiksetra;DNT Drammen og Omegn;betjent;https://ut.no/hytte/10678/eiksetra;59.8192082;10.1276927
+316624011;Innerdalshytta;Kristiansund og Nordmøre Turistforening;selvbetjent;https://ut.no/hytte/10940;62.7219005;8.7764311
+331256834;Hovdehytta;DNT Oslo og Omegn;ubetjent;https://ut.no/hytte/hovdehytta;59.8458944;10.3576549
+339326264;Blåkollkoia;Troms Turlag;ubetjent;https://ut.no/hytte/blaakollkoia;69.6809402;19.2087800
+339326265;Skarvassbu;Troms Turlag;selvbetjent;https://ut.no/hytte/skarvassbu;69.6380678;19.2011094
+339398252;Nedrefosshytta;Troms Turlag;ubetjent;https://ut.no/hytte/nedrefosshytta;69.3208625;21.9691124
+339405682;Gappohytta;DNT Oslo og Omegn;ubetjent;https://ut.no/hytte/gappohytta;69.0529755;20.2541688
+339405688;Rostahytta;DNT Oslo og Omegn;ubetjent;https://ut.no/hytte/rostahytta;68.9393770;20.0268506
+339409572;Stordalsstua;Troms Turlag;ubetjent;https://ut.no/hytte/stordalsstua;68.5531041;18.1867093
+339409574;Hundalshytta;Narvik og Omegn Turistforening;ubetjent;https://ut.no/hytte/hundalshytta;68.3182446;17.8992917
+339409576;Storsteinshytta;Narvik og Omegn Turistforening;ubetjent;https://ut.no/hytte/storsteinshytta;68.1990361;17.9633871
+339409578;Cáihnavággihytta;Narvik og Omegn Turistforening;ubetjent;https://ut.no/hytte/c%C3%A1ihnav%C3%A1ggihytta;68.1189329;17.9479960
+339409580;Losistua;DNT Oslo og Omegn;ubetjent;https://ut.no/hytte/losistua;68.1901463;17.7845141
+339409581;Skoaddejávre;Narvik og Omegn Turistforening;ubetjent;https://ut.no/hytte/skoaddej%C3%A1vre;68.0588072;17.5926033
+339409582;Sitashytta;Narvik og Omegn Turistforening;ubetjent;https://ut.no/hytte/sitashytta;68.1005820;17.2347661
+339409583;Paurohytta;Narvik og Omegn Turistforening;ubetjent;https://ut.no/hytte/paurohytta;68.0489365;17.0316185
+339412453;Skoddeberghytta;Harstad Turlag;ubetjent;https://ut.no/hytte/skoddeberghytta;68.5635421;17.2332339
+339595788;Blåvatnhytta;Harstad Turlag;ubetjent;https://ut.no/hytte/blaavatnhytta;68.5709003;17.0132008
+339595789;Maistua;Harstad Turlag;ubetjent;https://ut.no/hytte/maistua;68.7614982;16.5196442
+339595790;Bjørnhaugen;Harstad Turlag;ubetjent;https://ut.no/hytte/bjoernhaugen;68.6583336;16.3896615
+339595793;Haakonsbu;Harstad Turlag;ubetjent;https://ut.no/hytte/haakonsbu;68.5943663;16.0650630
+339595794;Fossestua;Harstad Turlag;ubetjent;https://ut.no/hytte/fossestua;68.6349622;16.0473736
+339595795;Ingemannhytta;Vesterålen Turlag;ubetjent;https://ut.no/hytte/ingemannhytta;68.7048958;15.7523517
+339595796;Snytindhytta;Vesterålen Turlag;ubetjent;https://ut.no/hytte/snytindhytta;68.5640545;15.5755530
+339595798;Selfjordhytta;Lofoten Turlag;ubetjent;https://ut.no/hytte/selfjordhytta;68.0359200;13.0751658
+339599364;Ny-Sulitjelma fjellstue (Hanken);Sulitjelma og Omegn Turistforening;ubetjent;https://ut.no/hytte/ny-sulitjelma-fjellstue;67.1401726;16.1368391
+339599365;Lomihytta;Sulitjelma og Omegn Turistforening;ubetjent;https://ut.no/hytte/lomihytta;67.1236209;16.2036218
+339599366;Muorkihytta;Sulitjelma og Omegn Turistforening;ubetjent;https://ut.no/hytte/muorkihytta;67.0542970;16.3724255
+339599367;Tjalalveshytta;Sulitjelma og Omegn Turistforening;ubetjent;https://ut.no/hytte/calalveshytta;67.0540414;16.0945186
+339599368;Gjælentunet;Bodø og Omegns Turistforening;ubetjent;https://ut.no/hytte/gjaelentunet;67.1878308;14.4267132
+339599369;Tverrbrennstua;Bodø og Omegns Turistforening;ubetjent;https://ut.no/hytte/tverrbrennstua;67.0018938;14.9485669
+339599370;Jordbruhytta;Bodø og Omegns Turistforening;ubetjent;https://ut.no/hytte/jordbruhytta;66.9359408;15.2365214
+339599371;Bjellåvasstua;Bodø og Omegns Turistforening;ubetjent;https://ut.no/hytte/bjellaavasstua;66.8494461;15.0456599
+339599372;Storeng fjellgård;Bodø og Omegns Turistforening;stengt;;66.9263877;15.5184914
+339599373;Trygvebu;Bodø og Omegns Turistforening;ubetjent;https://ut.no/hytte/trygvebu;66.8005523;15.6888647
+339599374;Lønsstua;Bodø og Omegns Turistforening;ubetjent;https://ut.no/hytte/loensstua;66.7360225;15.4656190
+339599375;Midtistua;Bodø og Omegns Turistforening;ubetjent;https://ut.no/hytte/midtistua;66.7608134;15.0129592
+339599376;Saltfjellstua;Rana Turistforening;ubetjent;https://ut.no/hytte/saltfjellstua;66.7149655;15.0259014
+339599377;Krukkistua;Rana Turistforening;ubetjent;https://ut.no/hytte/krukkistua;66.6788792;15.0490779
+339600585;Blakkådalshytta;Rana Turistforening;ubetjent;https://ut.no/hytte/blakkaadalshytta;66.5454807;14.4009758
+339600587;Bolnastua;Rana Turistforening;ubetjent;https://ut.no/hytte/bolnastua;66.4924338;15.2379836
+339600589;Virvasshytta;Rana Turistforening;ubetjent;https://ut.no/hytte/virvasshytta;66.3085612;15.3646462
+339602307;Kvitsteindalstunet;Rana Turistforening;ubetjent;https://ut.no/hytte/kvitsteindalstunet;66.1840932;15.0515441
+339602316;Kjennsvasshytta;Hemnes Turistforening;ubetjent;https://ut.no/hytte/kjennsvasshytta;66.0656537;14.2612302
+339602318;Gressvasshytta;Hemnes Turistforening;ubetjent;https://ut.no/hytte/gressvasshytta;66.0479925;14.4240133
+339602322;Gråfjellhytta;Hemnes Turistforening;ubetjent;https://ut.no/hytte/graafjellhytta;65.9879334;14.0530404
+339607867;Eldåbu;DNT Oslo og Omegn;selvbetjent;https://ut.no/hytte/101363/eldabu;61.7562897;9.9793564
+339607871;Storgrytdalseter;DNT Oslo og Omegn;selvbetjent;https://ut.no/hytte/storgrytdalseter;61.9123422;10.3694441
+339607872;Korsberghytta;DNT Oslo og Omegn;selvbetjent;https://ut.no/hytte/10720;61.9747860;10.4438233
+339607873;Grimsdalshytta;DNT Oslo og Omegn;betjent;https://ut.no/hytte/10494;62.0910527;9.6421663
+339607875;Knausen;DNT Oslo og Omegn;selvbetjent;https://ut.no/hytte/knausen;62.2238852;10.9558089
+339607876;Raudsjødalen;DNT Oslo og Omegn;selvbetjent;https://ut.no/hytte/raudsjoedalen;62.2151525;11.1503760
+339607877;Ellefsplass;DNT Oslo og Omegn;selvbetjent;https://ut.no/hytte/ellefsplass;62.2044651;11.4482470
+339607880;Narjordet;DNT Oslo og Omegn;selvbetjent;https://ut.no/hytte/narjordet;62.4301330;11.4110246
+343508885;Småvannsbu;DNT Oslo og Omegn;ubetjent;https://ut.no/hytte/smaavannsbu;59.7862478;10.3763258
+367871077;Liomseter;DNT Oslo og Omegn;betjent;https://www.ut.no/hytte/3.1755/;61.2423242;9.5946768
+410653214;Svarvestolen;Drammens og Oplands Turistforening;ubetjent;https://ut.no/hytte/svarvestolen;59.8834442;10.0327338
+444092409;Finsehytta;DNT Oslo og Omegn;betjent;https://finsehytta.dnt.no/;60.5979163;7.5070391
+444899477;Kongshelleren;DNT Oslo og Omegn;selvbetjent;https://ut.no/hytte/10811/kongshelleren;60.7770989;7.7011667
+448478795;Hellevassbu;DNT Oslo og Omegn;selvbetjent;https://ut.no/hytte/hellevassbu;59.9829633;7.2151591
+448518394;Litlos;DNT Oslo og Omegn;betjent;https://ut.no/hytte/litlos;60.0938207;7.1371543
+448543406;Stavali;Bergen Turlag;selvbetjent;https://ut.no/hytte/stavali;60.3184041;6.8949293
+448624959;Torehytten;DNT Oslo og Omegn;selvbetjent;https://ut.no/hytte/10664;60.2113308;7.0348754
+457082683;Fondsbu;DNT Oslo og Omegn;betjent;https://ut.no/hytte/fondsbu;61.3751863;8.2973974
+457085039;Olavsbu;DNT Oslo og Omegn;selvbetjent;https://ut.no/hytte/olavsbu;61.4711366;8.2742366
+481623261;Svartenut;DNT Sør;selvbetjent;https://ut.no/hytte/svartenut;59.1317879;7.2504501
+512097966;Reindalseter;Ålesund-Sunnmøre Turistforening;betjent;https://ut.no/hytte/reindalseter;62.1874056;7.5782621
+530783833;Sæteren gård;DNT Oslo og Omegn;ubetjent;https://ut.no/hytte/saeteren-gaard;59.9478038;10.5621885
+540229469;Kobberhaughytta;DNT Oslo og Omegn;betjent;https://kobberhaughytta.dnt.no;60.0360959;10.6636841
+564123127;Fjellvang;DNT Oslo og Omegn;ubetjent;https://ut.no/hytte/10775/fjellvang;60.0246601;10.8400944
+583350016;Håheller;DNT Sør;ubetjent;https://ut.no/hytte/haaheller;59.0298467;7.1654068
+583350017;Grautheller;Stavanger Turistforening;selvbetjent;https://ut.no/hytte/grautheller;59.1124629;6.8765970
+583350661;Flørli turiststasjon;Stavanger Turistforening;ubetjent;https://ut.no/hytte/floerli-turiststasjon;59.0125157;6.4255708
+613270417;Hovatn;Stavanger Turistforening;selvbetjent;https://ut.no/hytte/hovatn;59.3527031;7.0363400
+613270454;Storsteinen;Stavanger Turistforening;selvbetjent;https://ut.no/hytte/storsteinen;59.2804489;6.9096350
+614382550;Støle;Stavanger Turistforening;selvbetjent;https://ut.no/hytte/stoele;58.7630410;6.5776847
+655117911;Myrseter;DNT Oslo og Omegn;ubetjent;https://ut.no/hytte/myrseter;60.0326259;10.4126142
+655117913;Presthytta;DNT Oslo og Omegn;ubetjent;https://ut.no/hytte/presthytta;60.0554574;10.4259841
+656136702;Smedmyrkoia;DNT Oslo og Omegn;ubetjent;https://ut.no/hytte/smedmyrkoia;60.0514999;10.5497153
+656508400;Fugleleiken;Telemark Turistforening;ubetjent;https://www.ut.no/hytte/3.2010/;59.4017495;9.4247798
+666788642;Torfinnsheim;Voss Utferdslag;selvbetjent;https://ut.no/hytte/10428/torfinnsheim;60.5621375;6.2423708
+685784604;Træet gård;Bergen Turlag;ubetjent;https://ut.no/hytte/traeet-gaard;60.5618793;5.6703698
+716939467;Rauhelleren;Drammens og Oplands Turistforening;betjent;http://rauhelleren.no/;60.2560922;7.8495965
+716939661;Kjeldebu;DNT Oslo og Omegn;selvbetjent;https://ut.no/hytte/kjeldebu;60.4270572;7.4968829
+743293990;Gjevilvasshytta;Trondhjems Turistforening;betjent;https://ut.no/hytte/10966/gjevilvasshytta;62.6985008;9.4199884
+746987678;Iungsdalshytta;DNT Oslo og Omegn;betjent;https://ut.no/hytte/10973/iungsdalshytta;60.8100179;7.9339329
+748477737;Fannaråkhytta;DNT Oslo og Omegn;betjent;https://ut.no/hytte/fannaraakhytta;61.5161207;7.9070922
+748477768;Skogadalsbøen;DNT Oslo og Omegn;betjent;https://www.ut.no/hytte/3.2004/;61.4631544;8.0140237
+754402416;Bjordalsbu;DNT Oslo og Omegn;selvbetjent;https://www.ut.no/hytte/3.2080/;60.9269480;7.9982265
+754402425;Sulebu;DNT Oslo og Omegn;selvbetjent;https://www.ut.no/hytte/3.1981/;61.1401685;8.1755377
+765311400;Sinnerdammen;DNT Oslo og Omegn;ubetjent;https://ut.no/hytte/sinnerdammen;60.1691299;10.4959643
+772264010;Middalsbu;DNT Oslo og Omegn;selvbetjent;https://ut.no/hytte/middalsbu;59.9550504;6.9897632
+785550155;Gården Li;Flekkefjord og Oplands Turistforening;ubetjent;https://ut.no/hytte/g%C3%A5rden-li;58.2501963;6.5484355
+790406183;Krækkja;DNT Oslo og Omegn;betjent;https://www.ut.no/hytte/3.2351/;60.4513632;7.7131551
+791106132;Gjendesheim;DNT Oslo og Omegn;betjent;https://ut.no/hytte/gjendesheim;61.4943459;8.8126376
+798882804;Spikertjernhytta;DNT Oslo og Omegn;;https://ut.no/hytte/spikertjernhytta;60.0897540;10.9378765
+798882817;Øvresaga;DNT Oslo og Omegn;ubetjent;https://ut.no/hytte/oevresaga;59.7985198;11.0293603
+798882834;Røyrivannskoia;DNT Oslo og Omegn;ubetjent;https://ut.no/hytte/roeyrivannskoia;59.8499039;11.0097833
+798882836;Tingstadkoia;Hamar og Hedemarken Turistforening;ubetjent;https://ut.no/hytte/tingstadkoia;60.6721911;11.5782717
+800375503;Daggrø;Kongsberg og Omegns Turistforening;ubetjent;https://www.ut.no/hytte/3.1763/;60.0291467;8.9811316
+800375514;Gamle Høgevarde;DNT Drammen og Omegn;selvbetjent;https://ut.no/hytte/10258/hgevarde-gamle;60.2931398;9.4601872
+800376072;Dalabu;DNT Drammen og Omegn;ubetjent;https://ut.no/hytte/10702/dalabu;60.4013456;8.9796452
+801770719;Gammelsetra;Kristiansund og Nordmøre Turistforening;selvbetjent;https://ut.no/hytte/gammelsetra;62.5009512;9.1192951
+831341172;Storerikvollen;Trondhjems Turistforening;betjent;https://ut.no/hytte/storerikvollen;63.1116525;11.9830939
+832409141;Ramsjøhytta;Trondhjems Turistforening;selvbetjent;https://ut.no/hytte/ramsjoehytta;63.1636424;11.7219510
+837453905;Pyttbua;Ålesund-Sunnmøre Turistforening;selvbetjent;https://ut.no/hytte/pyttbua;62.2127489;7.7985752
+837453913;Kaldhusseter;Ålesund-Sunnmøre Turistforening;betjent;https://ut.no/hytte/kaldhusseter;62.1727931;7.4291792
+837453934;Vakkerstøylen;Ålesund-Sunnmøre Turistforening;selvbetjent;https://ut.no/hytte/vakkerstoeylen;62.2685920;7.8317317
+837453942;Fieldfarehytta;Ålesund-Sunnmøre Turistforening;ubetjent;https://ut.no/hytte/fieldfarehytta;62.1598382;7.7010945
+845182252;Yksendalsbu;DNT Oslo og Omegn;selvbetjent;https://ut.no/hytte/yksendalsbu;61.3094107;8.5163116
+845242780;Tomashelleren;DNT Oslo og Omegn;selvbetjent;https://ut.no/hytte/tomashelleren;61.2358071;8.5324369
+845600185;Skjellbreidhytta;Lillehammer og Omland Turistforening;ubetjent;https://ut.no/hytte/skjellbreidhytta;61.1149648;10.0982848
+845600189;Storkvelvbu;DNT Oslo og Omegn;selvbetjent;https://www.ut.no/hytte/3.1471/;61.3374674;9.4454823
+845600193;Kittilbua;Lillehammer og Omland Turistforening;ubetjent;https://www.ut.no/hytte/3.1916/;61.1723657;9.9595491
+845600200;Oskampen;DNT Oslo og Omegn;selvbetjent;https://ut.no/hytte/oskampen;61.4261414;9.1472741
+845600208;Storhøliseter;DNT Oslo og Omegn;selvbetjent;https://ut.no/hytte/storhoeliseter;61.4178132;9.3457943
+845636238;Fast;DNT Oslo og Omegn;selvbetjent;https://ut.no/hytte/fast;61.5733318;7.5382080
+845636243;Stølsdalen;DNT Oslo og Omegn;selvbetjent;https://ut.no/hytte/stoelsdalen;61.5678956;7.8132941
+845636247;Arentzbu;DNT Oslo og Omegn;selvbetjent;https://ut.no/hytte/arentzbu;61.6406260;7.5557477
+845742891;Vetåbua;Lillehammer og Omland Turistforening;selvbetjent;https://ut.no/hytte/10648;61.4686283;10.5029685
+845742898;Lyngbua;Lillehammer og Omland Turistforening;ubetjent;https://ut.no/hytte/10649;61.3823782;10.7473345
+845742916;Flisberget;Finnskogen Turistforening;ubetjent;https://ut.no/hytte/flisberget;61.0063674;12.0871824
+845742926;Åkersætra;Hamar og Hedemarken Turistforening;ubetjent;https://ut.no/hytte/101199;61.1553669;10.9174631
+845742948;Juskjølkoia;Finnskogen Turistforening;ubetjent;https://ut.no/hytte/juskjoelkoia;61.0166126;12.0111173
+845742951;Jammerdalsbu;DNT Oslo og Omegn;selvbetjent;https://ut.no/hytte/10341;61.5857799;10.3536473
+845742956;Halgutusveen;Hamar og Hedemarken Turistforening;ubetjent;https://ut.no/hytte/10349;61.1196233;11.0538055
+845742971;Djupslia;Lillehammer og Omland Turistforening;selvbetjent;https://ut.no/hytte/10650;61.3724310;10.5829316
+886707806;Bøvelstad;DNT Oslo og Omegn;ubetjent;https://ut.no/hytte/3.2042/;59.8152519;11.0440905
+922484024;Gammelsaga;Hamar og Hedemarken Turistforening;ubetjent;https://ut.no/hytte/gammelsaga;60.5195845;11.4042369
+923578807;Råbjørnhytta;DNT Oslo og Omegn;ubetjent;https://ut.no/hytte/raabjoernhytta;60.2361636;10.8549640
+923578814;Snellingen;DNT Oslo og Omegn;ubetjent;https://ut.no/hytte/snellingen;60.2622488;10.7854527
+923620268;Kjørestua på Sagvollen;Hadeland Turlag;ubetjent;https://ut.no/hytte/sagvollen;60.3758666;10.7147035
+923657649;Målia;Hamar og Hedemarken Turistforening;ubetjent;https://ut.no/hytte/101194;60.9838062;11.2385265
+924079202;Snippkoia;Hamar og Hedemarken Turistforening;selvbetjent;https://ut.no/hytte/10232;61.0387865;11.2479329
+965922723;Jørgenhytta;DNT Oslo og Omegn;ubetjent;;60.0202193;10.3237934
+1175135058;Eriksbu;Kongsberg og Omegns Turistforening;ubetjent;https://ut.no/hytte/eriksbu;59.8816078;9.1890262
+1175597282;Sigridsbu;Kongsberg og Omegns Turistforening;ubetjent;https://ut.no/hytte/sigridsbu;59.7946398;9.1557585
+1213120482;Tjørnbrotbu;Aust-Agder Turistforening;selvbetjent;https://ut.no/hytte/tjoernbrotbu;59.5372016;7.5203312
+1213120485;Berdalsbu;Aust-Agder Turistforening;selvbetjent;https://ut.no/hytte/berdalsbu;59.4432788;7.5085987
+1231082327;Kvitfjellhytta;Nord-Trøndelag Turistforening;selvbetjent;https://ut.no/hytte/kvitfjellhytta;63.3444724;11.2553566
+1283355943;Prestøyhytta;Nord-Trøndelag Turistforening;selvbetjent;https://ut.no/hytte/prestoeyhytta;63.2891387;11.3415744
+1283355952;Schulzhytta;Trondhjems Turistforening;betjent;https://ut.no/hytte/schulzhytta;63.2119247;11.5065181
+1288126381;Vikerkoia;Ringerikes Turistforening;ubetjent;https://ut.no/hytte/vikerkoia;60.4468527;9.9562076
+1288227385;Hovstøyl;Aust-Agder Turistforening;selvbetjent;https://ut.no/hytte/hovstoeyl;59.2551631;7.7706548
+1288244546;Helberghytta;DNT Oslo og Omegn;selvbetjent;https://ut.no/hytte/helberghytta;59.9289233;8.4799132
+1351708705;Holmaskjer;Bergen Turlag;selvbetjent;https://ut.no/hytte/holmaskjer;60.0960738;6.4429214
+1356401135;Alexander Grieghytten;Bergen Turlag;ubetjent;https://ut.no/hytte/alexander-grieghytten;60.5369870;6.0791407
+1356401151;Angeltjønnhytta;Nord-Trøndelag Turistforening;selvbetjent;https://ut.no/hytte/angeltjoennhytta;63.4623733;12.0588212
+1356401174;Argaladhytta;Bodø og Omegns Turistforening;ubetjent;https://ut.no/hytte/argaladhytta;66.8478765;15.7872207
+1356401192;Aursjøhytta;Kristiansund og Nordmøre Turistforening;betjent;https://ut.no/hytte/10447;62.4062368;8.5401701
+1356401202;Bakken gard;;ubetjent;https://ut.no/hytte/101314/bakken-gard;59.0155886;6.2880013
+1356401218;Balvasshytta;Sulitjelma og Omegn Turistforening;ubetjent;https://ut.no/hytte/balvasshytta;66.9249265;15.8709485
+1356401240;Bergersætra;Odal Turlag;ubetjent;https://ut.no/hytte/bergersaetra;60.1665380;11.7756811
+1356401273;Bjørneggen;Nord-Trøndelag Turistforening;selvbetjent;https://ut.no/hytte/bjoerneggen;63.2732304;11.8056816
+1356401288;Bjørnevasshytta;DNT Sør;ubetjent;https://ut.no/hytte/bjoernevasshytta;59.3477143;7.5374338
+1356401311;Blomstølen;Haugesund Turistforening;selvbetjent;https://ut.no/hytte/blomstoelen;59.7703475;6.2486349
+1356401328;Blåbrebu;Flora Turlag;ubetjent;https://ut.no/hytte/blaabrebu;61.7326399;5.5402284
+1356401348;Bossbu;DNT Sør;selvbetjent;https://ut.no/hytte/bossbu;59.1831461;7.2949686
+1356401384;Breidablikk;Bergen Turlag;ubetjent;https://ut.no/hytte/breidablikk;60.0908148;6.3429157
+1356401388;Bringsåsen;Nord-Trøndelag Turistforening;selvbetjent;https://ut.no/hytte/bringsaasen;63.8179935;12.2654757
+1356401406;Budalsvika;Tistedalen Friluftslag;ubetjent;https://ut.no/hytte/budalsvika;59.0521983;11.7372769
+1356401422;Butikken;Oslofjordens friluftsråd;ubetjent;https://ut.no/hytte/butikken;59.8518688;10.5414633
+1356401440;Buvasskoia;Ringerikes Turistforening;ubetjent;https://ut.no/hytte/10461/buvasskoia;60.4068414;9.7754110
+1356401443;Bårdsgarden;Trondhjems Turistforening;selvbetjent;https://ut.no/hytte/10513;62.6802736;9.1506870
+1356401463;Camp Killingen;Drammens og Oplands Turistforening;ubetjent;https://ut.no/hytte/camp-killingen;59.5207836;10.3341337
+1356401480;Tjoarvihytta;Sulitjelma og Omegn Turistforening;ubetjent;http://ut.no/hytte/coar%27vihytta;66.9947975;15.9664062
+1356401490;Damtjønna;Trondhjems Turistforening;ubetjent;https://ut.no/hytte/damtjoenna;62.8016620;9.8902820
+1356401503;Danskehytta;Ålesund-Sunnmøre Turistforening;selvbetjent;https://ut.no/hytte/danskehytta;62.1052625;7.5284304
+1356401518;Darrebu;Tønsberg og Omegn Turistforening;ubetjent;https://www.ut.no/hytte/3.1914/;59.4904091;9.7482831
+1356401534;Demmevasshytta;DNT Oslo og Omegn;ubetjent;https://ut.no/hytte/10784/demmevasshytta;60.5401258;7.3139959
+1356401544;Dusehesten;DNT Drammen og Omegn;ubetjent;https://ut.no/hytte/101087/dusehesten;60.3997916;8.6786444
+1356401560;Eidavatn;Stavanger Turistforening;selvbetjent;https://ut.no/hytte/eidavatn;59.2703791;6.7376353
+1356401572;Eiriksvollen;Kristiansund og Nordmøre Turistforening;selvbetjent;https://ut.no/hytte/eiriksvollen;62.6343187;8.8422268
+1356401583;Ferslia;Nord-Trøndelag Turistforening;selvbetjent;https://ut.no/hytte/10468/ferslia;63.5422525;11.9413666
+1356401589;Feskarbu;Molde og Romsdals Turistforening;ubetjent;https://ut.no/hytte/feskarbu;62.8226777;7.4087899
+1356401598;Fivla;Luster Turlag;ubetjent;https://ut.no/hytte/fivla;61.4959967;7.3569165
+1356401606;Fjellbu;Statskog;ubetjent;https://www.inatur.no/hytte/53ab2f1fe4b08639ed54e1e7/fjellbu-fin-lita-hytte-nar-vei-ved-elva-skjoma-i-narvik;68.1682741;17.5550776
+1356401623;Flotsberget;;ubetjent;https://ut.no/hytte/flotsberget;60.8334224;11.8424485
+1356401633;Flørlistølen;Stavanger Turistforening;ubetjent;https://ut.no/hytte/floerlistoelen;59.0058523;6.4222896
+1356401647;Fokhaugstova;;ubetjent;https://ut.no/hytte/fokhaugstova;62.4225035;7.2562331
+1356401659;Fonnabu;Bergen Turlag;selvbetjent;https://ut.no/hytte/fonnabu;60.0764838;6.3478449
+1356401668;Fuglesteg;Luster Turlag;ubetjent;https://ut.no/hytte/fuglesteg;61.4836584;7.6910947
+1356401681;Fønhuskoia;Ringerikes Turistforening;ubetjent;;60.6098792;9.4317390
+1356401693;Gaudland;Stavanger Turistforening;ubetjent;https://ut.no/hytte/gaudland;58.3968582;6.2493817
+1356401704;Gaukhei;DNT Sør;betjent;https://ut.no/hytte/gaukhei;58.9159973;7.3056920
+1356401733;Gjegnabu;Flora Turlag;ubetjent;https://ut.no/hytte/gjegnabu;61.7612416;5.8354960
+1356401745;Granbustøyl;Aust-Agder Turistforening;selvbetjent;https://ut.no/hytte/granbustoeyl;59.0066954;7.9488337
+1356401752;Grasdalen;Stavanger Turistforening;ubetjent;https://ut.no/hytte/grasdalen;59.2310300;6.6219032
+1356401760;Gravdalen;Årdal Turlag;ubetjent;https://ut.no/hytte/gravdalen;61.3595743;7.8491028
+1356401765;Grindaflethytta;DNT Oslo og Omegn;selvbetjent;https://ut.no/hytte/grindaflethytta;60.8434659;6.9155177
+1356401772;Grunnetjørnsbu;Aust-Agder Turistforening;selvbetjent;https://ut.no/hytte/grunnetjoernsbu;58.8929153;8.1248817
+1356401782;Grytadalsbu;Flora Turlag;ubetjent;https://ut.no/hytte/grytadalsbu;61.6516726;5.2000002
+1356401792;Grytbakksetra;Kristiansund og Nordmøre Turistforening;selvbetjent;https://ut.no/hytte/10102/grytbakksetra;63.1099528;8.9475166
+1356401793;Græslihytta;Trondhjems Turistforening;selvbetjent;https://ut.no/hytte/graeslihytta;63.0700194;11.4722582
+1356401810;Grønknutkoia;DNT Oslo og Omegn;ubetjent;https://ut.no/hytte/groenknutkoia;60.1759283;9.8827544
+1356401816;Grønnkollen;Harstad Turlag;ubetjent;https://ut.no/hytte/groennkollen;68.7720076;16.4376816
+1356401821;Grøssete;Sogndal Turlag;ubetjent;https://ut.no/hytte/groessete;61.3379340;6.9899274
+1356401829;Gullsteinvollen;Kristiansund og Nordmøre Turistforening;selvbetjent;https://ut.no/hytte/10370/gullsteinvollen;63.1909322;8.1072495
+1356401838;Guvåghytta;Vesterålen Turlag;ubetjent;https://ut.no/hytte/guvaaghytta;68.6622642;14.7756614
+1356401840;Haldorbu;DNT Oslo og Omegn;selvbetjent;https://ut.no/hytte/haldorbu;61.2605247;9.3699966
+1356401863;Haukeliseter Fjellstue;Stavanger Turistforening;betjent;https://ut.no/hytte/10660/haukeliseter-fjellstue;59.8237497;7.1942771
+1356401872;Haukenestårnet;DNT Indre Østfold;ubetjent;https://ut.no/hytte/haukenesfjellet;59.7160465;11.7559971
+1356401880;Heiberghytta Grautheller;Stavanger Turistforening;ubetjent;https://ut.no/hytte/heiberghytta-grautheller;59.1163918;6.8752144
+1356401886;Slirabu;Sandefjord og Oplands Turistforening;ubetjent;https://ut.no/hytte/101298/slirabu;59.2720594;10.0141223
+1356401905;Helgedammen;;ubetjent;https://ut.no/hytte/helgedammen;60.3799714;12.4239229
+1356401908;Hengeltjørnloftet;Aust-Agder Turistforening;selvbetjent;https://ut.no/hytte/hengeltjoernloftet;59.0714892;8.0828511
+1356401918;Hermannhytta;Kristiansund og Nordmøre Turistforening;selvbetjent;https://ut.no/hytte/10819/hermannhytta;63.0217503;8.9784232
+1356401924;Hevertjønna;Trondhjems Turistforening;ubetjent;https://ut.no/hytte/hevertjoenna;62.7663355;9.8683201
+1356401931;Hoemsbu;Molde og Romsdals Turistforening;selvbetjent;https://ut.no/hytte/hoemsbu;62.5646739;8.1435632
+1356401934;Holden fjellgård (Bekkstugu);Nord-Trøndelag Turistforening;selvbetjent;http://ut.no/hytte/holden-fjellgaard%2C-bekkstuggu;64.0632553;12.8966320
+1356401951;Hovinkoia;Ringerikes Turistforening;ubetjent;https://ut.no/hytte/hovinkoia;60.1319614;10.0155877
+1356401968;Høgabu;Bergen Turlag;selvbetjent;https://www.ut.no/hytte/3.2032/;60.5348764;5.9246994
+1356401978;Imarbu;Kristiansund og Nordmøre Turistforening;selvbetjent;https://ut.no/hytte/10551/imarbu;63.2110212;8.2765410
+1356401990;Ivarsbu;Larvik og Omegns Turistforening;ubetjent;https://www.ut.no/hytte/3.1750/;59.5148480;9.7255715
+1356402004;Josephsbu;DNT Sør;selvbetjent;https://ut.no/hytte/josephsbu;58.8787885;7.2056027
+1356402005;Jutulbu;Kristiansund og Nordmøre Turistforening;selvbetjent;https://ut.no/hytte/jutulbu;63.0391153;8.3898535
+1356402016;Jægervasshytta;Troms Turlag;ubetjent;https://ut.no/hytte/jaegervasshytta;69.7204976;19.9247159
+1356402028;Kalhovd turisthytte;Telemark Turistforening;betjent;https://ut.no/hytte/kalhovd;60.0686510;8.3696363
+1356402034;Kalvedalshytta;Bergen Turlag;selvbetjent;https://ut.no/hytte/kalvedalshytta;60.7676933;5.4888658
+1356402048;Kiellandbu;Bergen Turlag;ubetjent;https://ut.no/hytte/kiellandbu;60.5145912;6.2012770
+1356402053;Kjølihytta;Trondhjems Turistforening;selvbetjent;https://ut.no/hytte/kjoelihytta;62.8683385;11.6485202
+1356402059;Kljåen;DNT Oslo og Omegn;selvbetjent;https://ut.no/hytte/kljaaen;61.0265369;8.3167890
+1356402068;Klubbfjelltjørnhytta;Brurskanken Turlag;ubetjent;https://ut.no/hytte/klubbfjelltjoernhytta;65.7607125;13.5437614
+1356402081;Kringlevatn;Stavanger Turistforening;selvbetjent;https://ut.no/hytte/kringlevatn;59.2390050;7.0399496
+1356402093;Krokbua;DNT Lillehammer;ubetjent;https://ut.no/hytte/101056;61.1229332;10.5160011
+1356402099;Krossvatn;Stavanger Turistforening;selvbetjent;https://ut.no/hytte/krossvatn;59.4670100;6.8996928
+1356402115;Kvanndalen;Stavanger Turistforening;ubetjent;https://ut.no/hytte/101036/kvanndalen;59.6961767;6.9901002
+1356402118;Kvanntjørnsbu;Bergen Turlag;selvbetjent;https://ut.no/hytte/kvanntjoernsbu;60.0550149;6.6701120
+1356402127;Kvinen;DNT Sør;selvbetjent;https://ut.no/hytte/kvinen;58.8791584;7.0643803
+1356402136;Lakkenstova;DNT Sør;selvbetjent;https://ut.no/hytte/lakkenstova;58.7909379;7.2456843
+1356402143;Lebiko;;ubetjent;https://ut.no/hytte/lebiko;60.1526259;12.5126180
+1356402152;Leirsjøhytta;Magnor ungdomslag;ubetjent;https://www.ut.no/hytte/3.1631/;59.8896053;12.1691588
+1356402156;Litle Aurådal;Stavanger Turistforening;selvbetjent;https://ut.no/hytte/litle-auraadal;59.1882636;6.8770450
+1356402172;Loennechenbua;Kristiansund og Nordmøre Turistforening;ubetjent;https://ut.no/hytte/loennechenbua;62.4312387;9.1813256
+1356402188;Longåsdalen;Haugesund Turistforening;ubetjent;https://ut.no/hytte/longaasdalen;59.5487595;5.6428657
+1356402207;Lyngør fyr;Aust-Agder Turistforening;ubetjent;https://ut.no/hytte/lyng%C3%B8r-fyr;58.6368108;9.1489277
+1356402219;Lågaros;DNT Oslo og Omegn;selvbetjent;https://ut.no/hytte/laagaros;60.1315284;7.8017325
+1356402225;Løkjelsvatnhytta;Haugesund Turistforening;selvbetjent;https://ut.no/hytte/loekjelsvatnhytta;59.6602027;6.1154117
+1356402241;Marenvollen;DNT Oslo og Omegn;selvbetjent;https://ut.no/hytte/marenvollen;62.5434359;11.6394183
+1356402246;Massbu;Indre Sunnfjord Turlag;ubetjent;https://ut.no/hytte/massbu;61.4045930;5.4449079
+1356402264;Melands Grønahei;Stavanger Turistforening;selvbetjent;https://ut.no/hytte/melands-groenahei;59.2408675;6.5205707
+1356402280;Mjåvasshytta;Aust-Agder Turistforening;selvbetjent;https://ut.no/hytte/mjaavasshytta;58.9758992;8.1791153
+1356402304;Mogen;Telemark Turistforening;betjent;https://ut.no/hytte/mogen;60.0229368;7.8902169
+1356402308;Mosdalsbu;Bergen Turlag;selvbetjent;https://ut.no/hytte/mosdalsbu;60.1052211;6.6382714
+1356402329;Mule Varde;;ubetjent;https://ut.no/hytte/mule-varde;59.0998340;9.7002153
+1356402339;Målsethytta;Vik Turlag;ubetjent;https://ut.no/hytte/maalsethytta;60.9864926;6.5197831
+1356402344;Mårbu;Drammens og Oplands Turistforening;betjent;https://ut.no/hytte/maarbu;60.1856351;8.1713218
+1356402354;Måsvassbu;Molde og Romsdals Turistforening;selvbetjent;https://ut.no/hytte/maasvassbu;62.6481614;7.8341457
+1356402373;Navarsete;DNT Oslo og Omegn;selvbetjent;https://ut.no/hytte/navarsete;61.4326022;7.3409030
+1356402396;Nersetra;Kristiansund og Nordmøre Turistforening;selvbetjent;https://ut.no/hytte/1099/nersetra;63.2183616;8.4338004
+1356402417;Nilsebu;Stavanger Turistforening;selvbetjent;https://ut.no/hytte/nilsebu;59.1894276;6.6749435
+1356402434;Nipebu;Indre Sunnfjord Turlag;selvbetjent;https://ut.no/hytte/nipebu;61.4015422;5.3368915
+1356402453;Nodhagen;Stavanger Turistforening;ubetjent;https://ut.no/hytte/nodhagen;58.9209554;5.9668375
+1356402481;Nordvikgården;Haugesund Turistforening;ubetjent;https://ut.no/hytte/fyret-paa-utsira;59.3101938;4.8895233
+1356402521;Nystøyl;Aust-Agder Turistforening;selvbetjent;https://ut.no/hytte/nystoeyl;59.1670577;7.7357529
+1356402541;Olabu;Haugesund Turistforening;selvbetjent;https://ut.no/hytte/3.1866/;59.5991985;5.9559126
+1356402545;Olalia fjellstove;Haugesund Turistforening;selvbetjent;https://ut.no/hytte/olalihytta;59.5993576;5.9569253
+1356402565;Olandsbu;Aust-Agder Turistforening;ubetjent;https://ut.no/hytte/olandsbu;58.6645544;8.4918152
+1356402584;Orkelsjøhytta;Trondhjems Turistforening;ubetjent;https://ut.no/hytte/orkelsjoehytta;62.5194310;9.8749418
+1356402613;Peilehytta;Nord-Trøndelag Turistforening;dagsturhytte;https://ut.no/hytte/often%C3%A5sen;63.9920453;11.5291241
+1356402646;Preikestolhytta;Stavanger Turistforening;betjent;https://preikestolenbasecamp.com/produkt/preikestolhytta/;58.9900594;6.1377504
+1356402653;Presteseter;Larvik og Omegns Turistforening;ubetjent;https://www.ut.no/hytte/3.1714/;59.4337613;9.7929565
+1356402684;Ramssjøen;Trondhjems Turistforening;ubetjent;https://ut.no/hytte/ramssjoeen;62.8165753;9.8042038
+1356402692;Raubergshytta;Kristiansund og Nordmøre Turistforening;selvbetjent;https://ut.no/hytte/raubergshytta;62.5226548;8.7095547
+1356402722;Reinsvassbu;DNT Oslo og Omegn;selvbetjent;https://ut.no/hytte/reinsvassbu;62.5501361;8.3677108
+1356402741;Renosdammen;Finnskogen Turistforening;ubetjent;https://ut.no/hytte/renosdammen2;60.9933832;11.9566954
+1356402744;Ringvassbu;Troms Turlag;ubetjent;https://ut.no/hytte/ringvassbu;69.8962630;19.1280706
+1356402789;Rotberget bedehus;;ubetjent;https://ut.no/hytte/rotberget-bedehus;60.5155504;12.5406966
+1356402806;Rovangen;Kristiansund og Nordmøre Turistforening;selvbetjent;https://ut.no/hytte/10565/rovangen;63.3005422;8.6584303
+1356402822;Runde fyr;Ålesund-Sunnmøre Turistforening;selvbetjent;https://ut.no/hytte/runde-fyr;62.4137710;5.5865003
+1356402841;Rundkjølbrakka;;ubetjent;https://ut.no/hytte/rundkjoelbrakka;60.8341034;11.9457697
+1356402846;Råkeneset;Sogndal Turlag;ubetjent;https://ut.no/hytte/r%C3%A5keneset;61.1139822;4.8300088
+1356402891;Sandvatnbrakka;Sauda Turlag;selvbetjent;https://ut.no/hytte/oevre-sandvatnbrakka;59.7983916;6.6780648
+1356402915;Sauabrehytta;Haugesund Turistforening;selvbetjent;https://ut.no/hytte/sauabrehytta;59.9605231;6.4332366
+1356402937;Selsli;Kongsberg og Omegns Turistforening;ubetjent;https://ut.no/hytte/10486/selsli;59.6881694;9.3641127
+1356402956;Senjabu;Troms Turlag;ubetjent;https://ut.no/hytte/senjabu;69.3446753;17.4375685
+1356402974;Setertjønnhytta;Nord-Trøndelag Turistforening;selvbetjent;https://ut.no/hytte/setertjoennhytta;63.9954736;12.3129600
+1356402991;Sildevika;;ubetjent;https://ut.no/hytte/kystledhytta-sildevika;59.0497075;9.7607265
+1356402999;Simlebu;Haugesund Turistforening;selvbetjent;https://ut.no/hytte/simlebu;59.8465059;6.4570891
+1356403032;Skarsvassbu;Aust-Agder Turistforening;selvbetjent;https://ut.no/hytte/skarsvassbu;58.8195056;8.2579438
+1356403038;Skavlabu;Bergen Turlag;selvbetjent;https://ut.no/hytte/skavlabu;60.8618273;5.8151419
+1356403071;Skjækerdalshytta;Nord-Trøndelag Turistforening;selvbetjent;https://ut.no/hytte/skjaekerdalshytta;63.9105405;12.2206730
+1356403076;Skolla;Hamar og Hedemarken Turistforening;ubetjent;https://ut.no/hytte/101200;61.2430347;10.8170385
+1356403132;Skålatårnet;Bergen Turlag;selvbetjent;https://ut.no/hytte/10931/skalatarnet;61.8683974;6.9657127
+1356403149;Gamle Skåpet;Stavanger Turistforening;ubetjent;https://ut.no/hytte/101135/skapet-gamlehytta;58.9853007;6.3505185
+1356403165;Sloaros;DNT Sør;selvbetjent;https://ut.no/hytte/sloaros;59.6465960;7.2585675
+1356403180;Slæom;DNT Oslo og Omegn;selvbetjent;https://ut.no/hytte/slaeom;61.8238035;7.4823263
+1356403206;Sollia;Kristiansund og Nordmøre Turistforening;selvbetjent;https://ut.no/hytte/10100/sollia;63.2079462;8.8723514
+1356403240;Solum;Telemark Turistforening;ubetjent;https://www.ut.no/hytte/3.1749/;59.4685296;9.5679407
+1356403267;Songedalen fjellgard;;ubetjent;https://ut.no/hytte/songedalen-fjellgard;59.0420966;6.4301235
+1356403308;Stakken;Stavanger Turistforening;selvbetjent;https://ut.no/hytte/stakken;59.1808939;6.5651693
+1356403323;Standalhytta;;ubetjent;https://ut.no/hytte/standalhytta;62.2469799;6.3477994
+1356403342;Stavassgården;;ubetjent;https://ut.no/hytte/stavassgaarden;65.4871523;13.2915831
+1356403360;Stavassætra;;ubetjent;https://ut.no/hytte/stavassaetra;65.5030713;13.2352089
+1356403367;Stavskar;DNT Sør;ubetjent;https://ut.no/hytte/stavskar;59.2011516;7.4034341
+1356403383;Storavassbu;Haugesund Turistforening;selvbetjent;https://ut.no/hytte/3.1607/;59.6941035;6.2350732
+1356403420;Store Torungen;Oslofjordens friluftsråd;ubetjent;https://ut.no/hytte/store-torungen;58.3987171;8.7896128
+1356403435;Storekrakkoia;Ringerikes Turistforening;ubetjent;https://ut.no/hytte/101108/storekrakkoia;60.4964548;9.7113831
+1356403475;Storfiskhytta;Kristiansund og Nordmøre Turistforening;selvbetjent;https://ut.no/hytte/10567/storfiskhytta;63.2742005;8.8236704
+1356403490;Storjordstua;;ubetjent;https://ut.no/hytte/storjordstua;66.8141472;15.4006573
+1356403534;Stranddalshytta;Stavanger Turistforening;betjent;https://ut.no/hytte/stranddalshytta;59.4384264;6.7185144
+1356403549;Stølsmaradalen;DNT Oslo og Omegn;ubetjent;https://ut.no/hytte/101379/stlsmaradalen;61.4011715;7.9359076
+1356403565;Svarthamar;DNT Oslo og Omegn;selvbetjent;https://ut.no/hytte/svarthamar;61.1429719;9.5073227
+1356403579;Svarttjønnbua;Nord-Trøndelag Turistforening;ubetjent;https://ut.no/hytte/svarttjoennbua;64.0485919;11.5407682
+1356403585;Svartvassbu;Molde og Romsdals Turistforening;ubetjent;https://ut.no/hytte/svartvassbu;62.5989297;8.0506328
+1356403601;Sveinsbu;Kongsberg og Omegns Turistforening;ubetjent;https://ut.no/hytte/sveinsbu;59.5405155;9.5232798
+1356403650;Sætersetra;Kristiansund og Nordmøre Turistforening;selvbetjent;https://ut.no/hytte/10800/stersetra;62.9879507;9.0004672
+1356403663;Sørmyrseter;Kongsberg og Omegns Turistforening;ubetjent;https://www.ut.no/hytte/3.1840/;59.5037174;9.6485485
+1356403675;Tjuenborgkoia;Ringerike Turistforening;ubetjent;https://ut.no/hytte/10262/tjuenborgkoia;60.3386268;9.9764396
+1356403687;Tjønndalen;DNT Sør;ubetjent;https://ut.no/hytte/tjoenndalen;58.9612174;7.4714276
+1356403693;Tjønnebu;Ålesund-Sunnmøre Turistforening;ubetjent;https://ut.no/hytte/tjoennebu;62.3211360;7.6668627
+1356403701;Todalshytta;Kristiansund og Nordmøre Turistforening;betjent;https://ut.no/hytte/todalshytta;62.8038744;8.7335253
+1356403707;Torsbu;DNT Oslo og Omegn;selvbetjent;https://ut.no/hytte/torsbu;62.1239197;7.8491054
+1356403714;Torsdalsbu;Aust-Agder Turistforening;ubetjent;https://ut.no/hytte/torsdalsbu;59.2034583;7.7670881
+1356403723;Toveseter;DNT Drammen og Omegn;ubetjent;https://ut.no/hytte/10199/toveseter;60.3389403;9.3213916
+1356403727;Trollstua;Kristiansund og Nordmøre Turistforening;selvbetjent;https://ut.no/hytte/trollstua;63.1594411;8.0205261
+1356403737;Trulsbu;DNT Oslo og Omegn;selvbetjent;https://ut.no/hytte/trulsbu;61.7383804;7.9390799
+1356403746;Tverrlihytta;Kristiansund og Nordmøre Turistforening;selvbetjent;https://ut.no/hytte/tverrlihytta;63.0670928;8.6201557
+1356403759;Tyssenaustet;Ålesund-Sunnmøre Turistforening;ubetjent;https://ut.no/hytte/tyssenaustet;62.0939406;6.6070093
+1356403779;Store Tømtehytta;DNT Oslo og Omegn;ubetjent;https://ut.no/hytte/10777/store-tmtehytta;60.0512453;10.7610489
+1356403799;Vangshaugen;Kristiansund og Nordmøre Turistforening;betjent;https://ut.no/hytte/vangshaugen;62.5435290;8.9555614
+1356403814;Vassdalstjørn;Stavanger Turistforening;selvbetjent;https://ut.no/hytte/vassdalstjoern;59.3973498;6.9729826
+1356403832;Vassfarkoia;Ringerikes Turistforening;ubetjent;https://ut.no/hytte/vassfarkoia;60.4958497;9.4686697
+1356403843;Vasstindbu;Molde og Romsdals Turistforening;ubetjent;https://ut.no/hytte/vasstindbu;62.6305506;7.9845594
+1356403851;Vatnane;Bergen Turlag;ubetjent;https://ut.no/hytte/vatnane;61.0229098;6.3246844
+1356403866;Vending Turisthytte;Bergen Turlag;selvbetjent;https://www.ut.no/hytte/3.2031/;60.4740691;6.0752157
+1356403873;Veslebu;Stavanger Turistforening;ubetjent;https://ut.no/hytte/veslebu;58.9874281;6.1355266
+1356403880;Vesterås;;ubetjent;https://ut.no/hytte/vesteraas;60.5707292;10.8479883
+1356403887;Vetledalseter;;ubetjent;https://ut.no/hytte/10934/vetledalseter;61.8450712;7.1861445
+1356403896;Vigdalstøl;DNT Oslo og Omegn;selvbetjent;https://ut.no/hytte/vigdalstoel;61.5188429;7.3619192
+1356403905;Viglesdalen;Stavanger Turistforening;ubetjent;https://ut.no/hytte/viglesdalen;59.1593824;6.4502971
+1356403916;Vinddalen;Stavanger Turistforening;stengt;https://ut.no/hytte/101053/vinddalen;58.9617762;6.3265032
+1356403934;Vokterboligen;Narvik og Omegn Turistforening;ubetjent;https://ut.no/hytte/vokterboligen;68.4042148;17.9855164
+1356403936;Vollasetra;Kristiansund og Nordmøre Turistforening;selvbetjent;https://ut.no/hytte/10804/vollasetra;62.5794918;9.1245238
+1356403947;Vålet;;ubetjent;https://ut.no/hytte/vaalet;60.2786936;12.4779623
+1356403964;Øvre Fjellstul;Kongsberg og Omegns Turistforening;ubetjent;https://ut.no/hytte/3.1747/;59.9457030;9.0930136
+1356403973;Øyuvsbu;DNT Sør;selvbetjent;https://ut.no/hytte/oeyuvsbu;59.0243471;7.2367089
+1356457768;Fjellvassbu;;ubetjent;https://ut.no/hytte/fjellvassbu/;60.9504499;5.7943601
+1356459139;Sylvarnes;;ubetjent;https://ut.no/hytte/sylvarnes;61.0939468;6.2953302
+1606964723;Skorgedalsbu;Molde og Romsdals Turistforening;selvbetjent;https://ut.no/hytte/skorgedalsbu;62.5968124;7.6352083
+2066129571;Sandfløten;Hamar og Hedemarken Turistforening;ubetjent;https://ut.no/hytte/101060;61.0697173;11.1699911
+2789009843;Lufsjå;DNT Oslo og Omegn;selvbetjent;https://www.ut.no/hytte/3.1584/;60.1443014;8.7987062
+2816789355;Gramstad;;ubetjent;https://ut.no/hytte/gramstad;58.8842518;5.7991103
+2895902384;Lysefjorden turisthytte;Stavanger Turistforening;betjent;https://ut.no/hytte/101055/lysefjorden-turisthytte;59.0549031;6.6486725
+2971979832;Jonstøl;Stavanger Turistforening;selvbetjent;https://ut.no/hytte/3.2443/;59.5609726;6.8590903
+3108548206;Lageråkvisla;Hamar og Hedemarken Turistforening;ubetjent;https://ut.no/hytte/lageraakvisla;60.9245005;11.1947995
+3112456260;Skridulaupbu;DNT Oslo og Omegn;selvbetjent;https://ut.no/hytte/skridulaupbu;61.9032888;7.6057552
+3112456269;Veltdalshytta;Ålesund-Sunnmøre Turistforening;selvbetjent;https://ut.no/hytte/veltdalshytta;62.1593708;7.7206681
+3114489678;Øyungshytta;Hamar og Hedemarken Turistforening;selvbetjent;https://ut.no/hytte/101295;61.2189838;10.9326912
+3125297665;Bellingstua;Nord-Trøndelag Turistforening;selvbetjent;https://www.ut.no/hytte/3.1616/;63.6828675;12.2614124
+3169293543;Slettningsbu;DNT Oslo og Omegn;selvbetjent;https://www.ut.no/hytte/3.1980/;61.2457713;8.1292303
+3577262281;Brandstadbu;Molde og Romsdals Turistforening;ubetjent;https://ut.no/hytte/brandstadbu;62.6340821;8.2971544
+3579325678;Koboltkoia;Drammens og Oplands Turistforening;ubetjent;;59.9791746;9.8659458
+3791845276;Gullhorgabu;Bergen og Hordaland Turlag;;;60.5007664;5.9601822
+3792043284;Breidablik;Bergen og Hordaland Turlag;selvbetjent;;60.4660796;6.1255491
+3812829663;Børsteinen;Stavanger Turistforening;ubetjent;https://ut.no/hytte/boersteinen;59.0349174;6.8065227
+3986724650;Sandhaug;DNT Oslo og Omegn;betjent;https://ut.no/hytte/sandhaug;60.1839337;7.4818894
+3997897233;Holmavatnhytta;Stavanger Turistforening;selvbetjent;https://ut.no/hytte/holmavatn;59.7058920;7.1252406
+3998151837;Bleskestadmoen;Stavanger Turistforening;selvbetjent;https://ut.no/hytte/bleskestadmoen;59.6258262;6.9840852
+4148859174;Krokan;;;https://ut.no/hytte/krokan-turisthytte;59.8660539;8.4733245
+4215896868;Sauvasshytta;Rana Turistforening;ubetjent;https://ut.no/hytte/sauvasshytta;66.1865693;14.7508782
+4516132194;Mæhlumsetra;;ubetjent;https://ut.no/hytte/maehlumsetra;60.7202114;10.5035074
+4523282226;Nydalshytta;DNT Oslo og Omegn;ubetjent;https://ut.no/hytte/10595/nydalshytta;60.0241512;10.8409804
+4770274456;Reinheim;DNT Oslo og Omegn;selvbetjent;https://ut.no/hytte/10918/reinheim;62.3411774;9.3561922
+4770275398;Dindalshytta;Trondhjems Turistforening;selvbetjent;https://ut.no/hytte/dindalshytta;62.5400207;9.3411202
+4770276007;Vassendsetra;Trondhjems Turistforening;selvbetjent;https://ut.no/hytte/vassendsetra;62.7134496;9.1951681
+4770276323;Åmotdalshytta;Kristiansund og Nordmøre Turistforening;selvbetjent;https://ut.no/hytte/101147/amotdalshytta;62.3592608;9.1975064
+5506489896;Stordalsbu;DNT Oslo og Omegn;selvbetjent;https://ut.no/hytte/stordalsbu;60.0601300;8.0815105
+5618358305;Kvipt Gjestegard;;betjent;https://www.kvipt.no/;59.0633415;7.9225012
+5650841233;Storlisetra;Kristiansund og Nordmøre Turistforening;selvbetjent;https://ut.no/hytte/10568/storlisetra;63.1843962;9.0114048
+5903505082;Hardbakkhytta;Kristiansund og Nordmøre Turistforening;selvbetjent;https://ut.no/hytte/hardbakkhytta;63.0996837;8.7647845
+6018924885;Fuglemyrhytta;DNT Oslo og Omegn;ubetjent;;59.9782303;10.6953204
+6135572234;Torvedalshytta;Voss Utferdslag;selvbetjent;https://ut.no/hytte/torvedalshytta;60.8232026;6.3321234
+6135572239;Tvinnestølen;Voss Utferdslag;ubetjent;https://ut.no/hytte/tvinnestoelen;60.7368093;6.3645363
+6137075984;Trollvassbu;Troms Turlag;ubetjent;https://ut.no/hytte/trollvassbu;69.7369921;19.4900230
+6137347484;Fjellhov;Nord-Trøndelag Turistforening;ubetjent;https://ut.no/hytte/fjellhov;63.6627410;10.9032710
+6282702618;Fellvasstua;Bodø og Omegns Turistforening;ubetjent;https://ut.no/hytte/fellvasstua;66.8608989;14.1555149
+6710835200;Beiarstua;Bodø og Omegns Turistforening;ubetjent;https://ut.no/hytte/beiarstua;66.8574364;14.6904496
+7055984682;Volahytta;Voss Utferdslag;selvbetjent;https://ut.no/hytte/volahytta;60.7392593;6.3054696
+7292497840;Nørdstedalseter;DNT Oslo og Omegn;betjent;https://ut.no/hytte/noerdstedalseter;61.6426606;7.7903755
+7621468648;Nonsbu;Troms Turlag;ubetjent;https://ut.no/hytte/nonsbu;69.7048193;19.3154093
+8530799545;Taumevatn;Stavanger Turistforening;selvbetjent;https://ut.no/hytte/taumevatn;59.1030430;6.9871150
+8530799556;Heibergtunet Storevatn;Stavanger Turistforening;selvbetjent;https://ut.no/hytte/heibergtunet-storevatn;59.1479310;7.0222450
+8741100798;Langavatn;Stavanger Turistforening;selvbetjent;https://ut.no/hytte/langavatn;58.9916203;6.6147382
+9016113976;Kaldavasshytta;Voss Utferdslag;ubetjent;https://ut.no/hytte/kaldavasshytta;60.7022184;7.0787383
+9112739913;Tyssevassbu;DNT Oslo og Omegn;selvbetjent;https://ut.no/hytte/tyssevassbu;60.1561425;6.8418495
+9112799590;Reinaskorsbu;Bergen Turlag;selvbetjent;;60.1301761;6.7562665
+9132777016;Selhamar;Bergen Turlag;selvbetjent;https://ut.no/hytte/selhamar;60.9136755;6.2630249
+9132921981;Norddalshytten;Bergen Turlag;selvbetjent;https://ut.no/hytte/norddalshytten;61.0148023;5.9956436
+9175855991;Katnosdammen;DNT Oslo og Omegn;ubetjent;https://ut.no/hytte/10778/katnosdammen;60.1474386;10.5916919
+9654304928;Geiterygghytta;DNT Oslo og Omegn;betjent;https://ut.no/hytte/10808;60.7008348;7.6034770
+9809293373;Trollheimshytta;Trondhjems Turistforening;betjent;https://ut.no/hytte/trollheimshytta;62.8289990;9.2398228
+9809293378;Jøldalshytta;Trondhjems Turistforening;betjent;https://ut.no/hytte/joeldalshytta;62.8623199;9.5089021
+9809293382;Glitterheim;DNT Oslo og Omegn;betjent;https://ut.no/hytte/glitterheim;61.6226325;8.6327313
+9809293383;Snøheim;DNT Oslo og Omegn;betjent;https://ut.no/hytte/10917;62.2942397;9.3508918
+9810681362;Geitungen fyr;Haugesund Turistforening;ubetjent;https://ut.no/hytte/geitungen-fyr;59.1319709;5.2426431
+9810716499;Goldahytta;Troms Turlag;ubetjent;https://ut.no/hytte/goldahytta;69.0735076;20.5024300
+9886486078;Tomannsbu;Stavanger Turistforening;selvbetjent;https://ut.no/hytte/tomannsbu;58.8311620;6.6435550
+9951248453;Velleseter;Ålesund-Sunnmøre Turistforening;ubetjent;https://ut.no/hytte/velleseter;62.2680030;6.6704915
+9953892573;Sandvatn;Stavanger Turistforening;ubetjent;https://ut.no/hytte/sandvatn;58.9542616;6.6508131
+11177648171;Munkebu;Lofoten Turlag;ubetjent;https://ut.no/hytte/munkebu;67.9275276;13.0035016
+12756595187;Nye Høgevarde;DNT Drammen og Omegn;selvbetjent;https://ut.no/hytte/101266/hgevarde-nye;60.2925718;9.4604507
+12798384665;Gautelishytta;Narvik og Omegn Turistforening;ubetjent;https://ut.no/hytte/gautelishytta;68.0389216;17.8377463
+12801124335;Cunojávrihytta;Narvik og Omegn Turistforening;ubetjent;https://ut.no/hytte/cunoj%C3%A1vrihytta;68.1977355;18.0842547
+12801170419;Dividalshytta;DNT Oslo og Omegn;ubetjent;https://ut.no/hytte/dividalshytta;68.6751673;19.8233358
+12801170420;Vuomahytta;DNT Oslo og Omegn;ubetjent;https://ut.no/hytte/vuomahytta;68.6723093;19.4863320
+12801187428;Røysvatnhytta;Narvik og Omegn Turistforening;ubetjent;https://ut.no/hytte/roeysvatn;67.9605544;16.8332562
+12801189403;Gaskashytta;DNT Oslo og Omegn;ubetjent;https://ut.no/hytte/gaskashytta;68.6588825;19.1203529
+12801189404;Altevasshytta;Troms Turlag;ubetjent;https://ut.no/hytte/altevasshytta;68.6633431;18.8907547
+12801189405;Lappjordhytta;DNT Oslo og Omegn;ubetjent;https://ut.no/hytte/lappjordhytta;68.5138739;18.6316452
+12801260925;Sorjushytta;Sulitjelma og Omegn Turistforening;ubetjent;https://ut.no/hytte/sorjushytta;67.2067955;16.2560849
+12802270079;Bojobæskihytta;Alta og Omegn Turlag;ubetjent;https://ut.no/hytte/bojobaeskihytta-%28bojobeaskihytta%29;69.7919568;24.1761500
+12804439597;Nutevasshytta;Aust-Agder Turistforening;selvbetjent;https://ut.no/hytte/nutevasshytta;59.1066840;7.8172173
+12804468457;Gaustatoppen Turisthytte;DNT Telemark;betjent;https://ut.no/hytte/101065/gaustatoppen-turisthytte;59.8504041;8.6555911
+12804487549;Trollsvannstua;Tønsberg og Omegn Turistforening;ubetjent;https://ut.no/hytte/trollsvannstua;59.3577914;10.0306980
+12804494998;Sandvasshytta;Haugesund Turistforening;selvbetjent;https://ut.no/hytte/10187/sandvasshytta;59.7902060;6.3068527
+12804502308;Patchellhytta;Ålesund-Sunnmøre Turistforening;selvbetjent;https://ut.no/hytte/patchellhytta;62.2114725;6.7199313
+12804504305;Rembesdalseter;DNT Oslo og Omegn;selvbetjent;https://ut.no/hytte/rembesdalseter;60.5341892;7.2702246
+12804511784;Jashaugbu;DNT;ubetjent;https://ut.no/hytte/jashaugbu;60.9793846;6.7377060
+12804520589;Åsedalen;Bergen Turlag;selvbetjent;https://ut.no/hytte/aasedalen;60.9655261;6.2208312
+12804524713;Vardadalsbu;Bergen Turlag;selvbetjent;https://ut.no/hytte/10340/vardadalsbu;60.9466296;5.8899630
+12804531429;Hadlaskard;Bergen Turlag;selvbetjent;https://ut.no/hytte/hadlaskard;60.2507773;7.1665373
+12804531431;Grøvudalshytta;Kristiansund og Nordmøre Turistforening;selvbetjent;https://ut.no/hytte/10796;62.4440850;8.9017554
+12804544376;Sprongdalshytta;DNT Oslo og Omegn;selvbetjent;https://ut.no/hytte/sprongdalshytta;61.7402837;7.4884654
+12804561064;Solrenningen;Bergen Turlag;selvbetjent;https://ut.no/hytte/solrenningen;61.0086735;6.1309917
+12804564864;Toralfsbu;Harstad Turlag;ubetjent;https://ut.no/hytte/toralfsbu;68.5658890;15.9721170
+12804579605;Fogdehytta;DNT Gjøvik & Omegn;ubetjent;https://ut.no/hytte/fogdehytta;60.8042452;10.6260973
+12804587321;Tåkeheimen;Bodø og Omegns Turistforening;ubetjent;https://ut.no/hytte/taakeheimen;66.6941929;13.8298590
+12804592617;Blåfjellenden;Stavanger Turistforening;ubetjent;https://ut.no/hytte/blaafjellenden;58.9283772;6.5298973
+12804604888;Gråtådalstua;Bodø og Omegns Turistforening;ubetjent;https://ut.no/hytte/graataadalstua;66.7870454;14.4726882
+12804619055;Sandsa;Stavanger Turistforening;ubetjent;https://ut.no/hytte/sandsa;59.4341413;6.5867627
