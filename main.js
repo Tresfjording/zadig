@@ -1,7 +1,3 @@
-// Globbale variabler
-// Øverst i main.js
-const sokInput = document.getElementById("sokInput");
-
 // --------------------------
 // INIT KART
 // --------------------------
@@ -12,9 +8,13 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 const infobox = document.getElementById("infobox");
+const sokInput = document.getElementById("sokInput"); // globalt tilgjengelig
+const visInfoBtn = document.getElementById("visInfoBtn");
+
 let steder = [];
 let aktivMarker = null;
 let landssnitt = null;
+let aktivIndex = -1; // brukes av tastaturkontroll
 
 // --------------------------
 // HENT LANDSSNITT
@@ -60,10 +60,7 @@ async function hentPrisNaa(sone) {
   try {
     const res = await fetch(url);
     const data = await res.json();
-    const entry = data.find(p => {
-      const startHour = new Date(p.time_start).getHours();
-      return startHour === hour;
-    });
+    const entry = data.find(p => new Date(p.time_start).getHours() === hour);
     return entry ? entry.NOK_per_kWh.toFixed(2) : null;
   } catch (err) {
     console.error("Feil ved henting av pris nå:", err);
@@ -89,9 +86,9 @@ async function oppdaterFelter(entry, prisNaa) {
   html += "</ul>";
 
   if (entry.sone && prisNaa != null) {
-    html += `<p><strong>Pris nå (${entry.sone}):</strong> ${prisNaa} kr/kWh ekskl. MVA</p>`;
+    html += `<p><strong>Pris nå (${entry.sone}):</strong> ${prisNaa} kr/kWh</p>`;
     if (landssnitt) {
-      html += `<p><strong>Landssnitt:</strong> ${landssnitt} kr/kWh ekskl. MVA</p>`;
+      html += `<p><strong>Landssnitt:</strong> ${landssnitt} kr/kWh</p>`;
     }
   }
 
@@ -99,7 +96,7 @@ async function oppdaterFelter(entry, prisNaa) {
 }
 
 // --------------------------
-// VIS TETTSTED (kun via søk)
+// VIS TETTSTED
 // --------------------------
 async function visTettsted(entry) {
   if (aktivMarker) {
@@ -140,7 +137,7 @@ function normaliser(str) {
 }
 
 async function søkTettsted() {
-  const sok = normaliser(document.getElementById("sokInput").value);
+  const sok = normaliser(sokInput.value);
   const entry = steder.find(e => normaliser(e.tettsted) === sok);
   if (entry) {
     visTettsted(entry);
@@ -156,9 +153,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   await hentLandssnitt();
   await lastTettsteder();
 
-  const sokInput = document.getElementById("sokInput");
-  const visInfoBtn = document.getElementById("visInfoBtn");
-
   if (sokInput && visInfoBtn) {
     visInfoBtn.addEventListener("click", søkTettsted);
     sokInput.addEventListener("keyup", e => {
@@ -168,7 +162,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 // --------------------------
-// LAST TETTSTEDER (kun data)
+// LAST TETTSTEDER
 // --------------------------
 async function lastTettsteder() {
   try {
@@ -180,13 +174,11 @@ async function lastTettsteder() {
 }
 
 // --------------------------
-// AUTOCOMPLETE MED TASTATUR
+// AUTOCOMPLETE
 // --------------------------
 const forslagBox = document.createElement("div");
 forslagBox.id = "forslagBox";
 document.body.appendChild(forslagBox);
-
-let aktivIndex = -1;
 
 sokInput.addEventListener("input", () => {
   const query = sokInput.value.toLowerCase();
@@ -199,7 +191,7 @@ sokInput.addEventListener("input", () => {
       (e.fylke && e.fylke.toLowerCase().startsWith(query))
     ).slice(0, 10);
 
-    treff.forEach((e, idx) => {
+    treff.forEach(e => {
       const div = document.createElement("div");
       div.textContent = e.tettsted + (e.fylke ? ` (${e.fylke})` : "");
       div.className = "forslag";
@@ -218,7 +210,9 @@ sokInput.addEventListener("input", () => {
   }
 });
 
-// Tastaturkontroll
+// --------------------------
+// TASTATURKONTROLL
+// --------------------------
 sokInput.addEventListener("keydown", (e) => {
   const forslag = forslagBox.querySelectorAll(".forslag");
   if (forslag.length === 0) return;
