@@ -11,6 +11,43 @@
   <button id="visInfoBtn">Vis info</button>
 
   <div id="map"></div>
+
+<div id="map"></div>
+
+<script src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"></script>
+<script>
+  Papa.parse("https://tresfjording.no/hytter.csv", {
+    download: true,
+    header: false,
+    complete: function(results) {
+      const features = results.data.map(row => ({
+        type: "Feature",
+        properties: {
+          id: row[0],
+          navn: row[1],
+          forening: row[2],
+          type: row[3],
+          url: row[4]
+        },
+        geometry: {
+          type: "Point",
+          coordinates: [parseFloat(row[6]), parseFloat(row[5])]
+        }
+      }));
+
+      const geojson = { type: "FeatureCollection", features };
+
+      L.geoJSON(geojson, {
+        onEachFeature: function (feature, layer) {
+          const p = feature.properties;
+          layer.bindPopup(`<b>${p.navn}</b><br>${p.forening}<br>${p.type}<br><a href="${p.url}" target="_blank">Mer info</a>`);
+        }
+      }).addTo(map);
+    }
+  });
+</script>
+
+
   <div id="infobox">Klikk på et tettsted eller søk for å vise info.</div>
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
