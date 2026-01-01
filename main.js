@@ -1,7 +1,6 @@
 // --------------------------
 // INIT KART
 // --------------------------
-
 const map = L.map('map').setView([65.0, 12.0], 5);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -9,11 +8,6 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 const infobox = document.getElementById("infobox");
-
-document.getElementById("visInfoBtn").addEventListener("click", () => {
-  infobox.innerHTML = "<p>Her kommer info om tettstedet du søker.</p>";
-});
-
 let steder = [];
 let aktivMarker = null;
 let landssnitt = null;
@@ -101,7 +95,7 @@ async function oppdaterFelter(entry, prisNaa) {
 }
 
 // --------------------------
-// VIS TETTSTED MED FARGE + TOOLTIP
+// VIS TETTSTED (kun via søk)
 // --------------------------
 async function visTettsted(entry) {
   if (aktivMarker) {

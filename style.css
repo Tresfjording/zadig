@@ -66,7 +66,9 @@ body {
   border-radius: 4px;
 }
 
-/* Responsiv layout for mobil */
+/* --------------------------
+   RESPONSIV LAYOUT
+   -------------------------- */
 @media (max-width: 768px) {
   #map {
     height: 70vh;
@@ -74,11 +76,11 @@ body {
   }
 
   #infobox {
-    position: static;
-    width: 100%;
+    position: static;   /* ikke flytende */
+    width: 100%;        /* full bredde */
     max-width: none;
     max-height: none;
-    box-shadow: none;
+    box-shadow: none;   /* fjern skygge på mobil */
     border-radius: 0;
     border-top: 2px solid #ccc;
   }
