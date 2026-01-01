@@ -56,16 +56,18 @@ function placeMarkers() {
 
         const marker = L.marker([lat, lon]).addTo(map);
 
-// legg cabin-objektet direkte på markøren
-marker.cabin = cabin;
+        // legg cabin-objektet direkte på markøren
+        marker.cabin = cabin;
 
-marker.bindPopup(`
-    <strong>${cabin.name || "Ukjent hytte"}</strong><br>
-    Eier: ${cabin.owner || "Ukjent"}<br>
-    Kommune: ${cabin.kommune || "?"}
-`);
+        marker.bindPopup(`
+            <strong>${cabin.name || "Ukjent hytte"}</strong><br>
+            Eier: ${cabin.owner || "Ukjent"}<br>
+            Kommune: ${cabin.kommune || "?"}
+        `);
 
-markers.push(marker);
+        markers.push(marker);
+    });
+}
 
     });
 }
@@ -73,7 +75,7 @@ markers.push(marker);
 // -----------------------------
 // Search
 // -----------------------------
-ffunction setupSearch() {
+function setupSearch() {
     const input = document.getElementById('search');
 
     input.addEventListener('input', () => {
