@@ -91,17 +91,23 @@ function initMap(data, facts, strøm) {
     }
 
     // Hytte
-    if (entry.h_lat && entry.h_lon) {
-      const lat = toNumber(entry.k_lat_decimal || entry.h_lat);
+const lat = toNumber(entry.k_lat_decimal || entry.h_lat);
 const lon = toNumber(entry.k_lon_decimal || entry.h_lon);
-      const marker = L.marker([entry.h_lat, entry.h_lon], {
-        icon: L.divIcon({ className: "hytte-icon", html: "▲", iconSize: [12,12], iconAnchor:[6,6] })
-      }).bindTooltip(entry.h_navn);
-      marker.on("mouseover", () => updateHytteInfo(entry, facts));
-      marker.on("mouseout", () => clearInfo());
-      hytteLayer.addLayer(marker);
-    }
-  });
+
+if (!isNaN(lat) && !isNaN(lon)) {
+    const marker = L.marker([lat, lon], {
+        icon: L.divIcon({
+            className: "hytte-icon",
+            html: "▲",
+            iconSize: [12, 12],
+            iconAnchor: [6, 6]
+        })
+    }).bindTooltip(entry.h_navn);
+
+    marker.on("mouseover", () => updateHytteInfo(entry, facts));
+    marker.on("mouseout", () => clearInfo());
+    hytteLayer.addLayer(marker);
+}
 
   // Søkefunksjon
   const searchIndex = [
