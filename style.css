@@ -285,10 +285,10 @@ body {
 }
 
 /* Responsiv tilpasning */
-@media (max-width: 640px) {
+@media (max-width: 150px) {
   .search-container {
     top: 1.8rem;
-    max-width: 12vw;
+    min-width: 92vw;
   }
 
   .info-panel {
