@@ -130,6 +130,18 @@ body {
   font-weight: 500;
 }
 
+.suggestion-item {
+    padding: 6px 10px;
+    color: black;
+    background: white;
+    border-bottom: 1px solid #eee;
+}
+
+.suggestion-item:hover {
+    background: #f0f0f0;
+    cursor: pointer;
+}
+
 .suggestion-type {
   font-size: 0.7rem;
   text-transform: uppercase;
