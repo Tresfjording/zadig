@@ -105,7 +105,7 @@ function initMap() {
 // --------- Last data ---------
 let places = [];
 let cabins = [];
-let facts = [];
+// let facts = [];
 
 async function loadData() {
     try {
