@@ -27,7 +27,7 @@ body {
 .search-container {
       position: fixed;      /* Holder den alltid synlig */
     top: 20px;            /* Avstand fra toppen */
-    left: 200px;           /* Avstand fra venstre */
+    left: 400px;           /* Avstand fra venstre */
     z-index: 9999;        /* Over kartet */
  
     background: white;
