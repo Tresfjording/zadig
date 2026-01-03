@@ -254,29 +254,40 @@ async function velgTettsted(t) {
     duration: 0.8
   });
 }
-  // Strømpris
- async function loadPowerPrice(area = "NO3") {
+ // Strømpris
+async function loadPowerPrice(area = "NO3") {
     try {
         const now = new Date();
         const year = now.getFullYear();
         const month = String(now.getMonth() + 1).padStart(2, "0");
-        const day = String(now.getDate()).padStart(2, "0");}
+        const day = String(now.getDate()).padStart(2, "0");
 
         const url = `https://www.hvakosterstrommen.no/api/v1/prices/${year}/${month}-${day}_${area}.json`;
 
         const response = await fetch(url);
 
         if (!response.ok) {
-    console.warn("Klarte ikke hente JSON:", response.status)};
-    return; // stopp, men ikke krasj
-}
+            console.warn("Klarte ikke hente JSON:", response.status);
+            return null;
+        }
 
-let data;
-try {
-    data = await response.json();
-} catch (err) {
-    console.error("JSON-parsing feilet:", err);
-    return;
+        let data;
+        try {
+            data = await response.json();
+        } catch (err) {
+            console.error("JSON-parsing feilet:", err);
+            return null;
+        }
+
+        const hour = now.getHours();
+        if (!data[hour]) return null;
+
+        return data[hour].NOK_per_kWh;
+
+    } catch (err) {
+        console.error("loadPowerPrice feilet:", err);
+        return null;
+    }
 }
 
 const POWER_AREAS = ["NO1", "NO2", "NO3", "NO4", "NO5"];
