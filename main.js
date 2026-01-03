@@ -112,9 +112,11 @@ function renderSuggestions(matches) {
         const div = document.createElement("div");
         div.className = "suggestion-item";
         div.textContent = item.label;
-        div.addEventListener("click", () => {
+
+        div.addEventListener("mousedown", () => {
             handleSearch(item.label);
         });
+
         suggestionsEl.appendChild(div);
     });
 }

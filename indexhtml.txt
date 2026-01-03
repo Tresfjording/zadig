@@ -51,6 +51,12 @@
       </div>
     </div>
   </div>
+<input id="place-search" placeholder="SØK ETTER TETTSTED ELLER HYTTE">
+<div id="search-suggestions"></div>
+<div id="map"></div>
+<div id="info-title"></div>
+<div id="info-content"></div>
+<div id="random-fact"></div>
 
   <!-- Leaflet JS -->
   <script
