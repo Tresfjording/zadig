@@ -79,15 +79,16 @@ function initMap(data, facts, strøm) {
   // Legg til markører
   data.forEach(entry => {
 // Kommune
+// Kommune
 const kommuneLat = toNumber(entry.k_lat_decimal || entry.h_lat);
 const kommuneLon = toNumber(entry.k_lon_decimal || entry.h_lon);
 
-if (!isNaN(lat) && !isNaN(lon)) {
-    const marker = L.circleMarker([lat, lon], {
+if (!isNaN(kommuneLat) && !isNaN(kommuneLon)) {
+    const marker = L.circleMarker([kommuneLat, kommuneLon], {
         radius: 6,
         color: "black",
         weight: 1,
-        fillColor: "blue", // her kan du bytte til farge basert på strømpris
+        fillColor: "blue", // her kan du fargekode basert på strømpris
         fillOpacity: 0.8
     }).bindTooltip(entry.t_knavn || entry.h_navn);
 
@@ -144,7 +145,7 @@ if (!isNaN(lat) && !isNaN(lon)) {
       suggestions.appendChild(li);
     });
   });
-})
+}
 
 function updateInfo(entry, facts, pris) {
   document.getElementById("info-box").innerHTML = `
