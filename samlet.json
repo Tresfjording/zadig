@@ -8566,5 +8566,29 @@
     "h_url": "https://ut.no/hytte/3.2443/",
     "h_lat": "59,5609726",
     "h_lon": "6,8590903"
+  },
+  {
+    "t_k.nr": 1535,
+    "t_knavn": "Tresfjord",
+    "t_fnavn": "Møre og Romsdal",
+    "t_sone": "NO3",
+    "k_innbyggere": 7155,
+    "k_areal": 0.49,
+    "k_ansatte": "-",
+    "k_tilskudd":"261 192",
+    "k_språk": "nøytral",
+    "k_slagord": "Midt i Blinken",
+    "f_slagord": "-",
+    "k_lat": "7°07'32.52\" N",
+    "k_lon": "62°35'8.88\" E",
+    "k_lon_decimal": "7.1257",
+    "k_lat_decimal": "62.5858",
+    "h_id": "-",
+    "h_navn": "-",
+    "h_operatør": "-",
+    "h_type": "-",
+    "h_url": "https://no.wikipedia.org/wiki/Tresfjord",
+    "h_lat": "62.5858",
+    "h_lon": "7.1257"
   }
 ]
