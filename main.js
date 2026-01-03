@@ -169,7 +169,11 @@ function updateInfoBoxWithPlace(place) {
     contentEl.innerHTML = `
         <p><strong>Fylke:</strong> ${place.t_fnavn}</p>
         <p><strong>Innbyggere:</strong> ${place.k_innbyggere}</p>
+        <p><strong>Areal:</strong> ${place.areal}</p>
+        <p><strong>Ansatte:</strong> ${place.k_ansatte}</p>
         <p><strong>Språk:</strong> ${place.k_språk}</p>
+        <p><strong>Slagord:</strong> ${place.k_slagord}</p>
+        <p><strong>Tilskudd:</strong> ${place.tilskudd}</p>
         <p><strong>Slagord:</strong> ${place.k_slagord}</p>
     `;
 }
