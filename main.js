@@ -228,7 +228,7 @@ function renderAllHytteMarkers() {
 
         const marker = L.marker([lat, lon], {
             title: h.h_navn,
-            icon: hytteikon   // ← bruk trekanten her
+            icon: img/hytteikon.xcf   // ← bruk trekanten her
         });
 
         marker.on("mouseover", () => updateInfoBoxWithCabin(h));
