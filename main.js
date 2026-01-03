@@ -1,246 +1,102 @@
-//---------------------------
-// GLOBALE VARIABLER
-//---------------------------
-  
-// --------------------------
-// INIT KART
-// --------------------------
-const map = L.map('map').setView([65.0, 12.0], 5);
-
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '© OpenStreetMap'
-}).addTo(map);
-
-const infobox = document.getElementById("infobox");
-const sokInput = document.getElementById("sokInput"); // globalt tilgjengelig
-const visInfoBtn = document.getElementById("visInfoBtn");
-
-let steder = [];
-let aktivMarker = null;
-let landssnitt = null;
-let aktivIndex = -1; // brukes av tastaturkontroll
-
-// --------------------------
-// HENT LANDSSNITT
-// --------------------------
-async function hentLandssnitt() {
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, "0");
-  const day = String(today.getDate()).padStart(2, "0");
-
-  const soner = ["NO1","NO2","NO3","NO4","NO5"];
-  let alleVerdier = [];
-
-  for (const sone of soner) {
-    const url = `https://www.hvakosterstrommen.no/api/v1/prices/${year}/${month}-${day}_${sone}.json`;
-    try {
-      const res = await fetch(url);
-      const data = await res.json();
-      alleVerdier.push(...data.map(p => p.NOK_per_kWh));
-    } catch (err) {
-      console.error("Feil ved henting av sone", sone, err);
-    }
-  }
-
-  if (alleVerdier.length > 0) {
-    landssnitt = (alleVerdier.reduce((a,b)=>a+b,0) / alleVerdier.length).toFixed(2);
-    console.log("Landssnitt:", landssnitt);
-  }
-}
-
-// --------------------------
-// HENT PRIS FOR NÅVÆRENDE TIME
-// --------------------------
-async function hentPrisNaa(sone) {
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, "0");
-  const day = String(now.getDate()).padStart(2, "0");
-  const hour = now.getHours();
-
-  const url = `https://www.hvakosterstrommen.no/api/v1/prices/${year}/${month}-${day}_${sone}.json`;
-
-  try {
-    const res = await fetch(url);
-    const data = await res.json();
-    const entry = data.find(p => new Date(p.time_start).getHours() === hour);
-    return entry ? entry.NOK_per_kWh.toFixed(2) : null;
-  } catch (err) {
-    console.error("Feil ved henting av pris nå:", err);
-    return null;
-  }
-}
-
-// --------------------------
-// OPPDATER INFOBOKS
-// --------------------------
-async function oppdaterFelter(entry, prisNaa) {
-  if (!entry) {
-    infobox.innerHTML = "<p>Ingen data å vise.</p>";
-    return;
-  }
-
-  let html = `<h2>${entry.tettsted || "Ukjent tettsted"}</h2><ul>`;
-  for (const key in entry) {
-    if (!["lat", "lon", "lat_decimal", "lon_decimal"].includes(key)) {
-      html += `<li><strong>${key}:</strong> ${entry[key]}</li>`;
-    }
-  }
-  html += "</ul>";
-
-  if (entry.sone && prisNaa != null) {
-    html += `<p><strong>Pris nå (${entry.sone}):</strong> ${prisNaa} kr/kWh</p>`;
-    if (landssnitt) {
-      html += `<p><strong>Landssnitt:</strong> ${landssnitt} kr/kWh</p>`;
-    }
-  }
-
-  infobox.innerHTML = html;
-}
-
-// --------------------------
-// VIS TETTSTED
-// --------------------------
-async function visTettsted(entry) {
-  if (aktivMarker) {
-    map.removeLayer(aktivMarker);
-    aktivMarker = null;
-  }
-
-  const prisNaa = await hentPrisNaa(entry.sone);
-  let farge = "blue";
-
-  if (landssnitt && prisNaa) {
-    if (prisNaa < landssnitt) farge = "green";
-    else if (prisNaa > landssnitt) farge = "red";
-    else farge = "orange";
-  }
-
-  aktivMarker = L.circleMarker([entry.lat_decimal, entry.lon_decimal], {
-    radius: 10,
-    color: farge,
-    fillColor: farge,
-    fillOpacity: 0.8
-  }).addTo(map)
-    .bindTooltip(
-      `${entry.tettsted} – ${prisNaa ? prisNaa + " kr/kWh" : "pris ikke tilgjengelig"}`,
-      { permanent: true, direction: "top" }
-    )
-    .openTooltip();
-
-  await oppdaterFelter(entry, prisNaa);
-  map.setView([entry.lat_decimal, entry.lon_decimal], 10);
-}
-
-// --------------------------
-// SØK
-// --------------------------
-function normaliser(str) {
-  return (str || "").trim().toLowerCase();
-}
-
-async function søkTettsted() {
-  const sok = normaliser(sokInput.value);
-  const entry = steder.find(e => normaliser(e.tettsted) === sok);
-  if (entry) {
-    visTettsted(entry);
-  } else {
-    infobox.innerHTML = `<p>Fant ikke "${sok}" i lokal liste.</p>`;
-  }
-}
-
-// --------------------------
-// INIT
-// --------------------------
-document.addEventListener("DOMContentLoaded", async () => {
-  await hentLandssnitt();
-  await lastTettsteder();
-  console.log("Antall steder lastet:", steder.length);
-
-  if (sokInput && visInfoBtn) {
-    visInfoBtn.addEventListener("click", søkTettsted);
-    sokInput.addEventListener("keyup", e => {
-      if (e.key === "Enter") søkTettsted();
-    });
-  }
+// Last data
+Promise.all([
+  fetch("samlet.json").then(r => r.json()),
+  fetch("facts_all.json").then(r => r.json()),
+  fetch("https://www.hvakosterstrommen.no/api/v1/prices/current").then(r => r.json())
+]).then(([samlet, facts, strøm]) => {
+  initMap(samlet, facts, strøm);
 });
 
-// --------------------------
-// LAST TETTSTEDER
-// --------------------------
-async function lastTettsteder() {
-  try {
-    const res = await fetch("tettsteder_3.json");
-    steder = await res.json();
-  } catch (err) {
-    infobox.innerHTML = `<p>Feil ved lasting av tettsteder: ${err}</p>`;
-  }
-}
+function initMap(data, facts, strøm) {
+  const map = L.map("map").setView([64.5, 11], 5);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
 
-// --------------------------
-// AUTOCOMPLETE
-// --------------------------
-const forslagBox = document.createElement("div");
-forslagBox.id = "forslagBox";
-document.body.appendChild(forslagBox);
+  const kommuneLayer = L.layerGroup().addTo(map);
+  const hytteLayer = L.layerGroup().addTo(map);
 
-sokInput.addEventListener("input", () => {
-  const query = sokInput.value.toLowerCase();
-  forslagBox.innerHTML = "";
-  aktivIndex = -1;
+  // Beregn landsgjennomsnitt
+  const priser = Object.values(strøm).map(p => p.NOK_per_kWh);
+  const snitt = priser.reduce((a,b)=>a+b,0)/priser.length;
 
-  if (query.length > 1) {
-    const treff = steder.filter(e =>
-      e.tettsted.toLowerCase().startsWith(query) ||
-      (e.fylke && e.fylke.toLowerCase().startsWith(query))
-    ).slice(0, 10);
+  // Legg til markører
+  data.forEach(entry => {
+    // Kommune
+    if (entry.k_lat_decimal && entry.k_lon_decimal) {
+      const pris = strøm[entry.t_sone]?.NOK_per_kWh || snitt;
+      const farge = pris > snitt ? "red" : (pris < snitt ? "green" : "yellow");
 
-    console.log("Treff:", treff);
+      const marker = L.circleMarker([entry.k_lat_decimal, entry.k_lon_decimal], {
+        color: farge, radius: 8
+      }).bindTooltip(`${entry.t_knavn} – ${pris.toFixed(2)} kr/kWh`);
+      marker.on("click", () => updateInfo(entry, facts, pris));
+      kommuneLayer.addLayer(marker);
+    }
 
-    treff.forEach(e => {
-      const div = document.createElement("div");
-      div.textContent = e.tettsted + (e.fylke ? ` (${e.fylke})` : "");
-      div.className = "forslag";
-      div.onclick = () => {
-        sokInput.value = e.tettsted;
-        forslagBox.innerHTML = "";
-        visTettsted(e);
+    // Hytte
+    if (entry.h_lat && entry.h_lon) {
+      const marker = L.marker([entry.h_lat, entry.h_lon], {
+        icon: L.divIcon({ className: "hytte-icon", html: "▲", iconSize: [12,12], iconAnchor:[6,6] })
+      }).bindTooltip(entry.h_navn);
+      marker.on("mouseover", () => updateHytteInfo(entry, facts));
+      marker.on("mouseout", () => clearInfo());
+      hytteLayer.addLayer(marker);
+    }
+  });
+
+  // Søkefunksjon
+  const searchIndex = [
+    ...data.map(e => e.t_knavn).filter(Boolean),
+    ...data.map(e => e.h_navn).filter(Boolean)
+  ];
+  const input = document.getElementById("search");
+  const suggestions = document.getElementById("suggestions");
+
+  input.addEventListener("input", () => {
+    const val = input.value.toLowerCase();
+    suggestions.innerHTML = "";
+    searchIndex.filter(name => name.toLowerCase().includes(val)).slice(0,5).forEach(name => {
+      const li = document.createElement("li");
+      li.textContent = name;
+      li.onclick = () => {
+        input.value = name;
+        const entry = data.find(e => e.t_knavn === name || e.h_navn === name);
+        if (entry) {
+          const lat = parseFloat(entry.k_lat_decimal || entry.h_lat);
+          const lon = parseFloat(entry.k_lon_decimal || entry.h_lon);
+          map.setView([lat, lon], 10);
+        }
       };
-      forslagBox.appendChild(div);
+      suggestions.appendChild(li);
     });
+  });
+}
 
-    const rect = sokInput.getBoundingClientRect();
-    forslagBox.style.top = rect.bottom + window.scrollY + "px";
-    forslagBox.style.left = rect.left + window.scrollX + "px";
-    forslagBox.style.width = rect.width + "px";
-  }
-});
+function updateInfo(entry, facts, pris) {
+  document.getElementById("info-box").innerHTML = `
+    <h3>${entry.t_knavn}</h3>
+    <p>Fylke: ${entry.t_fnavn}</p>
+    <p>Sone: ${entry.t_sone}</p>
+    <p>Strømpris: ${pris.toFixed(2)} kr/kWh</p>
+    <p>Innbyggere: ${entry.k_innbyggere}</p>
+    <p>Ansatte: ${entry.k_ansatte}</p>
+    <p>Tilskudd: ${entry.k_tilskudd}</p>
+    <hr>
+    <em>${facts[Math.floor(Math.random()*facts.length)]}</em>
+  `;
+}
 
-// --------------------------
-// TASTATURKONTROLL
-// --------------------------
-sokInput.addEventListener("keydown", (e) => {
-  const forslag = forslagBox.querySelectorAll(".forslag");
-  if (forslag.length === 0) return;
+function updateHytteInfo(entry, facts) {
+  document.getElementById("info-box").innerHTML = `
+    <h3>${entry.h_navn}</h3>
+    <p>ID: ${entry.h_id}</p>
+    <p>Operatør: ${entry.h_operatør || "ukjent"}</p>
+    <p>Type: ${entry.h_type}</p>
+    <a href="${entry.h_url}" target="_blank">Mer info</a>
+    <hr>
+    <em>${facts[Math.floor(Math.random()*facts.length)]}</em>
+  `;
+}
 
-  if (e.key === "ArrowDown") {
-    aktivIndex = (aktivIndex + 1) % forslag.length;
-    oppdaterAktiv(forslag);
-    e.preventDefault();
-  } else if (e.key === "ArrowUp") {
-    aktivIndex = (aktivIndex - 1 + forslag.length) % forslag.length;
-    oppdaterAktiv(forslag);
-    e.preventDefault();
-  } else if (e.key === "Enter" && aktivIndex >= 0) {
-    forslag[aktivIndex].click();
-    e.preventDefault();
-  }
-});
-
-function oppdaterAktiv(forslag) {
-  forslag.forEach(f => f.classList.remove("aktiv"));
-  if (aktivIndex >= 0) {
-    forslag[aktivIndex].classList.add("aktiv");
-  }
+function clearInfo() {
+  document.getElementById("info-box").innerHTML = "";
 }
