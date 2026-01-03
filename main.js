@@ -28,7 +28,24 @@ function fetchStrømpriserForAlleSoner() {
     return strøm;
   });
 }
+// main.js
 
+// Hjelpefunksjon: konverterer tall med komma til punktum
+function toNumber(value) {
+  if (!value) return null;
+  return parseFloat(String(value).replace(",", "."));
+}
+
+// Hjelpefunksjon: lager dagens dato-streng til strømpris-API
+function getTodayDateString() {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const day = String(today.getDate()).padStart(2, "0");
+  return `${year}/${month}-${day}`;
+}
+
+// … resten av koden med Promise.all og initMap …
 // Last alle data
 Promise.all([
   fetch("samlet.json").then(r => r.json()),
