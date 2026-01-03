@@ -1,19 +1,64 @@
 ﻿<!DOCTYPE html>
 <html lang="no">
 <head>
-  <meta charset="UTF-8">
-  <title>Tresfjording – Norgeskart</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+  <meta charset="UTF-8" />
+  <title>Tresfjording – Norgekart med tettsteder og hytter</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Leaflet CSS -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  />
+
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="map"></div>
-  <div id="search-container">
-    <input id="search" type="text" placeholder="Søk etter kommune eller hytte...">
-    <ul id="suggestions"></ul>
+  <div id="app">
+    <!-- Kart -->
+    <div id="map"></div>
+
+    <!-- Flytende søkeboks -->
+    <div class="search-container">
+      <label for="place-search" class="search-label">Søk etter tettsted eller hytte</label>
+      <input
+        type="text"
+        id="place-search"
+        class="search-input"
+        placeholder="F.eks. Tresfjord, hyttenavn …"
+        autocomplete="off"
+      />
+      <ul id="search-suggestions" class="search-suggestions"></ul>
+    </div>
+
+    <!-- Infoboks -->
+    <div id="info-panel" class="info-panel">
+      <h2 id="info-title">Ingen sted valgt</h2>
+
+      <div id="info-content">
+        <!-- Innhold fylles/dynamisk erstattes fra main.js -->
+        <p class="info-placeholder">Velg et tettsted eller hold musepekeren over en hytte.</p>
+      </div>
+
+      <div id="power-price" class="power-price">
+        <!-- Strømpris for valgt tettsted/hytte -->
+      </div>
+
+      <div id="random-fact" class="random-fact">
+        <!-- Tilfeldig linje fra facts_all.json -->
+      </div>
+    </div>
   </div>
-  <div id="info-box"></div>
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+  <!-- Leaflet JS -->
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+  ></script>
+
   <script src="main.js"></script>
 </body>
 </html>

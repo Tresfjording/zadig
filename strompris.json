@@ -1,0 +1,12 @@
+
+[
+  {
+    "NOK_per_kWh": 1.3682,
+    "EUR_per_kWh": 0.13241999999999998,
+    "EXR": 10.3323,
+    "time_start": "date.now()",
+    "time_end": "date.now()",
+	"zone": "NO3"
+  
+  }
+]
