@@ -137,25 +137,67 @@ async function loadData() {
 
 
 // --------- Søk / autocomplete ---------
-console.log("initSearch kjører!");
 function initSearch() {
-  searchInput.addEventListener("input", onSearchInput);
-  searchInput.addEventListener("focus", onSearchInput);
-  document.addEventListener("click", (e) => {
-    if (!e.target.closest(".search-container")) {
-      hideSuggestions();
+    console.log("initSearch kjører!");
+
+    const searchInput = document.getElementById("place-search");
+    const suggestionsEl = document.getElementById("search-suggestions");
+
+    if (!searchInput || !suggestionsEl) {
+        console.warn("Søkeelementer mangler");
+        return;
     }
-  });
+
+    searchInput.addEventListener("input", () => {
+        const query = searchInput.value.toLowerCase();
+        const matches = searchIndex.filter(item =>
+            item.label.toLowerCase().includes(query)
+        );
+        renderSuggestions(matches);
+    });
+
+    searchInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            const first = suggestionsEl.querySelector(".suggestion-item");
+            if (first) {
+                first.click();
+            } else {
+                handleSearch(searchInput.value);
+            }
+        }
+    });
 }
 
-function onSearchInput() {
-  const query = searchInput.value.trim().toLowerCase();
-  if (!query) {
-    hideSuggestions();
-    return;
-  }
+function renderSuggestions(matches) {
+    const suggestionsEl = document.getElementById("search-suggestions");
+    suggestionsEl.innerHTML = "";
 
-  const forslag = [];
+    matches.slice(0, 10).forEach(item => {
+        const div = document.createElement("div");
+        div.className = "suggestion-item";
+        div.textContent = item.label;
+        div.addEventListener("click", () => {
+            handleSearch(item.label);
+        });
+        suggestionsEl.appendChild(div);
+    });
+}
+
+function handleSearch(label) {
+    const match = searchIndex.find(item => item.label === label);
+    if (!match) return;
+
+    if (match.type === "t") {
+        focusOnPlace(match.ref);
+        updateInfoBoxWithPlace(match.ref);
+    } else if (match.type === "h") {
+        focusOnCabin(match.ref);
+        updateInfoBoxWithCabin(match.ref);
+    }
+
+    document.getElementById("search-suggestions").innerHTML = "";
+}
 
   // Tettsteder
   tettsteder.forEach(t => {
@@ -180,7 +222,7 @@ function onSearchInput() {
   });
 
   renderSuggestions(forslag.slice(0, 30));
-}
+
 
 function renderSuggestions(list) {
   suggestionsEl.innerHTML = "";
