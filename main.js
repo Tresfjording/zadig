@@ -47,7 +47,11 @@ const randomFactEl = document.getElementById("random-fact");
 // --------- Init ---------
 document.addEventListener("DOMContentLoaded", async () => {
   initMap();
-  await loadData();
+ try {
+    await loadData();
+} catch (err) {
+    console.error("loadData feilet, men vi fortsetter:", err);
+}
   initSearch();
   renderAllHytteMarkers();
   setRandomFact();
@@ -248,37 +252,47 @@ async function velgTettsted(t) {
   map.flyTo([t.t_lat, t.t_lng], 8, {
     duration: 0.8
   });
-
+}
   // Strømpris
-  const strømInfo = await hentStrømInfoForSone(t.t_sone);
+ async function loadPowerPrice(area = "NO3") {
+    try {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, "0");
+        const day = String(now.getDate()).padStart(2, "0");}
 
-  const farge = strømInfo ? strømInfo.relativeColor : "yellow";
-  setTettstedMarker(t.t_lat, t.t_lng, farge);
+        const url = `https://www.hvakosterstrommen.no/api/v1/prices/${year}/${month}-${day}_${area}.json`;
 
-  updateInfoPanelForTettsted(t, strømInfo);
-  setRandomFact();
+        const response = await fetch(url);
+
+        if (!response.ok) {
+    console.warn("Klarte ikke hente JSON:", response.status)};
+    return; // stopp, men ikke krasj
 }
 
-async function velgHytteDirekte(h) {
-  // Finn tilhørende tettsted hvis mulig (for å ha t_-felt til infoboks)
-  let t = null;
-  if (h.t_id) {
-    t = tettsteder.find(x => x.t_id === h.t_id);
-  }
-
-  // Hvis vi har et tettsted, velg det, ellers centrer på hytta
-  if (t) {
-    await velgTettsted(t);
-  } else {
-    valgtTettsted = null;
-    map.flyTo([h.h_lat, h.h_lng], 8, { duration: 0.8 });
-  }
-
-  aktivHytte = h;
-  updateInfoPanelForHytte(h);
-  setRandomFact();
+let data;
+try {
+    data = await response.json();
+} catch (err) {
+    console.error("JSON-parsing feilet:", err);
+    return;
 }
 
+const POWER_AREAS = ["NO1", "NO2", "NO3", "NO4", "NO5"];
+
+async function loadNationalAveragePrice() {
+    const prices = [];
+
+    for (const area of POWER_AREAS) {
+        const price = await loadPowerPrice(area);
+        if (price != null) prices.push(price);
+    }
+
+    if (!prices.length) return null;
+
+    const sum = prices.reduce((a, b) => a + b, 0);
+    return sum / prices.length;
+}
 
 // --------- Infoboks ---------
 function clearInfoPanel() {
