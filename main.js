@@ -104,8 +104,11 @@ function initSearch() {
                 first.click();
             } else {
                 handleSearch(searchInput.value);
+                document.getElementById("place-search").value = label;
                 const suggestionsEl = document.getElementById("search-suggestions");
                 suggestionsEl.innerHTML = "";
+                suggestionsEl.style.display = "none";
+                sggestionsEl.innerHTML = "";
                 suggestionsEl.style.display = "none";
             }
         }
@@ -142,6 +145,10 @@ function handleSearch(label) {
     );
     if (!match) return;
 
+    // Oppdater inputfeltet med korrekt verdi
+    document.getElementById("place-search").value = label;
+
+    // Fokus på kart og infoboks
     if (match.type === "t") {
         focusOnPlace(match.ref);
         updateInfoBoxWithPlace(match.ref);
@@ -150,6 +157,7 @@ function handleSearch(label) {
         updateInfoBoxWithCabin(match.ref);
     }
 
+    // Lukk forslagslista
     const suggestionsEl = document.getElementById("search-suggestions");
     suggestionsEl.innerHTML = "";
     suggestionsEl.style.display = "none";
