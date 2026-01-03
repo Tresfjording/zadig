@@ -169,62 +169,7 @@ function initSearch() {
     });
 }
 
-function renderSuggestions(matches) {
-    const suggestionsEl = document.getElementById("search-suggestions");
-    suggestionsEl.innerHTML = "";
-
-    matches.slice(0, 10).forEach(item => {
-        const div = document.createElement("div");
-        div.className = "suggestion-item";
-        div.textContent = item.label;
-        div.addEventListener("click", () => {
-            handleSearch(item.label);
-        });
-        suggestionsEl.appendChild(div);
-    });
-}
-
-function handleSearch(label) {
-    const match = searchIndex.find(item => item.label === label);
-    if (!match) return;
-
-    if (match.type === "t") {
-        focusOnPlace(match.ref);
-        updateInfoBoxWithPlace(match.ref);
-    } else if (match.type === "h") {
-        focusOnCabin(match.ref);
-        updateInfoBoxWithCabin(match.ref);
-    }
-
-    document.getElementById("search-suggestions").innerHTML = "";
-}
-
-  // Tettsteder
-  tettsteder.forEach(t => {
-    if (t.t_navn && t.t_navn.toLowerCase().includes(query)) {
-      forslag.push({
-        type: "tettsted",
-        label: t.t_navn,
-        data: t
-      });
-    }
-  });
-
-  // Hytter
-  hytter.forEach(h => {
-    if (h.h_navn && h.h_navn.toLowerCase().includes(query)) {
-      forslag.push({
-        type: "hytte",
-        label: h.h_navn,
-        data: h
-      });
-    }
-  });
-
-  renderSuggestions(forslag.slice(0, 30));
-
-
-function renderSuggestions(list) {
+function renderSuggestions(...args: [matches: any]) {
   suggestionsEl.innerHTML = "";
 
   if (!list.length) {
