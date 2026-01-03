@@ -83,6 +83,7 @@ function initSearch() {
 
     searchInput.addEventListener("input", () => {
         const query = searchInput.value.toLowerCase();
+        console.log("searchIndex:", searchIndex);
         const matches = searchIndex.filter(item =>
             item.label.toLowerCase().includes(query)
         );
