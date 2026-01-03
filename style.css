@@ -25,13 +25,18 @@ body {
 
 /* Flytende søkeboks */
 .search-container {
+      position: fixed;      /* Holder den alltid synlig */
+    top: 20px;            /* Avstand fra toppen */
+    left: 20px;           /* Avstand fra venstre */
+    z-index: 9999;        /* Over kartet */
+    
+    background: white;
+    border: 1px solid rgba(0,0,0,0.15);
+    padding: 6px 10px;
+    border-radius: 6px;
+    max-width: 260px;
   position: absolute;
-  top: 1.5rem;
-  left: 50%;
   transform: translateX(-50%);
-  background-color: white;
-  border:1px solid rgba(0,0,0,0.15); /* syltynt omriss */
-  max-width: 300px;
   padding: 10px 14px; 
   border-radius: 8px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
@@ -40,7 +45,7 @@ body {
   flex-direction: column;
   gap: 0.25rem;
   min-width: min(520px, 90vw);
-  z-index: 1000;
+ 
 }
 
 #search-suggestions {
