@@ -169,43 +169,22 @@ function initSearch() {
     });
 }
 
-function renderSuggestions(...args: [matches: any]) {
-  suggestionsEl.innerHTML = "";
+function renderSuggestions(matches) {
+    suggestionsEl.innerHTML = "";
 
-  if (!list.length) {
-    suggestionsEl.classList.add("hidden");
-    return;
-  }
+    if (!matches.length) {
+        return;
+    }
 
-  list.forEach(item => {
-    const li = document.createElement("li");
-    const label = document.createElement("span");
-    label.className = "suggestion-label";
-    label.textContent = item.label;
-
-    const type = document.createElement("span");
-    type.className = "suggestion-type";
-    type.textContent = item.type === "tettsted" ? "tettsted" : "hytte";
-
-    li.appendChild(label);
-    li.appendChild(type);
-
-    li.addEventListener("click", () => {
-      searchInput.value = item.label;
-      hideSuggestions();
-
-      if (item.type === "tettsted") {
-        velgTettsted(item.data);
-      } else {
-        // Ved valg av hytte: bruk tilhørende tettsted hvis mulig
-        velgHytteDirekte(item.data);
-      }
+    matches.slice(0, 10).forEach(item => {
+        const div = document.createElement("div");
+        div.className = "suggestion-item";
+        div.textContent = item.label;
+        div.addEventListener("click", () => {
+            handleSearch(item.label);
+        });
+        suggestionsEl.appendChild(div);
     });
-
-    suggestionsEl.appendChild(li);
-  });
-
-  suggestionsEl.classList.remove("hidden");
 }
 
 function hideSuggestions() {
