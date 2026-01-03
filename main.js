@@ -1,9 +1,39 @@
 //03.01.2026  - 06:42:33
 // Last data
+// Hent dagens dato
+function getTodayDateString() {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const day = String(today.getDate()).padStart(2, "0");
+  return `${year}/${month}-${day}`;
+}
+
+// Hent strømpris for alle soner
+function fetchStrømpriserForAlleSoner() {
+  const dato = getTodayDateString();
+  const soner = ["NO1", "NO2", "NO3", "NO4", "NO5"];
+  const promises = soner.map(sone =>
+    fetch(`https://www.hvakosterstrommen.no/api/v1/prices/${dato}_${sone}.json`)
+      .then(r => r.json())
+      .then(priser => {
+        const snitt = priser.reduce((sum, p) => sum + p.NOK_per_kWh, 0) / priser.length;
+        return { sone, snitt };
+      })
+      .catch(() => ({ sone, snitt: null }))
+  );
+  return Promise.all(promises).then(resultat => {
+    const strøm = {};
+    resultat.forEach(({ sone, snitt }) => strøm[sone] = snitt);
+    return strøm;
+  });
+}
+
+// Last alle data
 Promise.all([
   fetch("samlet.json").then(r => r.json()),
   fetch("facts_all.json").then(r => r.json()),
-  fetch("https://www.hvakosterstrommen.no/api/v1/prices/current").then(r => r.json())
+  fetchStrømpriserForAlleSoner()
 ]).then(([samlet, facts, strøm]) => {
   initMap(samlet, facts, strøm);
 });
