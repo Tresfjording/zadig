@@ -95,6 +95,7 @@ async function loadData() {
 
 
 // --------- Søk / autocomplete ---------
+console.log("initSearch kjører!");
 function initSearch() {
   searchInput.addEventListener("input", onSearchInput);
   searchInput.addEventListener("focus", onSearchInput);
