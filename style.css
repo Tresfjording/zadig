@@ -274,7 +274,7 @@ body {
 /* Responsiv tilpasning */
 @media (max-width: 640px) {
   .search-container {
-    top: 0.8rem;
+    top: 1.8rem;
     min-width: 92vw;
   }
 
