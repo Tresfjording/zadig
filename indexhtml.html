@@ -1,82 +1,19 @@
 ﻿<!DOCTYPE html>
 <html lang="no">
-  <!--2026 01.01 - 18:18:52-->
 <head>
   <meta charset="UTF-8">
-  <title>Strømpris og tettsteder</title>
+  <title>Tresfjording – Norgeskart</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
 </head>
 <body>
-  <input id="sokInput" placeholder="Søk tettsted" />
-  <button id="visInfoBtn">Vis info</button>
-
   <div id="map"></div>
-
-<div id="map"></div>
-
-<script src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"></script>
-<script>
-Papa.parse("https://tresfjording.no/dnt_hytter.csv", {
-  download: true,
-  delimiter: ";",     // ← viktig!
-  header: false,      // sett til true hvis du har kolonnenavn
-  complete: function(results) {
-    console.log("CSV-data:", results.data); // ← se i konsollen
-
-    results.data.forEach(row => {
-      const navn = row[1];
-      const lat = parseFloat(row[5]);
-      const lon = parseFloat(row[6]);
-
-      if (!isNaN(lat) && !isNaN(lon)) {
-        L.marker([lat, lon])
-          .bindPopup(`<b>${navn}</b>`)
-          .addTo(map);
-      } else {
-        console.warn("Ugyldige koordinater:", row);
-      }
-    });
-  }
-});
-</script>
-
-
-  <div id="infobox">Klikk på et tettsted eller søk for å vise info.</div>
-<script src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"></script>
+  <div id="search-container">
+    <input id="search" type="text" placeholder="Søk etter kommune eller hytte...">
+    <ul id="suggestions"></ul>
+  </div>
+  <div id="info-box"></div>
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script src="main.js"></script>
 </body>
-</html><script>
-Papa.parse("https://tresfjording.no/hytter.csv", {
-  download: true,
-  header: false,
-  complete: function(results) {
-    const features = results.data.map(row => ({
-      type: "Feature",
-      properties: {
-        id: row[0],
-        navn: row[1],
-        forening: row[2],
-        type: row[3],
-        url: row[4]
-      },
-      geometry: {
-        type: "Point",
-        coordinates: [parseFloat(row[6]), parseFloat(row[5])]
-      }
-    }));
-
-    const geojson = { type: "FeatureCollection", features };
-
-    const hytteLayer = L.geoJSON(geojson, {
-      onEachFeature: function (feature, layer) {
-        const p = feature.properties;
-        layer.bindPopup(`<b>${p.navn}</b><br>${p.forening}<br>${p.type}<br><a href="${p.url}" target="_blank">Mer info</a>`);
-      }
-    }).addTo(map);
-
-    // Hvis du har søkekontroll, kan du koble den til hytteLayer
-  }
-});
-</script>
+</html>
