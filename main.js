@@ -104,6 +104,9 @@ function initSearch() {
                 first.click();
             } else {
                 handleSearch(searchInput.value);
+                const suggestionsEl = document.getElementById("search-suggestions");
+                suggestionsEl.innerHTML = "";
+                suggestionsEl.style.display = "none";
             }
         }
     });
@@ -113,7 +116,12 @@ function renderSuggestions(matches) {
     const suggestionsEl = document.getElementById("search-suggestions");
     suggestionsEl.innerHTML = "";
 
-    if (!matches || matches.length === 0) return;
+    if (!matches || matches.length === 0) {
+        suggestionsEl.style.display = "none";
+        return;
+    }
+
+    suggestionsEl.style.display = "block";
 
     matches.slice(0, 10).forEach(item => {
         const div = document.createElement("div");
@@ -142,7 +150,9 @@ function handleSearch(label) {
         updateInfoBoxWithCabin(match.ref);
     }
 
-    document.getElementById("search-suggestions").innerHTML = "";
+    const suggestionsEl = document.getElementById("search-suggestions");
+    suggestionsEl.innerHTML = "";
+    suggestionsEl.style.display = "none";
 }
 
 // -------------------- KARTFOKUS --------------------
