@@ -167,6 +167,7 @@ function updateInfoBoxWithPlace(place) {
 
     titleEl.textContent = place.t_knavn || "Ukjent sted";
     contentEl.innerHTML = `
+        <p><strong>Fylke:</strong> ${place.t_knavn}</p>
         <p><strong>Fylke:</strong> ${place.t_fnavn}</p>
         <p><strong>Innbyggere:</strong> ${place.k_innbyggere}</p>
         <p><strong>Areal:</strong> ${place.areal}</p>
@@ -184,8 +185,11 @@ function updateInfoBoxWithCabin(hytte) {
 
     titleEl.textContent = hytte.h_navn || "Ukjent hytte";
     contentEl.innerHTML = `
+        
+        <p><strong>Fylke:</strong> ${place.t_knavn}</p>
         <p><strong>Type:</strong> ${hytte.h_type}</p>
         <p><strong>Operatør:</strong> ${hytte.h_operatør}</p>
+        <p><strong>Kommune:</strong> ${hytte.h_operatør}</p>
         <p><a href="${hytte.h_url}" target="_blank">Se mer på UT.no</a></p>
     `;
 }
