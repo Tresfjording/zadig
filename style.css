@@ -34,7 +34,7 @@ body {
     border: 1px solid rgba(0,0,0,0.15);
     padding: 6px 10px;
     border-radius: 6px;
-    max-width: 260px;
+    max-width: 150px;  
 
   transform: translateX(-50%);
 
@@ -44,7 +44,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-  min-width: min(520px, 90vw);
+  min-width: min(100px, 90vw);
  
 }
 
