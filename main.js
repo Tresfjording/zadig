@@ -57,13 +57,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   setRandomFact();
 });
 // await loadData();
-buildSearchIndex();
-
-let searchIndex = [];
-
 function buildSearchIndex() {
     searchIndex = [];
 
+    // Tettsteder
     places.forEach(t => {
         if (t.t_knavn) {
             searchIndex.push({
@@ -74,6 +71,7 @@ function buildSearchIndex() {
         }
     });
 
+    // Hytter
     cabins.forEach(h => {
         if (h.h_navn) {
             searchIndex.push({
@@ -83,6 +81,9 @@ function buildSearchIndex() {
             });
         }
     });
+
+    // Sorter alfabetisk
+    searchIndex.sort((a, b) => a.label.localeCompare(b.label));
 
     console.log("Søkeindeks bygget:", searchIndex.length, "elementer");
 }
