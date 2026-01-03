@@ -56,7 +56,36 @@ document.addEventListener("DOMContentLoaded", async () => {
   renderAllHytteMarkers();
   setRandomFact();
 });
+await loadData();
+buildSearchIndex();
 
+let searchIndex = [];
+
+function buildSearchIndex() {
+    searchIndex = [];
+
+    places.forEach(t => {
+        if (t.t_knavn) {
+            searchIndex.push({
+                type: "t",
+                label: t.t_knavn,
+                ref: t
+            });
+        }
+    });
+
+    cabins.forEach(h => {
+        if (h.h_navn) {
+            searchIndex.push({
+                type: "h",
+                label: h.h_navn,
+                ref: h
+            });
+        }
+    });
+
+    console.log("Søkeindeks bygget:", searchIndex.length, "elementer");
+}
 
 // --------- Kart ---------
 function initMap() {
@@ -74,23 +103,35 @@ function initMap() {
 
 
 // --------- Last data ---------
+let places = [];
+let cabins = [];
+let facts = [];
+
 async function loadData() {
-  try {
-    const [samletResp, factsResp] = await Promise.all([
-      fetch("samlet.json"),
-      fetch("facts_all.json")
-    ]);
+    try {
+        const [samletResp, factsResp] = await Promise.all([
+            fetch("https://www.tresfjordring.no/samlet.json"),
+            fetch("facts_all.json")
+        ]);
 
-    samletData = await samletResp.json();
-    facts = await factsResp.json();
+        if (!samletResp.ok || !factsResp.ok) {
+            console.error("Kunne ikke hente en eller begge filer");
+            return;
+        }
 
-    // Del opp i tettsteder og hytter.
-    // Juster logikken til faktisk struktur hvis nødvendig.
-    tettsteder = samletData.filter(item => item.t_navn && item.t_lat && item.t_lng);
-    hytter = samletData.filter(item => item.h_navn && item.h_lat && item.h_lng);
-  } catch (err) {
-    console.error("Feil ved lasting av data:", err);
-  }
+        const samletData = await samletResp.json();
+        facts = await factsResp.json();
+
+        // Del opp i tettsteder og hytter
+        places = samletData.filter(d => d.t_knavn);
+        cabins = samletData.filter(d => d.h_navn);
+
+        console.log("Tettsteder:", places.length);
+        console.log("Hytter:", cabins.length);
+
+    } catch (err) {
+        console.error("Feil ved lasting av data:", err);
+    }
 }
 
 
