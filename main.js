@@ -6,7 +6,7 @@ let searchIndex = [];
 // hytteikon
 const hyttikon = L.icon({
     iconUrl: "img/hytteikon.png",
-    iconSize: [32, 32],
+    iconSize: [18, 18],
     iconAnchor: [9, 9]
 });
 // -------------------- OPPSTART --------------------
