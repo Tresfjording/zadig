@@ -26,10 +26,10 @@ body {
 /* Flytende søkeboks */
 .search-container {
       position: fixed;      /* Holder den alltid synlig */
-    top: 20px;            /* Avstand fra toppen */
+    top: 60px;            /* Avstand fra toppen */
     left: 20px;           /* Avstand fra venstre */
     z-index: 9999;        /* Over kartet */
-    
+    positin: fixed;
     background: white;
     border: 1px solid rgba(0,0,0,0.15);
     padding: 6px 10px;
