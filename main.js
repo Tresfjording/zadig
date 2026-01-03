@@ -4,22 +4,29 @@ let cabins = [];
 let facts = [];
 let searchIndex = [];
 
-document.addEventListener("DOMContentLoaded", async () => {
+// -------------------- OPPSTART --------------------
+document.addEventListener("DOMContentLoaded", () => {
     initMap();
 
-    try {
-        await loadData();
-        buildSearchIndex();
-    } catch (err) {
-        console.error("loadData feilet, men vi fortsetter:", err);
-    }
+    loadData()
+        .then(() => {
+            console.log("Data lastet!");
 
-    initSearch();
-    renderAllHytteMarkers();
-    setRandomFact();
+            buildSearchIndex();   // 1. Bygg søkeindeks
+            initSearch();         // 2. Aktiver søk
+            renderAllHytteMarkers(); // 3. Tegn hytter
+            setRandomFact();      // 4. Vis funfact
+        })
+        .catch(err => {
+            console.error("loadData feilet, men vi fortsetter:", err);
+
+            // Kart og fakta kan fortsatt vises
+            renderAllHytteMarkers();
+            setRandomFact();
+        });
 });
 
-// -------- Kart --------
+// -------------------- KART --------------------
 function initMap() {
     map = L.map("map").setView([63.0, 11.0], 6);
     L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -27,7 +34,7 @@ function initMap() {
     }).addTo(map);
 }
 
-// -------- Data --------
+// -------------------- DATA --------------------
 async function loadData() {
     try {
         const [samletResp, factsResp] = await Promise.all([
@@ -53,7 +60,7 @@ async function loadData() {
     }
 }
 
-// -------- Søk --------
+// -------------------- SØK --------------------
 function buildSearchIndex() {
     searchIndex = [];
 
@@ -83,7 +90,6 @@ function initSearch() {
 
     searchInput.addEventListener("input", () => {
         const query = searchInput.value.toLowerCase();
-        console.log("searchIndex:", searchIndex);
         const matches = searchIndex.filter(item =>
             item.label.toLowerCase().includes(query)
         );
@@ -139,7 +145,7 @@ function handleSearch(label) {
     document.getElementById("search-suggestions").innerHTML = "";
 }
 
-// -------- Kartfokus --------
+// -------------------- KARTFOKUS --------------------
 function focusOnPlace(place) {
     const lat = parseFloat(String(place.k_lat_decimal).replace(",", "."));
     const lon = parseFloat(String(place.k_lon_decimal).replace(",", "."));
@@ -154,7 +160,7 @@ function focusOnCabin(hytte) {
     map.setView([lat, lon], 13);
 }
 
-// -------- Infoboks --------
+// -------------------- INFOBOKS --------------------
 function updateInfoBoxWithPlace(place) {
     const titleEl = document.getElementById("info-title");
     const contentEl = document.getElementById("info-content");
@@ -180,7 +186,7 @@ function updateInfoBoxWithCabin(hytte) {
     `;
 }
 
-// -------- Hytte-markører --------
+// -------------------- HYTTE-MARKØRER --------------------
 function renderAllHytteMarkers() {
     if (!cabins || cabins.length === 0) return;
 
@@ -195,7 +201,7 @@ function renderAllHytteMarkers() {
     });
 }
 
-// -------- Trivia --------
+// -------------------- TRIVIA --------------------
 function setRandomFact() {
     const el = document.getElementById("random-fact");
     if (!el || !facts || facts.length === 0) return;
