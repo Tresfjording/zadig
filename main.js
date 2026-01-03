@@ -146,7 +146,7 @@ function initMap(data, strøm, facts) {
 // 🚀 Last inn data og start kartet
 Promise.all([
   fetch("samlet.json").then(r => r.json()),
-  fetch("strom.json").then(r => r.json()),
+  fetch("strompris.json").then(r => r.json()),
   fetch("facts.json").then(r => r.json())
 ]).then(([data, strøm, facts]) => {
   initMap(data, strøm, facts);
