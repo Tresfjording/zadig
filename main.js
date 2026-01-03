@@ -204,7 +204,7 @@ function updateInfoBoxWithCabin(hytte) {
     titleEl.textContent = hytte.h_navn || "Ukjent hytte";
     contentEl.innerHTML = `
         
-        <p><strong>Fylke:</strong> ${place.t_knavn}</p>
+        <p><strong>Fylke:</strong> ${hytte.t_knavn}</p>
         <p><strong>Type:</strong> ${hytte.h_type}</p>
         <p><strong>Operatør:</strong> ${hytte.h_operatør}</p>
         <p><strong>Kommune:</strong> ${hytte.h_operatør}</p>
