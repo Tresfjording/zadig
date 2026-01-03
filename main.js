@@ -3,7 +3,12 @@ let places = [];
 let cabins = [];
 let facts = [];
 let searchIndex = [];
-
+// hytteikon
+const cabinIcon = L.icon({
+    iconUrl: "img/hytteikon.xcf",
+    iconSize: [18, 18],
+    iconAnchor: [9, 9]
+});
 // -------------------- OPPSTART --------------------
 document.addEventListener("DOMContentLoaded", () => {
     initMap();
@@ -215,7 +220,7 @@ function updateInfoBoxWithCabin(hytte) {
 // -------------------- HYTTE-MARKØRER --------------------
 function renderAllHytteMarkers() {
     if (!cabins || cabins.length === 0) return;
-
+        
     cabins.forEach(h => {
         const lat = parseFloat(String(h.h_lat).replace(",", "."));
         const lon = parseFloat(String(h.h_lon).replace(",", "."));
@@ -224,7 +229,12 @@ function renderAllHytteMarkers() {
         const marker = L.marker([lat, lon], { title: h.h_navn });
         marker.on("mouseover", () => updateInfoBoxWithCabin(h));
         marker.addTo(map);
+        
     });
+    const marker = L.marker([lat, lon], {
+    title: h.h_navn,
+    icon: cabinIcon
+});
 }
 
 // -------------------- TRIVIA --------------------
