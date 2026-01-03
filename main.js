@@ -77,7 +77,7 @@ function initMap() {
 async function loadData() {
   try {
     const [samletResp, factsResp] = await Promise.all([
-      fetch("Samlet.json"),
+      fetch("samlet.json"),
       fetch("facts_all.json")
     ]);
 
