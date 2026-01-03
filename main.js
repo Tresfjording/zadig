@@ -145,7 +145,7 @@ if (!isNaN(lat) && !isNaN(lon)) {
       suggestions.appendChild(li);
     });
   });
-}
+});
 
 function updateInfo(entry, facts, pris) {
   document.getElementById("info-box").innerHTML = `
