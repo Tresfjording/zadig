@@ -1,5 +1,9 @@
 //03.01.2026  - 06:42:33
 // Last data
+function toNumber(value) {
+  if (!value) return null;
+  return parseFloat(String(value).replace(",", "."));
+}
 // Hent dagens dato
 function getTodayDateString() {
   const today = new Date();
@@ -115,9 +119,11 @@ function initMap(data, facts, strøm) {
         input.value = name;
         const entry = data.find(e => e.t_knavn === name || e.h_navn === name);
         if (entry) {
-          const lat = parseFloat(entry.k_lat_decimal || entry.h_lat);
-          const lon = parseFloat(entry.k_lon_decimal || entry.h_lon);
-          map.setView([lat, lon], 10);
+          const lat = toNumber(entry.k_lat_decimal || entry.h_lat);
+          const lon = toNumber(entry.k_lon_decimal || entry.h_lon);
+          if (lat && lon) {
+            map.setView([lat, lon], 10);
+          }
         }
       };
       suggestions.appendChild(li);
