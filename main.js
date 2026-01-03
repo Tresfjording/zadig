@@ -78,19 +78,26 @@ function initMap(data, facts, strøm) {
 
   // Legg til markører
   data.forEach(entry => {
-    // Kommune
-    if (entry.k_lat_decimal && entry.k_lon_decimal) {
-      const pris = strøm[entry.t_sone]?.NOK_per_kWh || snitt;
-      const farge = pris > snitt ? "red" : (pris < snitt ? "green" : "yellow");
+ // Kommune
+const lat = toNumber(entry.k_lat_decimal || entry.h_lat);
+const lon = toNumber(entry.k_lon_decimal || entry.h_lon);
 
-      const marker = L.circleMarker([entry.k_lat_decimal, entry.k_lon_decimal], {
-        color: farge, radius: 8
-      }).bindTooltip(`${entry.t_knavn} – ${pris.toFixed(2)} kr/kWh`);
-      marker.on("click", () => updateInfo(entry, facts, pris));
-      kommuneLayer.addLayer(marker);
-    }
+if (!isNaN(lat) && !isNaN(lon)) {
+    const marker = L.circleMarker([lat, lon], {
+        radius: 6,
+        color: "black",
+        weight: 1,
+        fillColor: "blue", // her kan du bytte til farge basert på strømpris
+        fillOpacity: 0.8
+    }).bindTooltip(entry.t_knavn || entry.h_navn);
 
-    // Hytte
+    marker.on("mouseover", () => updateKommuneInfo(entry, facts, strøm));
+    marker.on("mouseout", () => clearInfo());
+    kommuneLayer.addLayer(marker);
+}
+
+
+// Hytte
 const lat = toNumber(entry.k_lat_decimal || entry.h_lat);
 const lon = toNumber(entry.k_lon_decimal || entry.h_lon);
 
