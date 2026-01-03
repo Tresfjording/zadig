@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   renderAllHytteMarkers();
   setRandomFact();
 });
-await loadData();
+// await loadData();
 buildSearchIndex();
 
 let searchIndex = [];
