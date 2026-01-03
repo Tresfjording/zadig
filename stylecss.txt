@@ -1,0 +1,256 @@
+/* Layout grunnstruktur */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background-color: #020717;
+  color: #f5f5f5;
+}
+
+#app {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Kart */
+#map {
+  width: 100%;
+  height: 100%;
+  background: #020717;
+}
+
+/* Flytende søkeboks */
+.search-container {
+  position: absolute;
+  top: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(6, 11, 25, 0.92);
+  padding: 0.75rem 1rem;
+  border-radius: 999px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: min(520px, 90vw);
+  z-index: 1000;
+}
+
+.search-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: #9ca3af;
+  padding-left: 0.4rem;
+}
+
+.search-input {
+  border: none;
+  background: rgba(17, 24, 39, 0.9);
+  color: #f9fafb;
+  padding: 0.5rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  outline: none;
+  box-shadow: inset 0 0 0 1px rgba(75, 85, 99, 0.8);
+}
+
+.search-input::placeholder {
+  color: #6b7280;
+}
+
+/* Forslag-listen */
+.search-suggestions {
+  list-style: none;
+  margin: 0.35rem 0 0;
+  padding: 0;
+  max-height: 220px;
+  overflow-y: auto;
+  background: rgba(6, 11, 25, 0.98);
+  border-radius: 0.75rem;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(55, 65, 81, 0.7);
+}
+
+.search-suggestions.hidden {
+  display: none;
+}
+
+.search-suggestions li {
+  padding: 0.35rem 0.75rem;
+  font-size: 0.85rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.search-suggestions li:nth-child(odd) {
+  background: rgba(15, 23, 42, 0.95);
+}
+
+.search-suggestions li:nth-child(even) {
+  background: rgba(17, 24, 39, 0.95);
+}
+
+.search-suggestions li:hover {
+  background: rgba(37, 99, 235, 0.22);
+}
+
+.suggestion-label {
+  font-weight: 500;
+}
+
+.suggestion-type {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #9ca3af;
+}
+
+/* Infoboks */
+.info-panel {
+  position: absolute;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  width: min(320px, 70vw);
+  background: rgba(6, 11, 25, 0.95);
+  border-radius: 1.25rem;
+  padding: 1rem 1.1rem 0.9rem;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(55, 65, 81, 0.8);
+  z-index: 900;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.info-panel h2 {
+  margin: 0;
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+}
+
+.info-placeholder {
+  margin: 0.3rem 0;
+  font-size: 0.8rem;
+  color: #9ca3af;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  margin-bottom: 0.1rem;
+}
+
+.info-label {
+  color: #9ca3af;
+}
+
+.info-value {
+  color: #e5e7eb;
+  text-align: right;
+  max-width: 60%;
+}
+
+.info-value a {
+  color: #a5b4fc;
+  text-decoration: none;
+}
+
+.info-value a:hover {
+  text-decoration: underline;
+}
+
+/* Strømpris-seksjon */
+.power-price {
+  border-top: 1px solid rgba(55, 65, 81, 0.8);
+  padding-top: 0.4rem;
+  margin-top: 0.1rem;
+  font-size: 0.8rem;
+}
+
+.power-price-line {
+  display: flex;
+  justify-content: space-between;
+}
+
+.power-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(75, 85, 99, 0.9);
+}
+
+.power-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+}
+
+/* Fargekoder for pris vs landsgjennomsnitt */
+.power-dot.green {
+  background: #22c55e;
+}
+
+.power-dot.red {
+  background: #ef4444;
+}
+
+.power-dot.yellow {
+  background: #facc15;
+}
+
+/* Random fact */
+.random-fact {
+  border-top: 1px dashed rgba(55, 65, 81, 0.8);
+  margin-top: 0.35rem;
+  padding-top: 0.35rem;
+  font-size: 0.75rem;
+  color: #9ca3af;
+  font-style: italic;
+}
+
+/* Leaflet-tilpasninger – brun trekant for hytter med divIcon */
+.hytte-marker {
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 10px solid #92400e; /* brun */
+}
+
+/* Marker for valgt tettsted (sirkel med kant som vi kan fargekode) */
+.tettsted-marker {
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  border: 2px solid #e5e7eb;
+  background: #111827;
+  box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.7);
+}
+
+/* Responsiv tilpasning */
+@media (max-width: 640px) {
+  .search-container {
+    top: 0.8rem;
+    min-width: 92vw;
+  }
+
+  .info-panel {
+    left: 0.8rem;
+    right: 0.8rem;
+    width: auto;
+  }
+}
