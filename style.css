@@ -26,8 +26,8 @@ body {
 /* Flytende søkeboks */
 .search-container {
       position: fixed;      /* Holder den alltid synlig */
-    top: 20px;            /* Avstand fra toppen */
-    left: 125px;           /* Avstand fra venstre */
+    top: 16px;            /* Avstand fra toppen */
+    left: 130px;           /* Avstand fra venstre */
     z-index: 9999;        /* Over kartet */
  
     background: white;
