@@ -170,8 +170,8 @@ body {
 .info-placeholder {
   margin: 0.3rem 0;
   font-size: 0.8rem;
-  color: black
-
+  color: black;
+}
 .info-row {
   display: flex;
   justify-content: space-between;
