@@ -288,7 +288,7 @@ body {
 @media (max-width: 640px) {
   .search-container {
     top: 1.8rem;
-    min-width: 92vw;
+    max-width: 92vw;
   }
 
   .info-panel {
