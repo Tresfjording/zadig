@@ -6,7 +6,13 @@ Promise.all([
 ]).then(([samlet, facts, strøm]) => {
   initMap(samlet, facts, strøm);
 });
-
+function getTodayPriceUrl(zone) {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const day = String(today.getDate()).padStart(2, "0");
+  return `https://www.hvakosterstrommen.no/api/v1/prices/${year}/${month}-${day}_${zone}.json`;
+}
 function initMap(data, facts, strøm) {
   const map = L.map("map").setView([64.5, 11], 5);
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
