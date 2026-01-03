@@ -168,7 +168,7 @@ body {
 }
 
 #info-box h2 {
-    font-size: 16px;
+    font-size: 12px;
     margin-bottom: 6px;
 }
 
@@ -197,7 +197,7 @@ body {
 }
 
 .info-value {
-  color: #e5e7eb;
+  color:black;
   text-align: right;
   max-width: 60%;
 }
