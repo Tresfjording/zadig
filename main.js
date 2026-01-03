@@ -4,9 +4,9 @@ let cabins = [];
 let facts = [];
 let searchIndex = [];
 // hytteikon
-const cabinIcon = L.icon({
-    iconUrl: "img/hytteikon.xcf",
-    iconSize: [18, 18],
+const hyttikon = L.icon({
+    iconUrl: "img/hytteikon.png",
+    iconSize: [32, 32],
     iconAnchor: [9, 9]
 });
 // -------------------- OPPSTART --------------------
@@ -228,7 +228,7 @@ function renderAllHytteMarkers() {
 
         const marker = L.marker([lat, lon], {
             title: h.h_navn,
-            icon: hytteikon.png   // ← bruk trekanten her
+            icon: hyttikon   // ← bruk trekanten her
         });
 
         marker.on("mouseover", () => updateInfoBoxWithCabin(h));
