@@ -78,9 +78,9 @@ function initMap(data, facts, strøm) {
 
   // Legg til markører
   data.forEach(entry => {
- // Kommune
-const lat = toNumber(entry.k_lat_decimal || entry.h_lat);
-const lon = toNumber(entry.k_lon_decimal || entry.h_lon);
+// Kommune
+const kommuneLat = toNumber(entry.k_lat_decimal || entry.h_lat);
+const kommuneLon = toNumber(entry.k_lon_decimal || entry.h_lon);
 
 if (!isNaN(lat) && !isNaN(lon)) {
     const marker = L.circleMarker([lat, lon], {
@@ -96,10 +96,10 @@ if (!isNaN(lat) && !isNaN(lon)) {
     kommuneLayer.addLayer(marker);
 }
 
-
+    // Hytte
 // Hytte
-const lat = toNumber(entry.k_lat_decimal || entry.h_lat);
-const lon = toNumber(entry.k_lon_decimal || entry.h_lon);
+const hytteLat = toNumber(entry.k_lat_decimal || entry.h_lat);
+const hytteLon = toNumber(entry.k_lon_decimal || entry.h_lon);
 
 if (!isNaN(lat) && !isNaN(lon)) {
     const marker = L.marker([lat, lon], {
