@@ -185,32 +185,37 @@ function focusOnCabin(hytte) {
 }
 
 // -------------------- INFOBOKS --------------------
-async function updateInfoBoxWithPlace(place) {
-    const titleEl = document.getElementById("info-title");
-    const contentEl = document.getElementById("info-content");
+async function updateInfoBoxWithCabin(hytte) {
+  if (!hytte) {
+    console.warn("Ingen hytte valgt");
+    return;
+  }
 
-    // Rett sone
-    const priceArea = place.t_sone; // bruk den som den er
+  const titleEl = document.getElementById("info-title");
+  const contentEl = document.getElementById("info-content");
 
-    // HENT STRØMPRISEN (du manglet denne!)
-    const strømpris = await fetchCurrentPowerPrice(priceArea);
+  if (!titleEl || !contentEl) {
+    console.error("Infoboks mangler i HTML");
+    return;
+  }
 
-    titleEl.textContent = place.t_knavn || "Ukjent sted";
+  const priceArea = hytte.t_sone;
+  const strømpris = await fetchCurrentPowerPrice(priceArea);
 
-    contentEl.innerHTML = `
-        <p><strong>Strømpris nå:</strong> ${
-            strømpris ? strømpris.toFixed(2) + " kr/kWh" : "Ikke tilgjengelig"
-        }</p>
+  titleEl.textContent = hytte.h_navn || "Ukjent hytte";
 
-        <p><strong>Fylke:</strong> ${place.t_fnavn}</p>
-        <p><strong>Innbyggere:</strong> ${place.k_innbyggere}</p>
-        <p><strong>Areal:</strong> ${place.k_areal}</p>
-        <p><strong>Ansatte:</strong> ${place.k_ansatte}</p>
-        <p><strong>Språk:</strong> ${place.k_språk}</p>
-        <p><strong>Slagord:</strong> ${place.k_slagord}</p>
-        <p><strong>Tilskudd:</strong> ${place.k_tilskudd}</p>
-    `;
+  contentEl.innerHTML = `
+    <p><strong>Strømpris nå:</strong> ${
+      strømpris ? strømpris.toFixed(2) + " kr/kWh" : "Ikke tilgjengelig"
+    }</p>
+    <p><strong>Fylke:</strong> ${hytte.t_fnavn}</p>
+    <p><strong>Type:</strong> ${hytte.h_type}</p>
+    <p><strong>Operatør:</strong> ${hytte.h_operatør}</p>
+    <p><strong>Kommune:</strong> ${hytte.k_navn}</p>
+    <p><a href="${hytte.h_url}" target="_blank">Se mer på UT.no</a></p>
+  `;
 }
+
 
 async function updateInfoBoxWithCabin(hytte) {
     const titleEl = document.getElementById("info-title");
