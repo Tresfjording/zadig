@@ -112,15 +112,15 @@ body {
 }
 
 .search-suggestions li:nth-child(odd) {
-  background: rgba(152, 176, 231, 0.95);
+  background: #c1f0fd;
 }
 
 .search-suggestions li:nth-child(even) {
-  background: rgba(149, 176, 234, 0.95);
+  background: #c1f0fd;
 }
 
 .search-suggestions li:hover {
-  background: rgba(127, 147, 191, 0.22);
+  background:#c1f0fd;
 }
 
 .suggestion-label {
@@ -130,12 +130,12 @@ body {
 .suggestion-item {
     padding: 6px 10px;
     color: black;
-    background: white;
+    background: #c1f0fd;
     border-bottom: 1px solid #eee;
 }
 
 .suggestion-item:hover {
-    background: #f0f0f0;
+    background: #c1f0fd;
     cursor: pointer;
 }
 
