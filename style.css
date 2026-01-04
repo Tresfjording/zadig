@@ -29,15 +29,12 @@ body {
     top: 10px;            /* Avstand fra toppen */
     left: 130px;           /* Avstand fra venstre */
     z-index: 9999;        /* Over kartet */
- 
-    background: white;
+     background: white;
     border: 1px solid rgba(0,0,0,0.15);
     padding: 6px 10px;
     border-radius: 6px;
     max-width: 150px;  
-
   transform: translateX(-50%);
-
 
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
   backdrop-filter: blur(10px);
@@ -270,8 +267,8 @@ body {
 
 /* Leaflet-tilpasninger – brun trekant for hytter med divIcon */
 .hytte-marker {
-  width: 0;
-  height: 0;
+  width: 18px;
+  height: 18px0;
   top: 200px;
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
