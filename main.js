@@ -6,6 +6,10 @@ let places = [];
 let cabins = [];
 let facts = [];
 let searchIndex = [];
+let selectedCabinMarker = null;
+
+// markør tettsteder og hytter
+let selectedPlaceMarker = null;
 
 // cache for strømpriser
 const zonePriceCache = {}; // { NO1: { prices: [...], lastUpdated: Date }, ... }
@@ -31,7 +35,28 @@ function getPriceColor(price, avg) {
   if (rel < -0.1) return "green"; // > 10 % under snitt
   return "gold"; // omtrent likt
 }
+function setSelectedCabinMarker(hytte) {
+  const lat = parseFloat(String(hytte.h_lat).replace(",", "."));
+  const lon = parseFloat(String(hytte.h_lon).replace(",", "."));
 
+  if (!lat || !lon) return;
+
+  // Fjern gammel markør
+  if (selectedCabinMarker) {
+    map.removeLayer(selectedCabinMarker);
+  }
+
+  // Lag ny markør (blå ring, men litt mindre enn tettsted)
+  selectedCabinMarker = L.circleMarker([lat, lon], {
+    radius: 8,
+    color: "#aa5500",
+    weight: 3,
+    fillColor: "#ffddaa",
+    fillOpacity: 0.7,
+  });
+
+  selectedCabinMarker.addTo(map);
+}
 // -------------- OPPSTART --------------
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -310,10 +335,11 @@ function handleSearch(label) {
 
   document.getElementById("place-search").value = match.label;
 
-  if (match.type === "t") {
-    focusOnPlace(match.ref);
-    updateInfoBoxWithPlace(match.ref);
-  } else if (match.type === "h") {
+ if (match.type === "h") {
+  focusOnCabin(match.ref);
+  updateInfoBoxWithCabin(match.ref);
+  setSelectedCabinMarker(match.ref);
+} else if (match.type === "h") {
     focusOnCabin(match.ref);
     updateInfoBoxWithCabin(match.ref);
   }
@@ -347,9 +373,34 @@ function focusOnCabin(hytte) {
   map.setView([lat, lon], 13);
 }
 
+function setSelectedPlaceMarker(place) {
+  const lat = parseFloat(String(place.k_lat_decimal).replace(",", "."));
+  const lon = parseFloat(String(place.k_lon_decimal).replace(",", "."));
+
+  if (!lat || !lon) return;
+
+  // Fjern gammel markør
+  if (selectedPlaceMarker) {
+    map.removeLayer(selectedPlaceMarker);
+  }
+
+  // Lag ny markør
+  selectedPlaceMarker = L.circleMarker([lat, lon], {
+    radius: 10,
+    color: "#0044aa",
+    weight: 3,
+    fillColor: "#66aaff",
+    fillOpacity: 0.6,
+  });
+
+  selectedPlaceMarker.addTo(map);
+}
+
 // -------------- INFOBOKS --------------
 
 async function updateInfoBoxWithPlace(place) {
+  setSelectedPlaceMarker(place);
+
   if (!place) {
     console.warn("Ingen tettsted valgt");
     return;
@@ -411,6 +462,7 @@ async function updateInfoBoxWithPlace(place) {
 }
 
 async function updateInfoBoxWithCabin(hytte) {
+  setSelectedCabinMarker(hytte);
   if (!hytte) {
     console.warn("Ingen hytte valgt");
     return;
