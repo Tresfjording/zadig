@@ -212,7 +212,7 @@ function updateInfoBoxWithCabin(hytte) {
     titleEl.textContent = hytte.h_navn || "Ukjent hytte";
     contentEl.innerHTML = `
         <p><strong>Strømpris nå:</strong> ${
-  strømpris ? strømpris.toFixed(2) + " kr/kWh" : "Ikke tilgjengelig"
+  strompris ? strompris.toFixed(2) + " kr/kWh" : "Ikke tilgjengelig"
 }</p>
         <p><strong>Fylke:</strong> ${hytte.t_knavn}</p>
         <p><strong>Type:</strong> ${hytte.h_type}</p>
