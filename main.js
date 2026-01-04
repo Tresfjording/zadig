@@ -191,7 +191,7 @@ async function updateInfoBoxWithPlace(place) {
 
     // Rett sone
     const priceArea = place.t_sone; // bruk den som den er
-    
+
     // HENT STRØMPRISEN (du manglet denne!)
     const strømpris = await fetchCurrentPowerPrice(priceArea);
 
@@ -217,7 +217,7 @@ async function updateInfoBoxWithCabin(hytte) {
     const contentEl = document.getElementById("info-content");
 
     // Hent sone fra hytta
-    const priceArea = hytte.t_sone.replace(/^N(0\d)$/, "NO$1");
+const priceArea = place.t_sone;
 
     // HENT STRØMPRISEN
     const strømpris = await fetchCurrentPowerPrice(priceArea);
