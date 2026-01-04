@@ -5,11 +5,11 @@ let cabins = [];
 let facts = [];
 let searchIndex = [];
 // hytteikon
-//const hyttikon = L.icon({
-  //  iconUrl: "img/hytteikon.png",
-  //  iconSize: [18, 18],
-  //  iconAnchor: [9, 9]
-//});
+const hytteikon = L.icon({
+  iconUrl: "img/hytteikon.png",
+  iconSize: [18, 18],
+  iconAnchor: [9, 9]
+});
 // -------------------- OPPSTART --------------------
 document.addEventListener("DOMContentLoaded", () => {
     initMap();
