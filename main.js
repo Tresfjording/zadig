@@ -190,8 +190,8 @@ async function updateInfoBoxWithPlace(place) {
     const contentEl = document.getElementById("info-content");
 
     // Rett sone
-    const priceArea = place.t_sone.replace(/^N(0\d)$/, "NO$1");
-
+    const priceArea = place.t_sone; // bruk den som den er
+    
     // HENT STRØMPRISEN (du manglet denne!)
     const strømpris = await fetchCurrentPowerPrice(priceArea);
 
