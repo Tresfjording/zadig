@@ -4,11 +4,11 @@ let cabins = [];
 let facts = [];
 let searchIndex = [];
 // hytteikon
-const hyttikon = L.icon({
-    iconUrl: "img/hytteikon.png",
-    iconSize: [18, 18],
-    iconAnchor: [9, 9]
-});
+//const hyttikon = L.icon({
+  //  iconUrl: "img/hytteikon.png",
+  //  iconSize: [18, 18],
+  //  iconAnchor: [9, 9]
+//});
 // -------------------- OPPSTART --------------------
 document.addEventListener("DOMContentLoaded", () => {
     initMap();
@@ -187,7 +187,8 @@ function focusOnCabin(hytte) {
 function updateInfoBoxWithPlace(place) {
     const titleEl = document.getElementById("info-title");
     const contentEl = document.getElementById("info-content");
-
+    const priceArea = placeData.t_sone.replace("N", "NO");
+    const strømpris = await fetchCurrentPowerPrice(priceArea);
     titleEl.textContent = place.t_knavn || "Ukjent sted";
     contentEl.innerHTML = `
         <p><strong>Fylke:</strong> ${place.t_knavn}</p>
@@ -205,7 +206,10 @@ function updateInfoBoxWithPlace(place) {
 function updateInfoBoxWithCabin(hytte) {
     const titleEl = document.getElementById("info-title");
     const contentEl = document.getElementById("info-content");
-
+    
+<p><strong>Strømpris nå:</strong> ${
+  strømpris ? strømpris.toFixed(2) + " kr/kWh" : "Ikke tilgjengelig"
+}</p>
     titleEl.textContent = hytte.h_navn || "Ukjent hytte";
     contentEl.innerHTML = `
         
@@ -243,4 +247,30 @@ function setRandomFact() {
 
     const random = facts[Math.floor(Math.random() * facts.length)];
     el.textContent = random;
+}
+
+function buildPriceUrl(priceArea) {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+
+  return `https://www.hvakosterstrommen.no/api/v1/prices/${year}/${month}-${day}_${priceArea}.json`;
+}
+
+async function fetchCurrentPowerPrice(priceArea) {
+  const url = buildPriceUrl(priceArea);
+
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    const hour = new Date().getHours();
+    const entry = data[hour];
+
+    return entry?.NOK_per_kWh ?? null;
+  } catch (err) {
+    console.error("Feil ved henting av strømpris:", err);
+    return null;
+  }
 }
