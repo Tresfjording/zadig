@@ -187,10 +187,13 @@ function focusOnCabin(hytte) {
 function updateInfoBoxWithPlace(place) {
     const titleEl = document.getElementById("info-title");
     const contentEl = document.getElementById("info-content");
-    const priceArea = placeData.t_sone.replace("N", "NO");
+    const priceArea = place.t_sone.replace("N", "NO");
     const strømpris = await fetchCurrentPowerPrice(priceArea);
     titleEl.textContent = place.t_knavn || "Ukjent sted";
     contentEl.innerHTML = `
+    <p><strong>Strømpris nå:</strong> ${
+  strømpris ? strømpris.toFixed(2) + " kr/kWh" : "Ikke tilgjengelig"
+}</p>
         <p><strong>Fylke:</strong> ${place.t_knavn}</p>
         <p><strong>Fylke:</strong> ${place.t_fnavn}</p>
         <p><strong>Innbyggere:</strong> ${place.k_innbyggere}</p>
@@ -206,13 +209,12 @@ function updateInfoBoxWithPlace(place) {
 function updateInfoBoxWithCabin(hytte) {
     const titleEl = document.getElementById("info-title");
     const contentEl = document.getElementById("info-content");
-    
-<p><strong>Strømpris nå:</strong> ${
-  strømpris ? strømpris.toFixed(2) + " kr/kWh" : "Ikke tilgjengelig"
-}</p>
+
     titleEl.textContent = hytte.h_navn || "Ukjent hytte";
     contentEl.innerHTML = `
-        
+        <p><strong>Strømpris nå:</strong> ${
+  strømpris ? strømpris.toFixed(2) + " kr/kWh" : "Ikke tilgjengelig"
+}</p>
         <p><strong>Fylke:</strong> ${hytte.t_knavn}</p>
         <p><strong>Type:</strong> ${hytte.h_type}</p>
         <p><strong>Operatør:</strong> ${hytte.h_operatør}</p>
@@ -273,4 +275,9 @@ async function fetchCurrentPowerPrice(priceArea) {
     console.error("Feil ved henting av strømpris:", err);
     return null;
   }
+}
+function getPriceColor(price) {
+  if (price < 0.5) return "green";
+  if (price < 1.0) return "orange";
+  return "red";
 }
