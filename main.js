@@ -184,7 +184,7 @@ function focusOnCabin(hytte) {
 }
 
 // -------------------- INFOBOKS --------------------
-function updateInfoBoxWithPlace(place) {
+async function updateInfoBoxWithPlace(place) {
     const titleEl = document.getElementById("info-title");
     const contentEl = document.getElementById("info-content");
     const priceArea = place.t_sone.replace("N", "NO");
