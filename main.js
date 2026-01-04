@@ -189,10 +189,10 @@ async function updateInfoBoxWithPlace(place) {
     const titleEl = document.getElementById("info-title");
     const contentEl = document.getElementById("info-content");
     const priceArea = place.t_sone.replace("N", "NO");
-    const strompris = await fetchCurrentPowerPrice(priceArea);
+    const strømpris = await fetchCurrentPowerPrice(priceArea);
     titleEl.textContent = place.t_knavn || "Ukjent sted";
     contentEl.innerHTML = `
-<p><strong>Strømpris nå:</strong> <span style="color:${getPriceColor(strompris)};">${strompris.toFixed(2)} kr/kWh</span></p>
+<p><strong>Strømpris nå:</strong> <span style="color:${getPriceColor(strømpris)};">${strømpris.toFixed(2)} kr/kWh</span></p>
         <p><strong>Fylke:</strong> ${place.t_knavn}</p>
         <p><strong>Fylke:</strong> ${place.t_fnavn}</p>
         <p><strong>Innbyggere:</strong> ${place.k_innbyggere}</p>
@@ -212,7 +212,7 @@ function updateInfoBoxWithCabin(hytte) {
     titleEl.textContent = hytte.h_navn || "Ukjent hytte";
     contentEl.innerHTML = `
         <p><strong>Strømpris nå:</strong> ${
-  strompris ? strompris.toFixed(2) + " kr/kWh" : "Ikke tilgjengelig"
+  strømpris ? strømpris.toFixed(2) + " kr/kWh" : "Ikke tilgjengelig"
 }</p>
         <p><strong>Fylke:</strong> ${hytte.t_knavn}</p>
         <p><strong>Type:</strong> ${hytte.h_type}</p>
@@ -256,7 +256,7 @@ function buildPriceUrl(priceArea) {
   const month = String(now.getMonth() + 1).padStart(2, "0");
   const day = String(now.getDate()).padStart(2, "0");
 
-  return `https://www.hvakosterstrommen.no/api/v1/prices/${year}/${month}-${day}_${priceArea}.json`;
+  return `https://www.hvakosterstrømmen.no/api/v1/prices/${year}/${month}-${day}_${priceArea}.json`;
 }
 
 async function fetchCurrentPowerPrice(priceArea) {
