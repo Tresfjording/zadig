@@ -191,9 +191,9 @@ function updateInfoBoxWithPlace(place) {
     const strømpris = await fetchCurrentPowerPrice(priceArea);
     titleEl.textContent = place.t_knavn || "Ukjent sted";
     contentEl.innerHTML = `
-    <p><strong>Strømpris nå:</strong> ${
-  strømpris ? strømpris.toFixed(2) + " kr/kWh" : "Ikke tilgjengelig"
-}</p>
+<p><strong>Strømpris nå:</strong> <span style="color:${getPriceColor(strømpris)};">
+  ${strømpris.toFixed(2)} kr/kWh
+</span></p>
         <p><strong>Fylke:</strong> ${place.t_knavn}</p>
         <p><strong>Fylke:</strong> ${place.t_fnavn}</p>
         <p><strong>Innbyggere:</strong> ${place.k_innbyggere}</p>
