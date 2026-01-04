@@ -260,16 +260,21 @@ function buildPriceUrl(priceArea) {
 }
 
 async function fetchCurrentPowerPrice(priceArea) {
-  const url = buildPriceUrl(priceArea);
-
   try {
+    // Dette endepunktet har Access-Control-Allow-Origin: *
+    const url = `https://www.hvakosterstrommen.no/api/v1/prices.json?zone=${priceArea}`;
+
     const response = await fetch(url);
     const data = await response.json();
 
+    // Finn gjeldende time
     const hour = new Date().getHours();
+
+    // Data er et array med 24 elementer (0–23)
     const entry = data[hour];
 
     return entry?.NOK_per_kWh ?? null;
+
   } catch (err) {
     console.error("Feil ved henting av strømpris:", err);
     return null;
