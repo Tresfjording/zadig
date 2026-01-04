@@ -189,10 +189,10 @@ async function updateInfoBoxWithPlace(place) {
     const titleEl = document.getElementById("info-title");
     const contentEl = document.getElementById("info-content");
     const priceArea = place.t_sone.replace("N", "NO");
-    const strømpris = await fetchCurrentPowerPrice(priceArea);
+    const strompris = await fetchCurrentPowerPrice(priceArea);
     titleEl.textContent = place.t_knavn || "Ukjent sted";
     contentEl.innerHTML = `
-<p><strong>Strømpris nå:</strong> <span style="color:${getPriceColor(strømpris)};">${strømpris.toFixed(2)} kr/kWh</span></p>
+<p><strong>Strømpris nå:</strong> <span style="color:${getPriceColor(strompris)};">${strompris.toFixed(2)} kr/kWh</span></p>
         <p><strong>Fylke:</strong> ${place.t_knavn}</p>
         <p><strong>Fylke:</strong> ${place.t_fnavn}</p>
         <p><strong>Innbyggere:</strong> ${place.k_innbyggere}</p>
@@ -212,7 +212,7 @@ function updateInfoBoxWithCabin(hytte) {
     titleEl.textContent = hytte.h_navn || "Ukjent hytte";
     contentEl.innerHTML = `
         <p><strong>Strømpris nå:</strong> ${
-  strømpris ? strømpris.toFixed(2) + " kr/kWh" : "Ikke tilgjengelig"
+  strompris ? strompris.toFixed(2) + " kr/kWh" : "Ikke tilgjengelig"
 }</p>
         <p><strong>Fylke:</strong> ${hytte.t_knavn}</p>
         <p><strong>Type:</strong> ${hytte.h_type}</p>
