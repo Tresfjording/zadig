@@ -188,35 +188,51 @@ function focusOnCabin(hytte) {
 async function updateInfoBoxWithPlace(place) {
     const titleEl = document.getElementById("info-title");
     const contentEl = document.getElementById("info-content");
+
+    // Rett sone
     const priceArea = place.t_sone.replace(/^N(0\d)$/, "NO$1");
+
+    // HENT STRØMPRISEN (du manglet denne!)
+    const strømpris = await fetchCurrentPowerPrice(priceArea);
+
     titleEl.textContent = place.t_knavn || "Ukjent sted";
+
     contentEl.innerHTML = `
-<p><strong>Strømpris nå:</strong> <span style="color:${getPriceColor(strømpris)};">${strømpris.toFixed(2)} kr/kWh</span></p>
-        <p><strong>Fylke:</strong> ${place.t_knavn}</p>
+        <p><strong>Strømpris nå:</strong> ${
+            strømpris ? strømpris.toFixed(2) + " kr/kWh" : "Ikke tilgjengelig"
+        }</p>
+
         <p><strong>Fylke:</strong> ${place.t_fnavn}</p>
         <p><strong>Innbyggere:</strong> ${place.k_innbyggere}</p>
-        <p><strong>Areal:</strong> ${place.areal}</p>
+        <p><strong>Areal:</strong> ${place.k_areal}</p>
         <p><strong>Ansatte:</strong> ${place.k_ansatte}</p>
         <p><strong>Språk:</strong> ${place.k_språk}</p>
         <p><strong>Slagord:</strong> ${place.k_slagord}</p>
-        <p><strong>Tilskudd:</strong> ${place.tilskudd}</p>
-        <p><strong>Slagord:</strong> ${place.k_slagord}</p>
+        <p><strong>Tilskudd:</strong> ${place.k_tilskudd}</p>
     `;
 }
 
-function updateInfoBoxWithCabin(hytte) {
+async function updateInfoBoxWithCabin(hytte) {
     const titleEl = document.getElementById("info-title");
     const contentEl = document.getElementById("info-content");
 
+    // Hent sone fra hytta
+    const priceArea = hytte.t_sone.replace(/^N(0\d)$/, "NO$1");
+
+    // HENT STRØMPRISEN
+    const strømpris = await fetchCurrentPowerPrice(priceArea);
+
     titleEl.textContent = hytte.h_navn || "Ukjent hytte";
+
     contentEl.innerHTML = `
         <p><strong>Strømpris nå:</strong> ${
-  strømpris ? strømpris.toFixed(2) + " kr/kWh" : "Ikke tilgjengelig"
-}</p>
-        <p><strong>Fylke:</strong> ${hytte.t_knavn}</p>
+            strømpris ? strømpris.toFixed(2) + " kr/kWh" : "Ikke tilgjengelig"
+        }</p>
+
+        <p><strong>Fylke:</strong> ${hytte.t_fnavn}</p>
         <p><strong>Type:</strong> ${hytte.h_type}</p>
         <p><strong>Operatør:</strong> ${hytte.h_operatør}</p>
-        <p><strong>Kommune:</strong> ${hytte.h_operatør}</p>
+        <p><strong>Kommune:</strong> ${hytte.k_navn}</p>
         <p><a href="${hytte.h_url}" target="_blank">Se mer på UT.no</a></p>
     `;
 }
@@ -260,21 +276,16 @@ function buildPriceUrl(priceArea) {
 }
 
 async function fetchCurrentPowerPrice(priceArea) {
-  try {
-    // Dette endepunktet har Access-Control-Allow-Origin: *
-    const url = `https://www.hvakosterstrommen.no/api/v1/prices.json?zone=${priceArea}`;
+  const url = buildPriceUrl(priceArea);
 
+  try {
     const response = await fetch(url);
     const data = await response.json();
 
-    // Finn gjeldende time
     const hour = new Date().getHours();
-
-    // Data er et array med 24 elementer (0–23)
     const entry = data[hour];
 
     return entry?.NOK_per_kWh ?? null;
-
   } catch (err) {
     console.error("Feil ved henting av strømpris:", err);
     return null;
