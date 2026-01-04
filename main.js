@@ -188,8 +188,7 @@ function focusOnCabin(hytte) {
 async function updateInfoBoxWithPlace(place) {
     const titleEl = document.getElementById("info-title");
     const contentEl = document.getElementById("info-content");
-    const priceArea = place.t_sone.replace("N", "NO");
-    const strømpris = await fetchCurrentPowerPrice(priceArea);
+    const priceArea = place.t_sone.replace(/^N(0\d)$/, "NO$1");
     titleEl.textContent = place.t_knavn || "Ukjent sted";
     contentEl.innerHTML = `
 <p><strong>Strømpris nå:</strong> <span style="color:${getPriceColor(strømpris)};">${strømpris.toFixed(2)} kr/kWh</span></p>
@@ -257,6 +256,7 @@ function buildPriceUrl(priceArea) {
   const day = String(now.getDate()).padStart(2, "0");
 
   return `https://www.hvakosterstrømmen.no/api/v1/prices/${year}/${month}-${day}_${priceArea}.json`;
+  const url = `https://corsproxy.io/?${encodeURIComponent(originalUrl)}`;
 }
 
 async function fetchCurrentPowerPrice(priceArea) {
