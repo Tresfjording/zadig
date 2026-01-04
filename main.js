@@ -335,16 +335,19 @@ function handleSearch(label) {
 
   document.getElementById("place-search").value = match.label;
 
- if (match.type === "h") {
+if (match.type === "t") {
+  focusOnPlace(match.ref);
+  updateInfoBoxWithPlace(match.ref);
+  setSelectedPlaceMarker(match.ref);
+} else if (match.type === "h") {
   focusOnCabin(match.ref);
   updateInfoBoxWithCabin(match.ref);
   setSelectedCabinMarker(match.ref);
-} else if (match.type === "h") {
-    focusOnCabin(match.ref);
-    updateInfoBoxWithCabin(match.ref);
-  }
+}else {
+  console.warn("Ukjent match-type:", match.type);
+}
 
-  clearSuggestions();
+clearSuggestions();
 }
 
 // -------------- KARTFOKUS --------------
