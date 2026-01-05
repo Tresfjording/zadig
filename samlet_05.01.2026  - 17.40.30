@@ -94,24 +94,31 @@ function initMap() {
 }
 
 // -------------- DATA --------------
-let tettsteder = [];
-let hytter = [];
 
 async function loadData() {
   try {
-    const [tettResp, hytteResp] = await Promise.all([
-      fetch("tettsted.json"),
-      fetch("dnt_hytter.json"),
+    const [samletResp, factsResp] = await Promise.all([
+      fetch("https://www.tresfjording.no/samlet.json"),
+      fetch("facts_all.json"),
     ]);
 
-    tettsteder = await tettResp.json();
-    hytter = await hytteResp.json();
+    if (!samletResp.ok || !factsResp.ok) {
+      console.error("Kunne ikke hente en eller begge filer");
+      return;
+    }
 
-    console.log("Tettsteder lastet:", tettsteder.length);
-    console.log("Hytter lastet:", hytter.length);
+    const samletData = await samletResp.json();
+    const factsData = await factsResp.json();
 
+    // facts_all kan være enten array av strenger eller objekter med .fact
+    facts = Array.isArray(factsData) ? factsData : [];
+    places = samletData.filter((d) => d.t_knavn);
+    cabins = samletData.filter((d) => d.h_navn);
+
+    console.log("Tettsteder:", places.length);
+    console.log("Hytter:", cabins.length);
   } catch (err) {
-    console.error("Feil ved lasting av data:", err);
+    console.error("Feil i loadData:", err);
   }
 }
 
