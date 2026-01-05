@@ -2,8 +2,8 @@
 
 let map;
 
-let tettsteder = [];
-let hytter = [];
+let places = [];
+let cabins = [];
 let facts = [];
 let searchIndex = [];
 let selectedCabinMarker = null;
@@ -382,10 +382,12 @@ function setSelectedPlaceMarker(place) {
 
   if (!lat || !lon) return;
 
+  // Fjern gammel markør
   if (selectedPlaceMarker) {
     map.removeLayer(selectedPlaceMarker);
   }
 
+  // Lag ny markør
   selectedPlaceMarker = L.circleMarker([lat, lon], {
     radius: 10,
     color: "#0044aa",
@@ -396,8 +398,6 @@ function setSelectedPlaceMarker(place) {
 
   selectedPlaceMarker.addTo(map);
 }
-
-// -------------- INFOBOKS --------------
 
 // -------------- INFOBOKS --------------
 
@@ -534,13 +534,10 @@ async function updateInfoBoxWithCabin(hytte) {
 // -------------- MARKØRER --------------
 
 // Tettsteder med farge etter pris
-// -------------- MARKØRER --------------
-
-// Tettsteder med farge etter pris
 async function renderAllPlaceMarkers() {
-  if (!tettsteder || tettsteder.length === 0) return;
+  if (!places || places.length === 0) return;
 
-  for (const place of tettsteder) {
+  for (const place of places) {
     const lat = parseFloat(String(place.k_lat_decimal).replace(",", "."));
     const lon = parseFloat(String(place.k_lon_decimal).replace(",", "."));
 
@@ -571,9 +568,9 @@ async function renderAllPlaceMarkers() {
 
 // Hytter (små brune ikoner med hover)
 function renderAllHytteMarkers() {
-  if (!hytter || hytter.length === 0) return;
+  if (!cabins || cabins.length === 0) return;
 
-  hytter.forEach((h) => {
+  cabins.forEach((h) => {
     const lat = parseFloat(String(h.h_lat).replace(",", "."));
     const lon = parseFloat(String(h.h_lon).replace(",", "."));
 
