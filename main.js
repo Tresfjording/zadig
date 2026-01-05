@@ -499,7 +499,7 @@ async function updateInfoBoxWithCabin(hytte) {
         <p><strong>Hytte:</strong> ${hytte.h_navn}</p>
         <p><strong>Type:</strong> ${hytte.h_type ?? ""}</p>
         <p><strong>Operatør:</strong> ${hytte.h_operatør ?? ""}</p>
-        <p><strong>Kommune:</strong> ${hytte.k_navn ?? ""}</p>
+        <p><strong>Kommune:</strong> ${hytte.t_knavn ?? ""}</p>
         <p><strong>Fylke:</strong> ${hytte.t_fnavn ?? ""}</p>
       </div>
       <div class="info-col">
