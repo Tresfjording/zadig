@@ -6,10 +6,10 @@ let tettsteder = [];
 let hytter = [];
 let facts = [];
 let searchIndex = [];
-let selectedhytteMarker = null;
+let selectedCabinMarker = null;
 
 // markør tettsteder og hytter
-let selectedtettstedMarker = null;
+let selectedPlaceMarker = null;
 
 // cache for strømpriser
 const zonePriceCache = {}; // { NO1: { prices: [...], lastUpdated: Date }, ... }
@@ -36,8 +36,8 @@ function getPriceColor(price, avg) {
   return "gold"; // omtrent likt
 }
 function setSelectedCabinMarker(hytte) {
-  const lat = parseFloat(String(hytte.h_lat).retettsted(",", "."));
-  const lon = parseFloat(String(hytte.h_lon).retettsted(",", "."));
+  const lat = parseFloat(String(hytte.h_lat).replace(",", "."));
+  const lon = parseFloat(String(hytte.h_lon).replace(",", "."));
 
   if (!lat || !lon) return;
 
@@ -70,14 +70,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
       await initPrices(); // henter priser og landssnitt én gang
 
-      renderAlltettstedMarkers();
+      renderAllPlaceMarkers();
       renderAllHytteMarkers();
 
       setRandomFact();
     })
     .catch((err) => {
       console.error("loadData feilet, men vi fortsetter:", err);
-      renderAlltettstedMarkers();
+      renderAllPlaceMarkers();
       renderAllHytteMarkers();
       setRandomFact();
     });
@@ -112,11 +112,11 @@ async function loadData() {
 
     // facts_all kan være enten array av strenger eller objekter med .fact
     facts = Array.isArray(factsData) ? factsData : [];
-    tettsteder = samletData.filter((d) => d.t_knavn);
-    hytter = samletData.filter((d) => d.h_navn);
+    places = samletData.filter((d) => d.t_knavn);
+    cabins = samletData.filter((d) => d.h_navn);
 
-    console.log("Tettsteder:", tettsteder.length);
-    console.log("Hytter:", hytter.length);
+    console.log("Tettsteder:", places.length);
+    console.log("Hytter:", cabins.length);
   } catch (err) {
     console.error("Feil i loadData:", err);
   }
@@ -211,13 +211,13 @@ async function initPrices() {
 function buildSearchIndex() {
   searchIndex = [];
 
-  tettsteder.forEach((t) => {
+  places.forEach((t) => {
     if (t.t_knavn) {
       searchIndex.push({ type: "t", label: t.t_knavn, ref: t });
     }
   });
 
-  hytter.forEach((h) => {
+  cabins.forEach((h) => {
     if (h.h_navn) {
       searchIndex.push({ type: "h", label: h.h_navn, ref: h });
     }
@@ -230,7 +230,7 @@ function buildSearchIndex() {
 function initSearch() {
   console.log("initSearch kjører!");
 
-  const searchInput = document.getElementById("tettsted-search");
+  const searchInput = document.getElementById("place-search");
   const suggestionsEl = document.getElementById("search-suggestions");
 
   if (!searchInput || !suggestionsEl) return;
@@ -333,12 +333,12 @@ function handleSearch(label) {
     return;
   }
 
-  document.getElementById("tettsted-search").value = match.label;
+  document.getElementById("place-search").value = match.label;
 
 if (match.type === "t") {
-  focusOntettsted(match.ref);
-  updateInfoBoxWithtettsted(match.ref);
-  setSelectedtettstedMarker(match.ref);
+  focusOnPlace(match.ref);
+  updateInfoBoxWithPlace(match.ref);
+  setSelectedPlaceMarker(match.ref);
 } else if (match.type === "h") {
   focusOnCabin(match.ref);
   updateInfoBoxWithCabin(match.ref);
@@ -352,12 +352,12 @@ clearSuggestions();
 
 // -------------- KARTFOKUS --------------
 
-function focusOntettsted(tettsted) {
-  const lat = parseFloat(String(tettsted.k_lat_decimal).retettsted(",", "."));
-  const lon = parseFloat(String(tettsted.k_lon_decimal).retettsted(",", "."));
+function focusOnPlace(place) {
+  const lat = parseFloat(String(place.k_lat_decimal).replace(",", "."));
+  const lon = parseFloat(String(place.k_lon_decimal).replace(",", "."));
 
   if (!lat || !lon) {
-    console.warn("Manglende koordinater for tettsted:", tettsted.t_knavn);
+    console.warn("Manglende koordinater for tettsted:", place.t_knavn);
     return;
   }
 
@@ -365,8 +365,8 @@ function focusOntettsted(tettsted) {
 }
 
 function focusOnCabin(hytte) {
-  const lat = parseFloat(String(hytte.h_lat).retettsted(",", "."));
-  const lon = parseFloat(String(hytte.h_lon).retettsted(",", "."));
+  const lat = parseFloat(String(hytte.h_lat).replace(",", "."));
+  const lon = parseFloat(String(hytte.h_lon).replace(",", "."));
 
   if (!lat || !lon) {
     console.warn("Manglende koordinater for hytte:", hytte.h_navn);
@@ -376,19 +376,17 @@ function focusOnCabin(hytte) {
   map.setView([lat, lon], 13);
 }
 
-function setSelectedtettstedMarker(tettsted) {
-  const lat = parseFloat(String(tettsted.k_lat_decimal).retettsted(",", "."));
-  const lon = parseFloat(String(tettsted.k_lon_decimal).retettsted(",", "."));
+function setSelectedPlaceMarker(place) {
+  const lat = parseFloat(String(place.k_lat_decimal).replace(",", "."));
+  const lon = parseFloat(String(place.k_lon_decimal).replace(",", "."));
 
   if (!lat || !lon) return;
 
-  // Fjern gammel markør
-  if (selectedtettstedMarker) {
-    map.removeLayer(selectedtettstedMarker);
+  if (selectedPlaceMarker) {
+    map.removeLayer(selectedPlaceMarker);
   }
 
-  // Lag ny markør
-  selectedtettstedMarker = L.circleMarker([lat, lon], {
+  selectedPlaceMarker = L.circleMarker([lat, lon], {
     radius: 10,
     color: "#0044aa",
     weight: 3,
@@ -396,15 +394,17 @@ function setSelectedtettstedMarker(tettsted) {
     fillOpacity: 0.6,
   });
 
-  selectedtettstedMarker.addTo(map);
+  selectedPlaceMarker.addTo(map);
 }
 
 // -------------- INFOBOKS --------------
 
-async function updateInfoBoxWithtettsted(tettsted) {
-  setSelectedtettstedMarker(tettsted);
+// -------------- INFOBOKS --------------
 
-  if (!tettsted) {
+async function updateInfoBoxWithPlace(place) {
+  setSelectedPlaceMarker(place);
+
+  if (!place) {
     console.warn("Ingen tettsted valgt");
     return;
   }
@@ -417,10 +417,10 @@ async function updateInfoBoxWithtettsted(tettsted) {
     return;
   }
 
-  const priceArea = tettsted.t_sone;
+  const priceArea = place.t_sone;
   const strømpris = await fetchCurrentPowerPrice(priceArea);
 
-  titleEl.textContent = tettsted.t_knavn || "Ukjent tettsted";
+  titleEl.textContent = place.t_knavn || "Ukjent tettsted";
 
   const priceText =
     strømpris != null ? `${strømpris.toFixed(2)} kr/kWh` : "Ikke tilgjengelig";
@@ -435,24 +435,24 @@ async function updateInfoBoxWithtettsted(tettsted) {
   contentEl.innerHTML = `
     <div class="info-row">
       <div class="info-col">
-        <p><strong>Tettsted:</strong> ${tettsted.t_knavn}</p>
-        <p><strong>Kommune nr:</strong> ${tettsted["t_k.nr"] ?? tettsted.t_knr ?? ""}</p>
-        <p><strong>Kommune:</strong> ${tettsted.t_knavn}</p>
-        <p><strong>Fylke:</strong> ${tettsted.t_fnavn}</p>
-        <p><strong>Sone:</strong> ${tettsted.t_sone}</p>
+        <p><strong>Tettsted:</strong> ${place.t_knavn}</p>
+        <p><strong>Kommune nr:</strong> ${place["t_k.nr"] ?? place.t_knr ?? ""}</p>
+        <p><strong>Kommune:</strong> ${place.t_knavn}</p>
+        <p><strong>Fylke:</strong> ${place.t_fnavn}</p>
+        <p><strong>Sone:</strong> ${place.t_sone}</p>
       </div>
       <div class="info-col">
-        <p><strong>Innbyggere:</strong> ${tettsted.k_innbyggere ?? ""}</p>
-        <p><strong>Areal:</strong> ${tettsted.k_areal ?? ""}</p>
-        <p><strong>Ansatte:</strong> ${tettsted.k_ansatte ?? ""}</p>
-        <p><strong>Tilskudd:</strong> ${tettsted.k_tilskudd ?? ""}</p>
-        <p><strong>Språk:</strong> ${tettsted.k_språk ?? ""}</p>
+        <p><strong>Innbyggere:</strong> ${place.k_innbyggere ?? ""}</p>
+        <p><strong>Areal:</strong> ${place.k_areal ?? ""}</p>
+        <p><strong>Ansatte:</strong> ${place.k_ansatte ?? ""}</p>
+        <p><strong>Tilskudd:</strong> ${place.k_tilskudd ?? ""}</p>
+        <p><strong>Språk:</strong> ${place.k_språk ?? ""}</p>
       </div>
     </div>
 
     <div class="info-row">
-      <p><strong>Kommune-slagord:</strong> ${tettsted.k_slagord ?? ""}</p>
-      <p><strong>Fylkes-slagord:</strong> ${tettsted.f_slagord ?? ""}</p>
+      <p><strong>Kommune-slagord:</strong> ${place.k_slagord ?? ""}</p>
+      <p><strong>Fylkes-slagord:</strong> ${place.f_slagord ?? ""}</p>
     </div>
 
     <div class="info-row price-row">
@@ -534,16 +534,19 @@ async function updateInfoBoxWithCabin(hytte) {
 // -------------- MARKØRER --------------
 
 // Tettsteder med farge etter pris
-async function renderAlltettstedMarkers() {
+// -------------- MARKØRER --------------
+
+// Tettsteder med farge etter pris
+async function renderAllPlaceMarkers() {
   if (!tettsteder || tettsteder.length === 0) return;
 
-  for (const tettsted of tettsteder) {
-    const lat = parseFloat(String(tettsted.k_lat_decimal).retettsted(",", "."));
-    const lon = parseFloat(String(tettsted.k_lon_decimal).retettsted(",", "."));
+  for (const place of tettsteder) {
+    const lat = parseFloat(String(place.k_lat_decimal).replace(",", "."));
+    const lon = parseFloat(String(place.k_lon_decimal).replace(",", "."));
 
     if (!lat || !lon) continue;
 
-    const priceArea = tettsted.t_sone;
+    const priceArea = place.t_sone;
     const strømpris = await fetchCurrentPowerPrice(priceArea);
     const color = getPriceColor(strømpris, nationalAveragePrice);
 
@@ -555,11 +558,11 @@ async function renderAlltettstedMarkers() {
       fillOpacity: 0.9,
     });
 
-    marker.bindTooltip(tettsted.t_knavn, { direction: "top" });
+    marker.bindTooltip(place.t_knavn, { direction: "top" });
 
     marker.on("click", () => {
-      focusOntettsted(tettsted);
-      updateInfoBoxWithtettsted(tettsted);
+      focusOnPlace(place);
+      updateInfoBoxWithPlace(place);
     });
 
     marker.addTo(map);
@@ -571,8 +574,8 @@ function renderAllHytteMarkers() {
   if (!hytter || hytter.length === 0) return;
 
   hytter.forEach((h) => {
-    const lat = parseFloat(String(h.h_lat).retettsted(",", "."));
-    const lon = parseFloat(String(h.h_lon).retettsted(",", "."));
+    const lat = parseFloat(String(h.h_lat).replace(",", "."));
+    const lon = parseFloat(String(h.h_lon).replace(",", "."));
 
     if (!lat || !lon) return;
 
