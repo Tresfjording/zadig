@@ -151,7 +151,7 @@ body {
   position: absolute;
   right: 1.5rem;
   bottom: 1.5rem;
-  width: min(200px, 30vw);
+  width: min(400px, 30vw);
   background: white;
   border-radius: 1.25rem;
   padding: 1rem 1.1rem 0.9rem;
