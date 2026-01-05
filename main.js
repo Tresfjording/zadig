@@ -97,6 +97,9 @@ function initMap() {
 let tettsteder = [];
 let hytter = [];
 
+let tettsteder = [];
+let hytter = [];
+
 async function loadData() {
   try {
     const [tettResp, hytteResp] = await Promise.all([
@@ -114,7 +117,6 @@ async function loadData() {
     console.error("Feil ved lasting av data:", err);
   }
 }
-
 // -------------- STRØMPRISER --------------
 
 // Henter dagens priser for en sone én gang
@@ -486,42 +488,22 @@ async function updateInfoBoxWithCabin(hytte) {
 
   titleEl.textContent = hytte.h_navn || "Ukjent hytte";
 
-  contentEl.innerHTML = `
-    <div class="info-row">
-      <div class="info-col">
-        <p><strong>Hytte:</strong> ${hytte.h_navn}</p>
-        <p><strong>Type:</strong> ${hytte.h_type ?? ""}</p>
-        <p><strong>Operatør:</strong> ${hytte.h_operatør ?? ""}</p>
-        <p><strong>Kommune:</strong> ${hytte.k_navn ?? ""}</p>
-        <p><strong>Fylke:</strong> ${hytte.t_fnavn ?? ""}</p>
-      </div>
-      <div class="info-col">
-        <p><strong>Sone:</strong> ${hytte.t_sone ?? ""}</p>
-        <p><strong>Innbyggere:</strong> ${hytte.k_innbyggere ?? ""}</p>
-        <p><strong>Areal:</strong> ${hytte.k_areal ?? ""}</p>
-        <p><strong>Tilskudd:</strong> ${hytte.k_tilskudd ?? ""}</p>
-        <p><strong>Språk:</strong> ${hytte.k_språk ?? ""}</p>
-      </div>
-    </div>
+ function showInfo(item, type) {
+  if (type === "tettsted") {
+    contentEl.innerHTML = `
+      <h2>${item.navn}</h2>
+      <p><strong>Koordinater:</strong> ${item["@lat"]}, ${item["@lon"]}</p>
+      <p><strong>Folketall:</strong> ${item.folketall ?? "ukjent"}</p>
+    `;
+  }
 
-    <div class="info-row">
-      <p><strong>Kommune-slagord:</strong> ${hytte.k_slagord ?? ""}</p>
-      <p><strong>Fylkes-slagord:</strong> ${hytte.f_slagord ?? ""}</p>
-    </div>
-
-    <div class="info-row price-row">
-      <p><strong>Strømpris nå:</strong> 
-        <span class="price-badge price-${color}">${priceText}</span>
-      </p>
-      <p><strong>Landsgjennomsnitt nå:</strong> ${avgText}</p>
-    </div>
-
-    <p>
-      <a href="${hytte.h_url}" target="_blank" rel="noopener noreferrer">
-        Se mer på UT.no
-      </a>
-    </p>
-  `;
+  if (type === "hytte") {
+    contentEl.innerHTML = `
+      <h2>${item.navn}</h2>
+      <p><strong>Betjeningsgrad:</strong> ${item.betjeningsgrad ?? "ukjent"}</p>
+      <p><strong>Koordinater:</strong> ${item["@lat"]}, ${item["@lon"]}</p>
+    `;
+  }
 }
 
 // -------------- MARKØRER --------------
