@@ -417,7 +417,7 @@ async function updateInfoBoxWithPlace(place) {
     return;
   }
 
-  const priceArea = place.t_sone?.toUpperCase();
+  const priceArea = X.t_sone?.toUpperCase();
   const strømpris = await fetchCurrentPowerPrice(priceArea);
 
   titleEl.textContent = place.t_knavn || "Ukjent tettsted";
@@ -479,7 +479,7 @@ async function updateInfoBoxWithCabin(hytte) {
     return;
   }
 
-  const priceArea = hytte.t_sone;
+  const priceArea = X.t_sone?.toUpperCase();
   const strømpris = await fetchCurrentPowerPrice(priceArea);
   const priceText =
     strømpris != null ? `${strømpris.toFixed(2)} kr/kWh` : "Ikke tilgjengelig";
