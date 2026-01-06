@@ -480,7 +480,8 @@ async function updateInfoBoxWithCabin(hytte) {
   }
 
   const priceArea = hytte.t_sone?.toUpperCase();
-  const strømpris = await fetchCurrentPowerPrice(priceArea);
+const strømpris = await fetchCurrentPowerPrice(priceArea);
+
   const priceText =
     strømpris != null ? `${strømpris.toFixed(2)} kr/kWh` : "Ikke tilgjengelig";
 
@@ -544,7 +545,8 @@ async function renderAllPlaceMarkers() {
     if (!lat || !lon) continue;
 
     const priceArea = place.t_sone;
-    const strømpris = await fetchCurrentPowerPrice(priceArea);
+  const strømpris = await fetchCurrentPowerPrice(priceArea);
+
     const color = getPriceColor(strømpris, nationalAveragePrice);
 
     const marker = L.circleMarker([lat, lon], {
