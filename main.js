@@ -479,7 +479,7 @@ async function updateInfoBoxWithCabin(hytte) {
     return;
   }
 
-  const priceArea = place.t_sone;
+  const priceArea = hytte.t_sone;
   const strømpris = await fetchCurrentPowerPrice(priceArea);
   const priceText =
     strømpris != null ? `${strømpris.toFixed(2)} kr/kWh` : "Ikke tilgjengelig";
