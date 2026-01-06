@@ -128,12 +128,12 @@ async function loadData() {
 async function fetchZonePrices(priceArea) {
   if (!priceArea) return null;
 
-  // bruk cache hvis vi har
-  if (zonePriceCache[priceArea]) {
-    return zonePriceCache[priceArea].prices;
-  }
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
 
-  const url = `https://www.hvakosterstrommen.no/api/v1/prices.json?zone=${priceArea}`;
+  const url = `https://www.hvakosterstrommen.no/api/v1/prices/${year}/${month}-${day}_${priceArea}.json`;
 
   try {
     const response = await fetch(url);
@@ -147,11 +147,6 @@ async function fetchZonePrices(priceArea) {
       console.warn("Tomt datasett for sone:", priceArea);
       return null;
     }
-
-    zonePriceCache[priceArea] = {
-      prices: data,
-      lastUpdated: new Date(),
-    };
 
     return data;
   } catch (err) {
@@ -544,7 +539,7 @@ async function renderAllPlaceMarkers() {
 
     if (!lat || !lon) continue;
 
-    const priceArea = place.t_sone;
+const priceArea = place.t_sone?.toUpperCase();
   const strømpris = await fetchCurrentPowerPrice(priceArea);
 
     const color = getPriceColor(strømpris, nationalAveragePrice);
