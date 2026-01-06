@@ -417,7 +417,7 @@ async function updateInfoBoxWithPlace(place) {
     return;
   }
 
-  const priceArea = place.t_sone;
+  const priceArea = place.t_sone?.toUpperCase();
   const strømpris = await fetchCurrentPowerPrice(priceArea);
 
   titleEl.textContent = place.t_knavn || "Ukjent tettsted";
