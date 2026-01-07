@@ -262,10 +262,10 @@ async function visHytte(entry) {
     aktivMarker = null;
   }
 
-  const lat = entry["@lat"];
-  const lon = entry["@lon"];
-  if (!lat || !lon) {
-    console.warn("Mangler koordinater for hytte", entry);
+  const lat = parseFloat(entry["@lat"]);
+  const lon = parseFloat(entry["@lon"]);
+  if (isNaN(lat) || isNaN(lon)) {
+    console.warn("Ugyldige koordinater for hytte", entry);
     return;
   }
 
@@ -276,7 +276,7 @@ async function visHytte(entry) {
     .addTo(map)
     .bindTooltip(
       `${entry.name || "Hytte"} – ${
-        prisNaa ? prisNaa + " kr/kWh ekskl. MVA" : "pris ikke tilgjengelig"
+        prisNaa ? prisNaa + " kr/kWh" : "pris ikke tilgjengelig"
       }`,
       { permanent: true, direction: "top" }
     )
@@ -286,37 +286,6 @@ async function visHytte(entry) {
   await oppdaterInfoboks(entry, "hytte");
   map.setView([lat, lon], 12, { animate: true });
   sisteValg = { type: "hytte", id: entry["@id"] || entry.name };
-}
-
-  // const hytteIcon = L.icon({
-    // iconUrl: "hytte_icon.png", // bytt til faktisk ikon-fil
-    // iconSize: [24, 24],
-    // iconAnchor: [12, 24],
-    //popupAnchor: [0, -24]
-  //});
-
-  const marker = L.marker([h["@lat"], h["@lon"]])
-  .addTo(map)
-  .bindTooltip(h.name || "Hytte", {
-    permanent: false,
-    direction: "top"
-  })
-
-    .addTo(map)
-    .bindTooltip(
-      `${entry.navn || "Hytte"} – ${
-        prisNaa ? prisNaa + " kr/kWh ekskl. MVA ekskl. MVA" : "pris ikke tilgjengelig"
-      }`,
-      { permanent: true, direction: "top" }
-    )
-    .openTooltip();
-
-  startAnimasjon(entry.lat_decimal, entry.lon_decimal, farge);
-  await oppdaterInfoboks(entry, "hytte");
-  map.setView([entry.lat_decimal, entry.lon_decimal], 12, {
-    animate: true
-  });
-  sisteValg = { type: "hytte", id: entry.id || entry.navn };
 }
 
 // --------------------------
@@ -338,9 +307,9 @@ function plasserAlleHytter() {
   if (!hytter || hytter.length === 0) return;
 
   hytter.forEach(h => {
-    const lat = h["@lat"];
-    const lon = h["@lon"];
-    if (!lat || !lon) return;
+    const lat = parseFloat(h["@lat"]);
+    const lon = parseFloat(h["@lon"]);
+    if (isNaN(lat) || isNaN(lon)) return;
 
     const marker = L.marker([lat, lon])
       .addTo(map)
