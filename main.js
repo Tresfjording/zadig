@@ -302,7 +302,7 @@ async function visHytte(entry) {
 // --------------------------
 async function lastTettsteder() {
   try {
-    const res = await fetch("tettsteder.json");
+    const res = await fetch("tettsteder_3.json");
     if (!res.ok) throw new Error("HTTP " + res.status);
     steder = await res.json();
     console.log("Lastet tettsteder:", steder.length);
