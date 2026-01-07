@@ -148,14 +148,14 @@ async function oppdaterInfoboks(entry, type) {
 
   if (entry.sone && prisNaa != null) {
     const farge = prisTilFarge(prisNaa, landssnitt);
-    html += `<p><strong>Pris nå (${entry.sone}):</strong> <span style="color:${farge}">${prisNaa} kr/kWh</span></p>`;
+    html += `<p><strong>Pris nå (${entry.sone}):</strong> <span style="color:${farge}">${prisNaa} kr/kWh ekskl. MVA</span></p>`;
     if (landssnitt) {
-      html += `<p><strong>Landssnitt:</strong> ${landssnitt} kr/kWh</p>`;
+      html += `<p><strong>Landssnitt:</strong> ${landssnitt} kr/kWh ekskl. MVA</p>`;
     }
   } else if (entry.sone) {
     html += `<p><strong>Pris nå (${entry.sone}):</strong> ikke tilgjengelig</p>`;
     if (landssnitt) {
-      html += `<p><strong>Landssnitt:</strong> ${landssnitt} kr/kWh</p>`;
+      html += `<p><strong>Landssnitt:</strong> ${landssnitt} kr/kWh ekskl. MVA</p>`;
     }
   }
 
@@ -237,7 +237,7 @@ async function visTettsted(entry) {
     .addTo(map)
     .bindTooltip(
       `${entry.tettsted || "Tettsted"} – ${
-        prisNaa ? prisNaa + " kr/kWh" : "pris ikke tilgjengelig"
+        prisNaa ? prisNaa + " kr/kWh ekskl. MVA" : "pris ikke tilgjengelig"
       }`,
       { permanent: true, direction: "top" }
     )
@@ -289,7 +289,7 @@ async function visHytte(entry) {
     .addTo(map)
     .bindTooltip(
       `${entry.navn || "Hytte"} – ${
-        prisNaa ? prisNaa + " kr/kWh" : "pris ikke tilgjengelig"
+        prisNaa ? prisNaa + " kr/kWh ekskl. MVA ekskl. MVA" : "pris ikke tilgjengelig"
       }`,
       { permanent: true, direction: "top" }
     )
