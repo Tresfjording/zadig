@@ -1,401 +1,150 @@
-/* Generell layout */
-body {
-  text-align: center;
-  max-width: 1900px;  
-  margin: 0 auto;
-  text-align: center;  
-  font-family: 'Segoe UI', Arial, sans-serif;
-  background: linear-gradient(135deg, #f0f4f8, #d9e6f2);
-  color: #333;
-  margin: 0;
-  padding: 1rem;
-/*  display: flex;*/
-  justify-content: center;
-  align-items: flex-start; /* eller center hvis du vil midt på siden */
-  min-height: 100vh;
-}
-
-/* === GENERELT === */
+/* ------------------------------
+   GLOBALT
+--------------------------------*/
 body {
   margin: 0;
-  padding: 0;
-  font-family: system-ui, sans-serif;
-  background: #f5f5f5;
-  color: #222;
-  line-height: 1.5;
-}
-
-#map {
-  height: 600px;
-}
-
-.main-layout {
-  display: flex;
-  flex-direction: row;
-  height: 100vh;
-}
-
-.info-card {
-  flex: 1;
-  padding: 1rem;
-  overflow-y: auto;
-  background: #f9f9f9;
-}
-
-#map {
-  flex: 2;
-  height: 100vh;
-}
-
-.status {
-  margin: 1rem;
-  font-weight: bold;
-  color: #444;
-}
-.status-ok {
-  color: green;
-}
-.status-error {
-  color: red;
-}
-
-body {
   font-family: Arial, sans-serif;
-  margin: 20px;
-}
-
-#map {
-  height: 400px;
-  margin-bottom: 1rem;
-  border: 2px solid #ccc;
-}
-
-#infobox {
-  border: 1px solid #ccc;
-  padding: 1rem;
-  background: #f9f9f9;
-  max-width: 600px;
-}
-
-.leaflet-tooltip.custom-tooltip {
-  background: rgba(255,255,255,0.8);
-  border: 1px solid #333;
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 12px;
-}
-
-h1, h2 {
-  margin: 0;
-  padding: 0;
-}
-
-/* === CONTAINER === */
-.container {
-  max-width: 600px;
-  margin: 2rem auto;
-  padding: 1rem;
-}
-
-/* === SØKEBOKS === */
-.search-box {
+  height: 100vh;
   display: flex;
-  gap: 0.5rem;
-  padding: 1rem;
-  background: white;
-  border-radius: 8px;
-  margin: 1rem auto;
-  max-width: 600px;
+  overflow: hidden;
+  background: #f2f2f2;
 }
 
-.search-box input {
+/* ------------------------------
+   KART
+--------------------------------*/
+#map {
+  flex: 3;
+  height: 100%;
+  width: 100%;
+}
+
+/* ------------------------------
+   SIDEPANEL
+--------------------------------*/
+#sidepanel {
   flex: 1;
-  padding: 0.7rem;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  background: #ffffff;
+  border-left: 1px solid #ddd;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto;
+  box-shadow: -2px 0 4px rgba(0,0,0,0.05);
 }
 
-.search-box button {
-  padding: 0.7rem 1rem;
-  font-size: 1rem;
-  background: #0077cc;
+#sidepanel h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* ------------------------------
+   SØK
+--------------------------------*/
+#sokInput {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  outline: none;
+}
+
+#sokInput:focus {
+  border-color: #0078ff;
+  box-shadow: 0 0 3px rgba(0,120,255,0.4);
+}
+
+#visInfoBtn {
+  padding: 10px;
+  font-size: 16px;
+  background: #0078ff;
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 4px;
   cursor: pointer;
 }
 
-.search-box button:hover {
-  background: #005fa3;
+#visInfoBtn:hover {
+  background: #005fcc;
 }
 
-/* === INFO-KORT === */
-.info-card {
+/* ------------------------------
+   AUTOCOMPLETE
+--------------------------------*/
+#autocompleteList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #ccc;
   background: white;
-  padding: 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  margin-top: 1rem;
+  max-height: 200px;
+  overflow-y: auto;
+  display: none;
+  position: relative;
+  z-index: 9999;
+  border-radius: 4px;
 }
 
-.info-card h2 {
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-}
-
-/* === INFO-RADER === */
-.info-row, .pris-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 0.4rem 0;
+.autocomplete-item {
+  padding: 10px;
+  cursor: pointer;
   border-bottom: 1px solid #eee;
 }
 
-.info-row span, .pris-row span {
-  color: #555;
+.autocomplete-item:last-child {
+  border-bottom: none;
 }
 
-.info-row strong, .pris-row strong {
-  font-weight: 600;
+.autocomplete-item:hover {
+  background: #f0f0f0;
 }
 
-/* === STATUSMELDING === */
-.status {
-  margin-top: 1rem;
-  padding: 0.7rem;
-  border-radius: 6px;
-  font-weight: 600;
+/* ------------------------------
+   INFOBOKS
+--------------------------------*/
+#infobox {
+  background: #fafafa;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  min-height: 150px;
+  line-height: 1.5;
 }
 
-.status-ok {
-  background: #e6f7e6;
-  color: #0a7a0a;
+#infobox h2 {
+  margin-top: 0;
+  font-size: 22px;
+  color: #222;
 }
 
-.status-error {
-  background: #fdeaea;
-  color: #b30000;
+#infobox ul {
+  padding-left: 20px;
+  margin: 10px 0;
 }
 
-/* === MANGLENDE DATA === */
-.mangler {
-  color: #999;
-  font-style: italic;
+#infobox li {
+  margin-bottom: 4px;
 }
 
-/* === RESPONSIVITET === */
-@media (max-width: 600px) {
-  .container {
-    margin: 1rem;
-    padding: 0.5rem;  
-  }
-
-  .info-card {
-    padding: 1rem;
-  }
-
-  .search-box {
+/* ------------------------------
+   MOBILVENNLIG
+--------------------------------*/
+@media (max-width: 900px) {
+  body {
     flex-direction: column;
   }
 
-  .search-box button {
-    width: 100%;
+  #map {
+    height: 50vh;
   }
 
-  .info-card h2 {
-    font-size: 1.5rem;
+  #sidepanel {
+    height: 50vh;
+    border-left: none;
+    border-top: 1px solid #ddd;
   }
-}
-
-#mainWrapper {
-    max-width: 600px;      /* eller større hvis du vil */
-    margin: 0 auto;        /* sentrerer hele HTML-blokken */
-    text-align: center;    /* sentrerer tekst inni */
-}
-
-.info-row strong:empty::before {
-  content: "–";
-  color: #999;
-  font-style: italic;
-}
-
-.info-row strong.mangler {
-  color: #999;
-  font-style: italic;
-}
-
-.info-row strong.mangler::before {
-  content: "– ";
-}
-
-.status {
-  margin-top: 1em;
-  font-weight: bold;
-}
-.status-ok {
-  color: green;
-}
-.status-error {
-  color: red;
-}
-
-.dumy {
-  height: 100px;
-}   
-
-/* Tittel */
-h1 {
-  text-align: center;
-  color: #004080;
-  margin-bottom: 2rem;
-}
-
-#resultatBoks p {
-  max-width: 350px;
-  display: flex;
-  flex-direction: column;
-  margin: 0.8rem 0;
-  font-size: 1rem;
-}
-#resultatBoks p strong {
-  font-weight: 600;
-  color: #004080;
-}
-#resultatBoks p span {
-  margin-top: 0.2rem;
-}
-
-#søkInput {
-    text-align: center;
-}
-
-#søkInput::placeholder {
-    text-align: center;
-}
-
-/* Input og knapp */
-label {
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-  display: block;
-}
-
-p.uppercase {
-  text-transform: uppercase;
-}
-
-p.lowercase {
-  text-transform: lowercase;
-}
-
-p.capitalize {
-  text-transform: capitalize;
-}
-
-input[list] {
-  padding: 0.6rem;
-  border: 2px solid #004080;
-  border-radius: 6px;
-  width: 100%;
-  max-width: 350px;
-  font-size: 1rem;
-}
-
-button {
-  margin-left: 0;
-}
-
-@media (max-width: 600px) {
-  p {
-    font-size: 1rem;
-    line-height: 1.4;
-  }
-}
-
-img, input, button {
-  max-width: 100%;
-  box-sizing: border-box;
-}
-
-button {
-  padding: 0.6rem 1.2rem;
-  margin-left: 0.5rem;
-  background-color: #004080;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-button:hover {
-  background-color: #0066cc;
-}
-
-/* Resultatboks */
-#resultatBoks {
-  margin-top: 2rem;
-  padding: 1.5rem;
-  border-radius: 10px;
-  background: #fff;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
-#resultatBoks p {
-  margin: 0.5rem 0;
-  font-size: 1.1rem;
-  line-height: 1.4;
-
-}
-
-/* Highlight tekst */
-.highlight {
-  font-weight: bold;
-  color: #004080;
-}
-
-/* Fargekoding av prisniv� */
-.low {
-  color: green;
-}
-
-.medium {
-  color: orange;
-}
-
-.high {
-  color: red;
-}
-
-/* Responsiv til mobil */
-@media (max-width: 600px) {
-  body {
-    padding: 1rem;
-  }
-  input[list], button {
-    width: 100%;
-    margin: 0.5rem 0;
-  }
-}
-.nordic-price {
-  margin-top: 10px;
-  font-size: 1rem;
-  color: #333;
-}
-#faktaDisplay {
-  opacity: 0;
-  transition: opacity 1s ease-in;
-}
-
-#faktaDisplay.vis {
-  opacity: 1;
-}
-
-.prislinje {
-  text-align: center;
-  font-weight: bold;
-  color: #444;
-  margin-top: 0.5rem;
 }

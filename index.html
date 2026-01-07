@@ -1,42 +1,130 @@
 ﻿<!DOCTYPE html>
-<html lang="nb">
+<html lang="no">
 <head>
-  <meta charset="UTF-8">
-  <title>404 – Du rota dæ bort</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Norgeskart – Tettsteder & Hytter</title>
+
+  <!-- Leaflet CSS -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
+
   <style>
     body {
-      font-family: system-ui, sans-serif;
-      background-color: #fefefe;
-      padding: 3rem;
-      text-align: center;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
     }
-    h1 {
-      font-size: 2rem;
-      color: #c00;
+
+    /* Kart */
+    #map {
+      flex: 3;
+      height: 100%;
+      width: 100%;
     }
-    p {
-      font-size: 1.2rem;
-      margin-top: 1rem;
+
+    /* Sidepanel */
+    #sidepanel {
+      flex: 1;
+      background: #f8f8f8;
+      border-left: 1px solid #ccc;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      overflow-y: auto;
     }
-    img {
-      max-width: 300px;
-      margin-top: 2rem;
+
+    /* Søkefelt */
+    #sokInput {
+      width: 100%;
+      padding: 8px;
+      font-size: 16px;
+      border: 1px solid #aaa;
+      border-radius: 4px;
     }
-    a {
-      display: inline-block;
-      margin-top: 2rem;
-      font-size: 1rem;
-      color: #0077cc;
-      text-decoration: none;
+
+    #visInfoBtn {
+      padding: 8px;
+      font-size: 16px;
+      background: #0078ff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    #visInfoBtn:hover {
+      background: #005fcc;
+    }
+
+    /* Autocomplete */
+    #autocompleteList {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      border: 1px solid #ccc;
+      background: white;
+      max-height: 200px;
+      overflow-y: auto;
+      display: none;
+      position: relative;
+      z-index: 9999;
+    }
+
+    .autocomplete-item {
+      padding: 8px;
+      cursor: pointer;
+    }
+
+    .autocomplete-item:hover {
+      background: #eee;
+    }
+
+    /* Infoboks */
+    #infobox {
+      background: white;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      min-height: 150px;
     }
   </style>
 </head>
-<body>
-  <h1>🚧 404 – No he du rota de bort att</h1>
-  <p>Men slapp'a roe rekå! – me he'kje sprongje frå sag og samling!!</p>
-  <img src="image/sakja.png" alt="Me jobba mæ sakja!">
-  <!-- <a href="/index.html">← Ga tebake te framsia</a> -->
 
+<body>
+
+  <!-- Kart -->
+  <div id="map"></div>
+
+  <!-- Sidepanel -->
+  <div id="sidepanel">
+
+    <h2>Søk</h2>
+
+    <input type="text" id="sokInput" placeholder="Søk etter tettsted eller hytte..." />
+    <button id="visInfoBtn">Vis</button>
+
+    <ul id="autocompleteList"></ul>
+
+    <h2>Info</h2>
+    <div id="infobox">
+      <p>Velg et tettsted eller en hytte.</p>
+    </div>
+
+  </div>
+
+  <!-- Leaflet JS -->
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+  </script>
+
+  <!-- Main script -->
+  <script src="main.js"></script>
 
 </body>
 </html>
