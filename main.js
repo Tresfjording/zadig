@@ -270,16 +270,22 @@ async function visHytte(entry) {
   const prisNaa = entry.sone ? await hentPrisNaa(entry.sone) : null;
   const farge = prisTilFarge(prisNaa, landssnitt);
 
-  const hytteIcon = L.icon({
-    iconUrl: "hytte_icon.png", // bytt til faktisk ikon-fil
-    iconSize: [24, 24],
-    iconAnchor: [12, 24],
-    popupAnchor: [0, -24]
-  });
+  const hytteIcon = null; // bruker standard Leaflet-ikon
 
-  aktivMarker = L.marker([entry.lat_decimal, entry.lon_decimal], {
-    icon: hytteIcon
+  // const hytteIcon = L.icon({
+    // iconUrl: "hytte_icon.png", // bytt til faktisk ikon-fil
+    // iconSize: [24, 24],
+    // iconAnchor: [12, 24],
+    //popupAnchor: [0, -24]
+  //});
+
+  const marker = L.marker([h["@lat"], h["@lon"]])
+  .addTo(map)
+  .bindTooltip(h.name || "Hytte", {
+    permanent: false,
+    direction: "top"
   })
+
     .addTo(map)
     .bindTooltip(
       `${entry.navn || "Hytte"} – ${
