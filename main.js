@@ -12,6 +12,77 @@ const searchInput = document.getElementById("sokInput");
 const searchButton = document.getElementById("visInfoBtn");
 const autocompleteList = document.getElementById("autocompleteList");
 
+function leggTilAutocomplete() {
+  const input = document.getElementById("sokInput");
+  const list = document.getElementById("autocompleteList");
+
+  input.addEventListener("input", () => {
+    const q = input.value.trim().toLowerCase();
+    list.innerHTML = "";
+    if (!q) {
+      list.style.display = "none";
+      return;
+    }
+
+    // Finn treff i tettsteder
+    const treffTettsteder = tettsteder.filter(t =>
+      (t.tettsted || "").toLowerCase().includes(q)
+    );
+
+    // Finn treff i hytter
+    const treffHytter = hytter.filter(h =>
+      (h.name || "").toLowerCase().includes(q)
+    );
+
+    const alleTreff = [
+      ...treffTettsteder.map(t => ({ type: "tettsted", data: t })),
+      ...treffHytter.map(h => ({ type: "hytte", data: h }))
+    ];
+
+    if (alleTreff.length === 0) {
+      list.style.display = "none";
+      return;
+    }
+
+    alleTreff.slice(0, 20).forEach(item => {
+      const li = document.createElement("li");
+      li.className = "autocomplete-item";
+
+      li.textContent =
+        item.type === "tettsted"
+          ? item.data.tettsted
+          : item.data.name;
+
+      li.addEventListener("click", () => {
+        input.value =
+          item.type === "tettsted"
+            ? item.data.tettsted
+            : item.data.name;
+
+        list.style.display = "none";
+
+        if (item.type === "tettsted") {
+          visTettsted(item.data);
+        } else {
+          visHytte(item.data);
+        }
+      });
+
+      list.appendChild(li);
+    });
+
+    list.style.display = "block";
+  });
+
+  // Skjul listen når man klikker utenfor
+  document.addEventListener("click", e => {
+    if (!list.contains(e.target) && e.target !== input) {
+      list.style.display = "none";
+    }
+  });
+}
+
+
 let steder = [];
 let hytter = [];
 let landssnitt = null;
@@ -444,6 +515,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   await hentLandssnitt();
   await lastTettsteder();
   await lastHytter();
+  await leggTilAutocomplete();
 
   if (searchButton) {
     searchButton.addEventListener("click", () => {
