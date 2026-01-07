@@ -262,7 +262,9 @@ async function visHytte(entry) {
     aktivMarker = null;
   }
 
-  if (!entry.lat_decimal || !entry.lon_decimal) {
+  const lat = entry["@lat"];
+  const lon = entry["@lon"];
+  if (!lat || !lon) {
     console.warn("Mangler koordinater for hytte", entry);
     return;
   }
@@ -270,7 +272,21 @@ async function visHytte(entry) {
   const prisNaa = entry.sone ? await hentPrisNaa(entry.sone) : null;
   const farge = prisTilFarge(prisNaa, landssnitt);
 
-  const hytteIcon = null; // bruker standard Leaflet-ikon
+  aktivMarker = L.marker([lat, lon])
+    .addTo(map)
+    .bindTooltip(
+      `${entry.name || "Hytte"} – ${
+        prisNaa ? prisNaa + " kr/kWh ekskl. MVA" : "pris ikke tilgjengelig"
+      }`,
+      { permanent: true, direction: "top" }
+    )
+    .openTooltip();
+
+  startAnimasjon(lat, lon, farge);
+  await oppdaterInfoboks(entry, "hytte");
+  map.setView([lat, lon], 12, { animate: true });
+  sisteValg = { type: "hytte", id: entry["@id"] || entry.name };
+}
 
   // const hytteIcon = L.icon({
     // iconUrl: "hytte_icon.png", // bytt til faktisk ikon-fil
@@ -318,6 +334,24 @@ async function lastTettsteder() {
       "<p>Feil ved lasting av tettsteder. Prøv å laste siden på nytt.</p>";
   }
 }
+function plasserAlleHytter() {
+  if (!hytter || hytter.length === 0) return;
+
+  hytter.forEach(h => {
+    const lat = h["@lat"];
+    const lon = h["@lon"];
+    if (!lat || !lon) return;
+
+    const marker = L.marker([lat, lon])
+      .addTo(map)
+      .bindTooltip(h.name || "Hytte", {
+        permanent: false,
+        direction: "top"
+      });
+
+    marker.on("click", () => visHytte(h));
+  });
+}
 
 async function lastHytter() {
   try {
@@ -330,6 +364,9 @@ async function lastHytter() {
     // Ikke krasj – bare logg og vis kort info
   }
 }
+await lastHytter();
+plasserAlleHytter();
+
 
 // --------------------------
 // AUTOCOMPLETE
