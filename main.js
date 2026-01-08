@@ -261,7 +261,27 @@ function buildSearchIndex() {
   searchIndex.sort((a, b) => a.label.localeCompare(b.label));
 }
 
+function initSearch() {
+  const searchInput = document.getElementById("place-search");
+  const suggestionsEl = document.getElementById("search-suggestions");
 
+  if (!searchInput || !suggestionsEl) return;
+
+  searchInput.addEventListener("input", () => {
+    const query = searchInput.value.toLowerCase();
+    suggestionActiveIndex = -1;
+
+    if (!query) {
+      clearSuggestions();
+      return;
+    }
+
+    const matches = searchIndex.filter((item) =>
+      item.label.toLowerCase().includes(query)
+    );
+
+    renderSuggestions(matches);
+  });
 
   searchInput.addEventListener("keydown", (e) => {
     const items = suggestionsEl.querySelectorAll(".suggestion-item");
