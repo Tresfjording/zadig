@@ -159,6 +159,12 @@ async function loadData() {
     console.log("cabins:", cabins.length);
   } catch (err) {
     console.error("Feil i loadData:", err);
+    if (!places || !Array.isArray(places)) {
+    console.error("places er ikke et array!");
+}
+if (!cabins || !Array.isArray(cabins)) {
+    console.error("cabins er ikke et array!");
+}
   }
 }
 
