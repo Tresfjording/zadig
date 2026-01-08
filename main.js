@@ -97,9 +97,9 @@ function normaliser(str) {
   return (str || "").toString().trim().toLowerCase();
 }
 
-function safeNumber(v) {
-  const n = Number(v);
-  return Number.isFinite(n) ? n : null;
+function safeNumber(val) {
+  const num = parseFloat(val);
+  return isNaN(num) ? null : num;
 }
 
 // --------------------------
@@ -326,10 +326,34 @@ async function visTettsted(entry) {
   sisteValg = { type: "tettsted", id: entry.id || entry.tettsted };
 }
 
+ async function hentPrisNaa(sone) {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const day = String(today.getDate()).padStart(2, "0");
+
+  const url = `https://www.hvakosterstrommen.no/api/v1/prices/${year}/${month}/${day}_${sone}.json`;
+
+  try {
+    const res = await fetch(url);
+    if (!res.ok) return null;
+    const data = await res.json();
+    const verdier = data
+      .map(p => safeNumber(p.NOK_per_kWh))
+      .filter(v => v != null);
+    if (verdier.length === 0) return null;
+    const snitt = verdier.reduce((a, b) => a + b, 0) / verdier.length;
+    return snitt.toFixed(2);
+  } catch {
+    return null;
+  }
+}
+
 // --------------------------
 // VIS HYTTE
 // --------------------------
 async function visHytte(entry) {
+    const prisNaa = await hentPrisNaa(entry.sone);
   if (!entry) return;
 
   if (aktivMarker) {
@@ -346,24 +370,6 @@ async function visHytte(entry) {
   await oppdaterInfoboks(entry, "hytte");
 }
 
-  const prisNaa = entry.sone ? await hentPrisNaa(entry.sone) : null;
-  const farge = prisTilFarge(prisNaa, landssnitt);
-
-  aktivMarker = L.marker([lat, lon])
-    .addTo(map)
-    .bindTooltip(
-      `${entry.name || "Hytte"} – ${
-        prisNaa ? prisNaa + " kr/kWh" : "pris ikke tilgjengelig"
-      }`,
-      { permanent: true, direction: "top" }
-    )
-    .openTooltip();
-
-  startAnimasjon(lat, lon, farge);
-  await oppdaterInfoboks(entry, "hytte");
-  map.setView([lat, lon], 12, { animate: true });
-  sisteValg = { type: "hytte", id: entry["@id"] || entry.name };
-}
 
 // --------------------------
 // LAST DATA
