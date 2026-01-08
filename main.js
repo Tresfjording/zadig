@@ -104,20 +104,20 @@ document.addEventListener("DOMContentLoaded", () => {
     .then(async () => {
       console.log("Data lastet!");
 
-      
+      buildSearchIndex();
       initSearch();
 
       await initPrices();
 
       
-      renderAllHytteMarkers();
+      drawCabins(cabins);
 
       setRandomFact();
     })
     .catch((err) => {
       console.error("loadData feilet:", err);
-      //renderAllPlaceMarkers();
-      renderAllHytteMarkers();
+      //drawCabins(cabins);
+      drawCabins(cabins);
       setRandomFact();
     });
 });
@@ -179,12 +179,10 @@ async function loadData() {
     // ⭐ TEGN HYTTENE HER
   //  drawCabins(cabins);
 
-  } catch (err) {
-   // console.error("Feil i loadData:", err);
- // }
+} catch (err) {
+   console.error("Feil i loadData:", err);
+  }
 }
-
-//catch (err) {
   
 // ------------------------------------------------------
 // STRØMPRISER
@@ -565,7 +563,7 @@ async function renderAllPlaceMarkers() {
 
     marker.addTo(map);
   }
-}
+
 
 
 function renderAllHytteMarkers() {
