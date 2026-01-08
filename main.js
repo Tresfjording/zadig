@@ -144,8 +144,6 @@ async function loadData() {
     const samletData = await samletResp.json();
     const factsData = await factsResp.json();
 
-    console.log("Rådata fra JSON:", samletData);
-
     // Konverter til array hvis det er et objekt med nøkler
     const samletArray = Array.isArray(samletData)
       ? samletData
