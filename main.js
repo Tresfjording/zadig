@@ -82,7 +82,7 @@ function leggTilAutocomplete() {
 
 
 
-let steder = [];
+let tettsteder = [];
 let hytter = [];
 let landssnitt = null;
 let aktivMarker = null;
