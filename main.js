@@ -1,7 +1,13 @@
 // ------------------------------------------------------
 // GLOBAL STATE
 // ------------------------------------------------------
-
+L.circleMarker = function () {
+  console.warn("⚠️ circleMarker ble kalt!");
+  return {
+    addTo: () => {},
+    bindPopup: () => {}
+  };
+};
 let map;
 
 let places = [];
