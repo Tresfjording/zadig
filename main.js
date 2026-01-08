@@ -142,16 +142,19 @@ async function loadData() {
     }
 
     const samletData = await samletResp.json();
-console.log("Rådata fra JSON:", samletData);
-console.log("Er array?", Array.isArray(samletData));
-
-
     const factsData = await factsResp.json();
+
+    console.log("Rådata fra JSON:", samletData);
+
+    // Konverter til array hvis det er et objekt med nøkler
+    const samletArray = Array.isArray(samletData)
+      ? samletData
+      : Object.values(samletData);
 
     facts = Array.isArray(factsData) ? factsData : [];
 
-    places = samletData.filter((d) => d.t_knavn);
-    cabins = samletData.filter((d) => d.h_navn);
+    places = samletArray.filter((d) => d.tettsted);
+    cabins = samletArray.filter((d) => d.h_navn);
 
     console.log("Tettsteder:", places.length);
     console.log("Hytter:", cabins.length);
