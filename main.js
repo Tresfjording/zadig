@@ -51,13 +51,13 @@ function setSelectedCabinMarker(hytte) {
 
   if (selectedCabinMarker) map.removeLayer(selectedCabinMarker);
 
-  selectedCabinMarker = L.circleMarker([lat, lon], {
-    radius: 8,
-    color: "#aa5500",
-    weight: 3,
-    fillColor: "#ffddaa",
-    fillOpacity: 0.7,
-  });
+  //selectedCabinMarker = L.circleMarker([lat, lon], {
+    //radius: 8,
+    //color: "#aa5500",
+    //weight: 3,
+    //fillColor: "#ffddaa",
+    //fillOpacity: 0.7,
+  //});
 
   selectedCabinMarker.addTo(map);
 }
