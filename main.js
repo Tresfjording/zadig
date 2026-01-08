@@ -53,8 +53,8 @@ function getPriceColor(price, avg) {
 // ------------------------------------------------------
 
 function setSelectedCabinMarker(hytte) {
-  const lat = parseFloat(String(hytte.h_lat).replace(",", "."));
-  const lon = parseFloat(String(hytte.h_lon).replace(",", "."));
+const lat = h["@lat"];
+const lon = h["@lon"];
 
   if (!lat || !lon) return;
 
@@ -246,6 +246,32 @@ async function initPrices() {
   }
 
   if (count > 0) nationalAveragePrice = sum / count;
+}
+
+function renderAllHytteMarkers() {
+  if (!cabins || cabins.length === 0) return;
+
+  cabins.forEach((h) => {
+    const lat = h["@lat"];
+    const lon = h["@lon"];
+
+    if (!lat || !lon) return;
+
+    const marker = L.marker([lat, lon], {
+      title: h.name,
+      icon: hytteIcon,
+    });
+
+    marker.bindTooltip(`${h.name} (${h["dnt:classification"] ?? "ukjent type"})`, {
+      direction: "top",
+    });
+
+    marker.on("mouseover", () => {
+      updateInfoBoxWithCabin(h);
+    });
+
+    marker.addTo(map);
+  });
 }
 
 // ------------------------------------------------------
