@@ -96,27 +96,6 @@ function setSelectedPlaceMarker(place) {
 // ------------------------------------------------------
 // OPPSTART
 // ------------------------------------------------------
-
-document.addEventListener("DOMContentLoaded", () => {
-  initMap();
-
-  loadData()
-    .then(async () => {
-      console.log("Data lastet!");
-
-      //initSearch();
-      await initPrices();
-
-      drawCabins(cabins); // ← bruker din nye versjon
-      setRandomFact();
-    })
-    .catch((err) => {
-      console.error("loadData feilet:", err);
-      setRandomFact();
-    });
-});
-
-
 function drawCabins(cabins) {
   cabins.forEach((hytte) => {
     const lat = hytte["@lat"];
@@ -132,6 +111,27 @@ function drawCabins(cabins) {
       `);
   });
 }
+document.addEventListener("DOMContentLoaded", () => {
+  initMap();
+
+  loadData()
+    .then(async () => {
+      console.log("Data lastet!");
+
+      initSearch();
+      await initPrices();
+
+      drawCabins(cabins); // ← bruker din nye versjon
+      setRandomFact();
+    })
+    .catch((err) => {
+      console.error("loadData feilet:", err);
+      setRandomFact();
+    });
+});
+
+
+
 
 // ------------------------------------------------------
 // KART
