@@ -18,10 +18,11 @@ let nationalAveragePrice = null;
 let suggestionActiveIndex = -1;
 
 // hytteikon
-const hytteikon = L.icon({
-  iconUrl: "img/hytteikon.png",
-  iconSize: [18, 18],
-  iconAnchor: [9, 9],
+const hytteIcon = L.icon({
+  iconUrl: "hytte.png", // ← bytt til din egen ikonfil
+  iconSize: [32, 32],   // størrelse på ikonet
+  iconAnchor: [16, 32], // punktet som treffer kartet
+  popupAnchor: [0, -32] // hvor popupen dukker opp
 });
 
 // ------------------------------------------------------
@@ -118,19 +119,15 @@ function drawCabins(cabins) {
   cabins.forEach((hytte) => {
     const lat = hytte["@lat"];
     const lon = hytte["@lon"];
-    const navn = hytte.name || "Uten navn";
+    if (!lat || !lon) return;
 
-    if (!lat || !lon) return; // hopp over ugyldige
-
-    L.circleMarker([lat, lon], {
-      radius: 6,
-      color: "#d9534f",
-      fillColor: "#d9534f",
-      fillOpacity: 0.85,
-      weight: 1,
-    })
+    L.marker([lat, lon], { icon: hytteIcon })
       .addTo(map)
-      .bindPopup(`<b>${navn}</b><br>${hytte["dnt:classification"] || ""}`);
+      .bindPopup(`
+        <b>${hytte.name}</b><br>
+        ${hytte["dnt:classification"] || ""}<br>
+        <a href="${hytte.website}" target="_blank">UT.no</a>
+      `);
   });
 }
 
