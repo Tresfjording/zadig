@@ -104,21 +104,16 @@ document.addEventListener("DOMContentLoaded", () => {
     .then(async () => {
       console.log("Data lastet!");
 
-      
       initSearch();
-
       await initPrices();
 
-      
-      renderAllHytteMarkers();
-
+      drawCabins(cabins); // ← bruker din nye versjon
       setRandomFact();
     })
     .catch((err) => {
-  console.error("loadData feilet:", err);
-  // Ikke tegn hytter hvis data ikke er lastet
-  setRandomFact();
-});
+      console.error("loadData feilet:", err);
+      setRandomFact();
+    });
 });
 
 
