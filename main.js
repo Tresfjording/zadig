@@ -187,52 +187,23 @@ function prisTilFarge(pris, land) {
 // OPPDATER INFOBOKS
 // --------------------------
 async function oppdaterInfoboks(entry, type) {
-  let html = `<h2>${entry.name || "Ukjent hytte"}</h2><ul>`;
-  html += `<li><strong>Driftet av:</strong> ${entry.operator}</li>`;
-  html += `<li><strong>Type:</strong> ${entry["dnt:classification"]}</li>`;
-  html += `<li><strong>Nettside:</strong> <a href="${entry.website}" target="_blank">Besøk</a></li>`;
-  html += "</ul>";
-  infobox.innerHTML = html;
-}
-
   const prisNaa = entry.sone ? await hentPrisNaa(entry.sone) : null;
 
   let tittel = "";
   if (type === "tettsted") {
     tittel = entry.tettsted || "Ukjent tettsted";
   } else if (type === "hytte") {
-    tittel = entry.navn || entry.tettsted || "Ukjent hytte";
+    tittel = entry.name || entry.tettsted || "Ukjent hytte";
   } else {
-    tittel = entry.navn || entry.tettsted || "Ukjent sted";
+    tittel = entry.name || entry.tettsted || "Ukjent sted";
   }
 
   let html = `<h2>${tittel}</h2><ul>`;
-
-  for (const key in entry) {
-    if (
-      ["lat", "lon", "lat_decimal", "lon_decimal"].includes(key) ||
-      entry[key] === null ||
-      entry[key] === undefined ||
-      entry[key] === ""
-    ) {
-      continue;
-    }
-    html += `<li><strong>${key}:</strong> ${entry[key]}</li>`;
-  }
+  if (entry.operator) html += `<li><strong>Driftet av:</strong> ${entry.operator}</li>`;
+  if (entry["dnt:classification"]) html += `<li><strong>Type:</strong> ${entry["dnt:classification"]}</li>`;
+  if (entry.website) html += `<li><strong>Nettside:</strong> <a href="${entry.website}" target="_blank">Besøk</a></li>`;
+  if (prisNaa) html += `<li><strong>Pris nå:</strong> ${prisNaa} kr/kWh</li>`;
   html += "</ul>";
-
-  if (entry.sone && prisNaa != null) {
-    const farge = prisTilFarge(prisNaa, landssnitt);
-    html += `<p><strong>Pris nå (${entry.sone}):</strong> <span style="color:${farge}">${prisNaa} kr/kWh ekskl. MVA</span></p>`;
-    if (landssnitt) {
-      html += `<p><strong>Landssnitt:</strong> ${landssnitt} kr/kWh ekskl. MVA</p>`;
-    }
-  } else if (entry.sone) {
-    html += `<p><strong>Pris nå (${entry.sone}):</strong> ikke tilgjengelig</p>`;
-    if (landssnitt) {
-      html += `<p><strong>Landssnitt:</strong> ${landssnitt} kr/kWh ekskl. MVA</p>`;
-    }
-  }
 
   infobox.innerHTML = html;
 }
