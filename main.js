@@ -19,10 +19,10 @@ let suggestionActiveIndex = -1;
 
 // hytteikon
 const hytteIcon = L.icon({
-  iconUrl: "hytte.png", // ← bytt til din egen ikonfil
-  iconSize: [32, 32],   // størrelse på ikonet
-  iconAnchor: [16, 32], // punktet som treffer kartet
-  popupAnchor: [0, -32] // hvor popupen dukker opp
+  iconUrl: "https://cdn-icons-png.flaticon.com/512/1532/1532688.png",
+  iconSize: [32, 32],
+  iconAnchor: [16, 32],
+  popupAnchor: [0, -32]
 });
 
 // ------------------------------------------------------
