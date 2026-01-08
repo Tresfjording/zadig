@@ -142,6 +142,10 @@ async function loadData() {
     }
 
     const samletData = await samletResp.json();
+console.log("Rådata fra JSON:", samletData);
+console.log("Er array?", Array.isArray(samletData));
+
+
     const factsData = await factsResp.json();
 
     facts = Array.isArray(factsData) ? factsData : [];
