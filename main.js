@@ -134,6 +134,7 @@ async function loadData() {
     const [samletResp, factsResp] = await Promise.all([
       fetch("tettsteder_3.json"),
       fetch("facts_all.json"),
+      fetch("dnt_hytter.json"),
     ]);
 
     if (!samletResp.ok || !factsResp.ok) {
@@ -143,6 +144,7 @@ async function loadData() {
 
     const samletData = await samletResp.json();
     const factsData = await factsResp.json();
+    const hytter = await hytterResp.json();
 
     // Konverter objekt med nøkler til array
     const samletArray = Array.isArray(samletData)
