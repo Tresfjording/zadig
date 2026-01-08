@@ -337,6 +337,9 @@ async function visHytte(entry) {
 // --------------------------
 // LAST DATA
 // --------------------------
+let tettsteder = [];
+
+
 async function lastTettsteder() {
   try {
     const res = await fetch("tettsteder_3.json");
