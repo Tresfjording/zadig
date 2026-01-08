@@ -97,8 +97,47 @@ function setSelectedPlaceMarker(place) {
 // OPPSTART
 // ------------------------------------------------------
 
+document.addEventListener("DOMContentLoaded", () => {
+  initMap();
+
+  loadData()
+    .then(async () => {
+      console.log("Data lastet!");
+
+      
+      initSearch();
+
+      await initPrices();
+
+      
+      renderAllHytteMarkers();
+
+      setRandomFact();
+    })
+    .catch((err) => {
+      console.error("loadData feilet:", err);
+      //renderAllPlaceMarkers();
+      renderAllHytteMarkers();
+      setRandomFact();
+    });
+});
 
 
+function drawCabins(cabins) {
+  cabins.forEach((hytte) => {
+    const lat = hytte["@lat"];
+    const lon = hytte["@lon"];
+    if (!lat || !lon) return;
+
+    L.marker([lat, lon], { icon: hytteIcon })
+      .addTo(map)
+      .bindPopup(`
+        <b>${hytte.name}</b><br>
+        ${hytte["dnt:classification"] || ""}<br>
+        <a href="${hytte.website}" target="_blank">UT.no</a>
+      `);
+  });
+}
 
 // ------------------------------------------------------
 // KART
@@ -280,40 +319,6 @@ function initSearch() {
     }
   });
 }
-
-function drawCabins(cabins) {
-  cabins.forEach((hytte) => {
-    const lat = hytte["@lat"];
-    const lon = hytte["@lon"];
-    if (!lat || !lon) return;
-
-    L.marker([lat, lon], { icon: hytteIcon })
-      .addTo(map)
-      .bindPopup(`
-        <b>${hytte.name}</b><br>
-        ${hytte["dnt:classification"] || ""}<br>
-        <a href="${hytte.website}" target="_blank">UT.no</a>
-      `);
-  });
-}
-document.addEventListener("DOMContentLoaded", () => {
-  initMap();
-
-  loadData()
-    .then(async () => {
-      console.log("Data lastet!");
-
-      initSearch();
-      await initPrices();
-
-      drawCabins(cabins); // ← bruker din nye versjon
-      setRandomFact();
-    })
-    .catch((err) => {
-      console.error("loadData feilet:", err);
-      setRandomFact();
-    });
-});
 
 function renderSuggestions(matches) {
   const suggestionsEl = document.getElementById("search-suggestions");
