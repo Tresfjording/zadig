@@ -158,34 +158,21 @@ async function loadData() {
     const facts = await factsResp.json();
     const hytter = await hytterResp.json();
 
-    // tettsteder_3.json kan være objekt eller array
-    const samletArray = Array.isArray(samlet)
-      ? samlet
-      : Object.values(samlet);
+    const samletArray = Array.isArray(samlet) ? samlet : Object.values(samlet);
+    const factsArray = Array.isArray(facts) ? facts : Object.values(facts);
 
-    // facts_all.json kan være array eller objekt
-    const factsArray = Array.isArray(facts)
-      ? facts
-      : Object.values(facts);
-
-    // Nå setter vi places og cabins/hytter riktig
     places = samletArray.filter((d) => d.tettsted);
-    cabins = hytter; // direkte fra dnt_hytter.json
+    cabins = hytter;
 
     console.log("places:", places.length);
     console.log("cabins:", cabins.length);
 
+    // ⭐ TEGN HYTTENE HER
+    drawCabins(cabins);
+
   } catch (err) {
     console.error("Feil i loadData:", err);
-
-    if (!places || !Array.isArray(places)) {
-      console.error("places er ikke et array!");
-    }
-    if (!cabins || !Array.isArray(cabins)) {
-      console.error("cabins er ikke et array!");
-    }
   }
-  drawCabins(cabins);
 }
 
 // ------------------------------------------------------
