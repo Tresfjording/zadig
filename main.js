@@ -82,7 +82,7 @@ function setSelectedPlaceMarker(place) {
     //fillOpacity: 0.6,
   //});
 
-  selectedPlaceMarker.addTo(map);
+ // selectedPlaceMarker.addTo(map);
 }
 
 // ------------------------------------------------------
