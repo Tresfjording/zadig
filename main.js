@@ -344,7 +344,7 @@ async function lastTettsteder() {
   try {
     const res = await fetch("tettsteder_3.json");
     if (!res.ok) throw new Error("HTTP " + res.status);
-    steder = await res.json();
+    tettsteder = await res.json();
     console.log("Lastet tettsteder:", steder.length);
   } catch (err) {
     console.error("Feil ved lasting av tettsteder:", err);
