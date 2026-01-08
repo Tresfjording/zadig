@@ -106,66 +106,49 @@ function safeNumber(val) {
 // HENT LANDSSNITT
 // --------------------------
 async function hentLandssnitt() {
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, "0");
-  const day = String(today.getDate()).padStart(2, "0");
-
   const soner = ["NO1", "NO2", "NO3", "NO4", "NO5"];
-  let alleVerdier = [];
+  let alle = [];
 
   for (const sone of soner) {
-    const day = String(today.getDate()).padStart(2, "0");
-const url = `https://www.hvakosterstrommen.no/api/v1/prices/${year}/${month}/${day}_${sone}.json`;
-    try {
-      const res = await fetch(url);
-      if (!res.ok) continue;
-      const data = await res.json();
-      const verdier = data
-        .map(p => safeNumber(p.NOK_per_kWh))
-        .filter(v => v !== null);
-      alleVerdier.push(...verdier);
-    } catch (err) {
-      console.error("Feil ved henting av sone", sone, err);
-    }
+    const pris = await hentPrisNaa(sone);
+    if (pris !== null) alle.push(parseFloat(pris));
   }
 
-  if (alleVerdier.length > 0) {
-    const snitt =
-      alleVerdier.reduce((sum, v) => sum + v, 0) / alleVerdier.length;
-    landssnitt = snitt.toFixed(2);
-    console.log("Landssnitt:", landssnitt);
-  } else {
+  if (alle.length === 0) {
     console.warn("Fant ingen gyldige verdier for landssnitt");
+    return null;
   }
+
+  const snitt = alle.reduce((a, b) => a + b, 0) / alle.length;
+  return snitt.toFixed(2);
 }
 
 // --------------------------
 // HENT PRIS FOR NÅVÆRENDE TIME
 // --------------------------
 async function hentPrisNaa(sone) {
-  if (!sone) return null;
-
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, "0");
-  const day = String(now.getDate()).padStart(2, "0");
-  const hour = now.getHours();
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const day = String(today.getDate()).padStart(2, "0");
 
   const url = `https://www.hvakosterstrommen.no/api/v1/prices/${year}/${month}-${day}_${sone}.json`;
 
   try {
     const res = await fetch(url);
     if (!res.ok) return null;
+
     const data = await res.json();
-    const entry = data.find(p => {
-      const startHour = new Date(p.time_start).getHours();
-      return startHour === hour;
-    });
-    const verdi = entry ? safeNumber(entry.NOK_per_kWh) : null;
-    return verdi !== null ? verdi.toFixed(2) : null;
-  } catch (err) {
-    console.error("Feil ved henting av pris nå:", err);
+
+    const verdier = data
+      .map(p => parseFloat(p.NOK_per_kWh))
+      .filter(v => !isNaN(v));
+
+    if (verdier.length === 0) return null;
+
+    const snitt = verdier.reduce((a, b) => a + b, 0) / verdier.length;
+    return snitt.toFixed(2);
+  } catch {
     return null;
   }
 }
@@ -199,10 +182,19 @@ async function oppdaterInfoboks(entry, type) {
   }
 
   let html = `<h2>${tittel}</h2><ul>`;
-  if (entry.operator) html += `<li><strong>Driftet av:</strong> ${entry.operator}</li>`;
-  if (entry["dnt:classification"]) html += `<li><strong>Type:</strong> ${entry["dnt:classification"]}</li>`;
-  if (entry.website) html += `<li><strong>Nettside:</strong> <a href="${entry.website}" target="_blank">Besøk</a></li>`;
-  if (prisNaa) html += `<li><strong>Pris nå:</strong> ${prisNaa} kr/kWh</li>`;
+
+  if (entry.operator)
+    html += `<li><strong>Driftet av:</strong> ${entry.operator}</li>`;
+
+  if (entry["dnt:classification"])
+    html += `<li><strong>Type:</strong> ${entry["dnt:classification"]}</li>`;
+
+  if (entry.website)
+    html += `<li><strong>Nettside:</strong> <a href="${entry.website}" target="_blank">Besøk</a></li>`;
+
+  if (prisNaa)
+    html += `<li><strong>Pris nå:</strong> ${prisNaa} kr/kWh</li>`;
+
   html += "</ul>";
 
   infobox.innerHTML = html;
@@ -493,11 +485,12 @@ async function søk() {
 // INIT
 // --------------------------
 document.addEventListener("DOMContentLoaded", async () => {
-  await hentLandssnitt();
   await lastTettsteder();
   await lastHytter();
-  await plasserAlleHytter();
-  await leggTilAutocomplete();
+  await hentLandssnitt();
+  plasserAlleHytter();
+  leggTilAutocomplete();
+});
 
   if (searchButton) {
     searchButton.addEventListener("click", () => {
