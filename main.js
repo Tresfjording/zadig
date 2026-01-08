@@ -517,6 +517,24 @@ async function søk() {
 // --------------------------
 // INIT
 // --------------------------
+
+
+
+async function lastHytter() {
+  try {
+    const res = await fetch("hytter.json");
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    hytter = await res.json();
+    console.log("Lastet hytter:", hytter.length);
+  } catch (err) {
+    console.error("Feil ved lasting av hytter:", err);
+    infobox.innerHTML =
+      "<p>Feil ved lasting av hytter. Prøv å laste siden på nytt.</p>";
+  }
+}
+
+
+
 document.addEventListener("DOMContentLoaded", async () => {
   await lastTettsteder();
   await lastHytter();
