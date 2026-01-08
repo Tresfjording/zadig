@@ -537,13 +537,13 @@ async function renderAllPlaceMarkers() {
 
     const color = getPriceColor(strømpris, nationalAveragePrice);
 
-    const marker = L.circleMarker([lat, lon], {
-      radius: 6,
-      color: "#333",
-      weight: 1,
-      fillColor: color,
-      fillOpacity: 0.9,
-    });
+    //const marker = L.circleMarker([lat, lon], {
+      //radius: 6,
+      //color: "#333",
+      //weight: 1,
+      //fillColor: color,
+      //fillOpacity: 0.9,
+    //});
 
     marker.bindTooltip(place.t_knavn, { direction: "top" });
 
