@@ -637,3 +637,4 @@ function setRandomFact() {
     el.textContent = "Visste du at Norge er et ganske fint land?";
   }
 }
+}
