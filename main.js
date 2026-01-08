@@ -69,27 +69,6 @@ function setSelectedCabinMarker(hytte) {
 
  // selectedCabinMarker.addTo(map);
 }
-function initSearch() {
-  const searchInput = document.getElementById("place-search");
-  const suggestionsEl = document.getElementById("search-suggestions");
-
-  if (!searchInput || !suggestionsEl) return;
-
-  searchInput.addEventListener("input", () => {
-    const query = searchInput.value.toLowerCase();
-    suggestionActiveIndex = -1;
-
-    if (!query) {
-      clearSuggestions();
-      return;
-    }
-
-    const matches = searchIndex.filter((item) =>
-      item.label.toLowerCase().includes(query)
-    );
-
-    renderSuggestions(matches);
-  });
 
 // ------------------------------------------------------
 // MARKØR: TETTSTED
@@ -117,39 +96,6 @@ function setSelectedPlaceMarker(place) {
 // ------------------------------------------------------
 // OPPSTART
 // ------------------------------------------------------
-function drawCabins(cabins) {
-  cabins.forEach((hytte) => {
-    const lat = hytte["@lat"];
-    const lon = hytte["@lon"];
-    if (!lat || !lon) return;
-
-    L.marker([lat, lon], { icon: hytteIcon })
-      .addTo(map)
-      .bindPopup(`
-        <b>${hytte.name}</b><br>
-        ${hytte["dnt:classification"] || ""}<br>
-        <a href="${hytte.website}" target="_blank">UT.no</a>
-      `);
-  });
-}
-document.addEventListener("DOMContentLoaded", () => {
-  initMap();
-
-  loadData()
-    .then(async () => {
-      console.log("Data lastet!");
-
-      initSearch();
-      await initPrices();
-
-      drawCabins(cabins); // ← bruker din nye versjon
-      setRandomFact();
-    })
-    .catch((err) => {
-      console.error("loadData feilet:", err);
-      setRandomFact();
-    });
-});
 
 
 
@@ -282,6 +228,27 @@ function buildSearchIndex() {
   searchIndex.sort((a, b) => a.label.localeCompare(b.label));
 }
 
+function initSearch() {
+  const searchInput = document.getElementById("place-search");
+  const suggestionsEl = document.getElementById("search-suggestions");
+
+  if (!searchInput || !suggestionsEl) return;
+
+  searchInput.addEventListener("input", () => {
+    const query = searchInput.value.toLowerCase();
+    suggestionActiveIndex = -1;
+
+    if (!query) {
+      clearSuggestions();
+      return;
+    }
+
+    const matches = searchIndex.filter((item) =>
+      item.label.toLowerCase().includes(query)
+    );
+
+    renderSuggestions(matches);
+  });
 
   searchInput.addEventListener("keydown", (e) => {
     const items = suggestionsEl.querySelectorAll(".suggestion-item");
@@ -313,6 +280,40 @@ function buildSearchIndex() {
     }
   });
 }
+
+function drawCabins(cabins) {
+  cabins.forEach((hytte) => {
+    const lat = hytte["@lat"];
+    const lon = hytte["@lon"];
+    if (!lat || !lon) return;
+
+    L.marker([lat, lon], { icon: hytteIcon })
+      .addTo(map)
+      .bindPopup(`
+        <b>${hytte.name}</b><br>
+        ${hytte["dnt:classification"] || ""}<br>
+        <a href="${hytte.website}" target="_blank">UT.no</a>
+      `);
+  });
+}
+document.addEventListener("DOMContentLoaded", () => {
+  initMap();
+
+  loadData()
+    .then(async () => {
+      console.log("Data lastet!");
+
+      initSearch();
+      await initPrices();
+
+      drawCabins(cabins); // ← bruker din nye versjon
+      setRandomFact();
+    })
+    .catch((err) => {
+      console.error("loadData feilet:", err);
+      setRandomFact();
+    });
+});
 
 function renderSuggestions(matches) {
   const suggestionsEl = document.getElementById("search-suggestions");
