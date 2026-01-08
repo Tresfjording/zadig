@@ -154,10 +154,10 @@ async function loadData() {
     places = samletArray.filter((d) => d.tettsted);
     cabins = samletArray.filter((d) => d.h_navn);
 
-    console.log("Tettsteder:", places.length);
-    console.log("Hytter:", cabins.length);
-  } catch (err) {
-    console.error("Feil i loadData:", err);
+
+console.log("places:", places.length);
+console.log("cabins:", cabins.length);
+console.log("Første place:", places[0]);
   }
 }
 
