@@ -129,39 +129,44 @@ function initMap() {
 // DATA
 // ------------------------------------------------------
 
-async function loadData() {
+aasync function loadData() {
   try {
     const [samletResp, factsResp, hytterResp] = await Promise.all([
-  fetch("tettsteder_3.json"),
-  fetch("facts_all.json"),
-  fetch("dnt_hytter.json"),
-]);
+      fetch("tettsteder_3.json"),
+      fetch("facts_all.json"),
+      fetch("dnt_hytter.json"),
+    ]);
 
-const samlet = await samletResp.json();
-const facts = await factsResp.json();
-const hytter = await hytterResp.json();
+    const samlet = await samletResp.json();
+    const facts = await factsResp.json();
+    const hytter = await hytterResp.json();
 
-    // Konverter objekt med nøkler til array
-    const samletArray = Array.isArray(samletData)
-      ? samletData
-      : Object.values(samletData);
+    // tettsteder_3.json kan være objekt eller array
+    const samletArray = Array.isArray(samlet)
+      ? samlet
+      : Object.values(samlet);
 
-    facts = Array.isArray(factsData) ? factsData : [];
+    // facts_all.json kan være array eller objekt
+    const factsArray = Array.isArray(facts)
+      ? facts
+      : Object.values(facts);
 
+    // Nå setter vi places og cabins/hytter riktig
     places = samletArray.filter((d) => d.tettsted);
-    cabins = samletArray.filter((d) => d.h_navn);
-
+    cabins = hytter; // direkte fra dnt_hytter.json
 
     console.log("places:", places.length);
     console.log("cabins:", cabins.length);
+
   } catch (err) {
     console.error("Feil i loadData:", err);
+
     if (!places || !Array.isArray(places)) {
-    console.error("places er ikke et array!");
-}
-if (!cabins || !Array.isArray(cabins)) {
-    console.error("cabins er ikke et array!");
-}
+      console.error("places er ikke et array!");
+    }
+    if (!cabins || !Array.isArray(cabins)) {
+      console.error("cabins er ikke et array!");
+    }
   }
 }
 
