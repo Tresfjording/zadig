@@ -131,20 +131,15 @@ function initMap() {
 
 async function loadData() {
   try {
-    const [samletResp, factsResp] = await Promise.all([
-      fetch("tettsteder_3.json"),
-      fetch("facts_all.json"),
-      fetch("dnt_hytter.json"),
-    ]);
+    const [samletResp, factsResp, hytterResp] = await Promise.all([
+  fetch("tettsteder_3.json"),
+  fetch("facts_all.json"),
+  fetch("dnt_hytter.json"),
+]);
 
-    if (!samletResp.ok || !factsResp.ok) {
-      console.error("Kunne ikke hente en eller begge filer");
-      return;
-    }
-
-    const samletData = await samletResp.json();
-    const factsData = await factsResp.json();
-    const hytter = await hytterResp.json();
+const samlet = await samletResp.json();
+const facts = await factsResp.json();
+const hytter = await hytterResp.json();
 
     // Konverter objekt med nøkler til array
     const samletArray = Array.isArray(samletData)
