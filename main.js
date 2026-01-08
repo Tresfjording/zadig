@@ -116,17 +116,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function drawCabins(cabins) {
   cabins.forEach((hytte) => {
-    if (!hytte.lat || !hytte.lon) return; // hopp over ugyldige
+    const lat = hytte["@lat"];
+    const lon = hytte["@lon"];
+    const navn = hytte.name || "Uten navn";
 
-    L.circleMarker([hytte.lat, hytte.lon], {
-      radius: 5,
-      color: "#d9534f",   // rød-ish
+    if (!lat || !lon) return; // hopp over ugyldige
+
+    L.circleMarker([lat, lon], {
+      radius: 6,
+      color: "#d9534f",
       fillColor: "#d9534f",
-      fillOpacity: 0.8,
+      fillOpacity: 0.85,
       weight: 1,
     })
       .addTo(map)
-      .bindPopup(`<b>${hytte.h_navn}</b><br>${hytte.omrade || ""}`);
+      .bindPopup(`<b>${navn}</b><br>${hytte["dnt:classification"] || ""}`);
   });
 }
 
