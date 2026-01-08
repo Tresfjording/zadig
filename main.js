@@ -8,6 +8,8 @@ L.circleMarker = function () {
     bindPopup: () => {}
   };
 };
+
+
 let map;
 
 let places = [];
@@ -175,13 +177,15 @@ async function loadData() {
     console.log("cabins:", cabins.length);
 
     // ⭐ TEGN HYTTENE HER
-    drawCabins(cabins);
+  //  drawCabins(cabins);
 
   } catch (err) {
-    console.error("Feil i loadData:", err);
-  }
+   // console.error("Feil i loadData:", err);
+ // }
 }
 
+//catch (err) {
+  
 // ------------------------------------------------------
 // STRØMPRISER
 // ------------------------------------------------------
@@ -346,6 +350,7 @@ function updateSuggestionHighlight(items) {
     else item.classList.remove("active");
   });
 }
+
 
 function clearSuggestions() {
   const suggestionsEl = document.getElementById("search-suggestions");
@@ -549,7 +554,7 @@ async function renderAllPlaceMarkers() {
       //weight: 1,
       //fillColor: color,
       //fillOpacity: 0.9,
-    //});
+    };
 
     marker.bindTooltip(place.t_knavn, { direction: "top" });
 
@@ -562,6 +567,7 @@ async function renderAllPlaceMarkers() {
   }
 }
 
+
 function renderAllHytteMarkers() {
   if (!cabins || cabins.length === 0) return;
 
@@ -573,7 +579,7 @@ function renderAllHytteMarkers() {
 
     const marker = L.marker([lat, lon], {
       title: h.h_navn,
-      icon: hytteikon,
+      icon: hytteIcon,
     });
 
     marker.bindTooltip(`${h.h_navn} (${h.h_type ?? "ukjent type"})`, {
@@ -581,8 +587,7 @@ function renderAllHytteMarkers() {
     });
 
     marker.on("mouseover", () => {
-      updateInfoBoxWith
-            updateInfoBoxWithCabin(h);
+      updateInfoBoxWithCabin(h);
     });
 
     marker.addTo(map);
