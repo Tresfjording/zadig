@@ -581,15 +581,15 @@ async function renderAllPlaceMarkers() {
       //fillOpacity: 0.9,
     };
 
-    marker.bindTooltip(place.t_knavn, { direction: "top" });
-
-    marker.on("click", () => {
-      focusOnPlace(place);
-      updateInfoBoxWithPlace(place);
-    });
-
-    marker.addTo(map);
+marker.bindTooltip(
+  `${h.name} (${h["t_navn"] ?? "ukjent type"})`,
+  {
+    direction: "top",
+    permanent: false,   // ← vises ikke alltid, men på hover
+    sticky: true,       // ← følger musepekeren
+    opacity: 1          // ← gjør tooltip synlig
   }
+);
 
 
 
