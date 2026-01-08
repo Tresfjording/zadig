@@ -345,7 +345,7 @@ async function lastTettsteder() {
     const res = await fetch("tettsteder_3.json");
     if (!res.ok) throw new Error("HTTP " + res.status);
     tettsteder = await res.json();
-    console.log("Lastet tettsteder:", steder.length);
+    console.log("Lastet tettsteder:", tettsteder.length);
   } catch (err) {
     console.error("Feil ved lasting av tettsteder:", err);
     infobox.innerHTML =
@@ -399,7 +399,7 @@ function byggForslagListe(sok) {
 
   const forslag = [];
 
-  for (const s of steder) {
+  for (const s of tettstedsteder) {
     const navn = s.tettsted || "";
     if (normaliser(navn).includes(q)) {
       forslag.push({
@@ -449,25 +449,25 @@ function finnTettstedEllerHytte(sok) {
 
   // eksakt match først
   let entry =
-    steder.find(e => normaliser(e.tettsted) === q) ||
+    tettsteder.find(e => normaliser(e.tettsted) === q) ||
     hytter.find(e => normaliser(e.navn) === q);
 
   if (entry) {
     return {
-      type: steder.includes(entry) ? "tettsted" : "hytte",
+      type: tettsteder.includes(entry) ? "tettsted" : "hytte",
       entry
     };
   }
 
   // inneholder
   entry =
-    steder.find(e => normaliser(e.tettsted).includes(q)) ||
+    tettsteder.find(e => normaliser(e.tettsted).includes(q)) ||
     hytter.find(e => normaliser(e.navn).includes(q));
 
   if (!entry) return null;
 
   return {
-    type: steder.includes(entry) ? "tettsted" : "hytte",
+    type: tettsteder.includes(entry) ? "tettsted" : "hytte",
     entry
   };
 }
