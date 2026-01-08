@@ -113,6 +113,23 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+
+function drawCabins(cabins) {
+  cabins.forEach((hytte) => {
+    if (!hytte.lat || !hytte.lon) return; // hopp over ugyldige
+
+    L.circleMarker([hytte.lat, hytte.lon], {
+      radius: 5,
+      color: "#d9534f",   // rød-ish
+      fillColor: "#d9534f",
+      fillOpacity: 0.8,
+      weight: 1,
+    })
+      .addTo(map)
+      .bindPopup(`<b>${hytte.h_navn}</b><br>${hytte.omrade || ""}`);
+  });
+}
+
 // ------------------------------------------------------
 // KART
 // ------------------------------------------------------
@@ -168,6 +185,7 @@ async function loadData() {
       console.error("cabins er ikke et array!");
     }
   }
+  drawCabins(cabins);
 }
 
 // ------------------------------------------------------
