@@ -30,8 +30,8 @@ const hytteIcon = L.icon({
   iconUrl: "/image/cabin16.png",
   //iconUrl: "https://cdn-icons-png.flaticon.com/512/1532/1532688.png",
   iconSize: [16, 16],
-  iconAnchor: [16, 32],
-  popupAnchor: [0, -32]
+  iconAnchor: [16, 16],
+  popupAnchor: [0, -16]
 });
 
 // ------------------------------------------------------
