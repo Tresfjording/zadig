@@ -19,27 +19,15 @@ function leggTilAutocomplete() {
   input.addEventListener("input", () => {
     const q = input.value.trim().toLowerCase();
     list.innerHTML = "";
-    if (!q) return;
+    if (!q) {
+      list.style.display = "none";
+      return;
+    }
 
-    const treff = [
-      ...tettsteder.filter(t => t.tettsted?.toLowerCase().includes(q)).map(t => ({ type: "tettsted", data: t })),
-      ...hytter.filter(h => h.name?.toLowerCase().includes(q)).map(h => ({ type: "hytte", data: h }))
-    ];
+    const treffTettsteder = tettsteder.filter(t =>
+      (t.tettsted || "").toLowerCase().includes(q)
+    );
 
-    treff.forEach(item => {
-      const li = document.createElement("li");
-      li.textContent = item.type === "hytte" ? item.data.name : item.data.tettsted;
-      li.onclick = () => {
-        input.value = li.textContent;
-        item.type === "hytte" ? visHytte(item.data) : visTettsted(item.data);
-        list.innerHTML = "";
-      };
-      list.appendChild(li);
-    });
-  });
-}
-
-    // Finn treff i hytter
     const treffHytter = hytter.filter(h =>
       (h.name || "").toLowerCase().includes(q)
     );
@@ -57,20 +45,14 @@ function leggTilAutocomplete() {
     alleTreff.slice(0, 20).forEach(item => {
       const li = document.createElement("li");
       li.className = "autocomplete-item";
-
       li.textContent =
         item.type === "tettsted"
           ? item.data.tettsted
           : item.data.name;
 
       li.addEventListener("click", () => {
-        input.value =
-          item.type === "tettsted"
-            ? item.data.tettsted
-            : item.data.name;
-
+        input.value = li.textContent;
         list.style.display = "none";
-
         if (item.type === "tettsted") {
           visTettsted(item.data);
         } else {
@@ -84,13 +66,20 @@ function leggTilAutocomplete() {
     list.style.display = "block";
   });
 
-  // Skjul listen når man klikker utenfor
   document.addEventListener("click", e => {
     if (!list.contains(e.target) && e.target !== input) {
       list.style.display = "none";
     }
   });
 }
+
+  // Skjul listen når man klikker utenfor
+  document.addEventListener("click", e => {
+    if (!list.contains(e.target) && e.target !== input) {
+      list.style.display = "none";
+    }
+  });
+
 
 
 let steder = [];
