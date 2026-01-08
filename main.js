@@ -104,8 +104,8 @@ document.addEventListener("DOMContentLoaded", () => {
     .then(async () => {
       console.log("Data lastet!");
 
-      buildSearchIndex();
-      initSearch();
+      //buildSearchIndex();
+      //initSearch();
 
       await initPrices();
 
