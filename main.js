@@ -116,7 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .catch((err) => {
       console.error("loadData feilet:", err);
-      renderAllPlaceMarkers();
+      //renderAllPlaceMarkers();
       renderAllHytteMarkers();
       setRandomFact();
     });
