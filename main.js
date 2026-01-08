@@ -59,7 +59,7 @@ function setSelectedCabinMarker(hytte) {
     //fillOpacity: 0.7,
   //});
 
-  selectedCabinMarker.addTo(map);
+ // selectedCabinMarker.addTo(map);
 }
 
 // ------------------------------------------------------
