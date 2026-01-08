@@ -1,5 +1,5 @@
 // ------------------------------------------------------
-// GLOBAL STATE
+// GLOBAL STATE - 09.01.2026  - 00:52:07
 // ------------------------------------------------------
 L.circleMarker = function () {
   console.warn("⚠️ circleMarker ble kalt!");
@@ -582,7 +582,7 @@ async function renderAllPlaceMarkers() {
     };
 
 marker.bindTooltip(
-  `${h.name} (${h["t_navn"] ?? "ukjent type"})`,
+  `${h.name} (${h["name"] ?? "ukjent type"})`,
   {
     direction: "top",
     permanent: false,   // ← vises ikke alltid, men på hover
