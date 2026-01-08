@@ -29,7 +29,7 @@ let suggestionActiveIndex = -1;
 const hytteIcon = L.icon({
   iconUrl: "/image/cabin16.png",
   //iconUrl: "https://cdn-icons-png.flaticon.com/512/1532/1532688.png",
-  iconSize: [32, 32],
+  iconSize: [16, 16],
   iconAnchor: [16, 32],
   popupAnchor: [0, -32]
 });
