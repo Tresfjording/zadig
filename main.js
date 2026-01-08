@@ -19,15 +19,25 @@ function leggTilAutocomplete() {
   input.addEventListener("input", () => {
     const q = input.value.trim().toLowerCase();
     list.innerHTML = "";
-    if (!q) {
-      list.style.display = "none";
-      return;
-    }
+    if (!q) return;
 
-    // Finn treff i tettsteder
-    const treffTettsteder = tettsteder.filter(t =>
-      (t.tettsted || "").toLowerCase().includes(q)
-    );
+    const treff = [
+      ...tettsteder.filter(t => t.tettsted?.toLowerCase().includes(q)).map(t => ({ type: "tettsted", data: t })),
+      ...hytter.filter(h => h.name?.toLowerCase().includes(q)).map(h => ({ type: "hytte", data: h }))
+    ];
+
+    treff.forEach(item => {
+      const li = document.createElement("li");
+      li.textContent = item.type === "hytte" ? item.data.name : item.data.tettsted;
+      li.onclick = () => {
+        input.value = li.textContent;
+        item.type === "hytte" ? visHytte(item.data) : visTettsted(item.data);
+        list.innerHTML = "";
+      };
+      list.appendChild(li);
+    });
+  });
+}
 
     // Finn treff i hytter
     const treffHytter = hytter.filter(h =>
@@ -89,6 +99,7 @@ let landssnitt = null;
 let aktivMarker = null;
 let aktivAnimertRing = null;
 let sisteValg = null;
+
 
 // --------------------------
 // HJELPEFUNKSJONER
@@ -186,10 +197,13 @@ function prisTilFarge(pris, land) {
 // OPPDATER INFOBOKS
 // --------------------------
 async function oppdaterInfoboks(entry, type) {
-  if (!entry) {
-    infobox.innerHTML = "<p>Ingen data å vise.</p>";
-    return;
-  }
+  let html = `<h2>${entry.name || "Ukjent hytte"}</h2><ul>`;
+  html += `<li><strong>Driftet av:</strong> ${entry.operator}</li>`;
+  html += `<li><strong>Type:</strong> ${entry["dnt:classification"]}</li>`;
+  html += `<li><strong>Nettside:</strong> <a href="${entry.website}" target="_blank">Besøk</a></li>`;
+  html += "</ul>";
+  infobox.innerHTML = html;
+}
 
   const prisNaa = entry.sone ? await hentPrisNaa(entry.sone) : null;
 
@@ -333,12 +347,14 @@ async function visHytte(entry) {
     aktivMarker = null;
   }
 
+async function visHytte(entry) {
   const lat = parseFloat(entry["@lat"]);
   const lon = parseFloat(entry["@lon"]);
-  if (isNaN(lat) || isNaN(lon)) {
-    console.warn("Ugyldige koordinater for hytte", entry);
-    return;
-  }
+  if (isNaN(lat) || isNaN(lon)) return;
+
+  map.setView([lat, lon], 12);
+  await oppdaterInfoboks(entry, "hytte");
+}
 
   const prisNaa = entry.sone ? await hentPrisNaa(entry.sone) : null;
   const farge = prisTilFarge(prisNaa, landssnitt);
@@ -375,8 +391,6 @@ async function lastTettsteder() {
   }
 }
 function plasserAlleHytter() {
-  if (!hytter || hytter.length === 0) return;
-
   hytter.forEach(h => {
     const lat = parseFloat(h["@lat"]);
     const lon = parseFloat(h["@lon"]);
@@ -384,10 +398,7 @@ function plasserAlleHytter() {
 
     const marker = L.marker([lat, lon])
       .addTo(map)
-      .bindTooltip(h.name || "Hytte", {
-        permanent: false,
-        direction: "top"
-      });
+      .bindTooltip(h.name || "Hytte", { direction: "top" });
 
     marker.on("click", () => visHytte(h));
   });
@@ -395,9 +406,12 @@ function plasserAlleHytter() {
 
 async function lastHytter() {
   try {
-    const res = await fetch("dnt_hytter.json");
-    if (!res.ok) throw new Error("HTTP " + res.status);
-    hytter = await res.json();
+let hytter = [];
+
+async function lastHytter() {
+  const res = await fetch("dnt_hytter.json");
+  hytter = await res.json();
+}
     console.log("Lastet hytter:", hytter.length);
   } catch (err) {
     console.error("Feil ved lasting av hytter:", err);
@@ -515,6 +529,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   await hentLandssnitt();
   await lastTettsteder();
   await lastHytter();
+  await plasserAlleHytter();
   await leggTilAutocomplete();
 
   if (searchButton) {
