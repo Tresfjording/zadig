@@ -155,9 +155,10 @@ async function loadData() {
     cabins = samletArray.filter((d) => d.h_navn);
 
 
-console.log("places:", places.length);
-console.log("cabins:", cabins.length);
-console.log("Første place:", places[0]);
+    console.log("places:", places.length);
+    console.log("cabins:", cabins.length);
+  } catch (err) {
+    console.error("Feil i loadData:", err);
   }
 }
 
