@@ -387,7 +387,7 @@ async function lastHytter() {
 }
 await lastHytter();
 plasserAlleHytter();
-
+}
 
 // --------------------------
 // AUTOCOMPLETE
