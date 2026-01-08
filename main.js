@@ -73,6 +73,21 @@ function leggTilAutocomplete() {
   });
 }
 
+
+
+async function lastTettsteder() {
+  try {
+    const res = await fetch("tettsteder_3.json");
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    tettsteder = await res.json();
+    console.log("Lastet tettsteder:", tettsteder.length);
+  } catch (err) {
+    console.error("Feil ved lasting av tettsteder:", err);
+    infobox.innerHTML =
+      "<p>Feil ved lasting av tettsteder. Prøv å laste siden på nytt.</p>";
+  }
+}
+
   // Skjul listen når man klikker utenfor
   document.addEventListener("click", e => {
     if (!list.contains(e.target) && e.target !== input) {
@@ -89,6 +104,20 @@ let aktivMarker = null;
 let aktivAnimertRing = null;
 let sisteValg = null;
 
+
+
+async function lastTettsteder() {
+  try {
+    const res = await fetch("tettsteder_3.json");
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    tettsteder = await res.json();
+    console.log("Lastet tettsteder:", tettsteder.length);
+  } catch (err) {
+    console.error("Feil ved lasting av tettsteder:", err);
+    infobox.innerHTML =
+      "<p>Feil ved lasting av tettsteder. Prøv å laste siden på nytt.</p>";
+  }
+}
 
 // --------------------------
 // HJELPEFUNKSJONER
