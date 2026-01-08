@@ -129,7 +129,7 @@ function initMap() {
 // DATA
 // ------------------------------------------------------
 
-aasync function loadData() {
+async function loadData() {
   try {
     const [samletResp, factsResp, hytterResp] = await Promise.all([
       fetch("tettsteder_3.json"),
