@@ -126,7 +126,8 @@ async function hentLandssnitt() {
   let alleVerdier = [];
 
   for (const sone of soner) {
-    const url = `https://www.hvakosterstrommen.no/api/v1/prices/${year}/${month}-${day}_${sone}.json`;
+    const day = String(today.getDate()).padStart(2, "0");
+const url = `https://www.hvakosterstrommen.no/api/v1/prices/${year}/${month}/${day}_${sone}.json`;
     try {
       const res = await fetch(url);
       if (!res.ok) continue;
