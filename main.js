@@ -27,7 +27,7 @@ let suggestionActiveIndex = -1;
 
 // hytteikon
 const hytteIcon = L.icon({
-  icondUrl: "/image/cabin.png"
+  icondUrl: "/image/cabin2.png"
   //iconUrl: "https://cdn-icons-png.flaticon.com/512/1532/1532688.png",
   iconSize: [32, 32],
   iconAnchor: [16, 32],
