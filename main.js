@@ -109,17 +109,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
       await initPrices();
 
-      renderAllHytteMarkers();
+      
       renderAllHytteMarkers();
 
       setRandomFact();
     })
     .catch((err) => {
-      console.error("loadData feilet:", err);
-      //renderAllPlaceMarkers();
-      renderAllHytteMarkers();
-      setRandomFact();
-    });
+  console.error("loadData feilet:", err);
+  // Ikke tegn hytter hvis data ikke er lastet
+  setRandomFact();
+});
 });
 
 
