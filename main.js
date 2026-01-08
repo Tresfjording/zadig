@@ -418,6 +418,7 @@ function byggForslagListe(sok) {
     }
   }
 
+
   forslag.slice(0, 15).forEach(item => {
     const li = document.createElement("li");
     li.textContent = item.label + (item.type === "hytte" ? " (hytte)" : "");
@@ -490,7 +491,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   await hentLandssnitt();
   plasserAlleHytter();
   leggTilAutocomplete();
-});
+
 
   if (searchButton) {
     searchButton.addEventListener("click", () => {
