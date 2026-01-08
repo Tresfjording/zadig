@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .then(async () => {
       console.log("Data lastet!");
 
-      initSearch();
+      //initSearch();
       await initPrices();
 
       drawCabins(cabins); // ← bruker din nye versjon
