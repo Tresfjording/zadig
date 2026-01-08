@@ -111,9 +111,9 @@ document.addEventListener("DOMContentLoaded", () => {
       await initPrices();
 
       
-      drawCabins(cabins);
+      //drawCabins(cabins);
 
-      setRandomFact();
+      //setRandomFact();
     })
     .catch((err) => {
       console.error("loadData feilet:", err);
