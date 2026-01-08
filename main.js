@@ -98,7 +98,7 @@ function initMap() {
 async function loadData() {
   try {
     const [samletResp, factsResp] = await Promise.all([
-      fetch("https://www.tresfjording.no/samlet.json"),
+      fetch("https://www.tresfjording.no/tettsteder_3.json"),
       fetch("facts_all.json"),
     ]);
 
