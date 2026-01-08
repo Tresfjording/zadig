@@ -74,13 +74,13 @@ function setSelectedPlaceMarker(place) {
 
   if (selectedPlaceMarker) map.removeLayer(selectedPlaceMarker);
 
-  selectedPlaceMarker = L.circleMarker([lat, lon], {
-    radius: 10,
-    color: "#0044aa",
-    weight: 3,
-    fillColor: "#66aaff",
-    fillOpacity: 0.6,
-  });
+  //selectedPlaceMarker = L.circleMarker([lat, lon], {
+    //radius: 10,
+    //color: "#0044aa",
+    //weight: 3,
+    //fillColor: "#66aaff",
+    //fillOpacity: 0.6,
+  //});
 
   selectedPlaceMarker.addTo(map);
 }
