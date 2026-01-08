@@ -82,13 +82,13 @@ function setSelectedPlaceMarker(place) {
 
   if (selectedPlaceMarker) map.removeLayer(selectedPlaceMarker);
 
-  //selectedPlaceMarker = L.circleMarker([lat, lon], {
-    //radius: 10,
-    //color: "#0044aa",
-    //weight: 3,
-    //fillColor: "#66aaff",
-    //fillOpacity: 0.6,
-  //});
+  selectedPlaceMarker = L.circleMarker([lat, lon], {
+    radius: 10,
+    color: "#0044aa",
+    weight: 3,
+    fillColor: "#66aaff",
+    fillOpacity: 0.6,
+  });
 
  // selectedPlaceMarker.addTo(map);
 }
@@ -104,12 +104,12 @@ document.addEventListener("DOMContentLoaded", () => {
     .then(async () => {
       console.log("Data lastet!");
 
-      //buildSearchIndex();
-      //initSearch();
+      
+      initSearch();
 
       await initPrices();
 
-      renderAllPlaceMarkers();
+      renderAllHytteMarkers();
       renderAllHytteMarkers();
 
       setRandomFact();
