@@ -69,6 +69,27 @@ function setSelectedCabinMarker(hytte) {
 
  // selectedCabinMarker.addTo(map);
 }
+function initSearch() {
+  const searchInput = document.getElementById("place-search");
+  const suggestionsEl = document.getElementById("search-suggestions");
+
+  if (!searchInput || !suggestionsEl) return;
+
+  searchInput.addEventListener("input", () => {
+    const query = searchInput.value.toLowerCase();
+    suggestionActiveIndex = -1;
+
+    if (!query) {
+      clearSuggestions();
+      return;
+    }
+
+    const matches = searchIndex.filter((item) =>
+      item.label.toLowerCase().includes(query)
+    );
+
+    renderSuggestions(matches);
+  });
 
 // ------------------------------------------------------
 // MARKØR: TETTSTED
@@ -118,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .then(async () => {
       console.log("Data lastet!");
 
-      //initSearch();
+      initSearch();
       await initPrices();
 
       drawCabins(cabins); // ← bruker din nye versjon
@@ -261,27 +282,6 @@ function buildSearchIndex() {
   searchIndex.sort((a, b) => a.label.localeCompare(b.label));
 }
 
-function initSearch() {
-  const searchInput = document.getElementById("place-search");
-  const suggestionsEl = document.getElementById("search-suggestions");
-
-  if (!searchInput || !suggestionsEl) return;
-
-  searchInput.addEventListener("input", () => {
-    const query = searchInput.value.toLowerCase();
-    suggestionActiveIndex = -1;
-
-    if (!query) {
-      clearSuggestions();
-      return;
-    }
-
-    const matches = searchIndex.filter((item) =>
-      item.label.toLowerCase().includes(query)
-    );
-
-    renderSuggestions(matches);
-  });
 
   searchInput.addEventListener("keydown", (e) => {
     const items = suggestionsEl.querySelectorAll(".suggestion-item");
