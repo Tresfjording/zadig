@@ -249,45 +249,42 @@ function clearSuggestions() {
 // --------------------------------------------------
 // HANDLE SEARCH
 // --------------------------------------------------
-function initSearch(label) {
-  const searchInput = document.getElementById("searchBox");
-  if (!searchInput) {
-    console.warn("Fant ikke søkefeltet med ID 'searchBox'");
+function handleSearch(queryOrLabel) {
+  if (!queryOrLabel || queryOrLabel.trim().length < 2) {
+    console.warn("Ugyldig søkestreng:", queryOrLabel);
     return;
   }
 
-  searchInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      const query = searchInput.value.trim().toLowerCase();
-      handleSearch(query);
-    }
-  });
+  const query = queryOrLabel.trim().toLowerCase();
 
-  console.log("Søkefunksjon aktivert");
-}
-function handleSearch(label) {
-  if (!query || query.length < 2) {
-    console.warn("Ugyldig søkestreng:", label);
-    return;
-  }
-}
   const match = places.find(p =>
-    p.name?.toLowerCase() === label ||
-    p.title?.toLowerCase() === label
+    p.name?.toLowerCase() === query ||
+    p.title?.toLowerCase() === query ||
+    p.navn?.toLowerCase() === query ||
+    p.kommune?.toLowerCase() === query
   );
 
   if (!match) {
-    console.warn("Fant ikke sted:", label);
-
+    console.warn("Fant ikke sted:", query);
+    return;
   }
 
-  console.log("Fant sted:", match.name || match.title);
-  map.setView([match.lat, match.lon], 12);
-  L.marker([match.lat, match.lon]).addTo(map)
-    .bindPopup(match.name || match.title)
-    .openPopup();
+  const lat = match.lat;
+  const lon = match.lon;
 
+  if (typeof lat !== "number" || typeof lon !== "number") {
+    console.warn("Ugyldige koordinater for:", match);
+    return;
+  }
+
+  const navn = match.name || match.title || match.navn || "Uten navn";
+
+  console.log("Fant sted:", navn);
+  map.setView([lat, lon], 12);
+  L.marker([lat, lon]).addTo(map)
+    .bindPopup(navn)
+    .openPopup();
+}
 
   // Søk ved Enter
  searchInput.addEventListener("keydown", (e) => {
