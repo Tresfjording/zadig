@@ -10,22 +10,7 @@ let suggestionActiveIndex = -1;
 // --------------------------------------------------
 // OPPSTART
 // --------------------------------------------------
-document.addEventListener("DOMContentLoaded", () => {
-  initMap();
 
-  loadData()
-    .then(async () => {
-      buildSearchIndex();
-      initSearch();
-      await initPrices();
-      renderAllHytteMarkers();
-      setRandomFact();
-    })
-    .catch((err) => {
-      console.error("loadData feilet:", err);
-      setRandomFact();
-    });
-});
 
 // --------------------------------------------------
 // KART (Leaflet – tilpass om du bruker noe annet)
@@ -101,26 +86,30 @@ function setRandomFact() {
 function buildSearchIndex() {
   searchIndex = [];
 
+  // Hytter
   if (Array.isArray(allCabins)) {
-    const cabinEntries = allCabins
-      .filter((c) => typeof c.name === "string" && c.name.trim() !== "")
-      .map((c) => ({
-        label: c.name,
-        type: "hytte",
-        ref: c
-      }));
-    searchIndex.push(...cabinEntries);
+    searchIndex.push(
+      ...allCabins
+        .filter(c => typeof c.name === "string" && c.name.trim() !== "")
+        .map(c => ({
+          label: c.name.trim(),
+          type: "hytte",
+          ref: c
+        }))
+    );
   }
 
+  // Tettsteder
   if (Array.isArray(allPlaces)) {
-    const placeEntries = allPlaces
-      .filter((p) => typeof p.name === "string" && p.name.trim() !== "")
-      .map((p) => ({
-        label: p.name,
-        type: "sted",
-        ref: p
-      }));
-    searchIndex.push(...placeEntries);
+    searchIndex.push(
+      ...allPlaces
+        .filter(p => typeof p.name === "string" && p.name.trim() !== "")
+        .map(p => ({
+          label: p.name.trim(),
+          type: "sted",
+          ref: p
+        }))
+    );
   }
 
   console.log("searchIndex bygget, antall:", searchIndex.length);
