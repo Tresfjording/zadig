@@ -160,10 +160,33 @@ function initSearch() {
     return;
   }
 
- 
+  // Lytter på Enter
+  searchInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const query = searchInput.value.trim().toLowerCase();
+      handleSearch(query);
+    }
+  });
+
+  // Lytter på piltaster/autocomplete
+  searchInput.addEventListener("keydown", (e) => {
+    const suggestionsEl = document.getElementById("autocomplete");
+    if (!suggestionsEl) return;
+
+    const items = Array.from(
+      suggestionsEl.querySelectorAll(".suggestion-item")
+    );
+
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      if (items.length === 0) return;
+      // legg til fokuslogikk her hvis ønskelig
+    }
+  });
+
   console.log("Søkefunksjon aktivert");
 }
-
     // Finn treff i searchIndex
     searchInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter") {
