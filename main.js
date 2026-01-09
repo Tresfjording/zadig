@@ -153,8 +153,13 @@ function buildSearchIndex() {
 // --------------------------------------------------
 // SØK
 // --------------------------------------------------
-
-
+function initSearch() {
+  const searchInput = document.getElementById("searchBox");
+  if (!searchInput) {
+    console.warn("Fant ikke søkefeltet med ID 'searchBox'");
+    return;
+  }
+  
   searchInput.addEventListener("keydown", (e) => {
     const suggestionsEl = document.getElementById("autocomplete");
     const items = suggestionsEl
@@ -192,12 +197,6 @@ function buildSearchIndex() {
   });
 
   console.log("Søkefunksjon aktivert");
-function initSearch() {
-  const searchInput = document.getElementById("searchBox");
-  if (!searchInput) {
-    console.warn("Fant ikke søkefeltet med ID 'searchBox'");
-    return;
-  }
 }
 
 // --------------------------------------------------
