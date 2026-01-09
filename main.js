@@ -62,8 +62,8 @@ function renderAllHytteMarkers() {
 // --------------------------------------------------
 async function loadData() {
   // Tilpass URL-er til dine faktiske filer
-  const cabinsRes = await fetch("data/cabins.json");
-  const placesRes = await fetch("data/places.json");
+  const cabinsRes = await fetch("data/hytter.json");
+  const placesRes = await fetch("data/tettsteder_3.json");
 
   if (!cabinsRes.ok || !placesRes.ok) {
     throw new Error("Kunne ikke laste datafiler");
