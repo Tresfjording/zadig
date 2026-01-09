@@ -1,5 +1,5 @@
 // ------------------------------------------------------
-// GLOBAL STATE 2026-01-09 18:16:04
+// GLOBAL STATE 09.01.2026  - 18:29:23
 // ------------------------------------------------------
 let map;
 
@@ -294,10 +294,15 @@ searchInput.addEventListener("input", () => {
     suggestions.innerHTML = "";
     return;
   }
-
-  const matches = allPlaces.filter(p =>
-  typeof p.name === "string" && p.name.toLowerCase().includes(query)
-);
+const matches = [
+  ...allCabins.filter(c =>
+    (typeof c.name === "string" && c.name.toLowerCase().includes(query)) ||
+    (typeof c.website === "string" && c.website.toLowerCase().includes(query))
+  ),
+  ...allPlaces.filter(p =>
+    typeof p.name === "string" && p.name.toLowerCase().includes(query)
+  )
+];
  
 
   renderSuggestions(matches);
@@ -305,16 +310,17 @@ searchInput.addEventListener("input", () => {
 
 // Vis forslag
 function renderSuggestions(matches) {
+  const suggestions = document.getElementById("autocomplete");
+  if (!suggestions) {
+    console.warn("autocomplete-elementet finnes ikke");
+    return;
+  }
+
   suggestions.innerHTML = "";
-  matches.forEach(place => {
+
+  matches.forEach(match => {
     const item = document.createElement("div");
-    item.className = "autocomplete-item";
-    item.textContent = place.name;
-    item.addEventListener("click", () => {
-      showInfo(place);
-      suggestions.innerHTML = "";
-      searchInput.value = place.name;
-    });
+    item.textContent = match.name || "(navnløs)";
     suggestions.appendChild(item);
   });
 }
