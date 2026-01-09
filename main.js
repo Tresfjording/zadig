@@ -295,8 +295,10 @@ searchInput.addEventListener("input", () => {
     return;
   }
 
-  const matches = allPlaces.filter(p => p.name.toLowerCase().includes(query)
-  );
+  const matches = allPlaces.filter(p =>
+  typeof p.name === "string" && p.name.toLowerCase().includes(query)
+);
+ 
 
   renderSuggestions(matches);
 });
