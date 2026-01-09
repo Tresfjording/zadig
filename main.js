@@ -629,7 +629,7 @@ function renderAllHytteMarkers() {
 // ------------------------------------------------------
 
 function setRandomFact() {
-  const el = document.getElementById("random-fact");
+  const el = document.getElementById("facts.json");
   if (!el || !facts || facts.length === 0) return;
 
   const random = facts[Math.floor(Math.random() * facts.length)];
