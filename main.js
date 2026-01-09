@@ -457,18 +457,18 @@ async function updateInfoBoxWithPlace(place) {
   contentEl.innerHTML = `
     <div class="info-row">
       <div class="info-col">
-        <p><strong>Tettsted:</strong> ${place.t_knavn}</p>
-        <p><strong>Kommune nr:</strong> ${place["t_k.nr"] ?? place.t_knr ?? ""}</p>
-        <p><strong>Kommune:</strong> ${place.t_knavn}</p>
-        <p><strong>Fylke:</strong> ${place.t_fnavn}</p>
-        <p><strong>Sone:</strong> ${place.t_sone}</p>
+        <p><strong>Tettsted:</strong> ${place.tettsted ?? ""}</p>
+        <p><strong>Kommune nr:</strong> ${place.k_nr ?? ""}</p>
+        
+        <p><strong>Fylke:</strong> ${place.fylke ?? ""}</p>
+        <p><strong>Sone:</strong> ${place.sone ?? ""}</p>
       </div>
       <div class="info-col">
-        <p><strong>Innbyggere:</strong> ${place.k_innbyggere ?? ""}</p>
-        <p><strong>Areal:</strong> ${place.k_areal ?? ""}</p>
-        <p><strong>Ansatte:</strong> ${place.k_ansatte ?? ""}</p>
-        <p><strong>Tilskudd:</strong> ${place.k_tilskudd ?? ""}</p>
-        <p><strong>Språk:</strong> ${place.k_språk ?? ""}</p>
+        <p><strong>Areal:</strong> ${place.areal ?? ""}</p>
+        <p><strong>Ansatte:</strong> ${place.sysselsatte ?? ""}</p>
+        <p><strong>Tilskudd:</strong> ${place.tilskudd ?? ""}</p>
+        <p><strong>Språk:</strong> ${place.k_slagord ?? ""}</p>
+        <p><strong>Slagord:</strong> ${place.f_slagord ?? ""}</p>
       </div>
     </div>
 
