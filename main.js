@@ -279,11 +279,11 @@ const suggestions = document.getElementById("autocomplete");
 const infoBox = document.getElementById("infoBox");
 
 // Last inn data
-fetch("places.json")
+fetch("tettsteder_3.json")
   .then(res => res.json())
   .then(data => allPlaces = data);
 
-fetch("cabins.json")
+fetch("dnt_hytter.json")
   .then(res => res.json())
   .then(data => allCabins = data);
 
