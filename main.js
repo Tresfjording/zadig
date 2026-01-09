@@ -169,8 +169,8 @@ function initSearch() {
     if (e.key === "Enter") {
       e.preventDefault();
       handleSearch(); // sørg for at denne funksjonen finnes
-    }
-  });
+    
+ 
 }
 
     // Finn treff i searchIndex
