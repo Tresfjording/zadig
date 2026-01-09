@@ -76,9 +76,9 @@ function visAlleSteder() {
 
   // Initialiser kartet med terreng som default
   map = L.map("map", {
-    center: [62.5015216, 7.1454195], // Tresfjord
+    center: [62.501432, 7.1444801], // Tresfjord
     zoom: 10,
-    layers: [satelliteLayer]
+    layers: [positronLayer]
   });
 
   // Lagvelger
