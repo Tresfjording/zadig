@@ -305,7 +305,7 @@ const matches = [
 ];
  
 
-  renderSuggestions(matches);
+  document.getElementById("autocomplete").innerHTML = "";
 });
 
 // Vis forslag
