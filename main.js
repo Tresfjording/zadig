@@ -275,7 +275,18 @@ let allPlaces = [];
 let allCabins = [];
 
 // Søk
-const searchInput = document.getElementById("search");
+function initSearch() {
+  const searchInput = document.getElementById("searchBox");
+  if (!searchInput) {
+    console.warn("Fant ikke søkefeltet med ID 'searchBox'");
+    return;
+  }
+
+  searchInput.addEventListener("input", () => {
+    // søkelogikk her
+  });
+}
+const searchInput = document.getElementById("searchBox");
 
 searchInput.addEventListener("input", () => {
     const query = searchInput.value.trim().toLowerCase();
