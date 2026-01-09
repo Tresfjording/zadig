@@ -19,6 +19,11 @@ function initMap() {
   const mapEl = document.getElementById("map");
   if (!mapEl) return;
 
+  document.addEventListener("DOMContentLoaded", () => {
+  initMap();
+});
+
+
   // Kartlag
   const standardLayer = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 18,
