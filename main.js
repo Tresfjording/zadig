@@ -2,7 +2,7 @@
 console.log("main.js er lastet");
 
 // --------------------------------------------------
-// GLOBALE VARIABLER
+// GLOBALE VARIABLER - 09.01.2026  - 21:36:58
 // --------------------------------------------------
 let map;
 let allCabins = [];
@@ -325,3 +325,6 @@ function showInfo(place) {
 
   infoBox.style.display = "block";
 }
+document.addEventListener("DOMContentLoaded", () => {
+  initMap();
+});
