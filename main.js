@@ -142,27 +142,22 @@ function buildSearchIndex() {
 // SØK
 // --------------------------------------------------
 function initSearch() {
+ function initSearch() {
   const searchInput = document.getElementById("searchBox");
   if (!searchInput) {
     console.warn("Fant ikke søkefeltet med ID 'searchBox'");
     return;
   }
 
-  // Autocomplete ved input
-  searchInput.addEventListener("input", () => {
-    const query = searchInput.value.trim().toLowerCase();
-    const suggestionsEl = document.getElementById("autocomplete");
-    if (!suggestionsEl) return;
-
-    if (query.length < 2) {
-      suggestionsEl.innerHTML = "";
-      suggestionsEl.style.display = "none";
-      suggestionActiveIndex = -1;
-      return;
+  searchInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const query = searchInput.value.trim().toLowerCase();
+      console.log("Enter trykket – søker etter:", query);
+      handleSearch(query);
     }
-
-    // Her kan du fylle inn forslag senere
   });
+}
 
   // Søk ved Enter
   searchInput.addEventListener("keydown", (e) => {
@@ -281,34 +276,28 @@ function initSearch() {
     console.warn("Fant ikke søkefeltet med ID 'searchBox'");
     return;
   }
-function handleSearch() {
-  const query = document.getElementById("searchBox").value.trim().toLowerCase();
-  console.log("Søker etter:", query);
+function handleSearch(query) {
+  if (!query || query.length < 2) {
+    console.warn("Ugyldig søkestreng:", query);
+    return;
+  }
 
-  const match = places.find(p => p.name.toLowerCase() === query);
+  const match = places.find(p =>
+    p.name?.toLowerCase() === query ||
+    p.title?.toLowerCase() === query
+  );
+
   if (!match) {
     console.warn("Fant ikke sted:", query);
     return;
   }
 
+  console.log("Fant sted:", match.name || match.title);
   map.setView([match.lat, match.lon], 12);
-  L.marker([match.lat, match.lon]).addTo(map).bindPopup(match.name).openPopup();
+  L.marker([match.lat, match.lon]).addTo(map)
+    .bindPopup(match.name || match.title)
+    .openPopup();
 }
-  // Autocomplete ved input
-  searchInput.addEventListener("input", () => {
-    const query = searchInput.value.trim().toLowerCase();
-    const suggestionsEl = document.getElementById("autocomplete");
-    if (!suggestionsEl) return;
-
-    if (query.length < 2) {
-      suggestionsEl.innerHTML = "";
-      suggestionsEl.style.display = "none";
-      suggestionActiveIndex = -1;
-      return;
-    }
-
-    // Her kan du fylle inn forslag senere
-  });
 
   // Søk ved Enter
   searchInput.addEventListener("keydown", (e) => {
