@@ -37,7 +37,7 @@ function initMap() {
 
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution: "© OpenStreetMap",
-    maxZoom: 18,
+    maxZoom: 14,
   }).addTo(map);
 
   console.log("Kart initialisert");
