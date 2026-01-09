@@ -1,111 +1,20 @@
-// ------------------------------------------------------
-// GLOBAL STATE 09.01.2026  - 18:29:23
-// ------------------------------------------------------
+// --------------------------------------------------
+// GLOBALE VARIABLER
+// --------------------------------------------------
 let map;
-
-let places = [];
-let cabins = [];
-let facts = [];
+let allCabins = [];
+let allPlaces = [];
 let searchIndex = [];
-
-let selectedPlaceMarker = null;
-let selectedCabinMarker = null;
-
-let nationalAveragePrice = null;
 let suggestionActiveIndex = -1;
 
-// Hytteikon
-const hytteIcon = L.icon({
-  iconUrl: "/image/cabin16.png",
-  iconSize: [16, 16],
-  iconAnchor: [8, 8],
-  popupAnchor: [0, -8]
-});
-
-function normalizePlace(p) {
-  return {
-    // Navn
-    
-    
-    t_sone: p.sone,
-
-    // Tall
-    k_innbyggere: p.antall,
-    k_areal: p.areal,
-    k_ansatte: p.sysselsatte,
-    k_tilskudd: p.tilskudd,
-    k_språk: p.språk,
-
-    // Slagord
-    k_slagord: p.k_slagord,
-    f_slagord: p.f_slagord,
-
-    // Koordinater
-    k_lat_decimal: p.lat_decimal,
-    k_lon_decimal: p.lon_decimal,
-
-    // Behold originalen også
-    ...p
-  };
-}
-
-
-// ------------------------------------------------------
-// PRISFARGER
-// ------------------------------------------------------
-function getPriceColor(price, avg) {
-  if (price == null || avg == null) return "gray";
-  const diff = price - avg;
-  const rel = diff / avg;
-
-  if (rel > 0.1) return "red";
-  if (rel < -0.1) return "green";
-  return "gold";
-}
-
-// ------------------------------------------------------
-// MARKØR: HYTTE
-// ------------------------------------------------------
-function setSelectedCabinMarker(hytte) {
-  const lat = hytte["@lat"];
-  const lon = hytte["@lon"];
-  if (!lat || !lon) return;
-
-  if (selectedCabinMarker) map.removeLayer(selectedCabinMarker);
-
-  selectedCabinMarker = L.marker([lat, lon], { icon: hytteIcon });
-  selectedCabinMarker.addTo(map);
-}
-
-// ------------------------------------------------------
-// MARKØR: TETTSTED
-// ------------------------------------------------------
-function setSelectedPlaceMarker(place) {
-  const lat = parseFloat(String(place.k_lat_decimal).replace(",", "."));
-  const lon = parseFloat(String(place.k_lon_decimal).replace(",", "."));
-  if (!lat || !lon) return;
-
-  if (selectedPlaceMarker) map.removeLayer(selectedPlaceMarker);
-
-  selectedPlaceMarker = L.circleMarker([lat, lon], {
-    radius: 10,
-    color: "#0044aa",
-    weight: 3,
-    fillColor: "#66aaff",
-    fillOpacity: 0.6,
-  });
-
-  selectedPlaceMarker.addTo(map);
-}
-
-// ------------------------------------------------------
+// --------------------------------------------------
 // OPPSTART
-// ------------------------------------------------------
+// --------------------------------------------------
 document.addEventListener("DOMContentLoaded", () => {
   initMap();
 
-  
-    loadData().then(async () => {
+  loadData()
+    .then(async () => {
       buildSearchIndex();
       initSearch();
       await initPrices();
@@ -118,163 +27,108 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-// ------------------------------------------------------
-// KART
-// ------------------------------------------------------
+// --------------------------------------------------
+// KART (Leaflet – tilpass om du bruker noe annet)
+// --------------------------------------------------
 function initMap() {
-  map = L.map("map").setView([63.0, 11.0], 6);
+  const mapEl = document.getElementById("map");
+  if (!mapEl) {
+    console.warn("Fant ikke #map i DOM");
+    return;
+  }
 
-  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    attribution: "© OpenStreetMap",
+  map = L.map("map").setView([63.0, 8.0], 6); // Midt-Norge-ish
+
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 18,
+    attribution: "© OpenStreetMap"
   }).addTo(map);
 }
 
-// ------------------------------------------------------
-// DATA
-// ------------------------------------------------------
-async function loadData() {
-  try {
-    const [samletResp, factsResp, hytterResp] = await Promise.all([
-      fetch("tettsteder_3.json"),
-      fetch("facts_all.json"),
-      fetch("dnt_hytter.json"),
-    ]);
-
-    const samlet = await samletResp.json();
-    facts = await factsResp.json();
-    cabins = await hytterResp.json();
-
-    const samletArray = Array.isArray(samlet) ? samlet : Object.values(samlet);
-
-    // Normaliser tettstedene slik at de matcher resten av appen
-    places = samletArray.map(normalizePlace);
-
-    console.log("places:", places.length);
-    console.log("cabins:", cabins.length);
-  } catch (err) {
-    console.error("Feil i loadData:", err);
-  }
-}
-
-// ------------------------------------------------------
-// STRØMPRISER
-// ------------------------------------------------------
-async function fetchZonePrices(priceArea) {
-  if (!priceArea) return null;
-
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, "0");
-  const day = String(now.getDate()).padStart(2, "0");
-
-  const url = `https://www.hvakosterstrommen.no/api/v1/prices/${year}/${month}-${day}_${priceArea}.json`;
-
-  try {
-    const response = await fetch(url);
-    if (!response.ok) return null;
-
-    const data = await response.json();
-    if (!Array.isArray(data) || data.length === 0) return null;
-
-    return data;
-  } catch {
-    return null;
-  }
-}
-
-async function fetchCurrentPowerPrice(priceArea) {
-  const prices = await fetchZonePrices(priceArea);
-  if (!prices) return null;
-
-  const hour = new Date().getHours();
-  const entry = prices[hour];
-
-  return entry?.NOK_per_kWh ?? null;
-}
-
-async function initPrices() {
-  const zones = ["NO1", "NO2", "NO3", "NO4", "NO5"];
-  const allZoneData = [];
-
-  for (const z of zones) {
-    const data = await fetchZonePrices(z);
-    if (data) allZoneData.push(data);
-  }
-
-  if (allZoneData.length === 0) return;
-
-  const hour = new Date().getHours();
-  let sum = 0;
-  let count = 0;
-
-  for (const zoneData of allZoneData) {
-    const entry = zoneData[hour];
-    if (entry && typeof entry.NOK_per_kWh === "number") {
-      sum += entry.NOK_per_kWh;
-      count++;
-    }
-  }
-
-  if (count > 0) nationalAveragePrice = sum / count;
-}
-
-// ------------------------------------------------------
-// HYTTEMARKØRER
-// ------------------------------------------------------
+// Dummy – rendrer bare alle hytter som standard markører
 function renderAllHytteMarkers() {
-  if (!cabins || cabins.length === 0) return;
+  if (!map || !Array.isArray(allCabins)) return;
 
-  cabins.forEach((h) => {
-    const lat = h["@lat"];
-    const lon = h["@lon"];
-    if (!lat || !lon) return;
-
-    const marker = L.marker([lat, lon], {
-      title: h.name,
-      icon: hytteIcon,
-    });
-
-    marker.bindTooltip(
-      `${h.name} (${h["dnt:classification"] ?? "ukjent type"})`,
-      {
-        direction: "top",
-        permanent: false,
-        sticky: true,
-        opacity: 1
-      }
-    );
-
-    marker.on("mouseover", () => {
-      updateInfoBoxWithCabin(h);
-    });
-
-    marker.addTo(map);
+  allCabins.forEach((cabin) => {
+    if (typeof cabin.lat === "number" && typeof cabin.lon === "number") {
+      const marker = L.marker([cabin.lat, cabin.lon]).addTo(map);
+      marker.bindPopup(cabin.name || "Uten navn");
+    }
   });
 }
 
-// ------------------------------------------------------
-// SØK
-// ------------------------------------------------------
+// --------------------------------------------------
+// DATAINNLESSING – TILPASS STIER TIL DINE JSON-FILER
+// --------------------------------------------------
+async function loadData() {
+  // Tilpass URL-er til dine faktiske filer
+  const cabinsRes = await fetch("data/cabins.json");
+  const placesRes = await fetch("data/places.json");
+
+  if (!cabinsRes.ok || !placesRes.ok) {
+    throw new Error("Kunne ikke laste datafiler");
+  }
+
+  allCabins = await cabinsRes.json();
+  allPlaces = await placesRes.json();
+
+  console.log("places:", allPlaces.length);
+  console.log("cabins:", allCabins.length);
+}
+
+// --------------------------------------------------
+// STRØMPRISER / RANDOM FACT – STUBS DU KAN ERSTATTE
+// --------------------------------------------------
+async function initPrices() {
+  // Her kan du hente strømpriser og oppdatere #power-price
+  console.log("initPrices: stub");
+}
+
+function setRandomFact() {
+  const facts = [
+    "Visste du at Norge har over 400 000 hytter?",
+    "Møre og Romsdal har noen av de fineste fjordene i verden.",
+    "Tresfjordbrua kortet ned reisetida mellom Vestnes og Ålesund betydelig."
+  ];
+  const fact = facts[Math.floor(Math.random() * facts.length)];
+  const factEl = document.getElementById("random-fact");
+  if (factEl) factEl.textContent = fact;
+}
+
+// --------------------------------------------------
+// SØKEINDEKS
+// --------------------------------------------------
 function buildSearchIndex() {
   searchIndex = [];
 
-  places.forEach((t) => {
-    if (t.t_knavn) searchIndex.push({ type: "t", label: t.t_knavn, ref: t });
-  });
+  if (Array.isArray(allCabins)) {
+    const cabinEntries = allCabins
+      .filter((c) => typeof c.name === "string" && c.name.trim() !== "")
+      .map((c) => ({
+        label: c.name,
+        type: "hytte",
+        ref: c
+      }));
+    searchIndex.push(...cabinEntries);
+  }
 
-  cabins.forEach((h) => {
-    if (h.name) searchIndex.push({ type: "h", label: h.name, ref: h });
-  });
+  if (Array.isArray(allPlaces)) {
+    const placeEntries = allPlaces
+      .filter((p) => typeof p.name === "string" && p.name.trim() !== "")
+      .map((p) => ({
+        label: p.name,
+        type: "sted",
+        ref: p
+      }));
+    searchIndex.push(...placeEntries);
+  }
 
-  searchIndex.sort((a, b) => a.label.localeCompare(b.label));
+  console.log("searchIndex bygget, antall:", searchIndex.length);
 }
 
-function initSearch() {
-  // Støtt begge felt: hovedsøket og info-boksen
-let allPlaces = [];
-let allCabins = [];
-
-// Søk
+// --------------------------------------------------
+// SØK
+// --------------------------------------------------
 function initSearch() {
   const searchInput = document.getElementById("searchBox");
   if (!searchInput) {
@@ -283,97 +137,90 @@ function initSearch() {
   }
 
   searchInput.addEventListener("input", () => {
-    // søkelogikk her
-  });
-}
-const searchInput = document.getElementById("searchBox");
-
-searchInput.addEventListener("input", () => {
     const query = searchInput.value.trim().toLowerCase();
 
-    const suggestionsEl = document.getElementById("search-suggestions");
+    const suggestionsEl = document.getElementById("autocomplete");
     if (!suggestionsEl) return;
 
     if (query.length < 2) {
-        suggestionsEl.innerHTML = "";
-        suggestionsEl.style.display = "none";
-        return;
+      suggestionsEl.innerHTML = "";
+      suggestionsEl.style.display = "none";
+      suggestionActiveIndex = -1;
+      return;
     }
 
-    const matches = [
-        ...allCabins.filter(c =>
-            (typeof c.name === "string" && c.name.toLowerCase().includes(query)) ||
-            (typeof c.website === "string" && c.website.toLowerCase().includes(query)) ||
-            (typeof c.municipality === "string" && c.municipality.toLowerCase().includes(query)) ||
-            (typeof c.county === "string" && c.county.toLowerCase().includes(query))
-        ).map(c => ({
-            label: c.name || "(navnløs hytte)",
-            source: "hytte"
-        })),
-
-        ...allPlaces.filter(p =>
-            (typeof p.name === "string" && p.name.toLowerCase().includes(query)) ||
-            (typeof p.municipality === "string" && p.municipality.toLowerCase().includes(query)) ||
-            (typeof p.county === "string" && p.county.toLowerCase().includes(query))
-        ).map(p => ({
-            label: p.name || "(navnløst sted)",
-            source: "sted"
-        }))
-    ];
+    // Finn treff i searchIndex
+    const matches = searchIndex.filter((item) =>
+      item.label.toLowerCase().includes(query)
+    );
 
     renderSuggestions(matches);
-});
+  });
 
-function renderSuggestions(matches) {
-    const suggestionsEl = document.getElementById("search-suggestions");
+  // Enter / piltaster
+  searchInput.addEventListener("keydown", (e) => {
+    const suggestionsEl = document.getElementById("autocomplete");
     if (!suggestionsEl) return;
 
-    suggestionsEl.innerHTML = "";
+    const items = Array.from(
+      suggestionsEl.querySelectorAll(".suggestion-item")
+    );
 
-    if (!matches || matches.length === 0) {
-        suggestionsEl.style.display = "none";
-        return;
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      if (items.length === 0) return;
+      suggestionActiveIndex =
+        (suggestionActiveIndex + 1) % items.length;
+      updateSuggestionHighlight(items);
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      if (items.length === 0) return;
+      suggestionActiveIndex =
+        (suggestionActiveIndex - 1 + items.length) % items.length;
+      updateSuggestionHighlight(items);
+    } else if (e.key === "Enter") {
+      e.preventDefault();
+      if (
+        suggestionActiveIndex >= 0 &&
+        suggestionActiveIndex < items.length
+      ) {
+        const label = items[suggestionActiveIndex].dataset.label;
+        handleSearch(label);
+      } else {
+        const query = searchInput.value.trim();
+        if (query.length >= 2) {
+          handleSearch(query);
+        }
+      }
+    } else if (e.key === "Escape") {
+      clearSuggestions();
     }
-
-    suggestionsEl.style.display = "block";
-
-    matches.slice(0, 10).forEach((item) => {
-        const li = document.createElement("li");
-        li.className = "suggestion-item";
-        li.textContent = `${item.label} (${item.source})`;
-
-        li.addEventListener("mousedown", () => {
-            handleSearch(item.label);
-        });
-
-        suggestionsEl.appendChild(li);
-    });
-}
-// Vis infoboks
-function showInfo(place) {
-  infoBox.innerHTML = `
-    <h2>${place.name}</h2>
-    <p>Kommune: ${place.municipality || "Ukjent"}</p>
-    <p>Fylke: ${place.county || "Ukjent"}</p>
-  `;
-  infoBox.style.display = "block";
+  });
 }
 
+// --------------------------------------------------
+// VIS FORSLAG
+// --------------------------------------------------
 function renderSuggestions(matches) {
-  const suggestionsEl = document.getElementById("search-suggestions");
+  const suggestionsEl = document.getElementById("autocomplete");
+  if (!suggestionsEl) return;
+
   suggestionsEl.innerHTML = "";
 
   if (!matches || matches.length === 0) {
     suggestionsEl.style.display = "none";
+    suggestionActiveIndex = -1;
     return;
   }
 
   suggestionsEl.style.display = "block";
+  suggestionActiveIndex = -1;
 
   matches.slice(0, 10).forEach((item) => {
-    const div = document.createElement("li");
+    const div = document.createElement("div");
     div.className = "suggestion-item";
-    div.textContent = item.label;
+    div.textContent = `${item.label} (${item.type})`;
+    div.dataset.label = item.label;
 
     div.addEventListener("mousedown", () => {
       handleSearch(item.label);
@@ -381,7 +228,6 @@ function renderSuggestions(matches) {
 
     suggestionsEl.appendChild(div);
   });
-}
 }
 
 function updateSuggestionHighlight(items) {
@@ -392,11 +238,16 @@ function updateSuggestionHighlight(items) {
 }
 
 function clearSuggestions() {
-  const suggestionsEl = document.getElementById("search-suggestions");
+  const suggestionsEl = document.getElementById("autocomplete");
+  if (!suggestionsEl) return;
   suggestionsEl.innerHTML = "";
   suggestionsEl.style.display = "none";
   suggestionActiveIndex = -1;
 }
+
+// --------------------------------------------------
+// HANDLE SEARCH
+// --------------------------------------------------
 function handleSearch(label) {
   if (!label) {
     console.log("handleSearch: tom label");
@@ -405,176 +256,60 @@ function handleSearch(label) {
 
   console.log("handleSearch: søker etter =", label);
 
-  const match = searchIndex.find(
+  const indexMatch = searchIndex.find(
     (item) => item.label.toLowerCase() === label.toLowerCase()
   );
 
-  console.log("handleSearch: match =", match);
+  console.log("handleSearch: indexMatch =", indexMatch);
 
-  if (!match) {
-    clearSuggestions && clearSuggestions();
+  if (!indexMatch) {
+    clearSuggestions();
     return;
   }
 
-  // 1. Lukk forslag
-  clearSuggestions && clearSuggestions();
+  clearSuggestions();
 
-  // 2. Finn originalt objekt (fra allCabins eller allPlaces)
-  const place = [...allCabins, ...allPlaces].find(
-    (p) => p.name && p.name.toLowerCase() === match.label.toLowerCase()
-  );
-
+  const place = indexMatch.ref;
   if (!place) {
-    console.warn("Fant ikke objektet i datasettet:", match.label);
+    console.warn("Fant ikke ref-objekt for:", label);
     return;
   }
 
-  // 3. Vis infoboks
   showInfo(place);
 
-  // 4. Zoom kartet til posisjonen
-  if (place.lat && place.lon) {
-    map.setView([place.lat, place.lon], 12);
-  }
-
-  // 5. Marker punktet (hvis du har en funksjon for det)
-  if (typeof highlightMarker === "function") {
-    highlightMarker(place);
+  if (typeof place.lat === "number" && typeof place.lon === "number" && map) {
+    map.setView([place.lat, place.lon], 10);
   }
 }
 
-// ------------------------------------------------------
-// KARTFOKUS
-// ------------------------------------------------------
-function focusOnPlace(place) {
-  const lat = parseFloat(String(place.k_lat_decimal).replace(",", "."));
-  const lon = parseFloat(String(place.k_lon_decimal).replace(",", "."));
-  if (!lat || !lon) return;
-
-  map.setView([lat, lon], 11);
-}
-
-function focusOnCabin(hytte) {
-  const lat = hytte["@lat"];
-  const lon = hytte["@lon"];
-  if (!lat || !lon) return;
-
-  map.setView([lat, lon], 13);
-}
-
-// ------------------------------------------------------
+// --------------------------------------------------
 // INFOBOKS
-// ------------------------------------------------------
-async function updateInfoBoxWithPlace(place) {
-  setSelectedPlaceMarker(place);
-  if (!place) return;
-
+// --------------------------------------------------
+function showInfo(place) {
+  const infoBox = document.getElementById("infoBox");
   const titleEl = document.getElementById("info-title");
   const contentEl = document.getElementById("info-content");
-  if (!titleEl || !contentEl) return;
 
-  const priceArea = place.t_sone?.toUpperCase();
-  const strømpris = await fetchCurrentPowerPrice(priceArea);
-
-  const priceText =
-    strømpris != null ? `${strømpris.toFixed(2)} kr/kWh` : "Ikke tilgjengelig";
-
-  let avgText = "Ukjent";
-  if (nationalAveragePrice != null)
-    avgText = `${nationalAveragePrice.toFixed(2)} kr/kWh`;
-
-  const color = getPriceColor(strømpris, nationalAveragePrice);
-
-  titleEl.textContent = place.navn || "Ukjent tettsted";
-
-  contentEl.innerHTML = `
-    <div class="info-row">
-      <div class="info-col">
-        <p><strong>Tettsted:</strong> ${place.tettsted ?? ""}</p>
-        <p><strong>Kommune nr:</strong> ${place.k_nr ?? ""}</p>
-        <p><strong>Kommune</strong> ${place.name ?? ""}</p>
-        <p><strong>Fylke:</strong> ${place.fylke ?? ""}</p>
-        <p><strong>Sone:</strong> ${place.sone ?? ""}</p>
-      </div>
-      <div class="info-col">
-        <p><strong>Areal:</strong> ${place.areal ?? ""}</p>
-        <p><strong>Ansatte:</strong> ${place.sysselsatte ?? ""}</p>
-        <p><strong>Tilskudd:</strong> ${place.tilskudd ?? ""}</p>
-        <p><strong>Språk:</strong> ${place.k_slagord ?? ""}</p>
-        <p><strong>Slagord:</strong> ${place.f_slagord ?? ""}</p>
-      </div>
-    </div>
-
-
-
-    <div class="info-row price-row">
-      <p><strong>Strømpris nå:</strong>
-        <span class="price-badge price-${color}">${priceText}</span>
-      </p>
-      <p><strong>Landsgjennomsnitt nå:</strong> ${avgText}</p>
-    </div>
-  `;
-}
-async function updateInfoBoxWithCabin(hytte) {
-  setSelectedCabinMarker(hytte);
-  if (!hytte) return;
-
-  const titleEl = document.getElementById("info-title");
-  const contentEl = document.getElementById("info-content");
-  if (!titleEl || !contentEl) return;
-
-  const priceArea = hytte.t_sone?.toUpperCase();
-  const strømpris = await fetchCurrentPowerPrice(priceArea);
-
-  const priceText =
-    strømpris != null ? `${strømpris.toFixed(2)} kr/kWh` : "Ikke tilgjengelig";
-
-  let avgText = "Ukjent";
-  if (nationalAveragePrice != null)
-    avgText = `${nationalAveragePrice.toFixed(2)} kr/kWh`;
-
-  const color = getPriceColor(strømpris, nationalAveragePrice);
-
-  titleEl.textContent = hytte.name || "Ukjent hytte";
-
-  contentEl.innerHTML = `
-    <div class="info-row">
-      <div class="info-col">
-        <p><strong>Hytte:</strong> ${hytte.name}</p>
-        <p><strong>Type:</strong> ${hytte["dnt:classification"] ?? ""}</p>
-        <p><strong>Operatør:</strong> ${hytte.operator ?? ""}</p>
-        <p><strong>Lenke:</strong> <a href="${hytte.website}" target="_blank">UT.no</a></p>
-      </div>
-      <div class="info-col">
-        <p><strong>Sone:</strong> ${hytte.t_sone ?? ""}</p>
-        <p><strong>Lat:</strong> ${hytte["@lat"]}</p>
-        <p><strong>Lon:</strong> ${hytte["@lon"]}</p>
-      </div>
-    </div>
-
-    <div class="info-row price-row">
-      <p><strong>Strømpris nå:</strong>
-        <span class="price-badge price-${color}">${priceText}</span>
-      </p>
-      <p><strong>Landsgjennomsnitt nå:</strong> ${avgText}</p>
-    </div>
-  `;
-}
-
-// ------------------------------------------------------
-// TRIVIA / FUNFACTS
-// ------------------------------------------------------
-function setRandomFact() {
-  const el = document.getElementById("random-fact");
-  if (!el || !facts || facts.length === 0) return;
-
-  const random = facts[Math.floor(Math.random() * facts.length)];
-
-  if (typeof random === "string") {
-    el.textContent = random;
-  } else if (random && typeof random === "object" && random.fact) {
-    el.textContent = random.fact;
-  } else {
-    el.textContent = "Visste du at Norge er et ganske fint land?";
+  if (!infoBox || !titleEl || !contentEl) {
+    console.warn("Infoboks-elementer mangler i DOM");
+    return;
   }
+
+  const name = place.name || "Uten navn";
+  const municipality = place.municipality || "Ukjent kommune";
+  const county = place.county || "Ukjent fylke";
+  const website = place.website || null;
+
+  titleEl.textContent = name;
+
+  let html = `<p><strong>Kommune:</strong> ${municipality}</p>
+              <p><strong>Fylke:</strong> ${county}</p>`;
+
+  if (website) {
+    html += `<p><a href="${website}" target="_blank">Nettside</a></p>`;
+  }
+
+  contentEl.innerHTML = html;
+
+  infoBox.style.display = "block";
 }

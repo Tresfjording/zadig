@@ -19,7 +19,7 @@
   <body>
 
     <!-- KART -->
-    <div id="map"></div>
+  
 
     <!-- SØKEBOKS -->
     <div class="search-container">
@@ -33,6 +33,9 @@
     </div>
 
     <!-- INFOBOKS -->
+     <input id="search" type="text" placeholder="Søk etter hytte eller sted" />
+<ul id="search-suggestions" class="autocomplete-list"></ul>
+
     <div id="infoBox" class="info-box" style="display:none;">
       <h2 id="info-title">Ingen sted valgt</h2>
 
@@ -51,5 +54,8 @@
 
     <!-- Din logikk -->
     <script src="main.js"></script>
+    
+<div id="map"></div>
+
   </body>
 </html>
