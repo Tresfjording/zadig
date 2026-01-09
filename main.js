@@ -76,7 +76,7 @@ function visAlleSteder() {
 
   // Initialiser kartet med terreng som default
   map = L.map("map", {
-    center: [62.566, 7.475], // Tresfjord
+    center: [62.5015216, 7.1454195], // Tresfjord
     zoom: 12,
     layers: [topoLayer]
   });
