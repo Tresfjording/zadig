@@ -274,20 +274,7 @@ function initSearch() {
 let allPlaces = [];
 let allCabins = [];
 
-const searchInput = document.getElementById("searchBox");
-//const suggestions = document.getElementById("autocomplete");
-const infoBox = document.getElementById("infoBox");
-
-// Last inn data
-fetch("tettsteder_3.json")
-  .then(res => res.json())
-  .then(data => allPlaces = data);
-
-fetch("dnt_hytter.json")
-  .then(res => res.json())
-  .then(data => allCabins = data);
-
-// Søkefunksjon
+// Søk
 const searchInput = document.getElementById("search");
 
 searchInput.addEventListener("input", () => {
@@ -308,13 +295,19 @@ searchInput.addEventListener("input", () => {
             (typeof c.website === "string" && c.website.toLowerCase().includes(query)) ||
             (typeof c.municipality === "string" && c.municipality.toLowerCase().includes(query)) ||
             (typeof c.county === "string" && c.county.toLowerCase().includes(query))
-        ).map(c => ({ label: c.name || "(navnløs)", source: "hytte" })),
+        ).map(c => ({
+            label: c.name || "(navnløs hytte)",
+            source: "hytte"
+        })),
 
         ...allPlaces.filter(p =>
             (typeof p.name === "string" && p.name.toLowerCase().includes(query)) ||
             (typeof p.municipality === "string" && p.municipality.toLowerCase().includes(query)) ||
             (typeof p.county === "string" && p.county.toLowerCase().includes(query))
-        ).map(p => ({ label: p.name || "(navnløst sted)", source: "sted" }))
+        ).map(p => ({
+            label: p.name || "(navnløst sted)",
+            source: "sted"
+        }))
     ];
 
     renderSuggestions(matches);
