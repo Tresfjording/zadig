@@ -351,6 +351,7 @@ function renderSuggestions(matches) {
     suggestionsEl.appendChild(div);
   });
 }
+}
 
 function updateSuggestionHighlight(items) {
   items.forEach((item, index) => {
