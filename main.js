@@ -275,7 +275,7 @@ let allPlaces = [];
 let allCabins = [];
 
 const searchInput = document.getElementById("searchBox");
-const suggestions = document.getElementById("autocomplete");
+//const suggestions = document.getElementById("autocomplete");
 const infoBox = document.getElementById("infoBox");
 
 // Last inn data
