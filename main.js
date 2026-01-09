@@ -117,7 +117,6 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .catch((err) => {
       console.error("loadData feilet:", err);
-      //drawCabins(cabins);
       drawCabins(cabins);
       setRandomFact();
     });
@@ -262,9 +261,15 @@ function renderAllHytteMarkers() {
       icon: hytteIcon,
     });
 
-    marker.bindTooltip(`${h.name} (${h["dnt:classification"] ?? "ukjent type"})`, {
-      direction: "top",
-    });
+marker.bindTooltip(
+  `${h.name} (${h["dnt:classification"] ?? "ukjent type"})`,
+  {
+    direction: "top",
+    permanent: false,   // ← vises ikke alltid, men på hover
+    sticky: true,       // ← følger musepekeren
+    opacity: 1          // ← gjør tooltip synlig
+  }
+);
 
     marker.on("mouseover", () => {
       updateInfoBoxWithCabin(h);
