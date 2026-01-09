@@ -160,14 +160,7 @@ function initSearch() {
     return;
   }
 
-  searchInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      const query = searchInput.value.trim().toLowerCase();
-      handleSearch(query);
-    }
-  });
-
+ 
   console.log("Søkefunksjon aktivert");
 }
 
