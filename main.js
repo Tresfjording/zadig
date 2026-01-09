@@ -22,6 +22,36 @@ const hytteIcon = L.icon({
   popupAnchor: [0, -8]
 });
 
+function normalizePlace(p) {
+  return {
+    // Navn
+    t_knavn: p.tettsted,
+    t_fnavn: p.fylke,
+
+    // Strøm-sone
+    t_sone: p.sone,
+
+    // Tall
+    k_innbyggere: p.antall,
+    k_areal: p.areal,
+    k_ansatte: p.sysselsatte,
+    k_tilskudd: p.tilskudd,
+    k_språk: p.språk,
+
+    // Slagord
+    k_slagord: p.k_slagord,
+    f_slagord: p.f_slagord,
+
+    // Koordinater
+    k_lat_decimal: p.lat_decimal,
+    k_lon_decimal: p.lon_decimal,
+
+    // Behold originalen også
+    ...p
+  };
+}
+
+
 // ------------------------------------------------------
 // PRISFARGER
 // ------------------------------------------------------
@@ -76,8 +106,8 @@ function setSelectedPlaceMarker(place) {
 document.addEventListener("DOMContentLoaded", () => {
   initMap();
 
-  loadData()
-    .then(async () => {
+  
+    loadData().then(async () => {
       buildSearchIndex();
       initSearch();
       await initPrices();
@@ -117,7 +147,9 @@ async function loadData() {
     cabins = await hytterResp.json();
 
     const samletArray = Array.isArray(samlet) ? samlet : Object.values(samlet);
-    places = samletArray.filter((d) => d.tettsted);
+
+    // Normaliser tettstedene slik at de matcher resten av appen
+    places = samletArray.map(normalizePlace);
 
     console.log("places:", places.length);
     console.log("cabins:", cabins.length);
