@@ -102,21 +102,17 @@ document.addEventListener("DOMContentLoaded", () => {
   initMap();
 
   loadData()
-    .then(async () => {
-      console.log("Data lastet!");
-
-      buildSearchIndex();
-      initSearch();
-
-      await initPrices();
-
-      renderAllHytteMarkers();
-      setRandomFact();         // ← denne linja
-    })
-    .catch((err) => {
-      console.error("loadData feilet:", err);
-      setRandomFact();         // ← og evt denne
-    });
+  .then(async () => {
+    buildSearchIndex();
+    initSearch();
+    await initPrices();
+    renderAllHytteMarkers();
+    setRandomFact();   // ← riktig sted
+  })
+  .catch((err) => {
+    console.error("loadData feilet:", err);
+    setRandomFact();   // ← valgfritt, men fungerer
+  });
 });
 
 
