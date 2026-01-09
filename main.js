@@ -17,39 +17,40 @@ let suggestionActiveIndex = -1;
 // --------------------------------------------------
 function initMap() {
   const mapEl = document.getElementById("map");
-  if (!mapEl) {
-    console.warn("Fant ikke #map i DOM");
-    return;
-  }
+  if (!mapEl) return;
 
-  // Standardkart (lys)
+  // Kartlag
   const standardLayer = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 18,
     attribution: "© OpenStreetMap"
   });
 
-  // Terrengkart
   const topoLayer = L.tileLayer("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png", {
     maxZoom: 17,
     attribution: "© OpenTopoMap contributors"
   });
 
-  // Satelitt (valgfritt)
-  const satelliteLayer = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
-    attribution: "Tiles © Esri"
+  const positronLayer = L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png", {
+    attribution: "© CartoDB"
   });
 
-  // Initialiser kartet
+  const satelliteLayer = L.tileLayer(
+    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    { attribution: "Tiles © Esri" }
+  );
+
+  // Initialiser kartet med terreng som default
   map = L.map("map", {
     center: [62.566, 7.475], // Tresfjord
     zoom: 12,
-    layers: [standardLayer] // default
+    layers: [topoLayer]
   });
 
   // Lagvelger
   const baseMaps = {
     "Standard": standardLayer,
     "Terreng": topoLayer,
+    "Lys moderne": positronLayer,
     "Satelitt": satelliteLayer
   };
 
