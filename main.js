@@ -278,7 +278,7 @@ function handleSearch(query) {
   );
 
   if (!match) {
-    console.warn("Fant ikke sted:", query);
+    console.warn("Fant ikke sted:", label);
 
   }
 
