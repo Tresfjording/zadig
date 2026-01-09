@@ -271,62 +271,61 @@ function buildSearchIndex() {
 
 function initSearch() {
   // Støtt begge felt: hovedsøket og info-boksen
-  const mainSearchInput = document.getElementById("place-search");
-  const infoSearchInput = document.getElementById("infoSearch");
-  const suggestionsEl = document.getElementById("search-suggestions");
+let allPlaces = [];
+let allCabins = [];
 
-  if (!suggestionsEl || (!mainSearchInput && !infoSearchInput)) return;
+const searchInput = document.getElementById("searchBox");
+const suggestions = document.getElementById("autocomplete");
+const infoBox = document.getElementById("infoBox");
 
-  function attachSearchListeners(inputEl) {
-    inputEl.addEventListener("input", () => {
-      const query = inputEl.value.toLowerCase();
-      suggestionActiveIndex = -1;
+// Last inn data
+fetch("places.json")
+  .then(res => res.json())
+  .then(data => allPlaces = data);
 
-      if (!query) {
-        clearSuggestions();
-        return;
-      }
+fetch("cabins.json")
+  .then(res => res.json())
+  .then(data => allCabins = data);
 
-      const matches = searchIndex.filter((item) =>
-        item.label.toLowerCase().includes(query)
-      );
-
-      renderSuggestions(matches);
-    });
-
-    inputEl.addEventListener("keydown", (e) => {
-      const items = suggestionsEl.querySelectorAll(".suggestion-item");
-      const maxIndex = items.length - 1;
-
-      if (e.key === "ArrowDown") {
-        e.preventDefault();
-        if (maxIndex < 0) return;
-        suggestionActiveIndex =
-          suggestionActiveIndex < maxIndex ? suggestionActiveIndex + 1 : 0;
-        updateSuggestionHighlight(items);
-      } else if (e.key === "ArrowUp") {
-        e.preventDefault();
-        if (maxIndex < 0) return;
-        suggestionActiveIndex =
-          suggestionActiveIndex > 0 ? suggestionActiveIndex - 1 : maxIndex;
-        updateSuggestionHighlight(items);
-      } else if (e.key === "Enter") {
-        e.preventDefault();
-        if (suggestionActiveIndex >= 0 && items[suggestionActiveIndex]) {
-          items[suggestionActiveIndex].dispatchEvent(
-            new MouseEvent("mousedown")
-          );
-        } else {
-          handleSearch(inputEl.value);
-        }
-      } else if (e.key === "Escape") {
-        clearSuggestions();
-      }
-    });
+// Søkefunksjon
+searchInput.addEventListener("input", () => {
+  const query = searchInput.value.trim().toLowerCase();
+  if (query.length < 2) {
+    suggestions.innerHTML = "";
+    return;
   }
 
-  if (mainSearchInput) attachSearchListeners(mainSearchInput);
-  if (infoSearchInput) attachSearchListeners(infoSearchInput);
+  const matches = allPlaces.filter(p =>
+    p.name.toLowerCase().includes(query)
+  );
+
+  renderSuggestions(matches);
+});
+
+// Vis forslag
+function renderSuggestions(matches) {
+  suggestions.innerHTML = "";
+  matches.forEach(place => {
+    const item = document.createElement("div");
+    item.className = "autocomplete-item";
+    item.textContent = place.name;
+    item.addEventListener("click", () => {
+      showInfo(place);
+      suggestions.innerHTML = "";
+      searchInput.value = place.name;
+    });
+    suggestions.appendChild(item);
+  });
+}
+
+// Vis infoboks
+function showInfo(place) {
+  infoBox.innerHTML = `
+    <h2>${place.name}</h2>
+    <p>Kommune: ${place.municipality || "Ukjent"}</p>
+    <p>Fylke: ${place.county || "Ukjent"}</p>
+  `;
+  infoBox.style.display = "block";
 }
 
 function renderSuggestions(matches) {
