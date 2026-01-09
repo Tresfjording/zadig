@@ -199,13 +199,13 @@ function initSearch() {
   console.log("Søkefunksjon aktivert");
 }
     // Finn treff i searchIndex
-    searchInput.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") {
-    e.preventDefault();
-    const query = searchInput.value.trim().toLowerCase();
-    handleSearch(query);
-  }
-});
+  //  searchInput.addEventListener("keydown", (e) => {
+  //if (e.key === "Enter") {
+  //  e.preventDefault();
+  //  const query = searchInput.value.trim().toLowerCase();
+  //  handleSearch(query);
+  //}
+//});
 
   // Enter / piltaster
   searchInput.addEventListener("keydown", (e) => {
