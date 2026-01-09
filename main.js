@@ -1,15 +1,6 @@
 // ------------------------------------------------------
-// GLOBAL STATE - 09.01.2026  - 00:52:07
+// GLOBAL STATE
 // ------------------------------------------------------
-L.circleMarker = function () {
-  console.warn("⚠️ circleMarker ble kalt!");
-  return {
-    addTo: () => {},
-    bindPopup: () => {}
-  };
-};
-
-
 let map;
 
 let places = [];
@@ -21,23 +12,19 @@ let selectedPlaceMarker = null;
 let selectedCabinMarker = null;
 
 let nationalAveragePrice = null;
-
-// søk-state
 let suggestionActiveIndex = -1;
 
-// hytteikon
+// Hytteikon
 const hytteIcon = L.icon({
   iconUrl: "/image/cabin16.png",
-  //iconUrl: "https://cdn-icons-png.flaticon.com/512/1532/1532688.png",
   iconSize: [16, 16],
-  iconAnchor: [16, 16],
-  popupAnchor: [0, -16]
+  iconAnchor: [8, 8],
+  popupAnchor: [0, -8]
 });
 
 // ------------------------------------------------------
 // PRISFARGER
 // ------------------------------------------------------
-
 function getPriceColor(price, avg) {
   if (price == null || avg == null) return "gray";
   const diff = price - avg;
@@ -51,34 +38,23 @@ function getPriceColor(price, avg) {
 // ------------------------------------------------------
 // MARKØR: HYTTE
 // ------------------------------------------------------
-
 function setSelectedCabinMarker(hytte) {
-const lat = hytte["@lat"];
-const lon = hytte["@lon"];
-
+  const lat = hytte["@lat"];
+  const lon = hytte["@lon"];
   if (!lat || !lon) return;
 
   if (selectedCabinMarker) map.removeLayer(selectedCabinMarker);
 
-  //selectedCabinMarker = L.circleMarker([lat, lon], {
-    //radius: 8,
-    //color: "#aa5500",
-    //weight: 3,
-    //fillColor: "#ffddaa",
-    //fillOpacity: 0.7,
-  //});
-
- // selectedCabinMarker.addTo(map);
+  selectedCabinMarker = L.marker([lat, lon], { icon: hytteIcon });
+  selectedCabinMarker.addTo(map);
 }
 
 // ------------------------------------------------------
 // MARKØR: TETTSTED
 // ------------------------------------------------------
-
 function setSelectedPlaceMarker(place) {
   const lat = parseFloat(String(place.k_lat_decimal).replace(",", "."));
   const lon = parseFloat(String(place.k_lon_decimal).replace(",", "."));
-
   if (!lat || !lon) return;
 
   if (selectedPlaceMarker) map.removeLayer(selectedPlaceMarker);
@@ -91,51 +67,32 @@ function setSelectedPlaceMarker(place) {
     fillOpacity: 0.6,
   });
 
- // selectedPlaceMarker.addTo(map);
+  selectedPlaceMarker.addTo(map);
 }
 
 // ------------------------------------------------------
 // OPPSTART
 // ------------------------------------------------------
-
 document.addEventListener("DOMContentLoaded", () => {
   initMap();
 
   loadData()
-  .then(async () => {
-    buildSearchIndex();
-    initSearch();
-    await initPrices();
-    renderAllHytteMarkers();
-    setRandomFact();   // ← riktig sted
-  })
-  .catch((err) => {
-    console.error("loadData feilet:", err);
-    setRandomFact();   // ← valgfritt, men fungerer
-  });
+    .then(async () => {
+      buildSearchIndex();
+      initSearch();
+      await initPrices();
+      renderAllHytteMarkers();
+      setRandomFact();
+    })
+    .catch((err) => {
+      console.error("loadData feilet:", err);
+      setRandomFact();
+    });
 });
-
-
-function drawCabins(cabins) {
-  cabins.forEach((hytte) => {
-    const lat = hytte["@lat"];
-    const lon = hytte["@lon"];
-    if (!lat || !lon) return;
-
-    L.marker([lat, lon], { icon: hytteIcon })
-      .addTo(map)
-      .bindPopup(`
-        <b>${hytte.name}</b><br>
-        ${hytte["dnt:classification"] || ""}<br>
-        <a href="${hytte.website}" target="_blank">UT.no</a>
-      `);
-  });
-}
 
 // ------------------------------------------------------
 // KART
 // ------------------------------------------------------
-
 function initMap() {
   map = L.map("map").setView([63.0, 11.0], 6);
 
@@ -147,7 +104,6 @@ function initMap() {
 // ------------------------------------------------------
 // DATA
 // ------------------------------------------------------
-
 async function loadData() {
   try {
     const [samletResp, factsResp, hytterResp] = await Promise.all([
@@ -158,29 +114,21 @@ async function loadData() {
 
     const samlet = await samletResp.json();
     facts = await factsResp.json();
-    const hytter = await hytterResp.json();
+    cabins = await hytterResp.json();
 
     const samletArray = Array.isArray(samlet) ? samlet : Object.values(samlet);
-    const factsArray = Array.isArray(facts) ? facts : Object.values(facts);
-
     places = samletArray.filter((d) => d.tettsted);
-    cabins = hytter;
 
     console.log("places:", places.length);
     console.log("cabins:", cabins.length);
-
-    // ⭐ TEGN HYTTENE HER
-  //  drawCabins(cabins);
-
-} catch (err) {
-   console.error("Feil i loadData:", err);
+  } catch (err) {
+    console.error("Feil i loadData:", err);
   }
 }
-  
+
 // ------------------------------------------------------
 // STRØMPRISER
 // ------------------------------------------------------
-
 async function fetchZonePrices(priceArea) {
   if (!priceArea) return null;
 
@@ -240,13 +188,15 @@ async function initPrices() {
   if (count > 0) nationalAveragePrice = sum / count;
 }
 
+// ------------------------------------------------------
+// HYTTEMARKØRER
+// ------------------------------------------------------
 function renderAllHytteMarkers() {
   if (!cabins || cabins.length === 0) return;
 
   cabins.forEach((h) => {
     const lat = h["@lat"];
     const lon = h["@lon"];
-
     if (!lat || !lon) return;
 
     const marker = L.marker([lat, lon], {
@@ -254,15 +204,15 @@ function renderAllHytteMarkers() {
       icon: hytteIcon,
     });
 
-marker.bindTooltip(
-  `${h.name} (${h["dnt:classification"] ?? "ukjent type"})`,
-  {
-    direction: "top",
-    permanent: false,   // ← vises ikke alltid, men på hover
-    sticky: true,       // ← følger musepekeren
-    opacity: 1          // ← gjør tooltip synlig
-  }
-);
+    marker.bindTooltip(
+      `${h.name} (${h["dnt:classification"] ?? "ukjent type"})`,
+      {
+        direction: "top",
+        permanent: false,
+        sticky: true,
+        opacity: 1
+      }
+    );
 
     marker.on("mouseover", () => {
       updateInfoBoxWithCabin(h);
@@ -275,7 +225,6 @@ marker.bindTooltip(
 // ------------------------------------------------------
 // SØK
 // ------------------------------------------------------
-
 function buildSearchIndex() {
   searchIndex = [];
 
@@ -284,7 +233,7 @@ function buildSearchIndex() {
   });
 
   cabins.forEach((h) => {
-    if (h.h_navn) searchIndex.push({ type: "h", label: h.h_navn, ref: h });
+    if (h.name) searchIndex.push({ type: "h", label: h.name, ref: h });
   });
 
   searchIndex.sort((a, b) => a.label.localeCompare(b.label));
@@ -374,7 +323,6 @@ function updateSuggestionHighlight(items) {
   });
 }
 
-
 function clearSuggestions() {
   const suggestionsEl = document.getElementById("search-suggestions");
   suggestionsEl.innerHTML = "";
@@ -412,20 +360,17 @@ function handleSearch(label) {
 // ------------------------------------------------------
 // KARTFOKUS
 // ------------------------------------------------------
-
 function focusOnPlace(place) {
   const lat = parseFloat(String(place.k_lat_decimal).replace(",", "."));
   const lon = parseFloat(String(place.k_lon_decimal).replace(",", "."));
-
   if (!lat || !lon) return;
 
   map.setView([lat, lon], 11);
 }
 
 function focusOnCabin(hytte) {
-  const lat = parseFloat(String(hytte.h_lat).replace(",", "."));
-  const lon = parseFloat(String(hytte.h_lon).replace(",", "."));
-
+  const lat = hytte["@lat"];
+  const lon = hytte["@lon"];
   if (!lat || !lon) return;
 
   map.setView([lat, lon], 13);
@@ -434,15 +379,12 @@ function focusOnCabin(hytte) {
 // ------------------------------------------------------
 // INFOBOKS
 // ------------------------------------------------------
-
 async function updateInfoBoxWithPlace(place) {
   setSelectedPlaceMarker(place);
-
   if (!place) return;
 
   const titleEl = document.getElementById("info-title");
   const contentEl = document.getElementById("info-content");
-
   if (!titleEl || !contentEl) return;
 
   const priceArea = place.t_sone?.toUpperCase();
@@ -493,12 +435,10 @@ async function updateInfoBoxWithPlace(place) {
 
 async function updateInfoBoxWithCabin(hytte) {
   setSelectedCabinMarker(hytte);
-
   if (!hytte) return;
 
   const titleEl = document.getElementById("info-title");
   const contentEl = document.getElementById("info-content");
-
   if (!titleEl || !contentEl) return;
 
   const priceArea = hytte.t_sone?.toUpperCase();
@@ -513,14 +453,14 @@ async function updateInfoBoxWithCabin(hytte) {
 
   const color = getPriceColor(strømpris, nationalAveragePrice);
 
-  titleEl.textContent = hytte.h_navn || "Ukjent hytte";
+  titleEl.textContent = hytte.name || "Ukjent hytte";
 
   contentEl.innerHTML = `
     <div class="info-row">
       <div class="info-col">
-        <p><strong>Hytte:</strong> ${hytte.h_navn}</p>
-        <p><strong>Type:</strong> ${hytte.h_type ?? ""}</p>
-        <p><strong>Operatør:</strong> ${hytte.h_operatør ?? ""}</p>
+        <p><strong>Hytte:</strong> ${hytte.name}</p>
+        <p><strong>Type:</strong> ${hytte["dnt:classification"] ?? ""}</p>
+        <p><strong>Operatør:</strong> ${hytte.operator ?? ""}</p>
         <p><strong>Kommune:</strong> ${hytte.k_navn ?? ""}</p>
         <p><strong>Fylke:</strong> ${hytte.t_fnavn ?? ""}</p>
       </div>
@@ -546,7 +486,7 @@ async function updateInfoBoxWithCabin(hytte) {
     </div>
 
     <p>
-      <a href="${hytte.h_url}" target="_blank" rel="noopener noreferrer">
+      <a href="${hytte.website}" target="_blank" rel="noopener noreferrer">
         Se mer på UT.no
       </a>
     </p>
@@ -554,75 +494,10 @@ async function updateInfoBoxWithCabin(hytte) {
 }
 
 // ------------------------------------------------------
-// MARKØRER
-// ------------------------------------------------------
-
-async function renderAllPlaceMarkers() {
-  if (!places || places.length === 0) return;
-
-  for (const place of places) {
-    const lat = parseFloat(String(place.k_lat_decimal).replace(",", "."));
-    const lon = parseFloat(String(place.k_lon_decimal).replace(",", "."));
-
-    if (!lat || !lon) continue;
-
-    const priceArea = place.t_sone?.toUpperCase();
-    const strømpris = await fetchCurrentPowerPrice(priceArea);
-
-    const color = getPriceColor(strømpris, nationalAveragePrice);
-
-    //const marker = L.circleMarker([lat, lon], {
-      //radius: 6,
-      //color: "#333",
-      //weight: 1,
-      //fillColor: color,
-      //fillOpacity: 0.9,
-    };
-
-marker.bindTooltip(
-  `${h.name} (${h["name"] ?? "ukjent type"})`,
-  {
-    direction: "top",
-    permanent: false,   // ← vises ikke alltid, men på hover
-    sticky: true,       // ← følger musepekeren
-    opacity: 1          // ← gjør tooltip synlig
-  }
-);
-
-
-
-function renderAllHytteMarkers() {
-  if (!cabins || cabins.length === 0) return;
-
-  cabins.forEach((h) => {
-    const lat = parseFloat(String(h.h_lat).replace(",", "."));
-    const lon = parseFloat(String(h.h_lon).replace(",", "."));
-
-    if (!lat || !lon) return;
-
-    const marker = L.marker([lat, lon], {
-      title: h.h_navn,
-      icon: hytteIcon,
-    });
-
-    marker.bindTooltip(`${h.h_navn} (${h.h_type ?? "ukjent type"})`, {
-      direction: "top",
-    });
-
-    marker.on("mouseover", () => {
-      updateInfoBoxWithCabin(h);
-    });
-
-    marker.addTo(map);
-  });
-}
-
-// ------------------------------------------------------
 // TRIVIA / FUNFACTS
 // ------------------------------------------------------
-
 function setRandomFact() {
-  const el = document.getElementById("facts.json");
+  const el = document.getElementById("random-fact");
   if (!el || !facts || facts.length === 0) return;
 
   const random = facts[Math.floor(Math.random() * facts.length)];
@@ -634,5 +509,4 @@ function setRandomFact() {
   } else {
     el.textContent = "Visste du at Norge er et ganske fint land?";
   }
-}
 }
