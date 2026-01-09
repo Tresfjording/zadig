@@ -288,6 +288,7 @@ fetch("dnt_hytter.json")
   .then(data => allCabins = data);
 
 // Søkefunksjon
+// Søkefunksjon
 const searchInput = document.getElementById("search");
 
 searchInput.addEventListener("input", () => {
@@ -319,6 +320,7 @@ searchInput.addEventListener("input", () => {
     renderSuggestions(matches);
 });
 
+// Vis forslag
 function renderSuggestions(matches) {
     const suggestionsEl = document.getElementById("autocomplete");
     if (!suggestionsEl) return;
@@ -334,10 +336,10 @@ function renderSuggestions(matches) {
 
     matches.forEach(match => {
         const item = document.createElement("div");
-        const name = match.name || "(navnløs)";
+        const navn = match.name || "(navnløs)";
         const kommune = match.municipality || "(ukjent kommune)";
         const type = match.type || "ukjent";
-        item.textContent = `${name} – ${kommune} (${type})`;
+        item.textContent = `${navn} – ${kommune} (${type})`;
         suggestionsEl.appendChild(item);
     });
 }
