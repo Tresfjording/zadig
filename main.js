@@ -198,55 +198,6 @@ function initSearch() {
 
   console.log("Søkefunksjon aktivert");
 }
-    // Finn treff i searchIndex
-  //  searchInput.addEventListener("keydown", (e) => {
-  //if (e.key === "Enter") {
-  //  e.preventDefault();
-  //  const query = searchInput.value.trim().toLowerCase();
-  //  handleSearch(query);
-  //}
-//});
-
-  // Enter / piltaster
-  searchInput.addEventListener("keydown", (e) => {
-    const suggestionsEl = document.getElementById("autocomplete");
-    if (!suggestionsEl) return;
-
-    const items = Array.from(
-      suggestionsEl.querySelectorAll(".suggestion-item")
-    );
-
-    if (e.key === "ArrowDown") {
-      e.preventDefault();
-      if (items.length === 0) return;
-      suggestionActiveIndex =
-        (suggestionActiveIndex + 1) % items.length;
-      updateSuggestionHighlight(items);
-    } else if (e.key === "ArrowUp") {
-      e.preventDefault();
-      if (items.length === 0) return;
-      suggestionActiveIndex =
-        (suggestionActiveIndex - 1 + items.length) % items.length;
-      updateSuggestionHighlight(items);
-    } else if (e.key === "Enter") {
-      e.preventDefault();
-      if (
-        suggestionActiveIndex >= 0 &&
-        suggestionActiveIndex < items.length
-      ) {
-        const label = items[suggestionActiveIndex].dataset.label;
-        handleSearch(label);
-      } else {
-        const query = searchInput.value.trim();
-        if (query.length >= 2) {
-          handleSearch(query);
-        }
-      }
-    } else if (e.key === "Escape") {
-      clearSuggestions();
-    }
-  });
-
 
 // --------------------------------------------------
 // VIS FORSLAG
