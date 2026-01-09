@@ -110,15 +110,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
       await initPrices();
 
-      
-      drawCabins(cabins);
-
-      setRandomFact();
+      renderAllHytteMarkers();
+      setRandomFact();         // ← denne linja
     })
     .catch((err) => {
       console.error("loadData feilet:", err);
-      drawCabins(cabins);
-      setRandomFact();
+      setRandomFact();         // ← og evt denne
     });
 });
 
