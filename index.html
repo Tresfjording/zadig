@@ -1,101 +1,53 @@
 ﻿<!DOCTYPE html>
 <html lang="no">
-  <head
-    lang="en"
-    data-color-mode="auto"
-    data-light-theme="light"
-    data-dark-theme="dark"
-    data-a11y-animated-images="system"
-    data-a11y-link-underlines="true"
-  >
+  <head>
     <meta charset="UTF-8" />
     <title>Tresfjording – DNT Fjellhytter</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="DNT kart" content="Interaktivt kart over Norge med tettsteder og hytter, inkludert strømpriser og interessante fakta." />
-    <meta name="author" content="Øyvind Granberg" />
-    <meta name="robots" content="Hytte,turistforening,tettsted,fjell,fjelltur,DNT,strømpris,steddsnavn,sone,fakta" />
-    <meta http-equiv="content-language" content="nb-NO">
-    <meta name="topic" content="fjellhytte, DNT,strømpris,fakta">
-    <meta name="HandheldFriendly" content="True" />
-    <meta name="MobileOptimized" content="320" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta keywords="fjell,natur,hytte,dnt,turistforening,">
-    <meta name="owner" content="Øyvind Arthurson Forness Granberg" />
-    
-
 
     <!-- Leaflet CSS -->
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
       crossorigin=""
     />
-
-    <!-- Basis typografi / monospaced fallback (valgfritt) -->
-    <style>
-      :root {
-        --fontStack-monospace: "Monaspace Neon", ui-monospace, SFMono-Regular,
-          SF Mono, Menlo, Consolas, Liberation Mono, monospace;
-      }
-    </style>
 
     <!-- Din egen stil -->
     <link rel="stylesheet" href="style.css" />
   </head>
 
   <body>
-    <div id="app">
-      <!-- KART -->
-      <div id="map"></div>
 
-      <!-- FLYTENDE SØKEBOKS -->
-      <div class="search-container">
-        <label for="place-search" class="search-label">
-          Søk etter tettsted eller hytte
-        </label>
+    <!-- KART -->
+    <div id="map"></div>
 
-        <input
-          type="text"
-          id="place-search"
-          class="search-input"
-          placeholder="F.eks. Tresfjord, hyttenavn …"
-          autocomplete="off"
-        />
+    <!-- SØKEBOKS -->
+    <div class="search-container">
+      <input
+        type="text"
+        id="searchBox"
+        placeholder="Søk etter tettsted eller hytte..."
+        autocomplete="off"
+      />
+      <div id="autocomplete" class="autocomplete-list"></div>
+    </div>
 
-        <ul id="search-suggestions" class="search-suggestions"></ul>
+    <!-- INFOBOKS -->
+    <div id="infoBox" class="info-box" style="display:none;">
+      <h2 id="info-title">Ingen sted valgt</h2>
+
+      <div id="info-content">
+        <p class="info-placeholder">
+          Velg et tettsted eller hold musepekeren over en hytte.
+        </p>
       </div>
 
-      <!-- INFOBOKS -->
-      <div id="info-panel" class="info-panel">
-        <h2 id="info-title">Ingen sted valgt</h2>
-
-        <div id="info-content">
-          <!-- Innhold fylles/dynamisk erstattes fra main.js -->
-          <p class="info-placeholder">
-            Velg et tettsted eller hold musepekeren over en hytte.
-          </p>
-        </div>
-
-        <!-- Strømpris kan enten ligge her eller integreres i info-content.
-             ID beholdes hvis du vil bruke et eget felt senere. -->
-        <div id="power-price" class="power-price">
-          <!-- Strømpris for valgt tettsted/hytte (valgfritt separat felt) -->
-        </div>
-
-        <!-- Tilfeldig faktum fra facts_all.json -->
-        <div id="random-fact" class="random-fact">
-          <!-- Fylles fra main.js / setRandomFact() -->
-        </div>
-      </div>
+      <div id="power-price"></div>
+      <div id="random-fact"></div>
     </div>
 
     <!-- Leaflet JS -->
-    <script
-      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-      crossorigin=""
-    ></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <!-- Din logikk -->
     <script src="main.js"></script>
