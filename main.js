@@ -53,8 +53,8 @@ function getPriceColor(price, avg) {
 // ------------------------------------------------------
 
 function setSelectedCabinMarker(hytte) {
-const lat = h["@lat"];
-const lon = h["@lon"];
+const lat = hytte["@lat"];
+const lon = hytte["@lon"];
 
   if (!lat || !lon) return;
 
