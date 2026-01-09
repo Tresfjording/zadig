@@ -25,10 +25,10 @@ const hytteIcon = L.icon({
 function normalizePlace(p) {
   return {
     // Navn
-    t_knavn: p.tettsted,
-    t_fnavn: p.fylke,
+    
 
-    // Strøm-sone
+
+    
     t_sone: p.sone,
 
     // Tall
