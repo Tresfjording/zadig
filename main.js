@@ -164,7 +164,7 @@ async function loadData() {
     ]);
 
     const samlet = await samletResp.json();
-    const facts = await factsResp.json();
+    facts = await factsResp.json();
     const hytter = await hytterResp.json();
 
     const samletArray = Array.isArray(samlet) ? samlet : Object.values(samlet);
