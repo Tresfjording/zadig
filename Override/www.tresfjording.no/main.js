@@ -2,7 +2,7 @@
 console.log("main.js er lastet");
 
 // --------------------------------------------------
-// GLOBALE VARIABLER - 10.01.2026  - 00:28:28
+// GLOBALE VARIABLER - 09.01.2026  - 21:36:58
 // --------------------------------------------------
 let map;
 let allCabins = [];
@@ -10,12 +10,6 @@ let allPlaces = [];
 let searchIndex = [];
 let suggestionActiveIndex = -1;
 
-const cabinIcon = L.icon({
-  iconUrl: "image/cabin16.png",
-  iconSize: [24, 24], // juster etter behov
-  iconAnchor: [12, 24], // punktet som treffer bakken
-  popupAnchor: [0, -24], // hvor popup vises i forhold til ikonet
-});
 // --------------------------------------------------
 // OPPSTART
 // --------------------------------------------------
@@ -43,7 +37,7 @@ function initMap() {
 
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution: "© OpenStreetMap",
-    maxZoom: 14,
+    maxZoom: 18,
   }).addTo(map);
 
   console.log("Kart initialisert");
@@ -82,9 +76,9 @@ function visAlleSteder() {
 
   // Initialiser kartet med terreng som default
   map = L.map("map", {
-    center: [62.501432, 7.1444801], // Tresfjord
-    zoom: 10,
-    layers: [positronLayer]
+    center: [62.5015216, 7.1454195], // Tresfjord
+    zoom: 20,
+    layers: [topoLayer]
   });
 
   // Lagvelger
