@@ -310,21 +310,17 @@ const matches = [
 
 // Vis forslag
 function renderSuggestions(matches) {
-  const suggestions = document.getElementById("autocomplete");
-  if (!suggestions) {
-    console.warn("autocomplete-elementet finnes ikke");
-    return;
-  }
+    const suggestionsEl = document.getElementById("autocomplete");
+    if (!suggestionsEl) return;
 
-  suggestions.innerHTML = "";
+    suggestionsEl.innerHTML = "";
 
-  matches.forEach(match => {
-    const item = document.createElement("div");
-    item.textContent = match.name || "(navnløs)";
-    suggestions.appendChild(item);
-  });
+    matches.forEach(match => {
+        const item = document.createElement("div");
+        item.textContent = match.name || "(navnløs)";
+        suggestionsEl.appendChild(item);
+    });
 }
-
 // Vis infoboks
 function showInfo(place) {
   infoBox.innerHTML = `
