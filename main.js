@@ -148,9 +148,9 @@ function initSearch() {
     return;
   }
 
+  // Autocomplete ved input
   searchInput.addEventListener("input", () => {
     const query = searchInput.value.trim().toLowerCase();
-
     const suggestionsEl = document.getElementById("autocomplete");
     if (!suggestionsEl) return;
 
@@ -160,6 +160,18 @@ function initSearch() {
       suggestionActiveIndex = -1;
       return;
     }
+
+    // Her kan du fylle inn forslag senere
+  });
+
+  // Søk ved Enter
+  searchInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleSearch(); // sørg for at denne funksjonen finnes
+    }
+  });
+}
 
     // Finn treff i searchIndex
     const matches = searchIndex.filter((item) =>
