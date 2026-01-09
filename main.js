@@ -272,38 +272,52 @@ function clearSuggestions() {
 // --------------------------------------------------
 // HANDLE SEARCH
 // --------------------------------------------------
-function handleSearch(label) {
-  if (!label) {
-    console.log("handleSearch: tom label");
+function initSearch() {
+
+  console.log("initSearch kjører");
+
+  const searchInput = document.getElementById("searchBox");
+  if (!searchInput) {
+    console.warn("Fant ikke søkefeltet med ID 'searchBox'");
+    return;
+  }
+function handleSearch() {
+  const query = document.getElementById("searchBox").value.trim().toLowerCase();
+  console.log("Søker etter:", query);
+
+  const match = places.find(p => p.name.toLowerCase() === query);
+  if (!match) {
+    console.warn("Fant ikke sted:", query);
     return;
   }
 
-  console.log("handleSearch: søker etter =", label);
+  map.setView([match.lat, match.lon], 12);
+  L.marker([match.lat, match.lon]).addTo(map).bindPopup(match.name).openPopup();
+}
+  // Autocomplete ved input
+  searchInput.addEventListener("input", () => {
+    const query = searchInput.value.trim().toLowerCase();
+    const suggestionsEl = document.getElementById("autocomplete");
+    if (!suggestionsEl) return;
 
-  const indexMatch = searchIndex.find(
-    (item) => item.label.toLowerCase() === label.toLowerCase()
-  );
+    if (query.length < 2) {
+      suggestionsEl.innerHTML = "";
+      suggestionsEl.style.display = "none";
+      suggestionActiveIndex = -1;
+      return;
+    }
 
-  console.log("handleSearch: indexMatch =", indexMatch);
+    // Her kan du fylle inn forslag senere
+  });
 
-  if (!indexMatch) {
-    clearSuggestions();
-    return;
-  }
-
-  clearSuggestions();
-
-  const place = indexMatch.ref;
-  if (!place) {
-    console.warn("Fant ikke ref-objekt for:", label);
-    return;
-  }
-
-  showInfo(place);
-
-  if (typeof place.lat === "number" && typeof place.lon === "number" && map) {
-    map.setView([place.lat, place.lon], 10);
-  }
+  // Søk ved Enter
+  searchInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      console.log("Enter trykket – søker...");
+      handleSearch();
+    }
+  });
 }
 
 // --------------------------------------------------
