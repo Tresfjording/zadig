@@ -31,6 +31,19 @@ fetch("tettsteder_3.json")
 // --------------------------------------------------
 // KART (Leaflet – tilpass om du bruker noe annet)
 // --------------------------------------------------
+
+function initMap() {
+  map = L.map("map").setView([62.5, 7.5], 8); // Midt i Møre og Romsdal
+
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "© OpenStreetMap",
+    maxZoom: 18,
+  }).addTo(map);
+
+  console.log("Kart initialisert");
+}
+
+
 function visAlleSteder() {
   places.forEach(p => {
     if (p.lat && p.lon) {
@@ -58,6 +71,8 @@ function visAlleSteder() {
     "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
     { attribution: "Tiles © Esri" }
   );
+
+  
 
   // Initialiser kartet med terreng som default
   map = L.map("map", {
@@ -317,6 +332,3 @@ function showInfo(place) {
 
   infoBox.style.display = "block";
 }
-document.addEventListener("DOMContentLoaded", () => {
-  initMap();
-});
