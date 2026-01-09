@@ -397,7 +397,6 @@ function clearSuggestions() {
   suggestionsEl.style.display = "none";
   suggestionActiveIndex = -1;
 }
-
 function handleSearch(label) {
   if (!label) {
     console.log("handleSearch: tom label");
@@ -417,25 +416,30 @@ function handleSearch(label) {
     return;
   }
 
-  // Sett verdien tilbake i infoSearch (og place-search hvis den finnes)
-  const mainSearchInput = document.getElementById("place-search");
-  const infoSearchInput = document.getElementById("infoSearch");
+  // 1. Lukk forslag
+  clearSuggestions && clearSuggestions();
 
-  if (mainSearchInput) mainSearchInput.value = match.label;
-  if (infoSearchInput) infoSearchInput.value = match.label;
+  // 2. Finn originalt objekt (fra allCabins eller allPlaces)
+  const place = [...allCabins, ...allPlaces].find(
+    (p) => p.name && p.name.toLowerCase() === match.label.toLowerCase()
+  );
 
-  if (match.type === "t") {
-    focusOnPlace(match.ref);
-    updateInfoBoxWithPlace(match.ref);
-    setSelectedPlaceMarker(match.ref);
-  } else if (match.type === "h") {
-    focusOnCabin(match.ref);
-    updateInfoBoxWithCabin(match.ref);
-    setSelectedCabinMarker(match.ref);
+  if (!place) {
+    console.warn("Fant ikke objektet i datasettet:", match.label);
+    return;
   }
 
-  if (typeof clearSuggestions === "function") {
-    clearSuggestions();
+  // 3. Vis infoboks
+  showInfo(place);
+
+  // 4. Zoom kartet til posisjonen
+  if (place.lat && place.lon) {
+    map.setView([place.lat, place.lon], 12);
+  }
+
+  // 5. Marker punktet (hvis du har en funksjon for det)
+  if (typeof highlightMarker === "function") {
+    highlightMarker(place);
   }
 }
 
