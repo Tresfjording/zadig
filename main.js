@@ -288,9 +288,6 @@ fetch("dnt_hytter.json")
   .then(data => allCabins = data);
 
 // Søkefunksjon
-// Søkefunksjon
-const searchInput = document.getElementById("search");
-
 searchInput.addEventListener("input", () => {
     const query = searchInput.value.trim().toLowerCase();
 
