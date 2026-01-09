@@ -14,6 +14,18 @@ let suggestionActiveIndex = -1;
 // OPPSTART
 // --------------------------------------------------
 
+let places = [];
+
+fetch("tettsteder_3.json")
+  .then(res => res.json())
+  .then(data => {
+    places = data;
+    console.log("Tettsteder lastet:", places.length);
+    visAlleSteder(); // valgfritt: vis alle hytter/tettsteder på kartet
+  })
+  .catch(err => {
+    console.error("Klarte ikke å laste tettsteder_3.json:", err);
+  });
 
 // --------------------------------------------------
 // KART (Leaflet – tilpass om du bruker noe annet)
@@ -142,39 +154,37 @@ function buildSearchIndex() {
 // SØK
 // --------------------------------------------------
 function initSearch() {
- function initSearch() {
   const searchInput = document.getElementById("searchBox");
   if (!searchInput) {
     console.warn("Fant ikke søkefeltet med ID 'searchBox'");
     return;
   }
+ }
+searchInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    const query = searchInput.value.trim().toLowerCase();
+    handleSearch(query);
+  }
+});
 
-  searchInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      const query = searchInput.value.trim().toLowerCase();
-      console.log("Enter trykket – søker etter:", query);
-      handleSearch(query);
-    }
-  });
-}
 
   // Søk ved Enter
   searchInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
       handleSearch(); // sørg for at denne funksjonen finnes
-    
- 
-}
-
+    }
+    }
+  );
     // Finn treff i searchIndex
-    const matches = searchIndex.filter((item) =>
-      item.label.toLowerCase().includes(query)
-    );
-
-    renderSuggestions(matches);
-  });
+    searchInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    const query = searchInput.value.trim().toLowerCase();
+    handleSearch(query);
+  }
+});
 
   // Enter / piltaster
   searchInput.addEventListener("keydown", (e) => {
@@ -215,7 +225,7 @@ function initSearch() {
       clearSuggestions();
     }
   });
-}
+
 
 // --------------------------------------------------
 // VIS FORSLAG
@@ -275,13 +285,13 @@ function initSearch() {
   if (!searchInput) {
     console.warn("Fant ikke søkefeltet med ID 'searchBox'");
     return;
-  }
+  }}
 function handleSearch(query) {
   if (!query || query.length < 2) {
     console.warn("Ugyldig søkestreng:", query);
     return;
   }
-
+}
   const match = places.find(p =>
     p.name?.toLowerCase() === query ||
     p.title?.toLowerCase() === query
@@ -297,17 +307,16 @@ function handleSearch(query) {
   L.marker([match.lat, match.lon]).addTo(map)
     .bindPopup(match.name || match.title)
     .openPopup();
-}
+
 
   // Søk ved Enter
-  searchInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      console.log("Enter trykket – søker...");
-      handleSearch();
-    }
-  });
-}
+ searchInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    const query = searchInput.value.trim().toLowerCase();
+    handleSearch(query);
+  }
+});
 
 // --------------------------------------------------
 // INFOBOKS
