@@ -288,36 +288,56 @@ fetch("dnt_hytter.json")
   .then(data => allCabins = data);
 
 // Søkefunksjon
-searchInput.addEventListener("input", () => {
-  const query = searchInput.value.trim().toLowerCase();
-  if (query.length < 2) {
-    document.getElementById("autocomplete").innerHTML = "";
-    return;
-  }
-const matches = [
-  ...allCabins.filter(c =>
-    (typeof c.name === "string" && c.name.toLowerCase().includes(query)) ||
-    (typeof c.website === "string" && c.website.toLowerCase().includes(query))
-  ),
-  ...allPlaces.filter(p =>
-    typeof p.name === "string" && p.name.toLowerCase().includes(query)
-  )
-];
- 
+const searchInput = document.getElementById("search");
 
-  document.getElementById("autocomplete").innerHTML = "";
+searchInput.addEventListener("input", () => {
+    const query = searchInput.value.trim().toLowerCase();
+
+    const suggestionsEl = document.getElementById("autocomplete");
+    if (!suggestionsEl) return;
+
+    if (query.length < 2) {
+        suggestionsEl.innerHTML = "";
+        return;
+    }
+
+    const matches = [
+        ...allCabins.filter(c =>
+            (typeof c.name === "string" && c.name.toLowerCase().includes(query)) ||
+            (typeof c.website === "string" && c.website.toLowerCase().includes(query)) ||
+            (typeof c.municipality === "string" && c.municipality.toLowerCase().includes(query)) ||
+            (typeof c.county === "string" && c.county.toLowerCase().includes(query))
+        ).map(c => ({ ...c, type: "hytte" })),
+
+        ...allPlaces.filter(p =>
+            (typeof p.name === "string" && p.name.toLowerCase().includes(query)) ||
+            (typeof p.municipality === "string" && p.municipality.toLowerCase().includes(query)) ||
+            (typeof p.county === "string" && p.county.toLowerCase().includes(query))
+        ).map(p => ({ ...p, type: "sted" }))
+    ];
+
+    renderSuggestions(matches);
 });
 
-// Vis forslag
 function renderSuggestions(matches) {
     const suggestionsEl = document.getElementById("autocomplete");
     if (!suggestionsEl) return;
 
     suggestionsEl.innerHTML = "";
 
+    if (matches.length === 0) {
+        const item = document.createElement("div");
+        item.textContent = "Ingen treff";
+        suggestionsEl.appendChild(item);
+        return;
+    }
+
     matches.forEach(match => {
         const item = document.createElement("div");
-        item.textContent = match.name || "(navnløs)";
+        const name = match.name || "(navnløs)";
+        const kommune = match.municipality || "(ukjent kommune)";
+        const type = match.type || "ukjent";
+        item.textContent = `${name} – ${kommune} (${type})`;
         suggestionsEl.appendChild(item);
     });
 }
