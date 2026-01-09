@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Norgeskart – Tettsteder & Hytter</title>
+
+  <!-- Leaflet CSS -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Kart */
+    #map {
+      flex: 3;
+      height: 100%;
+      width: 100%;
+    }
+
+    /* Sidepanel */
+    #sidepanel {
+      flex: 1;
+      background: #f8f8f8;
+      border-left: 1px solid #ccc;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      overflow-y: auto;
+    }
+
+    /* Søkefelt */
+    #sokInput {
+      width: 100%;
+      padding: 8px;
+      font-size: 16px;
+      border: 1px solid #aaa;
+      border-radius: 4px;
+    }
+
+    #visInfoBtn {
+      padding: 8px;
+      font-size: 16px;
+      background: #0078ff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    #visInfoBtn:hover {
+      background: #005fcc;
+    }
+
+    /* Autocomplete */
+    #autocompleteList {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      border: 1px solid #ccc;
+      background: white;
+      max-height: 200px;
+      overflow-y: auto;
+      display: none;
+      position: relative;
+      z-index: 9999;
+    }
+
+    .autocomplete-item {
+      padding: 8px;
+      cursor: pointer;
+    }
+
+    .autocomplete-item:hover {
+      background: #eee;
+    }
+
+    /* Infoboks */
+    #infobox {
+      background: white;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      min-height: 150px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Kart -->
+  <div id="map"></div>
+
+  <!-- Sidepanel -->
+  <div id="sidepanel">
+
+    <h2>Søk</h2>
+
+    <input type="text" id="sokInput" placeholder="Søk etter tettsted eller hytte..." />
+    <button id="visInfoBtn">Vis</button>
+
+    <ul id="autocompleteList"></ul>
+
+   
+
+  </div>
+
+  <!-- Leaflet JS -->
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+  </script>
+
+  <!-- Main script -->
+  <script src="main.js"></script>
+
+  <div id="info-title"></div>
+<div id="info-content"></div>
+<input id="infoSearch" type="text" placeholder="Søk i info…">
+<ul id="search-suggestions"></ul>
+</body>
+</html>
