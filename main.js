@@ -288,14 +288,17 @@ fetch("dnt_hytter.json")
   .then(data => allCabins = data);
 
 // Søkefunksjon
+const searchInput = document.getElementById("search");
+
 searchInput.addEventListener("input", () => {
     const query = searchInput.value.trim().toLowerCase();
 
-    const suggestionsEl = document.getElementById("autocomplete");
+    const suggestionsEl = document.getElementById("search-suggestions");
     if (!suggestionsEl) return;
 
     if (query.length < 2) {
         suggestionsEl.innerHTML = "";
+        suggestionsEl.style.display = "none";
         return;
     }
 
@@ -305,39 +308,41 @@ searchInput.addEventListener("input", () => {
             (typeof c.website === "string" && c.website.toLowerCase().includes(query)) ||
             (typeof c.municipality === "string" && c.municipality.toLowerCase().includes(query)) ||
             (typeof c.county === "string" && c.county.toLowerCase().includes(query))
-        ).map(c => ({ ...c, type: "hytte" })),
+        ).map(c => ({ label: c.name || "(navnløs)", source: "hytte" })),
 
         ...allPlaces.filter(p =>
             (typeof p.name === "string" && p.name.toLowerCase().includes(query)) ||
             (typeof p.municipality === "string" && p.municipality.toLowerCase().includes(query)) ||
             (typeof p.county === "string" && p.county.toLowerCase().includes(query))
-        ).map(p => ({ ...p, type: "sted" }))
+        ).map(p => ({ label: p.name || "(navnløst sted)", source: "sted" }))
     ];
 
     renderSuggestions(matches);
 });
 
-// Vis forslag
 function renderSuggestions(matches) {
-    const suggestionsEl = document.getElementById("autocomplete");
+    const suggestionsEl = document.getElementById("search-suggestions");
     if (!suggestionsEl) return;
 
     suggestionsEl.innerHTML = "";
 
-    if (matches.length === 0) {
-        const item = document.createElement("div");
-        item.textContent = "Ingen treff";
-        suggestionsEl.appendChild(item);
+    if (!matches || matches.length === 0) {
+        suggestionsEl.style.display = "none";
         return;
     }
 
-    matches.forEach(match => {
-        const item = document.createElement("div");
-        const navn = match.name || "(navnløs)";
-        const kommune = match.municipality || "(ukjent kommune)";
-        const type = match.type || "ukjent";
-        item.textContent = `${navn} – ${kommune} (${type})`;
-        suggestionsEl.appendChild(item);
+    suggestionsEl.style.display = "block";
+
+    matches.slice(0, 10).forEach((item) => {
+        const li = document.createElement("li");
+        li.className = "suggestion-item";
+        li.textContent = `${item.label} (${item.source})`;
+
+        li.addEventListener("mousedown", () => {
+            handleSearch(item.label);
+        });
+
+        suggestionsEl.appendChild(li);
     });
 }
 // Vis infoboks
