@@ -240,10 +240,11 @@ function buildSearchIndex() {
 }
 
 function initSearch() {
-  const searchInput = document.getElementById("place-search");
+  const searchInput = document.getElementById("infoSearch"); // ← fikset!
   const suggestionsEl = document.getElementById("search-suggestions");
 
   if (!searchInput || !suggestionsEl) return;
+
 
   searchInput.addEventListener("input", () => {
     const query = searchInput.value.toLowerCase();
