@@ -291,7 +291,7 @@ fetch("dnt_hytter.json")
 searchInput.addEventListener("input", () => {
   const query = searchInput.value.trim().toLowerCase();
   if (query.length < 2) {
-    suggestions.innerHTML = "";
+    document.getElementById("autocomplete").innerHTML = "";
     return;
   }
 const matches = [
