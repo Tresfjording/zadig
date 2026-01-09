@@ -283,7 +283,18 @@ function initSearch() {
   if (!searchInput) {
     console.warn("Fant ikke søkefeltet med ID 'searchBox'");
     return;
-  }}
+  }
+
+  searchInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const query = searchInput.value.trim().toLowerCase();
+      handleSearch(query);
+    }
+  });
+
+  console.log("Søkefunksjon aktivert");
+}
 function handleSearch(query) {
   if (!query || query.length < 2) {
     console.warn("Ugyldig søkestreng:", query);
