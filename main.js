@@ -370,18 +370,25 @@ function clearSuggestions() {
 }
 
 function handleSearch(label) {
-  if (!label) return;
+  if (!label) {
+    console.log("handleSearch: tom label");
+    return;
+  }
+
+  console.log("handleSearch: søker etter =", label);
 
   const match = searchIndex.find(
     (item) => item.label.toLowerCase() === label.toLowerCase()
   );
 
+  console.log("handleSearch: match =", match);
+
   if (!match) {
-    clearSuggestions();
+    clearSuggestions && clearSuggestions();
     return;
   }
 
-  // Prøv å sette verdi i begge felt hvis de finnes
+  // Sett verdien tilbake i infoSearch (og place-search hvis den finnes)
   const mainSearchInput = document.getElementById("place-search");
   const infoSearchInput = document.getElementById("infoSearch");
 
@@ -398,7 +405,9 @@ function handleSearch(label) {
     setSelectedCabinMarker(match.ref);
   }
 
-  clearSuggestions();
+  if (typeof clearSuggestions === "function") {
+    clearSuggestions();
+  }
 }
 
 // ------------------------------------------------------
