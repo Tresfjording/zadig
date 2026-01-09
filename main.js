@@ -160,28 +160,39 @@ function initSearch() {
     return;
   }
 
-  // Lytter på Enter
-  searchInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      const query = searchInput.value.trim().toLowerCase();
-      handleSearch(query);
-    }
-  });
-
-  // Lytter på piltaster/autocomplete
   searchInput.addEventListener("keydown", (e) => {
     const suggestionsEl = document.getElementById("autocomplete");
-    if (!suggestionsEl) return;
-
-    const items = Array.from(
-      suggestionsEl.querySelectorAll(".suggestion-item")
-    );
+    const items = suggestionsEl
+      ? Array.from(suggestionsEl.querySelectorAll(".suggestion-item"))
+      : [];
 
     if (e.key === "ArrowDown") {
       e.preventDefault();
       if (items.length === 0) return;
-      // legg til fokuslogikk her hvis ønskelig
+      suggestionActiveIndex = (suggestionActiveIndex + 1) % items.length;
+      updateSuggestionHighlight(items);
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      if (items.length === 0) return;
+      suggestionActiveIndex =
+        (suggestionActiveIndex - 1 + items.length) % items.length;
+      updateSuggestionHighlight(items);
+    } else if (e.key === "Enter") {
+      e.preventDefault();
+      if (
+        suggestionActiveIndex >= 0 &&
+        suggestionActiveIndex < items.length
+      ) {
+        const label = items[suggestionActiveIndex].dataset.label;
+        handleSearch(label);
+      } else {
+        const query = searchInput.value.trim().toLowerCase();
+        if (query.length >= 2) {
+          handleSearch(query);
+        }
+      }
+    } else if (e.key === "Escape") {
+      clearSuggestions();
     }
   });
 
