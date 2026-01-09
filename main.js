@@ -22,24 +22,38 @@ function initMap() {
     return;
   }
 
-  map = L.map("map").setView([63.0, 8.0], 6); // Midt-Norge-ish
-
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  // Standardkart (lys)
+  const standardLayer = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 18,
     attribution: "© OpenStreetMap"
-  }).addTo(map);
-}
-
-// Dummy – rendrer bare alle hytter som standard markører
-function renderAllHytteMarkers() {
-  if (!map || !Array.isArray(allCabins)) return;
-
-  allCabins.forEach((cabin) => {
-    if (typeof cabin.lat === "number" && typeof cabin.lon === "number") {
-      const marker = L.marker([cabin.lat, cabin.lon]).addTo(map);
-      marker.bindPopup(cabin.name || "Uten navn");
-    }
   });
+
+  // Terrengkart
+  const topoLayer = L.tileLayer("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png", {
+    maxZoom: 17,
+    attribution: "© OpenTopoMap contributors"
+  });
+
+  // Satelitt (valgfritt)
+  const satelliteLayer = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
+    attribution: "Tiles © Esri"
+  });
+
+  // Initialiser kartet
+  map = L.map("map", {
+    center: [62.566, 7.475], // Tresfjord
+    zoom: 12,
+    layers: [standardLayer] // default
+  });
+
+  // Lagvelger
+  const baseMaps = {
+    "Standard": standardLayer,
+    "Terreng": topoLayer,
+    "Satelitt": satelliteLayer
+  };
+
+  L.control.layers(baseMaps).addTo(map);
 }
 
 // --------------------------------------------------
