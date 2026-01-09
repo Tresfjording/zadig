@@ -161,6 +161,7 @@ function initSearch() {
     return;
   }
  }
+  
 searchInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter") {
     e.preventDefault();
@@ -169,15 +170,6 @@ searchInput.addEventListener("keydown", (e) => {
   }
 });
 
-
-  // Søk ved Enter
-  searchInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      handleSearch(); // sørg for at denne funksjonen finnes
-    }
-    }
-  );
     // Finn treff i searchIndex
     searchInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter") {
