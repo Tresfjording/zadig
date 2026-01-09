@@ -155,20 +155,21 @@ function buildSearchIndex() {
 // --------------------------------------------------
 function initSearch() {
   const searchInput = document.getElementById("searchBox");
-
   if (!searchInput) {
     console.warn("Fant ikke søkefeltet med ID 'searchBox'");
     return;
   }
- }
-  
-searchInput.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") {
-    e.preventDefault();
-    const query = searchInput.value.trim().toLowerCase();
-    handleSearch(query);
-  }
-});
+
+  searchInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const query = searchInput.value.trim().toLowerCase();
+      handleSearch(query);
+    }
+  });
+
+  console.log("Søkefunksjon aktivert");
+}
 
     // Finn treff i searchIndex
     searchInput.addEventListener("keydown", (e) => {
