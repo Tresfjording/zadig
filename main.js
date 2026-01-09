@@ -452,14 +452,14 @@ async function updateInfoBoxWithPlace(place) {
 
   const color = getPriceColor(strømpris, nationalAveragePrice);
 
-  titleEl.textContent = place.t_knavn || "Ukjent tettsted";
+  titleEl.textContent = place.navn || "Ukjent tettsted";
 
   contentEl.innerHTML = `
     <div class="info-row">
       <div class="info-col">
         <p><strong>Tettsted:</strong> ${place.tettsted ?? ""}</p>
         <p><strong>Kommune nr:</strong> ${place.k_nr ?? ""}</p>
-        
+        <p><strong>Kommune</strong> ${place.name ?? ""}</p>
         <p><strong>Fylke:</strong> ${place.fylke ?? ""}</p>
         <p><strong>Sone:</strong> ${place.sone ?? ""}</p>
       </div>
@@ -472,10 +472,7 @@ async function updateInfoBoxWithPlace(place) {
       </div>
     </div>
 
-    <div class="info-row">
-      <p><strong>Kommune-slagord:</strong> ${place.k_slagord ?? ""}</p>
-      <p><strong>Fylkes-slagord:</strong> ${place.f_slagord ?? ""}</p>
-    </div>
+
 
     <div class="info-row price-row">
       <p><strong>Strømpris nå:</strong>
