@@ -21,6 +21,7 @@ fetch("tettsteder_3.json")
   .then(data => {
     places = data;
     console.log("Tettsteder lastet:", places.length);
+
     visAlleSteder(); // valgfritt: vis alle hytter/tettsteder på kartet
   })
   .catch(err => {
@@ -30,15 +31,14 @@ fetch("tettsteder_3.json")
 // --------------------------------------------------
 // KART (Leaflet – tilpass om du bruker noe annet)
 // --------------------------------------------------
-function initMap() {
-  const mapEl = document.getElementById("map");
-  if (!mapEl) return;
-
-  document.addEventListener("DOMContentLoaded", () => {
-  initMap();
-});
-
-
+function visAlleSteder() {
+  places.forEach(p => {
+    if (p.lat && p.lon) {
+      L.marker([p.lat, p.lon]).addTo(map)
+        .bindPopup(p.name || p.title || p.navn || "Uten navn");
+    }
+  });
+}
   // Kartlag
   const standardLayer = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 18,
@@ -75,7 +75,7 @@ function initMap() {
   };
 
   L.control.layers(baseMaps).addTo(map);
-}
+
 
 // --------------------------------------------------
 // DATAINNLESSING – TILPASS STIER TIL DINE JSON-FILER
@@ -155,6 +155,7 @@ function buildSearchIndex() {
 // --------------------------------------------------
 function initSearch() {
   const searchInput = document.getElementById("searchBox");
+
   if (!searchInput) {
     console.warn("Fant ikke søkefeltet med ID 'searchBox'");
     return;
