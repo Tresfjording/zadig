@@ -249,7 +249,7 @@ function clearSuggestions() {
 // --------------------------------------------------
 // HANDLE SEARCH
 // --------------------------------------------------
-function initSearch() {
+function initSearch(query) {
   const searchInput = document.getElementById("searchBox");
   if (!searchInput) {
     console.warn("Fant ikke søkefeltet med ID 'searchBox'");
@@ -278,7 +278,7 @@ function handleSearch(query) {
   );
 
   if (!match) {
-    console.warn("Fant ikke sted:", label);
+    console.warn("Fant ikke sted:", queryl);
 
   }
 
