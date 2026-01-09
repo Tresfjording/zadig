@@ -240,57 +240,63 @@ function buildSearchIndex() {
 }
 
 function initSearch() {
-  const searchInput = document.getElementById("infoSearch"); // ← fikset!
+  // Støtt begge felt: hovedsøket og info-boksen
+  const mainSearchInput = document.getElementById("place-search");
+  const infoSearchInput = document.getElementById("infoSearch");
   const suggestionsEl = document.getElementById("search-suggestions");
 
-  if (!searchInput || !suggestionsEl) return;
+  if (!suggestionsEl || (!mainSearchInput && !infoSearchInput)) return;
 
+  function attachSearchListeners(inputEl) {
+    inputEl.addEventListener("input", () => {
+      const query = inputEl.value.toLowerCase();
+      suggestionActiveIndex = -1;
 
-  searchInput.addEventListener("input", () => {
-    const query = searchInput.value.toLowerCase();
-    suggestionActiveIndex = -1;
-
-    if (!query) {
-      clearSuggestions();
-      return;
-    }
-
-    const matches = searchIndex.filter((item) =>
-      item.label.toLowerCase().includes(query)
-    );
-
-    renderSuggestions(matches);
-  });
-
-  searchInput.addEventListener("keydown", (e) => {
-    const items = suggestionsEl.querySelectorAll(".suggestion-item");
-    const maxIndex = items.length - 1;
-
-    if (e.key === "ArrowDown") {
-      e.preventDefault();
-      if (maxIndex < 0) return;
-      suggestionActiveIndex =
-        suggestionActiveIndex < maxIndex ? suggestionActiveIndex + 1 : 0;
-      updateSuggestionHighlight(items);
-    } else if (e.key === "ArrowUp") {
-      e.preventDefault();
-      if (maxIndex < 0) return;
-      suggestionActiveIndex =
-        suggestionActiveIndex > 0 ? suggestionActiveIndex - 1 : maxIndex;
-      updateSuggestionHighlight(items);
-    } else if (e.key === "Enter") {
-      e.preventDefault();
-      if (suggestionActiveIndex >= 0 && items[suggestionActiveIndex]) {
-        items[suggestionActiveIndex].dispatchEvent(
-          new MouseEvent("mousedown")
-        );
-      } else {
-        handleSearch(searchInput.value);
+      if (!query) {
+        clearSuggestions();
+        return;
       }
-    } else if (e.key === "Escape") {
-      clearSuggestions();
-    }
-  });
+
+      const matches = searchIndex.filter((item) =>
+        item.label.toLowerCase().includes(query)
+      );
+
+      renderSuggestions(matches);
+    });
+
+    inputEl.addEventListener("keydown", (e) => {
+      const items = suggestionsEl.querySelectorAll(".suggestion-item");
+      const maxIndex = items.length - 1;
+
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        if (maxIndex < 0) return;
+        suggestionActiveIndex =
+          suggestionActiveIndex < maxIndex ? suggestionActiveIndex + 1 : 0;
+        updateSuggestionHighlight(items);
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        if (maxIndex < 0) return;
+        suggestionActiveIndex =
+          suggestionActiveIndex > 0 ? suggestionActiveIndex - 1 : maxIndex;
+        updateSuggestionHighlight(items);
+      } else if (e.key === "Enter") {
+        e.preventDefault();
+        if (suggestionActiveIndex >= 0 && items[suggestionActiveIndex]) {
+          items[suggestionActiveIndex].dispatchEvent(
+            new MouseEvent("mousedown")
+          );
+        } else {
+          handleSearch(inputEl.value);
+        }
+      } else if (e.key === "Escape") {
+        clearSuggestions();
+      }
+    });
+  }
+
+  if (mainSearchInput) attachSearchListeners(mainSearchInput);
+  if (infoSearchInput) attachSearchListeners(infoSearchInput);
 }
 
 function renderSuggestions(matches) {
@@ -343,7 +349,12 @@ function handleSearch(label) {
     return;
   }
 
-  document.getElementById("place-search").value = match.label;
+  // Prøv å sette verdi i begge felt hvis de finnes
+  const mainSearchInput = document.getElementById("place-search");
+  const infoSearchInput = document.getElementById("infoSearch");
+
+  if (mainSearchInput) mainSearchInput.value = match.label;
+  if (infoSearchInput) infoSearchInput.value = match.label;
 
   if (match.type === "t") {
     focusOnPlace(match.ref);
