@@ -11,7 +11,7 @@ let searchIndex = [];
 let suggestionActiveIndex = -1;
 
 const cabinIcon = L.icon({
-  iconUrl: "image/cabin16.png",
+  iconUrl: "/image/cabin16.png",
   iconSize: [24, 24], // juster etter behov
   iconAnchor: [12, 24], // punktet som treffer bakken
   popupAnchor: [0, -24], // hvor popup vises i forhold til ikonet
