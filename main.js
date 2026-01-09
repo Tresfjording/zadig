@@ -26,8 +26,6 @@ function normalizePlace(p) {
   return {
     // Navn
     
-
-
     
     t_sone: p.sone,
 
@@ -482,7 +480,6 @@ async function updateInfoBoxWithPlace(place) {
     </div>
   `;
 }
-
 async function updateInfoBoxWithCabin(hytte) {
   setSelectedCabinMarker(hytte);
   if (!hytte) return;
@@ -511,21 +508,13 @@ async function updateInfoBoxWithCabin(hytte) {
         <p><strong>Hytte:</strong> ${hytte.name}</p>
         <p><strong>Type:</strong> ${hytte["dnt:classification"] ?? ""}</p>
         <p><strong>Operatør:</strong> ${hytte.operator ?? ""}</p>
-        <p><strong>Kommune:</strong> ${hytte.k_navn ?? ""}</p>
-        <p><strong>Fylke:</strong> ${hytte.t_fnavn ?? ""}</p>
+        <p><strong>Lenke:</strong> <a href="${hytte.website}" target="_blank">UT.no</a></p>
       </div>
       <div class="info-col">
         <p><strong>Sone:</strong> ${hytte.t_sone ?? ""}</p>
-        <p><strong>Innbyggere:</strong> ${hytte.k_innbyggere ?? ""}</p>
-        <p><strong>Areal:</strong> ${hytte.k_areal ?? ""}</p>
-        <p><strong>Tilskudd:</strong> ${hytte.k_tilskudd ?? ""}</p>
-        <p><strong>Språk:</strong> ${hytte.k_språk ?? ""}</p>
+        <p><strong>Lat:</strong> ${hytte["@lat"]}</p>
+        <p><strong>Lon:</strong> ${hytte["@lon"]}</p>
       </div>
-    </div>
-
-    <div class="info-row">
-      <p><strong>Kommune-slagord:</strong> ${hytte.k_slagord ?? ""}</p>
-      <p><strong>Fylkes-slagord:</strong> ${hytte.f_slagord ?? ""}</p>
     </div>
 
     <div class="info-row price-row">
@@ -534,12 +523,6 @@ async function updateInfoBoxWithCabin(hytte) {
       </p>
       <p><strong>Landsgjennomsnitt nå:</strong> ${avgText}</p>
     </div>
-
-    <p>
-      <a href="${hytte.website}" target="_blank" rel="noopener noreferrer">
-        Se mer på UT.no
-      </a>
-    </p>
   `;
 }
 
