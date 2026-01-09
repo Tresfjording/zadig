@@ -249,7 +249,7 @@ function clearSuggestions() {
 // --------------------------------------------------
 // HANDLE SEARCH
 // --------------------------------------------------
-function initSearch(query) {
+function initSearch(label) {
   const searchInput = document.getElementById("searchBox");
   if (!searchInput) {
     console.warn("Fant ikke søkefeltet med ID 'searchBox'");
@@ -266,19 +266,19 @@ function initSearch(query) {
 
   console.log("Søkefunksjon aktivert");
 }
-function handleSearch(query) {
+function handleSearch(label) {
   if (!query || query.length < 2) {
-    console.warn("Ugyldig søkestreng:", query);
+    console.warn("Ugyldig søkestreng:", label);
     return;
   }
 }
   const match = places.find(p =>
-    p.name?.toLowerCase() === query ||
-    p.title?.toLowerCase() === query
+    p.name?.toLowerCase() === label ||
+    p.title?.toLowerCase() === label
   );
 
   if (!match) {
-    console.warn("Fant ikke sted:", queryl);
+    console.warn("Fant ikke sted:", label);
 
   }
 
@@ -294,7 +294,7 @@ function handleSearch(query) {
   if (e.key === "Enter") {
     e.preventDefault();
     const query = searchInput.value.trim().toLowerCase();
-    handleSearch(query);
+    handleSearch(label);
   }
 });
 
