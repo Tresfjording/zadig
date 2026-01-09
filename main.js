@@ -159,7 +159,7 @@ function initSearch() {
     console.warn("Fant ikke søkefeltet med ID 'searchBox'");
     return;
   }
-  
+
   searchInput.addEventListener("keydown", (e) => {
     const suggestionsEl = document.getElementById("autocomplete");
     const items = suggestionsEl
@@ -286,16 +286,7 @@ function handleSearch(queryOrLabel) {
     .openPopup();
 }
 
-  // Søk ved Enter
- searchInput.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") {
-    e.preventDefault();
-    const query = searchInput.value.trim().toLowerCase();
-    handleSearch(label);
-  }
-});
-
-// --------------------------------------------------
+ // --------------------------------------------------
 // INFOBOKS
 // --------------------------------------------------
 function showInfo(place) {
