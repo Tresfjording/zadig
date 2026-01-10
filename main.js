@@ -249,7 +249,10 @@ async function renderAllHytteMarkers() {
     const url = `https://www.hvakosterstrommen.no/api/v1/prices/${år}/${måned}-${dag}_${sone}.json`;
     try {
       const res = await fetch(url);
-         strømpriser[sone] = await res.json();
+      strømpriser[sone] = await res.json();
+    } catch (err) {
+      console.warn(`⚠️ Klarte ikke hente pris for ${sone}:`, err);
+    }
   }));
 
   const priserNå = prisområder
