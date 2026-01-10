@@ -34,7 +34,7 @@ function visAlleHytter() {
   const box = document.getElementById("box2");
 
   const gyldige = allCabins.filter(h => h.lat && h.lon);
-  console.log("Gyldige hytter:", gyldige.length);
+  //console.log("Gyldige hytter:", gyldige.length);
 
   gyldige.forEach(hytte => {
     const marker = L.marker([hytte.lat, hytte.lon], { icon: cabinIcon }).addTo(map);
