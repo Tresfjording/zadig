@@ -30,7 +30,6 @@ function visAlleSteder() {
     }
   });
 }
-
 function visAlleHytter() {
   const box = document.getElementById("box2");
 
@@ -40,10 +39,14 @@ function visAlleHytter() {
   gyldige.forEach(hytte => {
     const marker = L.marker([hytte.lat, hytte.lon], { icon: cabinIcon }).addTo(map);
 
+    // 🚫 Ikke bruk .bindPopup()
+
+    // ✅ Hover inn
     marker.on("mouseover", () => {
       visHytteInfo(hytte);
     });
 
+    // ✅ Hover ut
     marker.on("mouseout", () => {
       box.classList.add("fade-out");
       setTimeout(() => {
@@ -53,7 +56,6 @@ function visAlleHytter() {
     });
   });
 }
-
 
 Promise.all([
   fetch("tettsteder_3.json").then(res => res.json()),
