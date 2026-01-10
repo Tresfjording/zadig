@@ -79,7 +79,7 @@ html, body {
 }
 
 /* === INFOBOKS === */
-.info-box {
+.infobox {
     position: absolute;
     bottom: 20px;
     left: 20px;
@@ -98,9 +98,18 @@ html, body {
     font-size: 18px;
 }
 
-.info-box p {
+.infobox p {
     margin: 4px 0;
 }
+.infoboks {
+  transition: opacity 0.3s ease;
+  opacity: 1;
+}
+
+.fade-out {
+  opacity: 0;
+}
+
 
 /* === MARKER ANIMASJON === */
 .marker-selected {
