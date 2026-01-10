@@ -24,6 +24,79 @@ const cabinIcon = L.icon({
   iconAnchor: [8, 8]
 });
 
+function renderSuggestions(matches) {
+  const suggestionsEl = document.getElementById("search-suggestions");
+  suggestionsEl.innerHTML = "";
+
+  if (!matches || matches.length === 0) {
+    suggestionsEl.style.display = "none";
+    return;
+  }
+
+  suggestionsEl.style.display = "block";
+
+  matches.slice(0, 10).forEach((item, index) => {
+    const div = document.createElement("div");
+    div.className = "suggestion-item";
+    div.textContent = item.label;
+    div.dataset.index = index;
+    div.addEventListener("mousedown", () => {
+      handleSearch(item.label);
+    });
+    suggestionsEl.appendChild(div);
+  });
+}
+
+function handleSearch(label) {
+  const match = searchIndex.find(item =>
+    item.label.toLowerCase() === label.toLowerCase()
+  );
+
+  if (!match) return;
+
+  document.getElementById("place-search").value = label;
+
+  const suggestionsEl = document.getElementById("search-suggestions");
+  suggestionsEl.innerHTML = "";
+  suggestionsEl.style.display = "none";
+
+  if (match.type === "t") {
+    focusOnPlace(match.ref);
+    updateBox1(match.ref);
+    updateBox3(match.ref);
+    updateBox4();
+  } else if (match.type === "h") {
+    focusOnCabin(match.ref);
+    updateBox2(match.ref);
+    updateBox4();
+  }
+}
+
+let activeIndex = -1;
+
+searchInput.addEventListener("keydown", (e) => {
+  const items = suggestionsEl.querySelectorAll(".suggestion-item");
+
+  if (e.key === "ArrowDown") {
+    e.preventDefault();
+    activeIndex = (activeIndex + 1) % items.length;
+  } else if (e.key === "ArrowUp") {
+    e.preventDefault();
+    activeIndex = (activeIndex - 1 + items.length) % items.length;
+  } else if (e.key === "Enter") {
+    e.preventDefault();
+    if (activeIndex >= 0 && items[activeIndex]) {
+      items[activeIndex].click();
+    } else {
+      handleSearch(searchInput.value);
+    }
+  }
+
+  items.forEach((item, index) => {
+    item.classList.toggle("active", index === activeIndex);
+  });
+});
+
 
 async function renderAllHytteMarkers() {
   if (!cabins || cabins.length === 0) return;

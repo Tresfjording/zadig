@@ -25,6 +25,9 @@ html, body {
   opacity: 0;
 }
 
+.suggestion-item.active {
+  background-color: #e0e0e0;
+}
 
 /* === SØKEBOKS === */
 .search-container {
@@ -81,38 +84,24 @@ html, body {
     background: #f0f0f0;
 }
 
-/* === INFOBOKS === */
-.infobox {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    z-index: 9999;
-    background: white;
-    padding: 12px 16px;
-    border-radius: 8px;
-    border: 1px solid rgba(0,0,0,0.12);
-    box-shadow: 0 2px 10px rgba(0,0,0,0.12);
-    width: 280px;
-    font-size: 14px;
+/.info-panel {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  max-width: 420px;
+  margin: 0 auto;
 }
 
-.info-box h2 {
-    margin: 0 0 6px 0;
-    font-size: 18px;
+.info-box {
+  width: 200px;
+  min-height: 100px;
+  border: 1px solid #ccc;
+  padding: 8px;
+  font-family: Consolas, monospace;
+  background-color: #f9f9f9;
 }
-
-.infobox p {
-    margin: 4px 0;
-}
-.infoboks {
-  transition: opacity 0.3s ease;
-  opacity: 1;
-}
-
-.fade-out {
-  opacity: 0;
-}
-
 
 /* === MARKER ANIMASJON === */
 .marker-selected {
