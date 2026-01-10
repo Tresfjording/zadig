@@ -93,9 +93,11 @@ function visAlleSteder() {
     }
   });
 }
+
+
   // Kartlag
   const standardLayer = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    maxZoom: 18,
+    maxZoom: 14,
     attribution: "© OpenStreetMap"
   });
 
