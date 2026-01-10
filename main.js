@@ -52,6 +52,9 @@ places.forEach(t => {
 });
 
 cabins.forEach(h => {
+    console.log("Hytte:", h.name, h.lat, h.lon);
+  const lat = parseFloat(h.lat);
+  const lon = parseFloat(h.lon);
   if (h.name) searchIndex.push({ type: "h", label: h.name, ref: h });
 });
 
