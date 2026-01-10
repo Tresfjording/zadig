@@ -78,7 +78,7 @@ Promise.all([
     visAlleHytter();
   })
   .catch(err => {
-    console.error("🚨 Klarte ikke å laste data:", err);
+  //  console.error("🚨 Klarte ikke å laste data:", err);
   });
 
   function visHytteInfo(hytte) {
