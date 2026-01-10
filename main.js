@@ -385,25 +385,16 @@ function showInfo(place) {
 // VIS ALLE HYTTER MED HOVER OG FADE I BOX:2
 // --------------------------------------------------
 
-function visAlleHytter() {
-  allCabins.forEach(hytte => {
-    if (hytte.lat && hytte.lon) {
-      const marker = L.marker([hytte.lat, hytte.lon], { icon: cabinIcon }).addTo(map);
+function visHytteInfo(hytte) {
+  const box = document.getElementById("box2");
+  if (!box) return;
 
-      marker.on('mouseover', () => {
-        visHytteInfo(hytte);
-      });
-
-      //marker.on('mouseout', () => {
-        //const box = document.getElementById("box2");
-        //box.classList.add("fade-out");
-        //setTimeout(() => {
-          //box.innerHTML = "";
-          //box.classList.remove("fade-out");
-        //}, 300);
-      //});
-    }
-  });
+  box.innerHTML = `
+    <strong>${hytte.name || hytte.title || hytte.navn || "Uten navn"}</strong><br>
+    ${hytte.utleie ? "🏠 Til leie" : "🚫 Ikke til leie"}<br>
+    ${hytte.område || hytte.kommune || ""}
+  `;
+  box.classList.remove("fade-out");
 }
 
 function visHytteInfo(hytte) {
