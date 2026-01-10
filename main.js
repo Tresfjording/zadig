@@ -11,7 +11,7 @@ let searchIndex = [];
 let suggestionActiveIndex = -1;
 
 const cabinIcon = L.icon({
-  iconUrl: "/image/cabin16.png",
+  iconUrl: "image/cabin16.png",
   iconSize: [18, 18], // juster etter behov
   iconAnchor: [12, 18], // punktet som treffer bakken
   popupAnchor: [0, -18], // hvor popup vises i forhold til ikonet
@@ -32,7 +32,7 @@ function visAlleSteder() {
 }
 function visAlleHytter() {
   const box = document.getElementById("box2");
-
+const marker = L.marker([hytte.lat, hytte.lon], { icon: cabinIcon }).addTo(map);
   const gyldige = allCabins.filter(h => h.lat && h.lon);
   //console.log("Gyldige hytter:", gyldige.length);
 
