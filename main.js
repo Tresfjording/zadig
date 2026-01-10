@@ -90,7 +90,7 @@ function visAlleSteder() {
   allPlaces.forEach(p => {
     if (p.lat && p.lon) {
       L.marker([p.lat, p.lon]).addTo(map)
-        .bindPopup(p.name || p.title || p.navn || "Uten navn");
+        .bindPopup(p.tettsted || "Uten navn");
     }
   });
 }
