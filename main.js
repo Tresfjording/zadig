@@ -23,6 +23,9 @@ const cabinIcon = L.icon({
 // --------------------------------------------------
 
 function visAlleSteder() {
+  allCabins.forEach(() => {
+  const marker = L.marker([hytte.lat, hytte.lon], { icon: cabinIcon }).addTo(map);
+});
   allPlaces.forEach(p => {
     if (p.lat && p.lon) {
       L.marker([p.lat, p.lon]).addTo(map)
@@ -32,7 +35,6 @@ function visAlleSteder() {
 }
 function visAlleHytter() {
   const box = document.getElementById("box2");
-const marker = L.marker([hytte.lat, hytte.lon], { icon: cabinIcon }).addTo(map);
   const gyldige = allCabins.filter(h => h.lat && h.lon);
   //console.log("Gyldige hytter:", gyldige.length);
 
