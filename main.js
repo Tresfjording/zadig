@@ -144,31 +144,35 @@ function buildSearchIndex() {
 
   // Hytter
   if (Array.isArray(allCabins)) {
+    const validCabins = allCabins.filter(c => typeof c.name === "string" && c.name.trim() !== "");
+    console.log("Gyldige hytter:", validCabins.length);
     searchIndex.push(
-      ...allCabins
-        .filter(c => typeof c.name === "string" && c.name.trim() !== "")
-        .map(c => ({
-          label: c.name.trim(),
-          type: "hytte",
-          ref: c
-        }))
+      ...validCabins.map(c => ({
+        label: c.name.trim(),
+        type: "hytte",
+        ref: c
+      }))
     );
+  } else {
+    console.warn("⚠️ allCabins er ikke en array:", allCabins);
   }
 
   // Tettsteder
   if (Array.isArray(allPlaces)) {
+    const validPlaces = allPlaces.filter(p => typeof p.name === "string" && p.name.trim() !== "");
+    console.log("Gyldige tettsteder:", validPlaces.length);
     searchIndex.push(
-      ...allPlaces
-        .filter(p => typeof p.name === "string" && p.name.trim() !== "")
-        .map(p => ({
-          label: p.name.trim(),
-          type: "sted",
-          ref: p
-        }))
+      ...validPlaces.map(p => ({
+        label: p.name.trim(),
+        type: "sted",
+        ref: p
+      }))
     );
+  } else {
+    console.warn("⚠️ allPlaces er ikke en array:", allPlaces);
   }
 
-  console.log("searchIndex bygget, antall:", searchIndex.length);
+  console.log("✅ Søkeindeks bygget:", searchIndex.length, "elementer");
 }
 
 // --------------------------------------------------
