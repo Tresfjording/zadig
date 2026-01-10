@@ -15,6 +15,17 @@ html, body {
     z-index: 1;
 }
 
+
+#box2 {
+  transition: opacity 0.3s ease;
+  opacity: 1;
+}
+
+#box2.fade-out {
+  opacity: 0;
+}
+
+
 /* === SØKEBOKS === */
 .search-container {
     position: absolute;

@@ -35,10 +35,38 @@ Promise.all([
 
     buildSearchIndex();
     visAlleSteder(); // valgfritt
+    visAlleHytter();
   })
   .catch(err => {
     console.error("🚨 Klarte ikke å laste data:", err);
   });
+
+  function visHytteInfo(hytte) {
+  const box = document.getElementById("box2");
+  box.classList.remove("fade-out");
+
+  const navn = hytte.name || "Uten navn";
+  const klassifisering = hytte["dnt:classification"] || "Ukjent type";
+  const nettside = hytte.website
+    ? `<a href="${hytte.website}" target="_blank">${hytte.website}</a>`
+    : "Ingen nettside";
+
+  box.innerHTML = `
+    <h3>${navn}</h3>
+    <p><strong>Type:</strong> ${klassifisering}</p>
+    <p><strong>Nettside:</strong> ${nettside}</p>
+  `;
+}
+
+marker.on('mouseout', () => {
+  const box = document.getElementById("box2");
+  box.classList.add("fade-out");
+
+  setTimeout(() => {
+    box.innerHTML = "";
+    box.classList.remove("fade-out");
+  }, 300); // matcher CSS-transition-tid
+});
 
 
 // --------------------------------------------------
@@ -348,4 +376,46 @@ function showInfo(place) {
   contentEl.innerHTML = html;
 
   infoBox.style.display = "block";
+}
+
+// --------------------------------------------------
+// VIS ALLE HYTTER MED HOVER OG FADE I BOX:2
+// --------------------------------------------------
+
+function visAlleHytter() {
+  allCabins.forEach(hytte => {
+    if (hytte.lat && hytte.lon) {
+      const marker = L.marker([hytte.lat, hytte.lon], { icon: cabinIcon }).addTo(map);
+
+      marker.on('mouseover', () => {
+        visHytteInfo(hytte);
+      });
+
+      marker.on('mouseout', () => {
+        const box = document.getElementById("box2");
+        box.classList.add("fade-out");
+        setTimeout(() => {
+          box.innerHTML = "";
+          box.classList.remove("fade-out");
+        }, 300);
+      });
+    }
+  });
+}
+
+function visHytteInfo(hytte) {
+  const box = document.getElementById("box2");
+  box.classList.remove("fade-out");
+
+  const navn = hytte.name || "Uten navn";
+  const klassifisering = hytte["dnt:classification"] || "Ukjent type";
+  const nettside = hytte.website
+    ? `<a href="${hytte.website}" target="_blank">${hytte.website}</a>`
+    : "Ingen nettside";
+
+  box.innerHTML = `
+    <h3>${navn}</h3>
+    <p><strong>Type:</strong> ${klassifisering}</p>
+    <p><strong>Nettside:</strong> ${nettside}</p>
+  `;
 }
