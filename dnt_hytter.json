@@ -5,8 +5,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "betjent",
    "website": "https://ut.no/hytte/10726/svukuriset",
-   "@lat": 62.2214612,
-   "@lon": 12.0150272
+   "lat": 62.2214612,
+   "lon": 12.0150272
  },
  {
    "@id": 33786865,
@@ -14,8 +14,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "betjent",
    "website": "https://ut.no/hytte/sota-saeter",
-   "@lat": 61.8091955,
-   "@lon": 7.7102484
+   "lat": 61.8091955,
+   "lon": 7.7102484
  },
  {
    "@id": 265777706,
@@ -23,8 +23,8 @@
    "operator": "Bodø og Omegns Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/lurfjellhytta",
-   "@lat": 67.1173422,
-   "@lon": 14.7458448
+   "lat": 67.1173422,
+   "lon": 14.7458448
  },
  {
    "@id": 281920558,
@@ -32,8 +32,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/roevollen",
-   "@lat": 62.3505942,
-   "@lon": 12.0493414
+   "lat": 62.3505942,
+   "lon": 12.0493414
  },
  {
    "@id": 287961798,
@@ -41,8 +41,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/10780/lille-tmtehytta",
-   "@lat": 60.0513076,
-   "@lon": 10.7612734
+   "lat": 60.0513076,
+   "lon": 10.7612734
  },
  {
    "@id": 288156091,
@@ -50,8 +50,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "betjent",
    "website": "https://ut.no/hytte/gjendebu",
-   "@lat": 61.4514077,
-   "@lon": 8.4885665
+   "lat": 61.4514077,
+   "lon": 8.4885665
  },
  {
    "@id": 289978936,
@@ -59,8 +59,8 @@
    "operator": "Bergen Turlag",
    "dnt:classification": "selvbetjent",
    "website": "https://hyttebestilling.dnt.no/hytte/10805",
-   "@lat": 60.6681596,
-   "@lon": 7.2486228
+   "lat": 60.6681596,
+   "lon": 7.2486228
  },
  {
    "@id": 290551735,
@@ -68,8 +68,8 @@
    "operator": "Trondhjems Turistforening",
    "dnt:classification": "betjent",
    "website": "https://ut.no/hytte/nedalshytta",
-   "@lat": 62.97854,
-   "@lon": 12.1019098
+   "lat": 62.97854,
+   "lon": 12.1019098
  },
  {
    "@id": 291057219,
@@ -77,8 +77,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "betjent",
    "website": "https://ut.no/hytte/rondvassbu",
-   "@lat": 61.8787483,
-   "@lon": 9.7963376
+   "lat": 61.8787483,
+   "lon": 9.7963376
  },
  {
    "@id": 291058055,
@@ -86,8 +86,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "betjent",
    "website": "https://ut.no/hytte/101110/bjrnhollia",
-   "@lat": 61.8840823,
-   "@lon": 10.0119584
+   "lat": 61.8840823,
+   "lon": 10.0119584
  },
  {
    "@id": 292351473,
@@ -95,8 +95,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/mustadkroken",
-   "@lat": 59.9720259,
-   "@lon": 10.3716819
+   "lat": 59.9720259,
+   "lon": 10.3716819
  },
  {
    "@id": 301159257,
@@ -104,8 +104,8 @@
    "operator": "Hamar og Hedemarken Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/svartskogkoia",
-   "@lat": 60.8369901,
-   "@lon": 11.4660816
+   "lat": 60.8369901,
+   "lon": 11.4660816
  },
  {
    "@id": 309020349,
@@ -113,8 +113,8 @@
    "operator": "DNT Drammen og Omegn",
    "dnt:classification": "betjent",
    "website": "https://ut.no/hytte/10678/eiksetra",
-   "@lat": 59.8192082,
-   "@lon": 10.1276927
+   "lat": 59.8192082,
+   "lon": 10.1276927
  },
  {
    "@id": 316624011,
@@ -122,8 +122,8 @@
    "operator": "Kristiansund og Nordmøre Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/10940",
-   "@lat": 62.7219005,
-   "@lon": 8.7764311
+   "lat": 62.7219005,
+   "lon": 8.7764311
  },
  {
    "@id": 331256834,
@@ -131,8 +131,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/hovdehytta",
-   "@lat": 59.8458944,
-   "@lon": 10.3576549
+   "lat": 59.8458944,
+   "lon": 10.3576549
  },
  {
    "@id": 339326264,
@@ -140,8 +140,8 @@
    "operator": "Troms Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/blaakollkoia",
-   "@lat": 69.6809402,
-   "@lon": 19.20878
+   "lat": 69.6809402,
+   "lon": 19.20878
  },
  {
    "@id": 339326265,
@@ -149,8 +149,8 @@
    "operator": "Troms Turlag",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/skarvassbu",
-   "@lat": 69.6380678,
-   "@lon": 19.2011094
+   "lat": 69.6380678,
+   "lon": 19.2011094
  },
  {
    "@id": 339398252,
@@ -158,8 +158,8 @@
    "operator": "Troms Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/nedrefosshytta",
-   "@lat": 69.3208625,
-   "@lon": 21.9691124
+   "lat": 69.3208625,
+   "lon": 21.9691124
  },
  {
    "@id": 339405682,
@@ -167,8 +167,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/gappohytta",
-   "@lat": 69.0529755,
-   "@lon": 20.2541688
+   "lat": 69.0529755,
+   "lon": 20.2541688
  },
  {
    "@id": 339405688,
@@ -176,8 +176,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/rostahytta",
-   "@lat": 68.939377,
-   "@lon": 20.0268506
+   "lat": 68.939377,
+   "lon": 20.0268506
  },
  {
    "@id": 339409572,
@@ -185,8 +185,8 @@
    "operator": "Troms Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/stordalsstua",
-   "@lat": 68.5531041,
-   "@lon": 18.1867093
+   "lat": 68.5531041,
+   "lon": 18.1867093
  },
  {
    "@id": 339409574,
@@ -194,8 +194,8 @@
    "operator": "Narvik og Omegn Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/hundalshytta",
-   "@lat": 68.3182446,
-   "@lon": 17.8992917
+   "lat": 68.3182446,
+   "lon": 17.8992917
  },
  {
    "@id": 339409576,
@@ -203,8 +203,8 @@
    "operator": "Narvik og Omegn Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/storsteinshytta",
-   "@lat": 68.1990361,
-   "@lon": 17.9633871
+   "lat": 68.1990361,
+   "lon": 17.9633871
  },
  {
    "@id": 339409578,
@@ -212,8 +212,8 @@
    "operator": "Narvik og Omegn Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/c%C3%A1ihnav%C3%A1ggihytta",
-   "@lat": 68.1189329,
-   "@lon": 17.947996
+   "lat": 68.1189329,
+   "lon": 17.947996
  },
  {
    "@id": 339409580,
@@ -221,8 +221,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/losistua",
-   "@lat": 68.1901463,
-   "@lon": 17.7845141
+   "lat": 68.1901463,
+   "lon": 17.7845141
  },
  {
    "@id": 339409581,
@@ -230,8 +230,8 @@
    "operator": "Narvik og Omegn Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/skoaddej%C3%A1vre",
-   "@lat": 68.0588072,
-   "@lon": 17.5926033
+   "lat": 68.0588072,
+   "lon": 17.5926033
  },
  {
    "@id": 339409582,
@@ -239,8 +239,8 @@
    "operator": "Narvik og Omegn Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/sitashytta",
-   "@lat": 68.100582,
-   "@lon": 17.2347661
+   "lat": 68.100582,
+   "lon": 17.2347661
  },
  {
    "@id": 339409583,
@@ -248,8 +248,8 @@
    "operator": "Narvik og Omegn Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/paurohytta",
-   "@lat": 68.0489365,
-   "@lon": 17.0316185
+   "lat": 68.0489365,
+   "lon": 17.0316185
  },
  {
    "@id": 339412453,
@@ -257,8 +257,8 @@
    "operator": "Harstad Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/skoddeberghytta",
-   "@lat": 68.5635421,
-   "@lon": 17.2332339
+   "lat": 68.5635421,
+   "lon": 17.2332339
  },
  {
    "@id": 339595788,
@@ -266,8 +266,8 @@
    "operator": "Harstad Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/blaavatnhytta",
-   "@lat": 68.5709003,
-   "@lon": 17.0132008
+   "lat": 68.5709003,
+   "lon": 17.0132008
  },
  {
    "@id": 339595789,
@@ -275,8 +275,8 @@
    "operator": "Harstad Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/maistua",
-   "@lat": 68.7614982,
-   "@lon": 16.5196442
+   "lat": 68.7614982,
+   "lon": 16.5196442
  },
  {
    "@id": 339595790,
@@ -284,8 +284,8 @@
    "operator": "Harstad Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/bjoernhaugen",
-   "@lat": 68.6583336,
-   "@lon": 16.3896615
+   "lat": 68.6583336,
+   "lon": 16.3896615
  },
  {
    "@id": 339595793,
@@ -293,8 +293,8 @@
    "operator": "Harstad Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/haakonsbu",
-   "@lat": 68.5943663,
-   "@lon": 16.065063
+   "lat": 68.5943663,
+   "lon": 16.065063
  },
  {
    "@id": 339595794,
@@ -302,8 +302,8 @@
    "operator": "Harstad Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/fossestua",
-   "@lat": 68.6349622,
-   "@lon": 16.0473736
+   "lat": 68.6349622,
+   "lon": 16.0473736
  },
  {
    "@id": 339595795,
@@ -311,8 +311,8 @@
    "operator": "Vesterålen Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/ingemannhytta",
-   "@lat": 68.7048958,
-   "@lon": 15.7523517
+   "lat": 68.7048958,
+   "lon": 15.7523517
  },
  {
    "@id": 339595796,
@@ -320,8 +320,8 @@
    "operator": "Vesterålen Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/snytindhytta",
-   "@lat": 68.5640545,
-   "@lon": 15.575553
+   "lat": 68.5640545,
+   "lon": 15.575553
  },
  {
    "@id": 339595798,
@@ -329,8 +329,8 @@
    "operator": "Lofoten Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/selfjordhytta",
-   "@lat": 68.03592,
-   "@lon": 13.0751658
+   "lat": 68.03592,
+   "lon": 13.0751658
  },
  {
    "@id": 339599364,
@@ -338,8 +338,8 @@
    "operator": "Sulitjelma og Omegn Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/ny-sulitjelma-fjellstue",
-   "@lat": 67.1401726,
-   "@lon": 16.1368391
+   "lat": 67.1401726,
+   "lon": 16.1368391
  },
  {
    "@id": 339599365,
@@ -347,8 +347,8 @@
    "operator": "Sulitjelma og Omegn Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/lomihytta",
-   "@lat": 67.1236209,
-   "@lon": 16.2036218
+   "lat": 67.1236209,
+   "lon": 16.2036218
  },
  {
    "@id": 339599366,
@@ -356,8 +356,8 @@
    "operator": "Sulitjelma og Omegn Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/muorkihytta",
-   "@lat": 67.054297,
-   "@lon": 16.3724255
+   "lat": 67.054297,
+   "lon": 16.3724255
  },
  {
    "@id": 339599367,
@@ -365,8 +365,8 @@
    "operator": "Sulitjelma og Omegn Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/calalveshytta",
-   "@lat": 67.0540414,
-   "@lon": 16.0945186
+   "lat": 67.0540414,
+   "lon": 16.0945186
  },
  {
    "@id": 339599368,
@@ -374,8 +374,8 @@
    "operator": "Bodø og Omegns Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/gjaelentunet",
-   "@lat": 67.1878308,
-   "@lon": 14.4267132
+   "lat": 67.1878308,
+   "lon": 14.4267132
  },
  {
    "@id": 339599369,
@@ -383,8 +383,8 @@
    "operator": "Bodø og Omegns Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/tverrbrennstua",
-   "@lat": 67.0018938,
-   "@lon": 14.9485669
+   "lat": 67.0018938,
+   "lon": 14.9485669
  },
  {
    "@id": 339599370,
@@ -392,8 +392,8 @@
    "operator": "Bodø og Omegns Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/jordbruhytta",
-   "@lat": 66.9359408,
-   "@lon": 15.2365214
+   "lat": 66.9359408,
+   "lon": 15.2365214
  },
  {
    "@id": 339599371,
@@ -401,8 +401,8 @@
    "operator": "Bodø og Omegns Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/bjellaavasstua",
-   "@lat": 66.8494461,
-   "@lon": 15.0456599
+   "lat": 66.8494461,
+   "lon": 15.0456599
  },
  {
    "@id": 339599372,
@@ -410,8 +410,8 @@
    "operator": "Bodø og Omegns Turistforening",
    "dnt:classification": "stengt",
    "website": "",
-   "@lat": 66.9263877,
-   "@lon": 15.5184914
+   "lat": 66.9263877,
+   "lon": 15.5184914
  },
  {
    "@id": 339599373,
@@ -419,8 +419,8 @@
    "operator": "Bodø og Omegns Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/trygvebu",
-   "@lat": 66.8005523,
-   "@lon": 15.6888647
+   "lat": 66.8005523,
+   "lon": 15.6888647
  },
  {
    "@id": 339599374,
@@ -428,8 +428,8 @@
    "operator": "Bodø og Omegns Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/loensstua",
-   "@lat": 66.7360225,
-   "@lon": 15.465619
+   "lat": 66.7360225,
+   "lon": 15.465619
  },
  {
    "@id": 339599375,
@@ -437,8 +437,8 @@
    "operator": "Bodø og Omegns Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/midtistua",
-   "@lat": 66.7608134,
-   "@lon": 15.0129592
+   "lat": 66.7608134,
+   "lon": 15.0129592
  },
  {
    "@id": 339599376,
@@ -446,8 +446,8 @@
    "operator": "Rana Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/saltfjellstua",
-   "@lat": 66.7149655,
-   "@lon": 15.0259014
+   "lat": 66.7149655,
+   "lon": 15.0259014
  },
  {
    "@id": 339599377,
@@ -455,8 +455,8 @@
    "operator": "Rana Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/krukkistua",
-   "@lat": 66.6788792,
-   "@lon": 15.0490779
+   "lat": 66.6788792,
+   "lon": 15.0490779
  },
  {
    "@id": 339600585,
@@ -464,8 +464,8 @@
    "operator": "Rana Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/blakkaadalshytta",
-   "@lat": 66.5454807,
-   "@lon": 14.4009758
+   "lat": 66.5454807,
+   "lon": 14.4009758
  },
  {
    "@id": 339600587,
@@ -473,8 +473,8 @@
    "operator": "Rana Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/bolnastua",
-   "@lat": 66.4924338,
-   "@lon": 15.2379836
+   "lat": 66.4924338,
+   "lon": 15.2379836
  },
  {
    "@id": 339600589,
@@ -482,8 +482,8 @@
    "operator": "Rana Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/virvasshytta",
-   "@lat": 66.3085612,
-   "@lon": 15.3646462
+   "lat": 66.3085612,
+   "lon": 15.3646462
  },
  {
    "@id": 339602307,
@@ -491,8 +491,8 @@
    "operator": "Rana Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/kvitsteindalstunet",
-   "@lat": 66.1840932,
-   "@lon": 15.0515441
+   "lat": 66.1840932,
+   "lon": 15.0515441
  },
  {
    "@id": 339602316,
@@ -500,8 +500,8 @@
    "operator": "Hemnes Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/kjennsvasshytta",
-   "@lat": 66.0656537,
-   "@lon": 14.2612302
+   "lat": 66.0656537,
+   "lon": 14.2612302
  },
  {
    "@id": 339602318,
@@ -509,8 +509,8 @@
    "operator": "Hemnes Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/gressvasshytta",
-   "@lat": 66.0479925,
-   "@lon": 14.4240133
+   "lat": 66.0479925,
+   "lon": 14.4240133
  },
  {
    "@id": 339602322,
@@ -518,8 +518,8 @@
    "operator": "Hemnes Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/graafjellhytta",
-   "@lat": 65.9879334,
-   "@lon": 14.0530404
+   "lat": 65.9879334,
+   "lon": 14.0530404
  },
  {
    "@id": 339607867,
@@ -527,8 +527,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/101363/eldabu",
-   "@lat": 61.7562897,
-   "@lon": 9.9793564
+   "lat": 61.7562897,
+   "lon": 9.9793564
  },
  {
    "@id": 339607871,
@@ -536,8 +536,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/storgrytdalseter",
-   "@lat": 61.9123422,
-   "@lon": 10.3694441
+   "lat": 61.9123422,
+   "lon": 10.3694441
  },
  {
    "@id": 339607872,
@@ -545,8 +545,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/10720",
-   "@lat": 61.974786,
-   "@lon": 10.4438233
+   "lat": 61.974786,
+   "lon": 10.4438233
  },
  {
    "@id": 339607873,
@@ -554,8 +554,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "betjent",
    "website": "https://ut.no/hytte/10494",
-   "@lat": 62.0910527,
-   "@lon": 9.6421663
+   "lat": 62.0910527,
+   "lon": 9.6421663
  },
  {
    "@id": 339607875,
@@ -563,8 +563,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/knausen",
-   "@lat": 62.2238852,
-   "@lon": 10.9558089
+   "lat": 62.2238852,
+   "lon": 10.9558089
  },
  {
    "@id": 339607876,
@@ -572,8 +572,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/raudsjoedalen",
-   "@lat": 62.2151525,
-   "@lon": 11.150376
+   "lat": 62.2151525,
+   "lon": 11.150376
  },
  {
    "@id": 339607877,
@@ -581,8 +581,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/ellefsplass",
-   "@lat": 62.2044651,
-   "@lon": 11.448247
+   "lat": 62.2044651,
+   "lon": 11.448247
  },
  {
    "@id": 339607880,
@@ -590,8 +590,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/narjordet",
-   "@lat": 62.430133,
-   "@lon": 11.4110246
+   "lat": 62.430133,
+   "lon": 11.4110246
  },
  {
    "@id": 343508885,
@@ -599,8 +599,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/smaavannsbu",
-   "@lat": 59.7862478,
-   "@lon": 10.3763258
+   "lat": 59.7862478,
+   "lon": 10.3763258
  },
  {
    "@id": 367871077,
@@ -608,8 +608,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "betjent",
    "website": "https://www.ut.no/hytte/3.1755/",
-   "@lat": 61.2423242,
-   "@lon": 9.5946768
+   "lat": 61.2423242,
+   "lon": 9.5946768
  },
  {
    "@id": 410653214,
@@ -617,8 +617,8 @@
    "operator": "Drammens og Oplands Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/svarvestolen",
-   "@lat": 59.8834442,
-   "@lon": 10.0327338
+   "lat": 59.8834442,
+   "lon": 10.0327338
  },
  {
    "@id": 444092409,
@@ -626,8 +626,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "betjent",
    "website": "https://finsehytta.dnt.no/",
-   "@lat": 60.5979163,
-   "@lon": 7.5070391
+   "lat": 60.5979163,
+   "lon": 7.5070391
  },
  {
    "@id": 444899477,
@@ -635,8 +635,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/10811/kongshelleren",
-   "@lat": 60.7770989,
-   "@lon": 7.7011667
+   "lat": 60.7770989,
+   "lon": 7.7011667
  },
  {
    "@id": 448478795,
@@ -644,8 +644,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/hellevassbu",
-   "@lat": 59.9829633,
-   "@lon": 7.2151591
+   "lat": 59.9829633,
+   "lon": 7.2151591
  },
  {
    "@id": 448518394,
@@ -653,8 +653,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "betjent",
    "website": "https://ut.no/hytte/litlos",
-   "@lat": 60.0938207,
-   "@lon": 7.1371543
+   "lat": 60.0938207,
+   "lon": 7.1371543
  },
  {
    "@id": 448543406,
@@ -662,8 +662,8 @@
    "operator": "Bergen Turlag",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/stavali",
-   "@lat": 60.3184041,
-   "@lon": 6.8949293
+   "lat": 60.3184041,
+   "lon": 6.8949293
  },
  {
    "@id": 448624959,
@@ -671,8 +671,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/10664",
-   "@lat": 60.2113308,
-   "@lon": 7.0348754
+   "lat": 60.2113308,
+   "lon": 7.0348754
  },
  {
    "@id": 457082683,
@@ -680,8 +680,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "betjent",
    "website": "https://ut.no/hytte/fondsbu",
-   "@lat": 61.3751863,
-   "@lon": 8.2973974
+   "lat": 61.3751863,
+   "lon": 8.2973974
  },
  {
    "@id": 457085039,
@@ -689,8 +689,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/olavsbu",
-   "@lat": 61.4711366,
-   "@lon": 8.2742366
+   "lat": 61.4711366,
+   "lon": 8.2742366
  },
  {
    "@id": 481623261,
@@ -698,8 +698,8 @@
    "operator": "DNT Sør",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/svartenut",
-   "@lat": 59.1317879,
-   "@lon": 7.2504501
+   "lat": 59.1317879,
+   "lon": 7.2504501
  },
  {
    "@id": 512097966,
@@ -707,8 +707,8 @@
    "operator": "Ålesund-Sunnmøre Turistforening",
    "dnt:classification": "betjent",
    "website": "https://ut.no/hytte/reindalseter",
-   "@lat": 62.1874056,
-   "@lon": 7.5782621
+   "lat": 62.1874056,
+   "lon": 7.5782621
  },
  {
    "@id": 530783833,
@@ -716,8 +716,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/saeteren-gaard",
-   "@lat": 59.9478038,
-   "@lon": 10.5621885
+   "lat": 59.9478038,
+   "lon": 10.5621885
  },
  {
    "@id": 540229469,
@@ -725,8 +725,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "betjent",
    "website": "https://kobberhaughytta.dnt.no",
-   "@lat": 60.0360959,
-   "@lon": 10.6636841
+   "lat": 60.0360959,
+   "lon": 10.6636841
  },
  {
    "@id": 564123127,
@@ -734,8 +734,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/10775/fjellvang",
-   "@lat": 60.0246601,
-   "@lon": 10.8400944
+   "lat": 60.0246601,
+   "lon": 10.8400944
  },
  {
    "@id": 583350016,
@@ -743,8 +743,8 @@
    "operator": "DNT Sør",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/haaheller",
-   "@lat": 59.0298467,
-   "@lon": 7.1654068
+   "lat": 59.0298467,
+   "lon": 7.1654068
  },
  {
    "@id": 583350017,
@@ -752,8 +752,8 @@
    "operator": "Stavanger Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/grautheller",
-   "@lat": 59.1124629,
-   "@lon": 6.876597
+   "lat": 59.1124629,
+   "lon": 6.876597
  },
  {
    "@id": 583350661,
@@ -761,8 +761,8 @@
    "operator": "Stavanger Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/floerli-turiststasjon",
-   "@lat": 59.0125157,
-   "@lon": 6.4255708
+   "lat": 59.0125157,
+   "lon": 6.4255708
  },
  {
    "@id": 613270417,
@@ -770,8 +770,8 @@
    "operator": "Stavanger Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/hovatn",
-   "@lat": 59.3527031,
-   "@lon": 7.03634
+   "lat": 59.3527031,
+   "lon": 7.03634
  },
  {
    "@id": 613270454,
@@ -779,8 +779,8 @@
    "operator": "Stavanger Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/storsteinen",
-   "@lat": 59.2804489,
-   "@lon": 6.909635
+   "lat": 59.2804489,
+   "lon": 6.909635
  },
  {
    "@id": 614382550,
@@ -788,8 +788,8 @@
    "operator": "Stavanger Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/stoele",
-   "@lat": 58.763041,
-   "@lon": 6.5776847
+   "lat": 58.763041,
+   "lon": 6.5776847
  },
  {
    "@id": 655117911,
@@ -797,8 +797,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/myrseter",
-   "@lat": 60.0326259,
-   "@lon": 10.4126142
+   "lat": 60.0326259,
+   "lon": 10.4126142
  },
  {
    "@id": 655117913,
@@ -806,8 +806,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/presthytta",
-   "@lat": 60.0554574,
-   "@lon": 10.4259841
+   "lat": 60.0554574,
+   "lon": 10.4259841
  },
  {
    "@id": 656136702,
@@ -815,8 +815,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/smedmyrkoia",
-   "@lat": 60.0514999,
-   "@lon": 10.5497153
+   "lat": 60.0514999,
+   "lon": 10.5497153
  },
  {
    "@id": 656508400,
@@ -824,8 +824,8 @@
    "operator": "Telemark Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://www.ut.no/hytte/3.2010/",
-   "@lat": 59.4017495,
-   "@lon": 9.4247798
+   "lat": 59.4017495,
+   "lon": 9.4247798
  },
  {
    "@id": 666788642,
@@ -833,8 +833,8 @@
    "operator": "Voss Utferdslag",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/10428/torfinnsheim",
-   "@lat": 60.5621375,
-   "@lon": 6.2423708
+   "lat": 60.5621375,
+   "lon": 6.2423708
  },
  {
    "@id": 685784604,
@@ -842,8 +842,8 @@
    "operator": "Bergen Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/traeet-gaard",
-   "@lat": 60.5618793,
-   "@lon": 5.6703698
+   "lat": 60.5618793,
+   "lon": 5.6703698
  },
  {
    "@id": 716939467,
@@ -851,8 +851,8 @@
    "operator": "Drammens og Oplands Turistforening",
    "dnt:classification": "betjent",
    "website": "http://rauhelleren.no/",
-   "@lat": 60.2560922,
-   "@lon": 7.8495965
+   "lat": 60.2560922,
+   "lon": 7.8495965
  },
  {
    "@id": 716939661,
@@ -860,8 +860,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/kjeldebu",
-   "@lat": 60.4270572,
-   "@lon": 7.4968829
+   "lat": 60.4270572,
+   "lon": 7.4968829
  },
  {
    "@id": 743293990,
@@ -869,8 +869,8 @@
    "operator": "Trondhjems Turistforening",
    "dnt:classification": "betjent",
    "website": "https://ut.no/hytte/10966/gjevilvasshytta",
-   "@lat": 62.6985008,
-   "@lon": 9.4199884
+   "lat": 62.6985008,
+   "lon": 9.4199884
  },
  {
    "@id": 746987678,
@@ -878,8 +878,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "betjent",
    "website": "https://ut.no/hytte/10973/iungsdalshytta",
-   "@lat": 60.8100179,
-   "@lon": 7.9339329
+   "lat": 60.8100179,
+   "lon": 7.9339329
  },
  {
    "@id": 748477737,
@@ -887,8 +887,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "betjent",
    "website": "https://ut.no/hytte/fannaraakhytta",
-   "@lat": 61.5161207,
-   "@lon": 7.9070922
+   "lat": 61.5161207,
+   "lon": 7.9070922
  },
  {
    "@id": 748477768,
@@ -896,8 +896,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "betjent",
    "website": "https://www.ut.no/hytte/3.2004/",
-   "@lat": 61.4631544,
-   "@lon": 8.0140237
+   "lat": 61.4631544,
+   "lon": 8.0140237
  },
  {
    "@id": 754402416,
@@ -905,8 +905,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://www.ut.no/hytte/3.2080/",
-   "@lat": 60.926948,
-   "@lon": 7.9982265
+   "lat": 60.926948,
+   "lon": 7.9982265
  },
  {
    "@id": 754402425,
@@ -914,8 +914,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://www.ut.no/hytte/3.1981/",
-   "@lat": 61.1401685,
-   "@lon": 8.1755377
+   "lat": 61.1401685,
+   "lon": 8.1755377
  },
  {
    "@id": 765311400,
@@ -923,8 +923,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/sinnerdammen",
-   "@lat": 60.1691299,
-   "@lon": 10.4959643
+   "lat": 60.1691299,
+   "lon": 10.4959643
  },
  {
    "@id": 772264010,
@@ -932,8 +932,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/middalsbu",
-   "@lat": 59.9550504,
-   "@lon": 6.9897632
+   "lat": 59.9550504,
+   "lon": 6.9897632
  },
  {
    "@id": 785550155,
@@ -941,8 +941,8 @@
    "operator": "Flekkefjord og Oplands Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/g%C3%A5rden-li",
-   "@lat": 58.2501963,
-   "@lon": 6.5484355
+   "lat": 58.2501963,
+   "lon": 6.5484355
  },
  {
    "@id": 790406183,
@@ -950,8 +950,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "betjent",
    "website": "https://www.ut.no/hytte/3.2351/",
-   "@lat": 60.4513632,
-   "@lon": 7.7131551
+   "lat": 60.4513632,
+   "lon": 7.7131551
  },
  {
    "@id": 791106132,
@@ -959,8 +959,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "betjent",
    "website": "https://ut.no/hytte/gjendesheim",
-   "@lat": 61.4943459,
-   "@lon": 8.8126376
+   "lat": 61.4943459,
+   "lon": 8.8126376
  },
  {
    "@id": 798882804,
@@ -968,8 +968,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "",
    "website": "https://ut.no/hytte/spikertjernhytta",
-   "@lat": 60.089754,
-   "@lon": 10.9378765
+   "lat": 60.089754,
+   "lon": 10.9378765
  },
  {
    "@id": 798882817,
@@ -977,8 +977,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/oevresaga",
-   "@lat": 59.7985198,
-   "@lon": 11.0293603
+   "lat": 59.7985198,
+   "lon": 11.0293603
  },
  {
    "@id": 798882834,
@@ -986,8 +986,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/roeyrivannskoia",
-   "@lat": 59.8499039,
-   "@lon": 11.0097833
+   "lat": 59.8499039,
+   "lon": 11.0097833
  },
  {
    "@id": 798882836,
@@ -995,8 +995,8 @@
    "operator": "Hamar og Hedemarken Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/tingstadkoia",
-   "@lat": 60.6721911,
-   "@lon": 11.5782717
+   "lat": 60.6721911,
+   "lon": 11.5782717
  },
  {
    "@id": 800375503,
@@ -1004,8 +1004,8 @@
    "operator": "Kongsberg og Omegns Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://www.ut.no/hytte/3.1763/",
-   "@lat": 60.0291467,
-   "@lon": 8.9811316
+   "lat": 60.0291467,
+   "lon": 8.9811316
  },
  {
    "@id": 800375514,
@@ -1013,8 +1013,8 @@
    "operator": "DNT Drammen og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/10258/hgevarde-gamle",
-   "@lat": 60.2931398,
-   "@lon": 9.4601872
+   "lat": 60.2931398,
+   "lon": 9.4601872
  },
  {
    "@id": 800376072,
@@ -1022,8 +1022,8 @@
    "operator": "DNT Drammen og Omegn",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/10702/dalabu",
-   "@lat": 60.4013456,
-   "@lon": 8.9796452
+   "lat": 60.4013456,
+   "lon": 8.9796452
  },
  {
    "@id": 801770719,
@@ -1031,8 +1031,8 @@
    "operator": "Kristiansund og Nordmøre Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/gammelsetra",
-   "@lat": 62.5009512,
-   "@lon": 9.1192951
+   "lat": 62.5009512,
+   "lon": 9.1192951
  },
  {
    "@id": 831341172,
@@ -1040,8 +1040,8 @@
    "operator": "Trondhjems Turistforening",
    "dnt:classification": "betjent",
    "website": "https://ut.no/hytte/storerikvollen",
-   "@lat": 63.1116525,
-   "@lon": 11.9830939
+   "lat": 63.1116525,
+   "lon": 11.9830939
  },
  {
    "@id": 832409141,
@@ -1049,8 +1049,8 @@
    "operator": "Trondhjems Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/ramsjoehytta",
-   "@lat": 63.1636424,
-   "@lon": 11.721951
+   "lat": 63.1636424,
+   "lon": 11.721951
  },
  {
    "@id": 837453905,
@@ -1058,8 +1058,8 @@
    "operator": "Ålesund-Sunnmøre Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/pyttbua",
-   "@lat": 62.2127489,
-   "@lon": 7.7985752
+   "lat": 62.2127489,
+   "lon": 7.7985752
  },
  {
    "@id": 837453913,
@@ -1067,8 +1067,8 @@
    "operator": "Ålesund-Sunnmøre Turistforening",
    "dnt:classification": "betjent",
    "website": "https://ut.no/hytte/kaldhusseter",
-   "@lat": 62.1727931,
-   "@lon": 7.4291792
+   "lat": 62.1727931,
+   "lon": 7.4291792
  },
  {
    "@id": 837453934,
@@ -1076,8 +1076,8 @@
    "operator": "Ålesund-Sunnmøre Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/vakkerstoeylen",
-   "@lat": 62.268592,
-   "@lon": 7.8317317
+   "lat": 62.268592,
+   "lon": 7.8317317
  },
  {
    "@id": 837453942,
@@ -1085,8 +1085,8 @@
    "operator": "Ålesund-Sunnmøre Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/fieldfarehytta",
-   "@lat": 62.1598382,
-   "@lon": 7.7010945
+   "lat": 62.1598382,
+   "lon": 7.7010945
  },
  {
    "@id": 845182252,
@@ -1094,8 +1094,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/yksendalsbu",
-   "@lat": 61.3094107,
-   "@lon": 8.5163116
+   "lat": 61.3094107,
+   "lon": 8.5163116
  },
  {
    "@id": 845242780,
@@ -1103,8 +1103,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/tomashelleren",
-   "@lat": 61.2358071,
-   "@lon": 8.5324369
+   "lat": 61.2358071,
+   "lon": 8.5324369
  },
  {
    "@id": 845600185,
@@ -1112,8 +1112,8 @@
    "operator": "Lillehammer og Omland Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/skjellbreidhytta",
-   "@lat": 61.1149648,
-   "@lon": 10.0982848
+   "lat": 61.1149648,
+   "lon": 10.0982848
  },
  {
    "@id": 845600189,
@@ -1121,8 +1121,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://www.ut.no/hytte/3.1471/",
-   "@lat": 61.3374674,
-   "@lon": 9.4454823
+   "lat": 61.3374674,
+   "lon": 9.4454823
  },
  {
    "@id": 845600193,
@@ -1130,8 +1130,8 @@
    "operator": "Lillehammer og Omland Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://www.ut.no/hytte/3.1916/",
-   "@lat": 61.1723657,
-   "@lon": 9.9595491
+   "lat": 61.1723657,
+   "lon": 9.9595491
  },
  {
    "@id": 845600200,
@@ -1139,8 +1139,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/oskampen",
-   "@lat": 61.4261414,
-   "@lon": 9.1472741
+   "lat": 61.4261414,
+   "lon": 9.1472741
  },
  {
    "@id": 845600208,
@@ -1148,8 +1148,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/storhoeliseter",
-   "@lat": 61.4178132,
-   "@lon": 9.3457943
+   "lat": 61.4178132,
+   "lon": 9.3457943
  },
  {
    "@id": 845636238,
@@ -1157,8 +1157,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/fast",
-   "@lat": 61.5733318,
-   "@lon": 7.538208
+   "lat": 61.5733318,
+   "lon": 7.538208
  },
  {
    "@id": 845636243,
@@ -1166,8 +1166,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/stoelsdalen",
-   "@lat": 61.5678956,
-   "@lon": 7.8132941
+   "lat": 61.5678956,
+   "lon": 7.8132941
  },
  {
    "@id": 845636247,
@@ -1175,8 +1175,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/arentzbu",
-   "@lat": 61.640626,
-   "@lon": 7.5557477
+   "lat": 61.640626,
+   "lon": 7.5557477
  },
  {
    "@id": 845742891,
@@ -1184,8 +1184,8 @@
    "operator": "Lillehammer og Omland Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/10648",
-   "@lat": 61.4686283,
-   "@lon": 10.5029685
+   "lat": 61.4686283,
+   "lon": 10.5029685
  },
  {
    "@id": 845742898,
@@ -1193,8 +1193,8 @@
    "operator": "Lillehammer og Omland Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/10649",
-   "@lat": 61.3823782,
-   "@lon": 10.7473345
+   "lat": 61.3823782,
+   "lon": 10.7473345
  },
  {
    "@id": 845742916,
@@ -1202,8 +1202,8 @@
    "operator": "Finnskogen Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/flisberget",
-   "@lat": 61.0063674,
-   "@lon": 12.0871824
+   "lat": 61.0063674,
+   "lon": 12.0871824
  },
  {
    "@id": 845742926,
@@ -1211,8 +1211,8 @@
    "operator": "Hamar og Hedemarken Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/101199",
-   "@lat": 61.1553669,
-   "@lon": 10.9174631
+   "lat": 61.1553669,
+   "lon": 10.9174631
  },
  {
    "@id": 845742948,
@@ -1220,8 +1220,8 @@
    "operator": "Finnskogen Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/juskjoelkoia",
-   "@lat": 61.0166126,
-   "@lon": 12.0111173
+   "lat": 61.0166126,
+   "lon": 12.0111173
  },
  {
    "@id": 845742951,
@@ -1229,8 +1229,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/10341",
-   "@lat": 61.5857799,
-   "@lon": 10.3536473
+   "lat": 61.5857799,
+   "lon": 10.3536473
  },
  {
    "@id": 845742956,
@@ -1238,8 +1238,8 @@
    "operator": "Hamar og Hedemarken Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/10349",
-   "@lat": 61.1196233,
-   "@lon": 11.0538055
+   "lat": 61.1196233,
+   "lon": 11.0538055
  },
  {
    "@id": 845742971,
@@ -1247,8 +1247,8 @@
    "operator": "Lillehammer og Omland Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/10650",
-   "@lat": 61.372431,
-   "@lon": 10.5829316
+   "lat": 61.372431,
+   "lon": 10.5829316
  },
  {
    "@id": 886707806,
@@ -1256,8 +1256,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/3.2042/",
-   "@lat": 59.8152519,
-   "@lon": 11.0440905
+   "lat": 59.8152519,
+   "lon": 11.0440905
  },
  {
    "@id": 922484024,
@@ -1265,8 +1265,8 @@
    "operator": "Hamar og Hedemarken Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/gammelsaga",
-   "@lat": 60.5195845,
-   "@lon": 11.4042369
+   "lat": 60.5195845,
+   "lon": 11.4042369
  },
  {
    "@id": 923578807,
@@ -1274,8 +1274,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/raabjoernhytta",
-   "@lat": 60.2361636,
-   "@lon": 10.854964
+   "lat": 60.2361636,
+   "lon": 10.854964
  },
  {
    "@id": 923578814,
@@ -1283,8 +1283,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/snellingen",
-   "@lat": 60.2622488,
-   "@lon": 10.7854527
+   "lat": 60.2622488,
+   "lon": 10.7854527
  },
  {
    "@id": 923620268,
@@ -1292,8 +1292,8 @@
    "operator": "Hadeland Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/sagvollen",
-   "@lat": 60.3758666,
-   "@lon": 10.7147035
+   "lat": 60.3758666,
+   "lon": 10.7147035
  },
  {
    "@id": 923657649,
@@ -1301,8 +1301,8 @@
    "operator": "Hamar og Hedemarken Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/101194",
-   "@lat": 60.9838062,
-   "@lon": 11.2385265
+   "lat": 60.9838062,
+   "lon": 11.2385265
  },
  {
    "@id": 924079202,
@@ -1310,8 +1310,8 @@
    "operator": "Hamar og Hedemarken Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/10232",
-   "@lat": 61.0387865,
-   "@lon": 11.2479329
+   "lat": 61.0387865,
+   "lon": 11.2479329
  },
  {
    "@id": 965922723,
@@ -1319,8 +1319,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "ubetjent",
    "website": "",
-   "@lat": 60.0202193,
-   "@lon": 10.3237934
+   "lat": 60.0202193,
+   "lon": 10.3237934
  },
  {
    "@id": 1175135058,
@@ -1328,8 +1328,8 @@
    "operator": "Kongsberg og Omegns Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/eriksbu",
-   "@lat": 59.8816078,
-   "@lon": 9.1890262
+   "lat": 59.8816078,
+   "lon": 9.1890262
  },
  {
    "@id": 1175597282,
@@ -1337,8 +1337,8 @@
    "operator": "Kongsberg og Omegns Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/sigridsbu",
-   "@lat": 59.7946398,
-   "@lon": 9.1557585
+   "lat": 59.7946398,
+   "lon": 9.1557585
  },
  {
    "@id": 1213120482,
@@ -1346,8 +1346,8 @@
    "operator": "Aust-Agder Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/tjoernbrotbu",
-   "@lat": 59.5372016,
-   "@lon": 7.5203312
+   "lat": 59.5372016,
+   "lon": 7.5203312
  },
  {
    "@id": 1213120485,
@@ -1355,8 +1355,8 @@
    "operator": "Aust-Agder Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/berdalsbu",
-   "@lat": 59.4432788,
-   "@lon": 7.5085987
+   "lat": 59.4432788,
+   "lon": 7.5085987
  },
  {
    "@id": 1231082327,
@@ -1364,8 +1364,8 @@
    "operator": "Nord-Trøndelag Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/kvitfjellhytta",
-   "@lat": 63.3444724,
-   "@lon": 11.2553566
+   "lat": 63.3444724,
+   "lon": 11.2553566
  },
  {
    "@id": 1283355943,
@@ -1373,8 +1373,8 @@
    "operator": "Nord-Trøndelag Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/prestoeyhytta",
-   "@lat": 63.2891387,
-   "@lon": 11.3415744
+   "lat": 63.2891387,
+   "lon": 11.3415744
  },
  {
    "@id": 1283355952,
@@ -1382,8 +1382,8 @@
    "operator": "Trondhjems Turistforening",
    "dnt:classification": "betjent",
    "website": "https://ut.no/hytte/schulzhytta",
-   "@lat": 63.2119247,
-   "@lon": 11.5065181
+   "lat": 63.2119247,
+   "lon": 11.5065181
  },
  {
    "@id": 1288126381,
@@ -1391,8 +1391,8 @@
    "operator": "Ringerikes Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/vikerkoia",
-   "@lat": 60.4468527,
-   "@lon": 9.9562076
+   "lat": 60.4468527,
+   "lon": 9.9562076
  },
  {
    "@id": 1288227385,
@@ -1400,8 +1400,8 @@
    "operator": "Aust-Agder Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/hovstoeyl",
-   "@lat": 59.2551631,
-   "@lon": 7.7706548
+   "lat": 59.2551631,
+   "lon": 7.7706548
  },
  {
    "@id": 1288244546,
@@ -1409,8 +1409,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/helberghytta",
-   "@lat": 59.9289233,
-   "@lon": 8.4799132
+   "lat": 59.9289233,
+   "lon": 8.4799132
  },
  {
    "@id": 1351708705,
@@ -1418,8 +1418,8 @@
    "operator": "Bergen Turlag",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/holmaskjer",
-   "@lat": 60.0960738,
-   "@lon": 6.4429214
+   "lat": 60.0960738,
+   "lon": 6.4429214
  },
  {
    "@id": 1356401135,
@@ -1427,8 +1427,8 @@
    "operator": "Bergen Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/alexander-grieghytten",
-   "@lat": 60.536987,
-   "@lon": 6.0791407
+   "lat": 60.536987,
+   "lon": 6.0791407
  },
  {
    "@id": 1356401151,
@@ -1436,8 +1436,8 @@
    "operator": "Nord-Trøndelag Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/angeltjoennhytta",
-   "@lat": 63.4623733,
-   "@lon": 12.0588212
+   "lat": 63.4623733,
+   "lon": 12.0588212
  },
  {
    "@id": 1356401174,
@@ -1445,8 +1445,8 @@
    "operator": "Bodø og Omegns Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/argaladhytta",
-   "@lat": 66.8478765,
-   "@lon": 15.7872207
+   "lat": 66.8478765,
+   "lon": 15.7872207
  },
  {
    "@id": 1356401192,
@@ -1454,8 +1454,8 @@
    "operator": "Kristiansund og Nordmøre Turistforening",
    "dnt:classification": "betjent",
    "website": "https://ut.no/hytte/10447",
-   "@lat": 62.4062368,
-   "@lon": 8.5401701
+   "lat": 62.4062368,
+   "lon": 8.5401701
  },
  {
    "@id": 1356401202,
@@ -1463,8 +1463,8 @@
    "operator": "",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/101314/bakken-gard",
-   "@lat": 59.0155886,
-   "@lon": 6.2880013
+   "lat": 59.0155886,
+   "lon": 6.2880013
  },
  {
    "@id": 1356401218,
@@ -1472,8 +1472,8 @@
    "operator": "Sulitjelma og Omegn Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/balvasshytta",
-   "@lat": 66.9249265,
-   "@lon": 15.8709485
+   "lat": 66.9249265,
+   "lon": 15.8709485
  },
  {
    "@id": 1356401240,
@@ -1481,8 +1481,8 @@
    "operator": "Odal Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/bergersaetra",
-   "@lat": 60.166538,
-   "@lon": 11.7756811
+   "lat": 60.166538,
+   "lon": 11.7756811
  },
  {
    "@id": 1356401273,
@@ -1490,8 +1490,8 @@
    "operator": "Nord-Trøndelag Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/bjoerneggen",
-   "@lat": 63.2732304,
-   "@lon": 11.8056816
+   "lat": 63.2732304,
+   "lon": 11.8056816
  },
  {
    "@id": 1356401288,
@@ -1499,8 +1499,8 @@
    "operator": "DNT Sør",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/bjoernevasshytta",
-   "@lat": 59.3477143,
-   "@lon": 7.5374338
+   "lat": 59.3477143,
+   "lon": 7.5374338
  },
  {
    "@id": 1356401311,
@@ -1508,8 +1508,8 @@
    "operator": "Haugesund Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/blomstoelen",
-   "@lat": 59.7703475,
-   "@lon": 6.2486349
+   "lat": 59.7703475,
+   "lon": 6.2486349
  },
  {
    "@id": 1356401328,
@@ -1517,8 +1517,8 @@
    "operator": "Flora Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/blaabrebu",
-   "@lat": 61.7326399,
-   "@lon": 5.5402284
+   "lat": 61.7326399,
+   "lon": 5.5402284
  },
  {
    "@id": 1356401348,
@@ -1526,8 +1526,8 @@
    "operator": "DNT Sør",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/bossbu",
-   "@lat": 59.1831461,
-   "@lon": 7.2949686
+   "lat": 59.1831461,
+   "lon": 7.2949686
  },
  {
    "@id": 1356401384,
@@ -1535,8 +1535,8 @@
    "operator": "Bergen Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/breidablikk",
-   "@lat": 60.0908148,
-   "@lon": 6.3429157
+   "lat": 60.0908148,
+   "lon": 6.3429157
  },
  {
    "@id": 1356401388,
@@ -1544,8 +1544,8 @@
    "operator": "Nord-Trøndelag Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/bringsaasen",
-   "@lat": 63.8179935,
-   "@lon": 12.2654757
+   "lat": 63.8179935,
+   "lon": 12.2654757
  },
  {
    "@id": 1356401406,
@@ -1553,8 +1553,8 @@
    "operator": "Tistedalen Friluftslag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/budalsvika",
-   "@lat": 59.0521983,
-   "@lon": 11.7372769
+   "lat": 59.0521983,
+   "lon": 11.7372769
  },
  {
    "@id": 1356401422,
@@ -1562,8 +1562,8 @@
    "operator": "Oslofjordens friluftsråd",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/butikken",
-   "@lat": 59.8518688,
-   "@lon": 10.5414633
+   "lat": 59.8518688,
+   "lon": 10.5414633
  },
  {
    "@id": 1356401440,
@@ -1571,8 +1571,8 @@
    "operator": "Ringerikes Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/10461/buvasskoia",
-   "@lat": 60.4068414,
-   "@lon": 9.775411
+   "lat": 60.4068414,
+   "lon": 9.775411
  },
  {
    "@id": 1356401443,
@@ -1580,8 +1580,8 @@
    "operator": "Trondhjems Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/10513",
-   "@lat": 62.6802736,
-   "@lon": 9.150687
+   "lat": 62.6802736,
+   "lon": 9.150687
  },
  {
    "@id": 1356401463,
@@ -1589,8 +1589,8 @@
    "operator": "Drammens og Oplands Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/camp-killingen",
-   "@lat": 59.5207836,
-   "@lon": 10.3341337
+   "lat": 59.5207836,
+   "lon": 10.3341337
  },
  {
    "@id": 1356401480,
@@ -1598,8 +1598,8 @@
    "operator": "Sulitjelma og Omegn Turistforening",
    "dnt:classification": "ubetjent",
    "website": "http://ut.no/hytte/coar%27vihytta",
-   "@lat": 66.9947975,
-   "@lon": 15.9664062
+   "lat": 66.9947975,
+   "lon": 15.9664062
  },
  {
    "@id": 1356401490,
@@ -1607,8 +1607,8 @@
    "operator": "Trondhjems Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/damtjoenna",
-   "@lat": 62.801662,
-   "@lon": 9.890282
+   "lat": 62.801662,
+   "lon": 9.890282
  },
  {
    "@id": 1356401503,
@@ -1616,8 +1616,8 @@
    "operator": "Ålesund-Sunnmøre Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/danskehytta",
-   "@lat": 62.1052625,
-   "@lon": 7.5284304
+   "lat": 62.1052625,
+   "lon": 7.5284304
  },
  {
    "@id": 1356401518,
@@ -1625,8 +1625,8 @@
    "operator": "Tønsberg og Omegn Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://www.ut.no/hytte/3.1914/",
-   "@lat": 59.4904091,
-   "@lon": 9.7482831
+   "lat": 59.4904091,
+   "lon": 9.7482831
  },
  {
    "@id": 1356401534,
@@ -1634,8 +1634,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/10784/demmevasshytta",
-   "@lat": 60.5401258,
-   "@lon": 7.3139959
+   "lat": 60.5401258,
+   "lon": 7.3139959
  },
  {
    "@id": 1356401544,
@@ -1643,8 +1643,8 @@
    "operator": "DNT Drammen og Omegn",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/101087/dusehesten",
-   "@lat": 60.3997916,
-   "@lon": 8.6786444
+   "lat": 60.3997916,
+   "lon": 8.6786444
  },
  {
    "@id": 1356401560,
@@ -1652,8 +1652,8 @@
    "operator": "Stavanger Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/eidavatn",
-   "@lat": 59.2703791,
-   "@lon": 6.7376353
+   "lat": 59.2703791,
+   "lon": 6.7376353
  },
  {
    "@id": 1356401572,
@@ -1661,8 +1661,8 @@
    "operator": "Kristiansund og Nordmøre Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/eiriksvollen",
-   "@lat": 62.6343187,
-   "@lon": 8.8422268
+   "lat": 62.6343187,
+   "lon": 8.8422268
  },
  {
    "@id": 1356401583,
@@ -1670,8 +1670,8 @@
    "operator": "Nord-Trøndelag Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/10468/ferslia",
-   "@lat": 63.5422525,
-   "@lon": 11.9413666
+   "lat": 63.5422525,
+   "lon": 11.9413666
  },
  {
    "@id": 1356401589,
@@ -1679,8 +1679,8 @@
    "operator": "Molde og Romsdals Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/feskarbu",
-   "@lat": 62.8226777,
-   "@lon": 7.4087899
+   "lat": 62.8226777,
+   "lon": 7.4087899
  },
  {
    "@id": 1356401598,
@@ -1688,8 +1688,8 @@
    "operator": "Luster Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/fivla",
-   "@lat": 61.4959967,
-   "@lon": 7.3569165
+   "lat": 61.4959967,
+   "lon": 7.3569165
  },
  {
    "@id": 1356401606,
@@ -1697,8 +1697,8 @@
    "operator": "Statskog",
    "dnt:classification": "ubetjent",
    "website": "https://www.inatur.no/hytte/53ab2f1fe4b08639ed54e1e7/fjellbu-fin-lita-hytte-nar-vei-ved-elva-skjoma-i-narvik",
-   "@lat": 68.1682741,
-   "@lon": 17.5550776
+   "lat": 68.1682741,
+   "lon": 17.5550776
  },
  {
    "@id": 1356401623,
@@ -1706,8 +1706,8 @@
    "operator": "",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/flotsberget",
-   "@lat": 60.8334224,
-   "@lon": 11.8424485
+   "lat": 60.8334224,
+   "lon": 11.8424485
  },
  {
    "@id": 1356401633,
@@ -1715,8 +1715,8 @@
    "operator": "Stavanger Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/floerlistoelen",
-   "@lat": 59.0058523,
-   "@lon": 6.4222896
+   "lat": 59.0058523,
+   "lon": 6.4222896
  },
  {
    "@id": 1356401647,
@@ -1724,8 +1724,8 @@
    "operator": "",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/fokhaugstova",
-   "@lat": 62.4225035,
-   "@lon": 7.2562331
+   "lat": 62.4225035,
+   "lon": 7.2562331
  },
  {
    "@id": 1356401659,
@@ -1733,8 +1733,8 @@
    "operator": "Bergen Turlag",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/fonnabu",
-   "@lat": 60.0764838,
-   "@lon": 6.3478449
+   "lat": 60.0764838,
+   "lon": 6.3478449
  },
  {
    "@id": 1356401668,
@@ -1742,8 +1742,8 @@
    "operator": "Luster Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/fuglesteg",
-   "@lat": 61.4836584,
-   "@lon": 7.6910947
+   "lat": 61.4836584,
+   "lon": 7.6910947
  },
  {
    "@id": 1356401681,
@@ -1751,8 +1751,8 @@
    "operator": "Ringerikes Turistforening",
    "dnt:classification": "ubetjent",
    "website": "",
-   "@lat": 60.6098792,
-   "@lon": 9.431739
+   "lat": 60.6098792,
+   "lon": 9.431739
  },
  {
    "@id": 1356401693,
@@ -1760,8 +1760,8 @@
    "operator": "Stavanger Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/gaudland",
-   "@lat": 58.3968582,
-   "@lon": 6.2493817
+   "lat": 58.3968582,
+   "lon": 6.2493817
  },
  {
    "@id": 1356401704,
@@ -1769,8 +1769,8 @@
    "operator": "DNT Sør",
    "dnt:classification": "betjent",
    "website": "https://ut.no/hytte/gaukhei",
-   "@lat": 58.9159973,
-   "@lon": 7.305692
+   "lat": 58.9159973,
+   "lon": 7.305692
  },
  {
    "@id": 1356401733,
@@ -1778,8 +1778,8 @@
    "operator": "Flora Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/gjegnabu",
-   "@lat": 61.7612416,
-   "@lon": 5.835496
+   "lat": 61.7612416,
+   "lon": 5.835496
  },
  {
    "@id": 1356401745,
@@ -1787,8 +1787,8 @@
    "operator": "Aust-Agder Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/granbustoeyl",
-   "@lat": 59.0066954,
-   "@lon": 7.9488337
+   "lat": 59.0066954,
+   "lon": 7.9488337
  },
  {
    "@id": 1356401752,
@@ -1796,8 +1796,8 @@
    "operator": "Stavanger Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/grasdalen",
-   "@lat": 59.23103,
-   "@lon": 6.6219032
+   "lat": 59.23103,
+   "lon": 6.6219032
  },
  {
    "@id": 1356401760,
@@ -1805,8 +1805,8 @@
    "operator": "Årdal Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/gravdalen",
-   "@lat": 61.3595743,
-   "@lon": 7.8491028
+   "lat": 61.3595743,
+   "lon": 7.8491028
  },
  {
    "@id": 1356401765,
@@ -1814,8 +1814,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/grindaflethytta",
-   "@lat": 60.8434659,
-   "@lon": 6.9155177
+   "lat": 60.8434659,
+   "lon": 6.9155177
  },
  {
    "@id": 1356401772,
@@ -1823,8 +1823,8 @@
    "operator": "Aust-Agder Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/grunnetjoernsbu",
-   "@lat": 58.8929153,
-   "@lon": 8.1248817
+   "lat": 58.8929153,
+   "lon": 8.1248817
  },
  {
    "@id": 1356401782,
@@ -1832,8 +1832,8 @@
    "operator": "Flora Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/grytadalsbu",
-   "@lat": 61.6516726,
-   "@lon": 5.2000002
+   "lat": 61.6516726,
+   "lon": 5.2000002
  },
  {
    "@id": 1356401792,
@@ -1841,8 +1841,8 @@
    "operator": "Kristiansund og Nordmøre Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/10102/grytbakksetra",
-   "@lat": 63.1099528,
-   "@lon": 8.9475166
+   "lat": 63.1099528,
+   "lon": 8.9475166
  },
  {
    "@id": 1356401793,
@@ -1850,8 +1850,8 @@
    "operator": "Trondhjems Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/graeslihytta",
-   "@lat": 63.0700194,
-   "@lon": 11.4722582
+   "lat": 63.0700194,
+   "lon": 11.4722582
  },
  {
    "@id": 1356401810,
@@ -1859,8 +1859,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/groenknutkoia",
-   "@lat": 60.1759283,
-   "@lon": 9.8827544
+   "lat": 60.1759283,
+   "lon": 9.8827544
  },
  {
    "@id": 1356401816,
@@ -1868,8 +1868,8 @@
    "operator": "Harstad Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/groennkollen",
-   "@lat": 68.7720076,
-   "@lon": 16.4376816
+   "lat": 68.7720076,
+   "lon": 16.4376816
  },
  {
    "@id": 1356401821,
@@ -1877,8 +1877,8 @@
    "operator": "Sogndal Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/groessete",
-   "@lat": 61.337934,
-   "@lon": 6.9899274
+   "lat": 61.337934,
+   "lon": 6.9899274
  },
  {
    "@id": 1356401829,
@@ -1886,8 +1886,8 @@
    "operator": "Kristiansund og Nordmøre Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/10370/gullsteinvollen",
-   "@lat": 63.1909322,
-   "@lon": 8.1072495
+   "lat": 63.1909322,
+   "lon": 8.1072495
  },
  {
    "@id": 1356401838,
@@ -1895,8 +1895,8 @@
    "operator": "Vesterålen Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/guvaaghytta",
-   "@lat": 68.6622642,
-   "@lon": 14.7756614
+   "lat": 68.6622642,
+   "lon": 14.7756614
  },
  {
    "@id": 1356401840,
@@ -1904,8 +1904,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/haldorbu",
-   "@lat": 61.2605247,
-   "@lon": 9.3699966
+   "lat": 61.2605247,
+   "lon": 9.3699966
  },
  {
    "@id": 1356401863,
@@ -1913,8 +1913,8 @@
    "operator": "Stavanger Turistforening",
    "dnt:classification": "betjent",
    "website": "https://ut.no/hytte/10660/haukeliseter-fjellstue",
-   "@lat": 59.8237497,
-   "@lon": 7.1942771
+   "lat": 59.8237497,
+   "lon": 7.1942771
  },
  {
    "@id": 1356401872,
@@ -1922,8 +1922,8 @@
    "operator": "DNT Indre Østfold",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/haukenesfjellet",
-   "@lat": 59.7160465,
-   "@lon": 11.7559971
+   "lat": 59.7160465,
+   "lon": 11.7559971
  },
  {
    "@id": 1356401880,
@@ -1931,8 +1931,8 @@
    "operator": "Stavanger Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/heiberghytta-grautheller",
-   "@lat": 59.1163918,
-   "@lon": 6.8752144
+   "lat": 59.1163918,
+   "lon": 6.8752144
  },
  {
    "@id": 1356401886,
@@ -1940,8 +1940,8 @@
    "operator": "Sandefjord og Oplands Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/101298/slirabu",
-   "@lat": 59.2720594,
-   "@lon": 10.0141223
+   "lat": 59.2720594,
+   "lon": 10.0141223
  },
  {
    "@id": 1356401905,
@@ -1949,8 +1949,8 @@
    "operator": "",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/helgedammen",
-   "@lat": 60.3799714,
-   "@lon": 12.4239229
+   "lat": 60.3799714,
+   "lon": 12.4239229
  },
  {
    "@id": 1356401908,
@@ -1958,8 +1958,8 @@
    "operator": "Aust-Agder Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/hengeltjoernloftet",
-   "@lat": 59.0714892,
-   "@lon": 8.0828511
+   "lat": 59.0714892,
+   "lon": 8.0828511
  },
  {
    "@id": 1356401918,
@@ -1967,8 +1967,8 @@
    "operator": "Kristiansund og Nordmøre Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/10819/hermannhytta",
-   "@lat": 63.0217503,
-   "@lon": 8.9784232
+   "lat": 63.0217503,
+   "lon": 8.9784232
  },
  {
    "@id": 1356401924,
@@ -1976,8 +1976,8 @@
    "operator": "Trondhjems Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/hevertjoenna",
-   "@lat": 62.7663355,
-   "@lon": 9.8683201
+   "lat": 62.7663355,
+   "lon": 9.8683201
  },
  {
    "@id": 1356401931,
@@ -1985,8 +1985,8 @@
    "operator": "Molde og Romsdals Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/hoemsbu",
-   "@lat": 62.5646739,
-   "@lon": 8.1435632
+   "lat": 62.5646739,
+   "lon": 8.1435632
  },
  {
    "@id": 1356401934,
@@ -1994,8 +1994,8 @@
    "operator": "Nord-Trøndelag Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "http://ut.no/hytte/holden-fjellgaard%2C-bekkstuggu",
-   "@lat": 64.0632553,
-   "@lon": 12.896632
+   "lat": 64.0632553,
+   "lon": 12.896632
  },
  {
    "@id": 1356401951,
@@ -2003,8 +2003,8 @@
    "operator": "Ringerikes Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/hovinkoia",
-   "@lat": 60.1319614,
-   "@lon": 10.0155877
+   "lat": 60.1319614,
+   "lon": 10.0155877
  },
  {
    "@id": 1356401968,
@@ -2012,8 +2012,8 @@
    "operator": "Bergen Turlag",
    "dnt:classification": "selvbetjent",
    "website": "https://www.ut.no/hytte/3.2032/",
-   "@lat": 60.5348764,
-   "@lon": 5.9246994
+   "lat": 60.5348764,
+   "lon": 5.9246994
  },
  {
    "@id": 1356401978,
@@ -2021,8 +2021,8 @@
    "operator": "Kristiansund og Nordmøre Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/10551/imarbu",
-   "@lat": 63.2110212,
-   "@lon": 8.276541
+   "lat": 63.2110212,
+   "lon": 8.276541
  },
  {
    "@id": 1356401990,
@@ -2030,8 +2030,8 @@
    "operator": "Larvik og Omegns Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://www.ut.no/hytte/3.1750/",
-   "@lat": 59.514848,
-   "@lon": 9.7255715
+   "lat": 59.514848,
+   "lon": 9.7255715
  },
  {
    "@id": 1356402004,
@@ -2039,8 +2039,8 @@
    "operator": "DNT Sør",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/josephsbu",
-   "@lat": 58.8787885,
-   "@lon": 7.2056027
+   "lat": 58.8787885,
+   "lon": 7.2056027
  },
  {
    "@id": 1356402005,
@@ -2048,8 +2048,8 @@
    "operator": "Kristiansund og Nordmøre Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/jutulbu",
-   "@lat": 63.0391153,
-   "@lon": 8.3898535
+   "lat": 63.0391153,
+   "lon": 8.3898535
  },
  {
    "@id": 1356402016,
@@ -2057,8 +2057,8 @@
    "operator": "Troms Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/jaegervasshytta",
-   "@lat": 69.7204976,
-   "@lon": 19.9247159
+   "lat": 69.7204976,
+   "lon": 19.9247159
  },
  {
    "@id": 1356402028,
@@ -2066,8 +2066,8 @@
    "operator": "Telemark Turistforening",
    "dnt:classification": "betjent",
    "website": "https://ut.no/hytte/kalhovd",
-   "@lat": 60.068651,
-   "@lon": 8.3696363
+   "lat": 60.068651,
+   "lon": 8.3696363
  },
  {
    "@id": 1356402034,
@@ -2075,8 +2075,8 @@
    "operator": "Bergen Turlag",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/kalvedalshytta",
-   "@lat": 60.7676933,
-   "@lon": 5.4888658
+   "lat": 60.7676933,
+   "lon": 5.4888658
  },
  {
    "@id": 1356402048,
@@ -2084,8 +2084,8 @@
    "operator": "Bergen Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/kiellandbu",
-   "@lat": 60.5145912,
-   "@lon": 6.201277
+   "lat": 60.5145912,
+   "lon": 6.201277
  },
  {
    "@id": 1356402053,
@@ -2093,8 +2093,8 @@
    "operator": "Trondhjems Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/kjoelihytta",
-   "@lat": 62.8683385,
-   "@lon": 11.6485202
+   "lat": 62.8683385,
+   "lon": 11.6485202
  },
  {
    "@id": 1356402059,
@@ -2102,8 +2102,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/kljaaen",
-   "@lat": 61.0265369,
-   "@lon": 8.316789
+   "lat": 61.0265369,
+   "lon": 8.316789
  },
  {
    "@id": 1356402068,
@@ -2111,8 +2111,8 @@
    "operator": "Brurskanken Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/klubbfjelltjoernhytta",
-   "@lat": 65.7607125,
-   "@lon": 13.5437614
+   "lat": 65.7607125,
+   "lon": 13.5437614
  },
  {
    "@id": 1356402081,
@@ -2120,8 +2120,8 @@
    "operator": "Stavanger Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/kringlevatn",
-   "@lat": 59.239005,
-   "@lon": 7.0399496
+   "lat": 59.239005,
+   "lon": 7.0399496
  },
  {
    "@id": 1356402093,
@@ -2129,8 +2129,8 @@
    "operator": "DNT Lillehammer",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/101056",
-   "@lat": 61.1229332,
-   "@lon": 10.5160011
+   "lat": 61.1229332,
+   "lon": 10.5160011
  },
  {
    "@id": 1356402099,
@@ -2138,8 +2138,8 @@
    "operator": "Stavanger Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/krossvatn",
-   "@lat": 59.46701,
-   "@lon": 6.8996928
+   "lat": 59.46701,
+   "lon": 6.8996928
  },
  {
    "@id": 1356402115,
@@ -2147,8 +2147,8 @@
    "operator": "Stavanger Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/101036/kvanndalen",
-   "@lat": 59.6961767,
-   "@lon": 6.9901002
+   "lat": 59.6961767,
+   "lon": 6.9901002
  },
  {
    "@id": 1356402118,
@@ -2156,8 +2156,8 @@
    "operator": "Bergen Turlag",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/kvanntjoernsbu",
-   "@lat": 60.0550149,
-   "@lon": 6.670112
+   "lat": 60.0550149,
+   "lon": 6.670112
  },
  {
    "@id": 1356402127,
@@ -2165,8 +2165,8 @@
    "operator": "DNT Sør",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/kvinen",
-   "@lat": 58.8791584,
-   "@lon": 7.0643803
+   "lat": 58.8791584,
+   "lon": 7.0643803
  },
  {
    "@id": 1356402136,
@@ -2174,8 +2174,8 @@
    "operator": "DNT Sør",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/lakkenstova",
-   "@lat": 58.7909379,
-   "@lon": 7.2456843
+   "lat": 58.7909379,
+   "lon": 7.2456843
  },
  {
    "@id": 1356402143,
@@ -2183,8 +2183,8 @@
    "operator": "",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/lebiko",
-   "@lat": 60.1526259,
-   "@lon": 12.512618
+   "lat": 60.1526259,
+   "lon": 12.512618
  },
  {
    "@id": 1356402152,
@@ -2192,8 +2192,8 @@
    "operator": "Magnor ungdomslag",
    "dnt:classification": "ubetjent",
    "website": "https://www.ut.no/hytte/3.1631/",
-   "@lat": 59.8896053,
-   "@lon": 12.1691588
+   "lat": 59.8896053,
+   "lon": 12.1691588
  },
  {
    "@id": 1356402156,
@@ -2201,8 +2201,8 @@
    "operator": "Stavanger Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/litle-auraadal",
-   "@lat": 59.1882636,
-   "@lon": 6.877045
+   "lat": 59.1882636,
+   "lon": 6.877045
  },
  {
    "@id": 1356402172,
@@ -2210,8 +2210,8 @@
    "operator": "Kristiansund og Nordmøre Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/loennechenbua",
-   "@lat": 62.4312387,
-   "@lon": 9.1813256
+   "lat": 62.4312387,
+   "lon": 9.1813256
  },
  {
    "@id": 1356402188,
@@ -2219,8 +2219,8 @@
    "operator": "Haugesund Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/longaasdalen",
-   "@lat": 59.5487595,
-   "@lon": 5.6428657
+   "lat": 59.5487595,
+   "lon": 5.6428657
  },
  {
    "@id": 1356402207,
@@ -2228,8 +2228,8 @@
    "operator": "Aust-Agder Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/lyng%C3%B8r-fyr",
-   "@lat": 58.6368108,
-   "@lon": 9.1489277
+   "lat": 58.6368108,
+   "lon": 9.1489277
  },
  {
    "@id": 1356402219,
@@ -2237,8 +2237,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/laagaros",
-   "@lat": 60.1315284,
-   "@lon": 7.8017325
+   "lat": 60.1315284,
+   "lon": 7.8017325
  },
  {
    "@id": 1356402225,
@@ -2246,8 +2246,8 @@
    "operator": "Haugesund Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/loekjelsvatnhytta",
-   "@lat": 59.6602027,
-   "@lon": 6.1154117
+   "lat": 59.6602027,
+   "lon": 6.1154117
  },
  {
    "@id": 1356402241,
@@ -2255,8 +2255,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/marenvollen",
-   "@lat": 62.5434359,
-   "@lon": 11.6394183
+   "lat": 62.5434359,
+   "lon": 11.6394183
  },
  {
    "@id": 1356402246,
@@ -2264,8 +2264,8 @@
    "operator": "Indre Sunnfjord Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/massbu",
-   "@lat": 61.404593,
-   "@lon": 5.4449079
+   "lat": 61.404593,
+   "lon": 5.4449079
  },
  {
    "@id": 1356402264,
@@ -2273,8 +2273,8 @@
    "operator": "Stavanger Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/melands-groenahei",
-   "@lat": 59.2408675,
-   "@lon": 6.5205707
+   "lat": 59.2408675,
+   "lon": 6.5205707
  },
  {
    "@id": 1356402280,
@@ -2282,8 +2282,8 @@
    "operator": "Aust-Agder Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/mjaavasshytta",
-   "@lat": 58.9758992,
-   "@lon": 8.1791153
+   "lat": 58.9758992,
+   "lon": 8.1791153
  },
  {
    "@id": 1356402304,
@@ -2291,8 +2291,8 @@
    "operator": "Telemark Turistforening",
    "dnt:classification": "betjent",
    "website": "https://ut.no/hytte/mogen",
-   "@lat": 60.0229368,
-   "@lon": 7.8902169
+   "lat": 60.0229368,
+   "lon": 7.8902169
  },
  {
    "@id": 1356402308,
@@ -2300,8 +2300,8 @@
    "operator": "Bergen Turlag",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/mosdalsbu",
-   "@lat": 60.1052211,
-   "@lon": 6.6382714
+   "lat": 60.1052211,
+   "lon": 6.6382714
  },
  {
    "@id": 1356402329,
@@ -2309,8 +2309,8 @@
    "operator": "",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/mule-varde",
-   "@lat": 59.099834,
-   "@lon": 9.7002153
+   "lat": 59.099834,
+   "lon": 9.7002153
  },
  {
    "@id": 1356402339,
@@ -2318,8 +2318,8 @@
    "operator": "Vik Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/maalsethytta",
-   "@lat": 60.9864926,
-   "@lon": 6.5197831
+   "lat": 60.9864926,
+   "lon": 6.5197831
  },
  {
    "@id": 1356402344,
@@ -2327,8 +2327,8 @@
    "operator": "Drammens og Oplands Turistforening",
    "dnt:classification": "betjent",
    "website": "https://ut.no/hytte/maarbu",
-   "@lat": 60.1856351,
-   "@lon": 8.1713218
+   "lat": 60.1856351,
+   "lon": 8.1713218
  },
  {
    "@id": 1356402354,
@@ -2336,8 +2336,8 @@
    "operator": "Molde og Romsdals Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/maasvassbu",
-   "@lat": 62.6481614,
-   "@lon": 7.8341457
+   "lat": 62.6481614,
+   "lon": 7.8341457
  },
  {
    "@id": 1356402373,
@@ -2345,8 +2345,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/navarsete",
-   "@lat": 61.4326022,
-   "@lon": 7.340903
+   "lat": 61.4326022,
+   "lon": 7.340903
  },
  {
    "@id": 1356402396,
@@ -2354,8 +2354,8 @@
    "operator": "Kristiansund og Nordmøre Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/1099/nersetra",
-   "@lat": 63.2183616,
-   "@lon": 8.4338004
+   "lat": 63.2183616,
+   "lon": 8.4338004
  },
  {
    "@id": 1356402417,
@@ -2363,8 +2363,8 @@
    "operator": "Stavanger Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/nilsebu",
-   "@lat": 59.1894276,
-   "@lon": 6.6749435
+   "lat": 59.1894276,
+   "lon": 6.6749435
  },
  {
    "@id": 1356402434,
@@ -2372,8 +2372,8 @@
    "operator": "Indre Sunnfjord Turlag",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/nipebu",
-   "@lat": 61.4015422,
-   "@lon": 5.3368915
+   "lat": 61.4015422,
+   "lon": 5.3368915
  },
  {
    "@id": 1356402453,
@@ -2381,8 +2381,8 @@
    "operator": "Stavanger Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/nodhagen",
-   "@lat": 58.9209554,
-   "@lon": 5.9668375
+   "lat": 58.9209554,
+   "lon": 5.9668375
  },
  {
    "@id": 1356402481,
@@ -2390,8 +2390,8 @@
    "operator": "Haugesund Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/fyret-paa-utsira",
-   "@lat": 59.3101938,
-   "@lon": 4.8895233
+   "lat": 59.3101938,
+   "lon": 4.8895233
  },
  {
    "@id": 1356402521,
@@ -2399,8 +2399,8 @@
    "operator": "Aust-Agder Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/nystoeyl",
-   "@lat": 59.1670577,
-   "@lon": 7.7357529
+   "lat": 59.1670577,
+   "lon": 7.7357529
  },
  {
    "@id": 1356402541,
@@ -2408,8 +2408,8 @@
    "operator": "Haugesund Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/3.1866/",
-   "@lat": 59.5991985,
-   "@lon": 5.9559126
+   "lat": 59.5991985,
+   "lon": 5.9559126
  },
  {
    "@id": 1356402545,
@@ -2417,8 +2417,8 @@
    "operator": "Haugesund Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/olalihytta",
-   "@lat": 59.5993576,
-   "@lon": 5.9569253
+   "lat": 59.5993576,
+   "lon": 5.9569253
  },
  {
    "@id": 1356402565,
@@ -2426,8 +2426,8 @@
    "operator": "Aust-Agder Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/olandsbu",
-   "@lat": 58.6645544,
-   "@lon": 8.4918152
+   "lat": 58.6645544,
+   "lon": 8.4918152
  },
  {
    "@id": 1356402584,
@@ -2435,8 +2435,8 @@
    "operator": "Trondhjems Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/orkelsjoehytta",
-   "@lat": 62.519431,
-   "@lon": 9.8749418
+   "lat": 62.519431,
+   "lon": 9.8749418
  },
  {
    "@id": 1356402613,
@@ -2444,8 +2444,8 @@
    "operator": "Nord-Trøndelag Turistforening",
    "dnt:classification": "dagsturhytte",
    "website": "https://ut.no/hytte/often%C3%A5sen",
-   "@lat": 63.9920453,
-   "@lon": 11.5291241
+   "lat": 63.9920453,
+   "lon": 11.5291241
  },
  {
    "@id": 1356402646,
@@ -2453,8 +2453,8 @@
    "operator": "Stavanger Turistforening",
    "dnt:classification": "betjent",
    "website": "https://preikestolenbasecamp.com/produkt/preikestolhytta/",
-   "@lat": 58.9900594,
-   "@lon": 6.1377504
+   "lat": 58.9900594,
+   "lon": 6.1377504
  },
  {
    "@id": 1356402653,
@@ -2462,8 +2462,8 @@
    "operator": "Larvik og Omegns Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://www.ut.no/hytte/3.1714/",
-   "@lat": 59.4337613,
-   "@lon": 9.7929565
+   "lat": 59.4337613,
+   "lon": 9.7929565
  },
  {
    "@id": 1356402684,
@@ -2471,8 +2471,8 @@
    "operator": "Trondhjems Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/ramssjoeen",
-   "@lat": 62.8165753,
-   "@lon": 9.8042038
+   "lat": 62.8165753,
+   "lon": 9.8042038
  },
  {
    "@id": 1356402692,
@@ -2480,8 +2480,8 @@
    "operator": "Kristiansund og Nordmøre Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/raubergshytta",
-   "@lat": 62.5226548,
-   "@lon": 8.7095547
+   "lat": 62.5226548,
+   "lon": 8.7095547
  },
  {
    "@id": 1356402722,
@@ -2489,8 +2489,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/reinsvassbu",
-   "@lat": 62.5501361,
-   "@lon": 8.3677108
+   "lat": 62.5501361,
+   "lon": 8.3677108
  },
  {
    "@id": 1356402741,
@@ -2498,8 +2498,8 @@
    "operator": "Finnskogen Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/renosdammen2",
-   "@lat": 60.9933832,
-   "@lon": 11.9566954
+   "lat": 60.9933832,
+   "lon": 11.9566954
  },
  {
    "@id": 1356402744,
@@ -2507,8 +2507,8 @@
    "operator": "Troms Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/ringvassbu",
-   "@lat": 69.896263,
-   "@lon": 19.1280706
+   "lat": 69.896263,
+   "lon": 19.1280706
  },
  {
    "@id": 1356402789,
@@ -2516,8 +2516,8 @@
    "operator": "",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/rotberget-bedehus",
-   "@lat": 60.5155504,
-   "@lon": 12.5406966
+   "lat": 60.5155504,
+   "lon": 12.5406966
  },
  {
    "@id": 1356402806,
@@ -2525,8 +2525,8 @@
    "operator": "Kristiansund og Nordmøre Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/10565/rovangen",
-   "@lat": 63.3005422,
-   "@lon": 8.6584303
+   "lat": 63.3005422,
+   "lon": 8.6584303
  },
  {
    "@id": 1356402822,
@@ -2534,8 +2534,8 @@
    "operator": "Ålesund-Sunnmøre Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/runde-fyr",
-   "@lat": 62.413771,
-   "@lon": 5.5865003
+   "lat": 62.413771,
+   "lon": 5.5865003
  },
  {
    "@id": 1356402841,
@@ -2543,8 +2543,8 @@
    "operator": "",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/rundkjoelbrakka",
-   "@lat": 60.8341034,
-   "@lon": 11.9457697
+   "lat": 60.8341034,
+   "lon": 11.9457697
  },
  {
    "@id": 1356402846,
@@ -2552,8 +2552,8 @@
    "operator": "Sogndal Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/r%C3%A5keneset",
-   "@lat": 61.1139822,
-   "@lon": 4.8300088
+   "lat": 61.1139822,
+   "lon": 4.8300088
  },
  {
    "@id": 1356402891,
@@ -2561,8 +2561,8 @@
    "operator": "Sauda Turlag",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/oevre-sandvatnbrakka",
-   "@lat": 59.7983916,
-   "@lon": 6.6780648
+   "lat": 59.7983916,
+   "lon": 6.6780648
  },
  {
    "@id": 1356402915,
@@ -2570,8 +2570,8 @@
    "operator": "Haugesund Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/sauabrehytta",
-   "@lat": 59.9605231,
-   "@lon": 6.4332366
+   "lat": 59.9605231,
+   "lon": 6.4332366
  },
  {
    "@id": 1356402937,
@@ -2579,8 +2579,8 @@
    "operator": "Kongsberg og Omegns Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/10486/selsli",
-   "@lat": 59.6881694,
-   "@lon": 9.3641127
+   "lat": 59.6881694,
+   "lon": 9.3641127
  },
  {
    "@id": 1356402956,
@@ -2588,8 +2588,8 @@
    "operator": "Troms Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/senjabu",
-   "@lat": 69.3446753,
-   "@lon": 17.4375685
+   "lat": 69.3446753,
+   "lon": 17.4375685
  },
  {
    "@id": 1356402974,
@@ -2597,8 +2597,8 @@
    "operator": "Nord-Trøndelag Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/setertjoennhytta",
-   "@lat": 63.9954736,
-   "@lon": 12.31296
+   "lat": 63.9954736,
+   "lon": 12.31296
  },
  {
    "@id": 1356402991,
@@ -2606,8 +2606,8 @@
    "operator": "",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/kystledhytta-sildevika",
-   "@lat": 59.0497075,
-   "@lon": 9.7607265
+   "lat": 59.0497075,
+   "lon": 9.7607265
  },
  {
    "@id": 1356402999,
@@ -2615,8 +2615,8 @@
    "operator": "Haugesund Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/simlebu",
-   "@lat": 59.8465059,
-   "@lon": 6.4570891
+   "lat": 59.8465059,
+   "lon": 6.4570891
  },
  {
    "@id": 1356403032,
@@ -2624,8 +2624,8 @@
    "operator": "Aust-Agder Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/skarsvassbu",
-   "@lat": 58.8195056,
-   "@lon": 8.2579438
+   "lat": 58.8195056,
+   "lon": 8.2579438
  },
  {
    "@id": 1356403038,
@@ -2633,8 +2633,8 @@
    "operator": "Bergen Turlag",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/skavlabu",
-   "@lat": 60.8618273,
-   "@lon": 5.8151419
+   "lat": 60.8618273,
+   "lon": 5.8151419
  },
  {
    "@id": 1356403071,
@@ -2642,8 +2642,8 @@
    "operator": "Nord-Trøndelag Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/skjaekerdalshytta",
-   "@lat": 63.9105405,
-   "@lon": 12.220673
+   "lat": 63.9105405,
+   "lon": 12.220673
  },
  {
    "@id": 1356403076,
@@ -2651,8 +2651,8 @@
    "operator": "Hamar og Hedemarken Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/101200",
-   "@lat": 61.2430347,
-   "@lon": 10.8170385
+   "lat": 61.2430347,
+   "lon": 10.8170385
  },
  {
    "@id": 1356403132,
@@ -2660,8 +2660,8 @@
    "operator": "Bergen Turlag",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/10931/skalatarnet",
-   "@lat": 61.8683974,
-   "@lon": 6.9657127
+   "lat": 61.8683974,
+   "lon": 6.9657127
  },
  {
    "@id": 1356403149,
@@ -2669,8 +2669,8 @@
    "operator": "Stavanger Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/101135/skapet-gamlehytta",
-   "@lat": 58.9853007,
-   "@lon": 6.3505185
+   "lat": 58.9853007,
+   "lon": 6.3505185
  },
  {
    "@id": 1356403165,
@@ -2678,8 +2678,8 @@
    "operator": "DNT Sør",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/sloaros",
-   "@lat": 59.646596,
-   "@lon": 7.2585675
+   "lat": 59.646596,
+   "lon": 7.2585675
  },
  {
    "@id": 1356403180,
@@ -2687,8 +2687,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/slaeom",
-   "@lat": 61.8238035,
-   "@lon": 7.4823263
+   "lat": 61.8238035,
+   "lon": 7.4823263
  },
  {
    "@id": 1356403206,
@@ -2696,8 +2696,8 @@
    "operator": "Kristiansund og Nordmøre Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/10100/sollia",
-   "@lat": 63.2079462,
-   "@lon": 8.8723514
+   "lat": 63.2079462,
+   "lon": 8.8723514
  },
  {
    "@id": 1356403240,
@@ -2705,8 +2705,8 @@
    "operator": "Telemark Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://www.ut.no/hytte/3.1749/",
-   "@lat": 59.4685296,
-   "@lon": 9.5679407
+   "lat": 59.4685296,
+   "lon": 9.5679407
  },
  {
    "@id": 1356403267,
@@ -2714,8 +2714,8 @@
    "operator": "",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/songedalen-fjellgard",
-   "@lat": 59.0420966,
-   "@lon": 6.4301235
+   "lat": 59.0420966,
+   "lon": 6.4301235
  },
  {
    "@id": 1356403308,
@@ -2723,8 +2723,8 @@
    "operator": "Stavanger Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/stakken",
-   "@lat": 59.1808939,
-   "@lon": 6.5651693
+   "lat": 59.1808939,
+   "lon": 6.5651693
  },
  {
    "@id": 1356403323,
@@ -2732,8 +2732,8 @@
    "operator": "",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/standalhytta",
-   "@lat": 62.2469799,
-   "@lon": 6.3477994
+   "lat": 62.2469799,
+   "lon": 6.3477994
  },
  {
    "@id": 1356403342,
@@ -2741,8 +2741,8 @@
    "operator": "",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/stavassgaarden",
-   "@lat": 65.4871523,
-   "@lon": 13.2915831
+   "lat": 65.4871523,
+   "lon": 13.2915831
  },
  {
    "@id": 1356403360,
@@ -2750,8 +2750,8 @@
    "operator": "",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/stavassaetra",
-   "@lat": 65.5030713,
-   "@lon": 13.2352089
+   "lat": 65.5030713,
+   "lon": 13.2352089
  },
  {
    "@id": 1356403367,
@@ -2759,8 +2759,8 @@
    "operator": "DNT Sør",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/stavskar",
-   "@lat": 59.2011516,
-   "@lon": 7.4034341
+   "lat": 59.2011516,
+   "lon": 7.4034341
  },
  {
    "@id": 1356403383,
@@ -2768,8 +2768,8 @@
    "operator": "Haugesund Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/3.1607/",
-   "@lat": 59.6941035,
-   "@lon": 6.2350732
+   "lat": 59.6941035,
+   "lon": 6.2350732
  },
  {
    "@id": 1356403420,
@@ -2777,8 +2777,8 @@
    "operator": "Oslofjordens friluftsråd",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/store-torungen",
-   "@lat": 58.3987171,
-   "@lon": 8.7896128
+   "lat": 58.3987171,
+   "lon": 8.7896128
  },
  {
    "@id": 1356403435,
@@ -2786,8 +2786,8 @@
    "operator": "Ringerikes Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/101108/storekrakkoia",
-   "@lat": 60.4964548,
-   "@lon": 9.7113831
+   "lat": 60.4964548,
+   "lon": 9.7113831
  },
  {
    "@id": 1356403475,
@@ -2795,8 +2795,8 @@
    "operator": "Kristiansund og Nordmøre Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/10567/storfiskhytta",
-   "@lat": 63.2742005,
-   "@lon": 8.8236704
+   "lat": 63.2742005,
+   "lon": 8.8236704
  },
  {
    "@id": 1356403490,
@@ -2804,8 +2804,8 @@
    "operator": "",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/storjordstua",
-   "@lat": 66.8141472,
-   "@lon": 15.4006573
+   "lat": 66.8141472,
+   "lon": 15.4006573
  },
  {
    "@id": 1356403534,
@@ -2813,8 +2813,8 @@
    "operator": "Stavanger Turistforening",
    "dnt:classification": "betjent",
    "website": "https://ut.no/hytte/stranddalshytta",
-   "@lat": 59.4384264,
-   "@lon": 6.7185144
+   "lat": 59.4384264,
+   "lon": 6.7185144
  },
  {
    "@id": 1356403549,
@@ -2822,8 +2822,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/101379/stlsmaradalen",
-   "@lat": 61.4011715,
-   "@lon": 7.9359076
+   "lat": 61.4011715,
+   "lon": 7.9359076
  },
  {
    "@id": 1356403565,
@@ -2831,8 +2831,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/svarthamar",
-   "@lat": 61.1429719,
-   "@lon": 9.5073227
+   "lat": 61.1429719,
+   "lon": 9.5073227
  },
  {
    "@id": 1356403579,
@@ -2840,8 +2840,8 @@
    "operator": "Nord-Trøndelag Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/svarttjoennbua",
-   "@lat": 64.0485919,
-   "@lon": 11.5407682
+   "lat": 64.0485919,
+   "lon": 11.5407682
  },
  {
    "@id": 1356403585,
@@ -2849,8 +2849,8 @@
    "operator": "Molde og Romsdals Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/svartvassbu",
-   "@lat": 62.5989297,
-   "@lon": 8.0506328
+   "lat": 62.5989297,
+   "lon": 8.0506328
  },
  {
    "@id": 1356403601,
@@ -2858,8 +2858,8 @@
    "operator": "Kongsberg og Omegns Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/sveinsbu",
-   "@lat": 59.5405155,
-   "@lon": 9.5232798
+   "lat": 59.5405155,
+   "lon": 9.5232798
  },
  {
    "@id": 1356403650,
@@ -2867,8 +2867,8 @@
    "operator": "Kristiansund og Nordmøre Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/10800/stersetra",
-   "@lat": 62.9879507,
-   "@lon": 9.0004672
+   "lat": 62.9879507,
+   "lon": 9.0004672
  },
  {
    "@id": 1356403663,
@@ -2876,8 +2876,8 @@
    "operator": "Kongsberg og Omegns Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://www.ut.no/hytte/3.1840/",
-   "@lat": 59.5037174,
-   "@lon": 9.6485485
+   "lat": 59.5037174,
+   "lon": 9.6485485
  },
  {
    "@id": 1356403675,
@@ -2885,8 +2885,8 @@
    "operator": "Ringerike Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/10262/tjuenborgkoia",
-   "@lat": 60.3386268,
-   "@lon": 9.9764396
+   "lat": 60.3386268,
+   "lon": 9.9764396
  },
  {
    "@id": 1356403687,
@@ -2894,8 +2894,8 @@
    "operator": "DNT Sør",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/tjoenndalen",
-   "@lat": 58.9612174,
-   "@lon": 7.4714276
+   "lat": 58.9612174,
+   "lon": 7.4714276
  },
  {
    "@id": 1356403693,
@@ -2903,8 +2903,8 @@
    "operator": "Ålesund-Sunnmøre Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/tjoennebu",
-   "@lat": 62.321136,
-   "@lon": 7.6668627
+   "lat": 62.321136,
+   "lon": 7.6668627
  },
  {
    "@id": 1356403701,
@@ -2912,8 +2912,8 @@
    "operator": "Kristiansund og Nordmøre Turistforening",
    "dnt:classification": "betjent",
    "website": "https://ut.no/hytte/todalshytta",
-   "@lat": 62.8038744,
-   "@lon": 8.7335253
+   "lat": 62.8038744,
+   "lon": 8.7335253
  },
  {
    "@id": 1356403707,
@@ -2921,8 +2921,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/torsbu",
-   "@lat": 62.1239197,
-   "@lon": 7.8491054
+   "lat": 62.1239197,
+   "lon": 7.8491054
  },
  {
    "@id": 1356403714,
@@ -2930,8 +2930,8 @@
    "operator": "Aust-Agder Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/torsdalsbu",
-   "@lat": 59.2034583,
-   "@lon": 7.7670881
+   "lat": 59.2034583,
+   "lon": 7.7670881
  },
  {
    "@id": 1356403723,
@@ -2939,8 +2939,8 @@
    "operator": "DNT Drammen og Omegn",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/10199/toveseter",
-   "@lat": 60.3389403,
-   "@lon": 9.3213916
+   "lat": 60.3389403,
+   "lon": 9.3213916
  },
  {
    "@id": 1356403727,
@@ -2948,8 +2948,8 @@
    "operator": "Kristiansund og Nordmøre Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/trollstua",
-   "@lat": 63.1594411,
-   "@lon": 8.0205261
+   "lat": 63.1594411,
+   "lon": 8.0205261
  },
  {
    "@id": 1356403737,
@@ -2957,8 +2957,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/trulsbu",
-   "@lat": 61.7383804,
-   "@lon": 7.9390799
+   "lat": 61.7383804,
+   "lon": 7.9390799
  },
  {
    "@id": 1356403746,
@@ -2966,8 +2966,8 @@
    "operator": "Kristiansund og Nordmøre Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/tverrlihytta",
-   "@lat": 63.0670928,
-   "@lon": 8.6201557
+   "lat": 63.0670928,
+   "lon": 8.6201557
  },
  {
    "@id": 1356403759,
@@ -2975,8 +2975,8 @@
    "operator": "Ålesund-Sunnmøre Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/tyssenaustet",
-   "@lat": 62.0939406,
-   "@lon": 6.6070093
+   "lat": 62.0939406,
+   "lon": 6.6070093
  },
  {
    "@id": 1356403779,
@@ -2984,8 +2984,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/10777/store-tmtehytta",
-   "@lat": 60.0512453,
-   "@lon": 10.7610489
+   "lat": 60.0512453,
+   "lon": 10.7610489
  },
  {
    "@id": 1356403799,
@@ -2993,8 +2993,8 @@
    "operator": "Kristiansund og Nordmøre Turistforening",
    "dnt:classification": "betjent",
    "website": "https://ut.no/hytte/vangshaugen",
-   "@lat": 62.543529,
-   "@lon": 8.9555614
+   "lat": 62.543529,
+   "lon": 8.9555614
  },
  {
    "@id": 1356403814,
@@ -3002,8 +3002,8 @@
    "operator": "Stavanger Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/vassdalstjoern",
-   "@lat": 59.3973498,
-   "@lon": 6.9729826
+   "lat": 59.3973498,
+   "lon": 6.9729826
  },
  {
    "@id": 1356403832,
@@ -3011,8 +3011,8 @@
    "operator": "Ringerikes Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/vassfarkoia",
-   "@lat": 60.4958497,
-   "@lon": 9.4686697
+   "lat": 60.4958497,
+   "lon": 9.4686697
  },
  {
    "@id": 1356403843,
@@ -3020,8 +3020,8 @@
    "operator": "Molde og Romsdals Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/vasstindbu",
-   "@lat": 62.6305506,
-   "@lon": 7.9845594
+   "lat": 62.6305506,
+   "lon": 7.9845594
  },
  {
    "@id": 1356403851,
@@ -3029,8 +3029,8 @@
    "operator": "Bergen Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/vatnane",
-   "@lat": 61.0229098,
-   "@lon": 6.3246844
+   "lat": 61.0229098,
+   "lon": 6.3246844
  },
  {
    "@id": 1356403866,
@@ -3038,8 +3038,8 @@
    "operator": "Bergen Turlag",
    "dnt:classification": "selvbetjent",
    "website": "https://www.ut.no/hytte/3.2031/",
-   "@lat": 60.4740691,
-   "@lon": 6.0752157
+   "lat": 60.4740691,
+   "lon": 6.0752157
  },
  {
    "@id": 1356403873,
@@ -3047,8 +3047,8 @@
    "operator": "Stavanger Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/veslebu",
-   "@lat": 58.9874281,
-   "@lon": 6.1355266
+   "lat": 58.9874281,
+   "lon": 6.1355266
  },
  {
    "@id": 1356403880,
@@ -3056,8 +3056,8 @@
    "operator": "",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/vesteraas",
-   "@lat": 60.5707292,
-   "@lon": 10.8479883
+   "lat": 60.5707292,
+   "lon": 10.8479883
  },
  {
    "@id": 1356403887,
@@ -3065,8 +3065,8 @@
    "operator": "",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/10934/vetledalseter",
-   "@lat": 61.8450712,
-   "@lon": 7.1861445
+   "lat": 61.8450712,
+   "lon": 7.1861445
  },
  {
    "@id": 1356403896,
@@ -3074,8 +3074,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/vigdalstoel",
-   "@lat": 61.5188429,
-   "@lon": 7.3619192
+   "lat": 61.5188429,
+   "lon": 7.3619192
  },
  {
    "@id": 1356403905,
@@ -3083,8 +3083,8 @@
    "operator": "Stavanger Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/viglesdalen",
-   "@lat": 59.1593824,
-   "@lon": 6.4502971
+   "lat": 59.1593824,
+   "lon": 6.4502971
  },
  {
    "@id": 1356403916,
@@ -3092,8 +3092,8 @@
    "operator": "Stavanger Turistforening",
    "dnt:classification": "stengt",
    "website": "https://ut.no/hytte/101053/vinddalen",
-   "@lat": 58.9617762,
-   "@lon": 6.3265032
+   "lat": 58.9617762,
+   "lon": 6.3265032
  },
  {
    "@id": 1356403934,
@@ -3101,8 +3101,8 @@
    "operator": "Narvik og Omegn Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/vokterboligen",
-   "@lat": 68.4042148,
-   "@lon": 17.9855164
+   "lat": 68.4042148,
+   "lon": 17.9855164
  },
  {
    "@id": 1356403936,
@@ -3110,8 +3110,8 @@
    "operator": "Kristiansund og Nordmøre Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/10804/vollasetra",
-   "@lat": 62.5794918,
-   "@lon": 9.1245238
+   "lat": 62.5794918,
+   "lon": 9.1245238
  },
  {
    "@id": 1356403947,
@@ -3119,8 +3119,8 @@
    "operator": "",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/vaalet",
-   "@lat": 60.2786936,
-   "@lon": 12.4779623
+   "lat": 60.2786936,
+   "lon": 12.4779623
  },
  {
    "@id": 1356403964,
@@ -3128,8 +3128,8 @@
    "operator": "Kongsberg og Omegns Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/3.1747/",
-   "@lat": 59.945703,
-   "@lon": 9.0930136
+   "lat": 59.945703,
+   "lon": 9.0930136
  },
  {
    "@id": 1356403973,
@@ -3137,8 +3137,8 @@
    "operator": "DNT Sør",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/oeyuvsbu",
-   "@lat": 59.0243471,
-   "@lon": 7.2367089
+   "lat": 59.0243471,
+   "lon": 7.2367089
  },
  {
    "@id": 1356457768,
@@ -3146,8 +3146,8 @@
    "operator": "",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/fjellvassbu/",
-   "@lat": 60.9504499,
-   "@lon": 5.7943601
+   "lat": 60.9504499,
+   "lon": 5.7943601
  },
  {
    "@id": 1356459139,
@@ -3155,8 +3155,8 @@
    "operator": "",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/sylvarnes",
-   "@lat": 61.0939468,
-   "@lon": 6.2953302
+   "lat": 61.0939468,
+   "lon": 6.2953302
  },
  {
    "@id": 1606964723,
@@ -3164,8 +3164,8 @@
    "operator": "Molde og Romsdals Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/skorgedalsbu",
-   "@lat": 62.5968124,
-   "@lon": 7.6352083
+   "lat": 62.5968124,
+   "lon": 7.6352083
  },
  {
    "@id": 2066129571,
@@ -3173,8 +3173,8 @@
    "operator": "Hamar og Hedemarken Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/101060",
-   "@lat": 61.0697173,
-   "@lon": 11.1699911
+   "lat": 61.0697173,
+   "lon": 11.1699911
  },
  {
    "@id": 2789009843,
@@ -3182,8 +3182,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://www.ut.no/hytte/3.1584/",
-   "@lat": 60.1443014,
-   "@lon": 8.7987062
+   "lat": 60.1443014,
+   "lon": 8.7987062
  },
  {
    "@id": 2816789355,
@@ -3191,8 +3191,8 @@
    "operator": "",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/gramstad",
-   "@lat": 58.8842518,
-   "@lon": 5.7991103
+   "lat": 58.8842518,
+   "lon": 5.7991103
  },
  {
    "@id": 2895902384,
@@ -3200,8 +3200,8 @@
    "operator": "Stavanger Turistforening",
    "dnt:classification": "betjent",
    "website": "https://ut.no/hytte/101055/lysefjorden-turisthytte",
-   "@lat": 59.0549031,
-   "@lon": 6.6486725
+   "lat": 59.0549031,
+   "lon": 6.6486725
  },
  {
    "@id": 2971979832,
@@ -3209,8 +3209,8 @@
    "operator": "Stavanger Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/3.2443/",
-   "@lat": 59.5609726,
-   "@lon": 6.8590903
+   "lat": 59.5609726,
+   "lon": 6.8590903
  },
  {
    "@id": 3108548206,
@@ -3218,8 +3218,8 @@
    "operator": "Hamar og Hedemarken Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/lageraakvisla",
-   "@lat": 60.9245005,
-   "@lon": 11.1947995
+   "lat": 60.9245005,
+   "lon": 11.1947995
  },
  {
    "@id": 3112456260,
@@ -3227,8 +3227,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/skridulaupbu",
-   "@lat": 61.9032888,
-   "@lon": 7.6057552
+   "lat": 61.9032888,
+   "lon": 7.6057552
  },
  {
    "@id": 3112456269,
@@ -3236,8 +3236,8 @@
    "operator": "Ålesund-Sunnmøre Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/veltdalshytta",
-   "@lat": 62.1593708,
-   "@lon": 7.7206681
+   "lat": 62.1593708,
+   "lon": 7.7206681
  },
  {
    "@id": 3114489678,
@@ -3245,8 +3245,8 @@
    "operator": "Hamar og Hedemarken Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/101295",
-   "@lat": 61.2189838,
-   "@lon": 10.9326912
+   "lat": 61.2189838,
+   "lon": 10.9326912
  },
  {
    "@id": 3125297665,
@@ -3254,8 +3254,8 @@
    "operator": "Nord-Trøndelag Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://www.ut.no/hytte/3.1616/",
-   "@lat": 63.6828675,
-   "@lon": 12.2614124
+   "lat": 63.6828675,
+   "lon": 12.2614124
  },
  {
    "@id": 3169293543,
@@ -3263,8 +3263,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://www.ut.no/hytte/3.1980/",
-   "@lat": 61.2457713,
-   "@lon": 8.1292303
+   "lat": 61.2457713,
+   "lon": 8.1292303
  },
  {
    "@id": 3577262281,
@@ -3272,8 +3272,8 @@
    "operator": "Molde og Romsdals Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/brandstadbu",
-   "@lat": 62.6340821,
-   "@lon": 8.2971544
+   "lat": 62.6340821,
+   "lon": 8.2971544
  },
  {
    "@id": 3579325678,
@@ -3281,8 +3281,8 @@
    "operator": "Drammens og Oplands Turistforening",
    "dnt:classification": "ubetjent",
    "website": "",
-   "@lat": 59.9791746,
-   "@lon": 9.8659458
+   "lat": 59.9791746,
+   "lon": 9.8659458
  },
  {
    "@id": 3791845276,
@@ -3290,8 +3290,8 @@
    "operator": "Bergen og Hordaland Turlag",
    "dnt:classification": "",
    "website": "",
-   "@lat": 60.5007664,
-   "@lon": 5.9601822
+   "lat": 60.5007664,
+   "lon": 5.9601822
  },
  {
    "@id": 3792043284,
@@ -3299,8 +3299,8 @@
    "operator": "Bergen og Hordaland Turlag",
    "dnt:classification": "selvbetjent",
    "website": "",
-   "@lat": 60.4660796,
-   "@lon": 6.1255491
+   "lat": 60.4660796,
+   "lon": 6.1255491
  },
  {
    "@id": 3812829663,
@@ -3308,8 +3308,8 @@
    "operator": "Stavanger Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/boersteinen",
-   "@lat": 59.0349174,
-   "@lon": 6.8065227
+   "lat": 59.0349174,
+   "lon": 6.8065227
  },
  {
    "@id": 3986724650,
@@ -3317,8 +3317,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "betjent",
    "website": "https://ut.no/hytte/sandhaug",
-   "@lat": 60.1839337,
-   "@lon": 7.4818894
+   "lat": 60.1839337,
+   "lon": 7.4818894
  },
  {
    "@id": 3997897233,
@@ -3326,8 +3326,8 @@
    "operator": "Stavanger Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/holmavatn",
-   "@lat": 59.705892,
-   "@lon": 7.1252406
+   "lat": 59.705892,
+   "lon": 7.1252406
  },
  {
    "@id": 3998151837,
@@ -3335,8 +3335,8 @@
    "operator": "Stavanger Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/bleskestadmoen",
-   "@lat": 59.6258262,
-   "@lon": 6.9840852
+   "lat": 59.6258262,
+   "lon": 6.9840852
  },
  {
    "@id": 4148859174,
@@ -3344,8 +3344,8 @@
    "operator": "",
    "dnt:classification": "",
    "website": "https://ut.no/hytte/krokan-turisthytte",
-   "@lat": 59.8660539,
-   "@lon": 8.4733245
+   "lat": 59.8660539,
+   "lon": 8.4733245
  },
  {
    "@id": 4215896868,
@@ -3353,8 +3353,8 @@
    "operator": "Rana Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/sauvasshytta",
-   "@lat": 66.1865693,
-   "@lon": 14.7508782
+   "lat": 66.1865693,
+   "lon": 14.7508782
  },
  {
    "@id": 4516132194,
@@ -3362,8 +3362,8 @@
    "operator": "",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/maehlumsetra",
-   "@lat": 60.7202114,
-   "@lon": 10.5035074
+   "lat": 60.7202114,
+   "lon": 10.5035074
  },
  {
    "@id": 4523282226,
@@ -3371,8 +3371,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/10595/nydalshytta",
-   "@lat": 60.0241512,
-   "@lon": 10.8409804
+   "lat": 60.0241512,
+   "lon": 10.8409804
  },
  {
    "@id": 4770274456,
@@ -3380,8 +3380,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/10918/reinheim",
-   "@lat": 62.3411774,
-   "@lon": 9.3561922
+   "lat": 62.3411774,
+   "lon": 9.3561922
  },
  {
    "@id": 4770275398,
@@ -3389,8 +3389,8 @@
    "operator": "Trondhjems Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/dindalshytta",
-   "@lat": 62.5400207,
-   "@lon": 9.3411202
+   "lat": 62.5400207,
+   "lon": 9.3411202
  },
  {
    "@id": 4770276007,
@@ -3398,8 +3398,8 @@
    "operator": "Trondhjems Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/vassendsetra",
-   "@lat": 62.7134496,
-   "@lon": 9.1951681
+   "lat": 62.7134496,
+   "lon": 9.1951681
  },
  {
    "@id": 4770276323,
@@ -3407,8 +3407,8 @@
    "operator": "Kristiansund og Nordmøre Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/101147/amotdalshytta",
-   "@lat": 62.3592608,
-   "@lon": 9.1975064
+   "lat": 62.3592608,
+   "lon": 9.1975064
  },
  {
    "@id": 5506489896,
@@ -3416,8 +3416,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/stordalsbu",
-   "@lat": 60.06013,
-   "@lon": 8.0815105
+   "lat": 60.06013,
+   "lon": 8.0815105
  },
  {
    "@id": 5618358305,
@@ -3425,8 +3425,8 @@
    "operator": "",
    "dnt:classification": "betjent",
    "website": "https://www.kvipt.no/",
-   "@lat": 59.0633415,
-   "@lon": 7.9225012
+   "lat": 59.0633415,
+   "lon": 7.9225012
  },
  {
    "@id": 5650841233,
@@ -3434,8 +3434,8 @@
    "operator": "Kristiansund og Nordmøre Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/10568/storlisetra",
-   "@lat": 63.1843962,
-   "@lon": 9.0114048
+   "lat": 63.1843962,
+   "lon": 9.0114048
  },
  {
    "@id": 5903505082,
@@ -3443,8 +3443,8 @@
    "operator": "Kristiansund og Nordmøre Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/hardbakkhytta",
-   "@lat": 63.0996837,
-   "@lon": 8.7647845
+   "lat": 63.0996837,
+   "lon": 8.7647845
  },
  {
    "@id": 6018924885,
@@ -3452,8 +3452,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "ubetjent",
    "website": "",
-   "@lat": 59.9782303,
-   "@lon": 10.6953204
+   "lat": 59.9782303,
+   "lon": 10.6953204
  },
  {
    "@id": 6135572234,
@@ -3461,8 +3461,8 @@
    "operator": "Voss Utferdslag",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/torvedalshytta",
-   "@lat": 60.8232026,
-   "@lon": 6.3321234
+   "lat": 60.8232026,
+   "lon": 6.3321234
  },
  {
    "@id": 6135572239,
@@ -3470,8 +3470,8 @@
    "operator": "Voss Utferdslag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/tvinnestoelen",
-   "@lat": 60.7368093,
-   "@lon": 6.3645363
+   "lat": 60.7368093,
+   "lon": 6.3645363
  },
  {
    "@id": 6137075984,
@@ -3479,8 +3479,8 @@
    "operator": "Troms Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/trollvassbu",
-   "@lat": 69.7369921,
-   "@lon": 19.490023
+   "lat": 69.7369921,
+   "lon": 19.490023
  },
  {
    "@id": 6137347484,
@@ -3488,8 +3488,8 @@
    "operator": "Nord-Trøndelag Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/fjellhov",
-   "@lat": 63.662741,
-   "@lon": 10.903271
+   "lat": 63.662741,
+   "lon": 10.903271
  },
  {
    "@id": 6282702618,
@@ -3497,8 +3497,8 @@
    "operator": "Bodø og Omegns Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/fellvasstua",
-   "@lat": 66.8608989,
-   "@lon": 14.1555149
+   "lat": 66.8608989,
+   "lon": 14.1555149
  },
  {
    "@id": 6710835200,
@@ -3506,8 +3506,8 @@
    "operator": "Bodø og Omegns Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/beiarstua",
-   "@lat": 66.8574364,
-   "@lon": 14.6904496
+   "lat": 66.8574364,
+   "lon": 14.6904496
  },
  {
    "@id": 7055984682,
@@ -3515,8 +3515,8 @@
    "operator": "Voss Utferdslag",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/volahytta",
-   "@lat": 60.7392593,
-   "@lon": 6.3054696
+   "lat": 60.7392593,
+   "lon": 6.3054696
  },
  {
    "@id": 7292497840,
@@ -3524,8 +3524,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "betjent",
    "website": "https://ut.no/hytte/noerdstedalseter",
-   "@lat": 61.6426606,
-   "@lon": 7.7903755
+   "lat": 61.6426606,
+   "lon": 7.7903755
  },
  {
    "@id": 7621468648,
@@ -3533,8 +3533,8 @@
    "operator": "Troms Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/nonsbu",
-   "@lat": 69.7048193,
-   "@lon": 19.3154093
+   "lat": 69.7048193,
+   "lon": 19.3154093
  },
  {
    "@id": 8530799545,
@@ -3542,8 +3542,8 @@
    "operator": "Stavanger Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/taumevatn",
-   "@lat": 59.103043,
-   "@lon": 6.987115
+   "lat": 59.103043,
+   "lon": 6.987115
  },
  {
    "@id": 8530799556,
@@ -3551,8 +3551,8 @@
    "operator": "Stavanger Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/heibergtunet-storevatn",
-   "@lat": 59.147931,
-   "@lon": 7.022245
+   "lat": 59.147931,
+   "lon": 7.022245
  },
  {
    "@id": 8741100798,
@@ -3560,8 +3560,8 @@
    "operator": "Stavanger Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/langavatn",
-   "@lat": 58.9916203,
-   "@lon": 6.6147382
+   "lat": 58.9916203,
+   "lon": 6.6147382
  },
  {
    "@id": 9016113976,
@@ -3569,8 +3569,8 @@
    "operator": "Voss Utferdslag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/kaldavasshytta",
-   "@lat": 60.7022184,
-   "@lon": 7.0787383
+   "lat": 60.7022184,
+   "lon": 7.0787383
  },
  {
    "@id": 9112739913,
@@ -3578,8 +3578,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/tyssevassbu",
-   "@lat": 60.1561425,
-   "@lon": 6.8418495
+   "lat": 60.1561425,
+   "lon": 6.8418495
  },
  {
    "@id": 9112799590,
@@ -3587,8 +3587,8 @@
    "operator": "Bergen Turlag",
    "dnt:classification": "selvbetjent",
    "website": "",
-   "@lat": 60.1301761,
-   "@lon": 6.7562665
+   "lat": 60.1301761,
+   "lon": 6.7562665
  },
  {
    "@id": 9132777016,
@@ -3596,8 +3596,8 @@
    "operator": "Bergen Turlag",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/selhamar",
-   "@lat": 60.9136755,
-   "@lon": 6.2630249
+   "lat": 60.9136755,
+   "lon": 6.2630249
  },
  {
    "@id": 9132921981,
@@ -3605,8 +3605,8 @@
    "operator": "Bergen Turlag",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/norddalshytten",
-   "@lat": 61.0148023,
-   "@lon": 5.9956436
+   "lat": 61.0148023,
+   "lon": 5.9956436
  },
  {
    "@id": 9175855991,
@@ -3614,8 +3614,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/10778/katnosdammen",
-   "@lat": 60.1474386,
-   "@lon": 10.5916919
+   "lat": 60.1474386,
+   "lon": 10.5916919
  },
  {
    "@id": 9654304928,
@@ -3623,8 +3623,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "betjent",
    "website": "https://ut.no/hytte/10808",
-   "@lat": 60.7008348,
-   "@lon": 7.603477
+   "lat": 60.7008348,
+   "lon": 7.603477
  },
  {
    "@id": 9809293373,
@@ -3632,8 +3632,8 @@
    "operator": "Trondhjems Turistforening",
    "dnt:classification": "betjent",
    "website": "https://ut.no/hytte/trollheimshytta",
-   "@lat": 62.828999,
-   "@lon": 9.2398228
+   "lat": 62.828999,
+   "lon": 9.2398228
  },
  {
    "@id": 9809293378,
@@ -3641,8 +3641,8 @@
    "operator": "Trondhjems Turistforening",
    "dnt:classification": "betjent",
    "website": "https://ut.no/hytte/joeldalshytta",
-   "@lat": 62.8623199,
-   "@lon": 9.5089021
+   "lat": 62.8623199,
+   "lon": 9.5089021
  },
  {
    "@id": 9809293382,
@@ -3650,8 +3650,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "betjent",
    "website": "https://ut.no/hytte/glitterheim",
-   "@lat": 61.6226325,
-   "@lon": 8.6327313
+   "lat": 61.6226325,
+   "lon": 8.6327313
  },
  {
    "@id": 9809293383,
@@ -3659,8 +3659,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "betjent",
    "website": "https://ut.no/hytte/10917",
-   "@lat": 62.2942397,
-   "@lon": 9.3508918
+   "lat": 62.2942397,
+   "lon": 9.3508918
  },
  {
    "@id": 9810681362,
@@ -3668,8 +3668,8 @@
    "operator": "Haugesund Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/geitungen-fyr",
-   "@lat": 59.1319709,
-   "@lon": 5.2426431
+   "lat": 59.1319709,
+   "lon": 5.2426431
  },
  {
    "@id": 9810716499,
@@ -3677,8 +3677,8 @@
    "operator": "Troms Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/goldahytta",
-   "@lat": 69.0735076,
-   "@lon": 20.50243
+   "lat": 69.0735076,
+   "lon": 20.50243
  },
  {
    "@id": 9886486078,
@@ -3686,8 +3686,8 @@
    "operator": "Stavanger Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/tomannsbu",
-   "@lat": 58.831162,
-   "@lon": 6.643555
+   "lat": 58.831162,
+   "lon": 6.643555
  },
  {
    "@id": 9951248453,
@@ -3695,8 +3695,8 @@
    "operator": "Ålesund-Sunnmøre Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/velleseter",
-   "@lat": 62.268003,
-   "@lon": 6.6704915
+   "lat": 62.268003,
+   "lon": 6.6704915
  },
  {
    "@id": 9953892573,
@@ -3704,8 +3704,8 @@
    "operator": "Stavanger Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/sandvatn",
-   "@lat": 58.9542616,
-   "@lon": 6.6508131
+   "lat": 58.9542616,
+   "lon": 6.6508131
  },
  {
    "@id": 11177648171,
@@ -3713,8 +3713,8 @@
    "operator": "Lofoten Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/munkebu",
-   "@lat": 67.9275276,
-   "@lon": 13.0035016
+   "lat": 67.9275276,
+   "lon": 13.0035016
  },
  {
    "@id": 12756595187,
@@ -3722,8 +3722,8 @@
    "operator": "DNT Drammen og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/101266/hgevarde-nye",
-   "@lat": 60.2925718,
-   "@lon": 9.4604507
+   "lat": 60.2925718,
+   "lon": 9.4604507
  },
  {
    "@id": 12798384665,
@@ -3731,8 +3731,8 @@
    "operator": "Narvik og Omegn Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/gautelishytta",
-   "@lat": 68.0389216,
-   "@lon": 17.8377463
+   "lat": 68.0389216,
+   "lon": 17.8377463
  },
  {
    "@id": 12801124335,
@@ -3740,8 +3740,8 @@
    "operator": "Narvik og Omegn Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/cunoj%C3%A1vrihytta",
-   "@lat": 68.1977355,
-   "@lon": 18.0842547
+   "lat": 68.1977355,
+   "lon": 18.0842547
  },
  {
    "@id": 12801170419,
@@ -3749,8 +3749,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/dividalshytta",
-   "@lat": 68.6751673,
-   "@lon": 19.8233358
+   "lat": 68.6751673,
+   "lon": 19.8233358
  },
  {
    "@id": 12801170420,
@@ -3758,8 +3758,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/vuomahytta",
-   "@lat": 68.6723093,
-   "@lon": 19.486332
+   "lat": 68.6723093,
+   "lon": 19.486332
  },
  {
    "@id": 12801187428,
@@ -3767,8 +3767,8 @@
    "operator": "Narvik og Omegn Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/roeysvatn",
-   "@lat": 67.9605544,
-   "@lon": 16.8332562
+   "lat": 67.9605544,
+   "lon": 16.8332562
  },
  {
    "@id": 12801189403,
@@ -3776,8 +3776,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/gaskashytta",
-   "@lat": 68.6588825,
-   "@lon": 19.1203529
+   "lat": 68.6588825,
+   "lon": 19.1203529
  },
  {
    "@id": 12801189404,
@@ -3785,8 +3785,8 @@
    "operator": "Troms Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/altevasshytta",
-   "@lat": 68.6633431,
-   "@lon": 18.8907547
+   "lat": 68.6633431,
+   "lon": 18.8907547
  },
  {
    "@id": 12801189405,
@@ -3794,8 +3794,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/lappjordhytta",
-   "@lat": 68.5138739,
-   "@lon": 18.6316452
+   "lat": 68.5138739,
+   "lon": 18.6316452
  },
  {
    "@id": 12801260925,
@@ -3803,8 +3803,8 @@
    "operator": "Sulitjelma og Omegn Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/sorjushytta",
-   "@lat": 67.2067955,
-   "@lon": 16.2560849
+   "lat": 67.2067955,
+   "lon": 16.2560849
  },
  {
    "@id": 12802270079,
@@ -3812,8 +3812,8 @@
    "operator": "Alta og Omegn Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/bojobaeskihytta-%28bojobeaskihytta%29",
-   "@lat": 69.7919568,
-   "@lon": 24.17615
+   "lat": 69.7919568,
+   "lon": 24.17615
  },
  {
    "@id": 12804439597,
@@ -3821,8 +3821,8 @@
    "operator": "Aust-Agder Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/nutevasshytta",
-   "@lat": 59.106684,
-   "@lon": 7.8172173
+   "lat": 59.106684,
+   "lon": 7.8172173
  },
  {
    "@id": 12804468457,
@@ -3830,8 +3830,8 @@
    "operator": "DNT Telemark",
    "dnt:classification": "betjent",
    "website": "https://ut.no/hytte/101065/gaustatoppen-turisthytte",
-   "@lat": 59.8504041,
-   "@lon": 8.6555911
+   "lat": 59.8504041,
+   "lon": 8.6555911
  },
  {
    "@id": 12804487549,
@@ -3839,8 +3839,8 @@
    "operator": "Tønsberg og Omegn Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/trollsvannstua",
-   "@lat": 59.3577914,
-   "@lon": 10.030698
+   "lat": 59.3577914,
+   "lon": 10.030698
  },
  {
    "@id": 12804494998,
@@ -3848,8 +3848,8 @@
    "operator": "Haugesund Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/10187/sandvasshytta",
-   "@lat": 59.790206,
-   "@lon": 6.3068527
+   "lat": 59.790206,
+   "lon": 6.3068527
  },
  {
    "@id": 12804502308,
@@ -3857,8 +3857,8 @@
    "operator": "Ålesund-Sunnmøre Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/patchellhytta",
-   "@lat": 62.2114725,
-   "@lon": 6.7199313
+   "lat": 62.2114725,
+   "lon": 6.7199313
  },
  {
    "@id": 12804504305,
@@ -3866,8 +3866,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/rembesdalseter",
-   "@lat": 60.5341892,
-   "@lon": 7.2702246
+   "lat": 60.5341892,
+   "lon": 7.2702246
  },
  {
    "@id": 12804511784,
@@ -3875,8 +3875,8 @@
    "operator": "DNT",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/jashaugbu",
-   "@lat": 60.9793846,
-   "@lon": 6.737706
+   "lat": 60.9793846,
+   "lon": 6.737706
  },
  {
    "@id": 12804520589,
@@ -3884,8 +3884,8 @@
    "operator": "Bergen Turlag",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/aasedalen",
-   "@lat": 60.9655261,
-   "@lon": 6.2208312
+   "lat": 60.9655261,
+   "lon": 6.2208312
  },
  {
    "@id": 12804524713,
@@ -3893,8 +3893,8 @@
    "operator": "Bergen Turlag",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/10340/vardadalsbu",
-   "@lat": 60.9466296,
-   "@lon": 5.889963
+   "lat": 60.9466296,
+   "lon": 5.889963
  },
  {
    "@id": 12804531429,
@@ -3902,8 +3902,8 @@
    "operator": "Bergen Turlag",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/hadlaskard",
-   "@lat": 60.2507773,
-   "@lon": 7.1665373
+   "lat": 60.2507773,
+   "lon": 7.1665373
  },
  {
    "@id": 12804531431,
@@ -3911,8 +3911,8 @@
    "operator": "Kristiansund og Nordmøre Turistforening",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/10796",
-   "@lat": 62.444085,
-   "@lon": 8.9017554
+   "lat": 62.444085,
+   "lon": 8.9017554
  },
  {
    "@id": 12804544376,
@@ -3920,8 +3920,8 @@
    "operator": "DNT Oslo og Omegn",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/sprongdalshytta",
-   "@lat": 61.7402837,
-   "@lon": 7.4884654
+   "lat": 61.7402837,
+   "lon": 7.4884654
  },
  {
    "@id": 12804561064,
@@ -3929,8 +3929,8 @@
    "operator": "Bergen Turlag",
    "dnt:classification": "selvbetjent",
    "website": "https://ut.no/hytte/solrenningen",
-   "@lat": 61.0086735,
-   "@lon": 6.1309917
+   "lat": 61.0086735,
+   "lon": 6.1309917
  },
  {
    "@id": 12804564864,
@@ -3938,8 +3938,8 @@
    "operator": "Harstad Turlag",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/toralfsbu",
-   "@lat": 68.565889,
-   "@lon": 15.972117
+   "lat": 68.565889,
+   "lon": 15.972117
  },
  {
    "@id": 12804579605,
@@ -3947,8 +3947,8 @@
    "operator": "DNT Gjøvik & Omegn",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/fogdehytta",
-   "@lat": 60.8042452,
-   "@lon": 10.6260973
+   "lat": 60.8042452,
+   "lon": 10.6260973
  },
  {
    "@id": 12804587321,
@@ -3956,8 +3956,8 @@
    "operator": "Bodø og Omegns Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/taakeheimen",
-   "@lat": 66.6941929,
-   "@lon": 13.829859
+   "lat": 66.6941929,
+   "lon": 13.829859
  },
  {
    "@id": 12804592617,
@@ -3965,8 +3965,8 @@
    "operator": "Stavanger Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/blaafjellenden",
-   "@lat": 58.9283772,
-   "@lon": 6.5298973
+   "lat": 58.9283772,
+   "lon": 6.5298973
  },
  {
    "@id": 12804604888,
@@ -3974,8 +3974,8 @@
    "operator": "Bodø og Omegns Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/graataadalstua",
-   "@lat": 66.7870454,
-   "@lon": 14.4726882
+   "lat": 66.7870454,
+   "lon": 14.4726882
  },
  {
    "@id": 12804619055,
@@ -3983,7 +3983,7 @@
    "operator": "Stavanger Turistforening",
    "dnt:classification": "ubetjent",
    "website": "https://ut.no/hytte/sandsa",
-   "@lat": 59.4341413,
-   "@lon": 6.5867627
+   "lat": 59.4341413,
+   "lon": 6.5867627
  }
 ]

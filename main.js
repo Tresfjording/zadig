@@ -29,16 +29,13 @@ function visAlleHytter() {
   const box = document.getElementById("box2");
   if (!box) return;
 
-  const gyldige = allCabins.filter(h => h.lat && h.lon);
+  const gyldige = allCabins.filter(h => typeof h.lat === "number" && typeof h.lon === "number");
   console.log("🏕️ Gyldige hytter:", gyldige.length);
 
   gyldige.forEach(hytte => {
     const marker = L.marker([hytte.lat, hytte.lon], { icon: cabinIcon }).addTo(map);
 
-    marker.on("mouseover", () => {
-      visHytteInfo(hytte);
-    });
-
+    marker.on("mouseover", () => visHytteInfo(hytte));
     marker.on("mouseout", () => {
       box.classList.add("fade-out");
       setTimeout(() => {
