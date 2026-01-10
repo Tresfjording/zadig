@@ -24,6 +24,71 @@ const cabinIcon = L.icon({
   iconAnchor: [8, 8]
 });
 
+
+async function renderAllHytteMarkers() {
+  if (!cabins || cabins.length === 0) return;
+
+  const prisområder = ["NO1", "NO2", "NO3", "NO4", "NO5"];
+  const strømpriser = {};
+  const nå = new Date();
+  const år = nå.getFullYear();
+  const måned = String(nå.getMonth() + 1).padStart(2, "0");
+  const dag = String(nå.getDate()).padStart(2, "0");
+  const time = nå.getHours();
+
+  // 1. Hent strømpris for alle prisområder
+  await Promise.all(prisområder.map(async sone => {
+    const url = `https://www.hvakosterstrommen.no/api/v1/prices/${år}/${måned}-${dag}_${sone}.json`;
+    try {
+      const res = await fetch(url);
+      const data = await res.json();
+      strømpriser[sone] = data;
+    } catch (err) {
+      console.warn(`⚠️ Klarte ikke å hente pris for ${sone}:`, err);
+    }
+  }));
+
+  // 2. Beregn landsgjennomsnitt
+  const priserNå = prisområder
+    .map(sone => strømpriser[sone]?.[time]?.NOK_per_kWh)
+    .filter(p => typeof p === "number");
+
+  const snittpris = priserNå.reduce((a, b) => a + b, 0) / priserNå.length;
+  console.log("⚡ Strømpris nå:", priserNå, "Snitt:", snittpris.toFixed(2));
+
+  // 3. Tegn hytter med fargekodet ikon
+  cabins.forEach(h => {
+    const lat = parseFloat(String(h.h_lat).replace(",", "."));
+    const lon = parseFloat(String(h.h_lon).replace(",", "."));
+    const sone = h.t_sone;
+
+    if (!lat || !lon || !sone || !strømpriser[sone]) return;
+
+    const pris = strømpriser[sone][time]?.NOK_per_kWh;
+    if (typeof pris !== "number") return;
+
+    let farge = "orange";
+    if (pris < snittpris - 0.05) farge = "green";
+    else if (pris > snittpris + 0.05) farge = "red";
+
+    const ikon = L.icon({
+      iconUrl: `image/cabin16_${farge}.png`,
+      iconSize: [18, 18],
+      iconAnchor: [9, 9]
+    });
+
+    const marker = L.marker([lat, lon], {
+      icon: ikon,
+      title: `${h.h_navn} (${h.h_type || "ukjent"})`
+    });
+
+    marker.on("mouseover", () => updateInfoBoxWithCabin(h));
+    marker.addTo(map);
+  });
+}
+
+
+
 // 🧭 Vis alle hytter med hover
 function visAlleHytter() {
   const box = document.getElementById("box2");
