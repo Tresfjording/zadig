@@ -22,6 +22,15 @@ const cabinIcon = L.icon({
 // OPPSTART – Laster både tettsteder og hytter
 // --------------------------------------------------
 
+function visAlleSteder() {
+  allPlaces.forEach(p => {
+    if (p.lat && p.lon) {
+      L.marker([p.lat, p.lon]).addTo(map)
+        .bindPopup(p.tettsted || "Uten navn");
+    }
+  });
+}
+
 Promise.all([
   fetch("tettsteder_3.json").then(res => res.json()),
   fetch("dnt_hytter.json").then(res => res.json()) // ← endret her
@@ -86,14 +95,7 @@ function initMap() {
 }
 
 
-function visAlleSteder() {
-  allPlaces.forEach(p => {
-    if (p.lat && p.lon) {
-      L.marker([p.lat, p.lon]).addTo(map)
-        .bindPopup(p.tettsted || "Uten navn");
-    }
-  });
-}
+
 
 
   // Kartlag
