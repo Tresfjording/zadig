@@ -73,6 +73,8 @@ function handleSearch(label) {
 }
 
 let activeIndex = -1;
+const searchInput = document.getElementById("place-search");
+const suggestionsEl = document.getElementById("search-suggestions");
 
 searchInput.addEventListener("keydown", (e) => {
   const items = suggestionsEl.querySelectorAll(".suggestion-item");
