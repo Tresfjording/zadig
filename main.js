@@ -32,16 +32,15 @@ function initMap() {
 // -------------------- DATA --------------------
 
 async function loadData() {
-  const [samletResp, factsResp] = await Promise.all([
-    fetch("https://www.tresfjording.no/samlet.json"),
+  const [tettstederResp, hytterResp, factsResp] = await Promise.all([
+    fetch("tettsteder_3.json"),
+    fetch("dnt_hytter.json"),
     fetch("facts_all.json")
   ]);
 
-  const samletData = await samletResp.json();
+  places = await tettstederResp.json();
+  cabins = await hytterResp.json();
   facts = await factsResp.json();
-
-  places = samletData.filter(d => d.t_knavn);
-  cabins = samletData.filter(d => d.h_navn);
 }
 
 // -------------------- SØK --------------------
