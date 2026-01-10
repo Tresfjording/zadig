@@ -1,28 +1,5 @@
 
-window.onload = () => {
-  console.log("🧪 DOM er klar");
 
-  initMap(); // 🧭 må kalles før du bruker map
-
-  Promise.all([
-    fetch("tettsteder_3.json").then(res => res.json()),
-    fetch("dnt_hytter.json").then(res => res.json())
-  ])
-  .then(([steder, hytter]) => {
-    allPlaces = steder;
-    allCabins = hytter;
-
-    console.log("✅ Tettsteder:", allPlaces.length);
-    console.log("✅ Hytter:", allCabins.length);
-
-    buildSearchIndex();
-    visAlleSteder();
-    visAlleHytter();
-  })
-  .catch(err => {
-    console.error("❌ Klarte ikke å laste data:", err);
-  });
-};
 // --------------------------------------------------
 // GLOBALE VARIABLER - 10.01.2026  - 16:32:51
 
@@ -40,52 +17,22 @@ const cabinIcon = L.icon({
   popupAnchor: [0, -18], // hvor popup vises i forhold til ikonet
 });
 
-// --------------------------------------------------
-// KART (Leaflet – tilpass om du bruker noe annet)
-// --------------------------------------------------
-
-function initMap() {
-  if (map) {
-    map.remove(); // 🔥 Fjern eksisterende kart hvis det finnes
-  }
-
-  map = L.map("map").setView([62.5, 7.5], 8);
-
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    attribution: '&copy; OpenStreetMap-bidragsytere'
-  }).addTo(map);
-
-  console.log("Kart initialisert");
-}
 
 // --------------------------------------------------
 // OPPSTART – Laster både tettsteder og hytter
 // --------------------------------------------------
 
 function visAlleSteder() {
-  allCabins.forEach(() => {
-  const marker = L.marker([hytte.lat, hytte.lon], { icon: cabinIcon }).addTo(map);
-});
- allPlaces.forEach(sted => {
-  const marker = L.marker([sted.lat, sted.lon], { icon: placeIcon }).addTo(map);
- 
-  marker.on("mouseover", () => {
-    visStedInfo(sted);
+  allPlaces.forEach(p => {
+    if (p.lat && p.lon) {
+      L.marker([p.lat, p.lon]).addTo(map)
+        .bindPopup(p.tettsted || "Uten navn");
+    }
   });
-
-  marker.on("mouseout", () => {
-    const box = document.getElementById("box1");
-    box.classList.add("fade-out");
-    setTimeout(() => {
-      box.innerHTML = "";
-      box.classList.remove("fade-out");
-    }, 300);
-  });
-});
-
-
+}
 function visAlleHytter() {
   const box = document.getElementById("box2");
+const marker = L.marker([hytte.lat, hytte.lon], { icon: cabinIcon }).addTo(map);
   const gyldige = allCabins.filter(h => h.lat && h.lon);
   //console.log("Gyldige hytter:", gyldige.length);
 
@@ -129,7 +76,7 @@ Promise.all([
     visAlleHytter();
   })
   .catch(err => {
-  //  console.error("🚨 Klarte ikke å laste data:", err);
+    console.error("🚨 Klarte ikke å laste data:", err);
   });
 
   function visHytteInfo(hytte) {
@@ -149,7 +96,23 @@ Promise.all([
   `;
 }
 
+// --------------------------------------------------
+// KART (Leaflet – tilpass om du bruker noe annet)
+// --------------------------------------------------
 
+function initMap() {
+  if (map) {
+    map.remove(); // 🔥 Fjern eksisterende kart hvis det finnes
+  }
+
+  map = L.map("map").setView([62.5, 7.5], 8);
+
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: '&copy; OpenStreetMap-bidragsytere'
+  }).addTo(map);
+
+  console.log("Kart initialisert");
+}
 
 
 
@@ -471,4 +434,4 @@ function visHytteInfo(hytte) {
     <p><strong>Type:</strong> ${klassifisering}</p>
     <p><strong>Nettside:</strong> ${nettside}</p>
   `;
-}}
+}
