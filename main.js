@@ -163,6 +163,33 @@ searchInput.addEventListener("keydown", (e) => {
   }
 });
 
+
+function handleSearch(label) {
+  const match = searchIndex.find(item =>
+    item.label.toLowerCase() === label.toLowerCase()
+  );
+
+  if (!match) return;
+
+  document.getElementById("place-search").value = label;
+
+  const suggestionsEl = document.getElementById("search-suggestions");
+  suggestionsEl.innerHTML = "";
+  suggestionsEl.style.display = "none";
+
+  if (match.type === "t") {
+    focusOnPlace(match.ref);
+    updateBox1(match.ref);
+    updateBox3(match.ref);
+    updateBox4();
+  } else if (match.type === "h") {
+    focusOnCabin(match.ref);
+    updateBox2(match.ref);
+    updateBox4();
+  }
+}
+
+
 // 🧭 Vis alle hytter med hover
 function visAlleHytter() {
   const box = document.getElementById("box2");
