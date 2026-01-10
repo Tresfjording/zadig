@@ -146,6 +146,22 @@ if (match.type === "t") {
   updateBox4();
 }
 
+searchInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    const first = suggestionsEl.querySelector(".suggestion-item");
+    if (first) {
+      first.click();
+    } else {
+      const label = searchInput.value;
+      handleSearch(label);
+
+      searchInput.value = label;
+      suggestionsEl.innerHTML = "";
+      suggestionsEl.style.display = "none";
+    }
+  }
+});
 
 // 🧭 Vis alle hytter med hover
 function visAlleHytter() {
