@@ -47,13 +47,13 @@ async function loadData() {
 function buildSearchIndex() {
   searchIndex = [];
 
-  places.forEach(t => {
-    if (t.t_knavn) searchIndex.push({ type: "t", label: t.t_knavn, ref: t });
-  });
+places.forEach(t => {
+  if (t.tettsted) searchIndex.push({ type: "t", label: t.tettsted, ref: t });
+});
 
-  cabins.forEach(h => {
-    if (h.h_navn) searchIndex.push({ type: "h", label: h.h_navn, ref: h });
-  });
+cabins.forEach(h => {
+  if (h.name) searchIndex.push({ type: "h", label: h.name, ref: h });
+});
 
   searchIndex.sort((a, b) => a.label.localeCompare(b.label));
 }
@@ -148,15 +148,15 @@ function handleSearch(label) {
 // -------------------- KARTFOKUS --------------------
 
 function focusOnPlace(place) {
-  const lat = parseFloat(String(place.k_lat_decimal).replace(",", "."));
-  const lon = parseFloat(String(place.k_lon_decimal).replace(",", "."));
+  const lat = parseFloat(t.lat);
+const lon = parseFloat(t.lon);
   if (!lat || !lon) return;
   map.setView([lat, lon], 11);
 }
 
 function focusOnCabin(hytte) {
-  const lat = parseFloat(String(hytte.h_lat).replace(",", "."));
-  const lon = parseFloat(String(hytte.h_lon).replace(",", "."));
+const lat = parseFloat(h.lat);
+const lon = parseFloat(h.lon);
   if (!lat || !lon) return;
   map.setView([lat, lon], 13);
 }
@@ -167,13 +167,13 @@ function updateBox1(place) {
   const el = document.getElementById("box1");
   if (!el || !place) return;
 
-  fetchCurrentPowerPrice(place.t_sone).then(pris => {
-    el.innerHTML = `
-      <p><strong>Tettsted:</strong> ${place.t_knavn}</p>
-      <p><strong>Sone:</strong> ${place.t_sone}</p>
-      <p><strong>Strømpris nå:</strong> ${pris?.toFixed(2) ?? "?"} kr/kWh</p>
-    `;
-  });
+  fetchCurrentPowerPrice(t.sone).then(pris => {
+  el.innerHTML = `
+    <p><strong>Tettsted:</strong> ${t.tettsted}</p>
+    <p><strong>Sone:</strong> ${t.sone}</p>
+    <p><strong>Strømpris nå:</strong> ${pris?.toFixed(2) ?? "?"} kr/kWh</p>
+  `;
+});
 }
 
 function updateBox2(hytte) {
@@ -191,16 +191,17 @@ function updateBox3(place) {
   const el = document.getElementById("box3");
   if (!el || !place) return;
 
-  el.innerHTML = `
-    <p><strong>K.nr:</strong> ${place["t_k.nr"]}</p>
-    <p><strong>Fylke:</strong> ${place.t_fnavn}</p>
-    <p><strong>Antall ansatte:</strong> ${place.k_ansatte}</p>
-    <p><strong>Areal:</strong> ${place.k_areal} km²</p>
-    <p><strong>Tilskudd:</strong> ${place.k_tilskudd} kr</p>
-    <p><strong>Språk:</strong> ${place.k_språk}</p>
-    <p><em>${place.k_slagord}</em></p>
-    <p><em>${place.f_slagord}</em></p>
-  `;
+ el.innerHTML = `
+  <p><strong>K.nr:</strong> ${t.k_nr}</p>
+  <p><strong>Fylke:</strong> ${t.fylke}</p>
+  <p><strong>Antall:</strong> ${t.antall}</p>
+  <p><strong>Areal:</strong> ${t.areal} km²</p>
+  <p><strong>Sysselsatte:</strong> ${t.sysselsatte}</p>
+  <p><strong>Tilskudd:</strong> ${t.tilskudd} kr</p>
+  <p><strong>Språk:</strong> ${t.språk}</p>
+  <p><em>${t.k_slagord}</em></p>
+  <p><em>${t.f_slagord}</em></p>
+`;
 }
 
 function updateBox4() {
@@ -244,7 +245,7 @@ async function renderAllHytteMarkers() {
   const måned = String(nå.getMonth() + 1).padStart(2, "0");
   const dag = String(nå.getDate()).padStart(2, "0");
   const time = nå.getHours();
-
+console.log("Hytte:", h.h_navn, h.h_lat, h.h_lon, h.t_sone);
   await Promise.all(prisområder.map(async sone => {
     const url = `https://www.hvakosterstrommen.no/api/v1/prices/${år}/${måned}-${dag}_${sone}.json`;
     try {
