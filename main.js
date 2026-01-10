@@ -40,8 +40,9 @@ const marker = L.marker([hytte.lat, hytte.lon], { icon: cabinIcon }).addTo(map);
     const marker = L.marker([hytte.lat, hytte.lon], { icon: cabinIcon }).addTo(map);
 
     // 🚫 Ikke bruk .bindPopup()
-allCabins.forEach(hytte => {
+allCabins.forEach(() => {
   const marker = L.marker([hytte.lat, hytte.lon], { icon: cabinIcon }).addTo(map);
+});
 
   marker.on("mouseover", () => {
     visHytteInfo(hytte);
