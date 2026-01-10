@@ -1,7 +1,7 @@
 
 
 // --------------------------------------------------
-// GLOBALE VARIABLER - 10.01.2026  - 07:51:07
+// GLOBALE VARIABLER - 10.01.2026  - 07:52:29
 // --------------------------------------------------
 let map;
 let allCabins = [];
@@ -25,7 +25,7 @@ const cabinIcon = L.icon({
 
 Promise.all([
   fetch("tettsteder_3.json").then(res => res.json()),
-  fetch("hytter.json").then(res => res.json())
+  fetch("dnt_hytter.json").then(res => res.json())
 ])
   .then(([placesData, cabinsData]) => {
     allPlaces = placesData;
