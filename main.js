@@ -72,7 +72,7 @@ Promise.all([
     console.log("✅ Tettsteder lastet:", allPlaces.length);
     console.log("✅ Hytter lastet:", allCabins.length);
 
-    //initMap(); // 👈 må kalles før du bruker map
+    initMap(); // 👈 må kalles før du bruker map
     buildSearchIndex();
     visAlleSteder(); // valgfritt
     visAlleHytter();
