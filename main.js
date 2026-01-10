@@ -393,14 +393,14 @@ function visAlleHytter() {
         visHytteInfo(hytte);
       });
 
-      marker.on('mouseout', () => {
-        const box = document.getElementById("box2");
-        box.classList.add("fade-out");
-        setTimeout(() => {
-          box.innerHTML = "";
-          box.classList.remove("fade-out");
-        }, 300);
-      });
+      //marker.on('mouseout', () => {
+        //const box = document.getElementById("box2");
+        //box.classList.add("fade-out");
+        //setTimeout(() => {
+          //box.innerHTML = "";
+          //box.classList.remove("fade-out");
+        //}, 300);
+      //});
     }
   });
 }
