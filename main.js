@@ -1,28 +1,104 @@
 let map;
-let allPlaces = [];
-let allCabins = [];
+let places = [];
+let cabins = [];
+let facts = [];
+let searchIndex = [];
 
-// 🗺️ Initialiser Leaflet-kartet
+document.addEventListener("DOMContentLoaded", () => {
+  initMap();
+  loadData()
+    .then(() => {
+      buildSearchIndex();
+      initSearch();
+      renderAllHytteMarkers();
+      updateBox4();
+    })
+    .catch(err => {
+      console.error("Feil ved lasting:", err);
+      renderAllHytteMarkers();
+      updateBox4();
+    });
+});
+
+// -------------------- KART --------------------
+
 function initMap() {
-  if (map) {
-    map.remove(); // 🔥 Fjern eksisterende kart hvis det finnes
-  }
-
-  map = L.map("map").setView([62.5, 7.5], 8);
-
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    attribution: '&copy; OpenStreetMap-bidragsytere'
+  map = L.map("map").setView([63.0, 11.0], 6);
+  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "© OpenStreetMap"
   }).addTo(map);
-
-  console.log("🗺️ Kart initialisert");
 }
 
-// 🏕️ Egendefinert ikon for hytter
-const cabinIcon = L.icon({
-  iconUrl: "image/cabin16.png",
-  iconSize: [16, 16],
-  iconAnchor: [8, 8]
-});
+// -------------------- DATA --------------------
+
+async function loadData() {
+  const [samletResp, factsResp] = await Promise.all([
+    fetch("https://www.tresfjording.no/samlet.json"),
+    fetch("facts_all.json")
+  ]);
+
+  const samletData = await samletResp.json();
+  facts = await factsResp.json();
+
+  places = samletData.filter(d => d.t_knavn);
+  cabins = samletData.filter(d => d.h_navn);
+}
+
+// -------------------- SØK --------------------
+
+function buildSearchIndex() {
+  searchIndex = [];
+
+  places.forEach(t => {
+    if (t.t_knavn) searchIndex.push({ type: "t", label: t.t_knavn, ref: t });
+  });
+
+  cabins.forEach(h => {
+    if (h.h_navn) searchIndex.push({ type: "h", label: h.h_navn, ref: h });
+  });
+
+  searchIndex.sort((a, b) => a.label.localeCompare(b.label));
+}
+
+function initSearch() {
+  const searchInput = document.getElementById("place-search");
+  const suggestionsEl = document.getElementById("search-suggestions");
+  let activeIndex = -1;
+
+  if (!searchInput || !suggestionsEl) return;
+
+  searchInput.addEventListener("input", () => {
+    const query = searchInput.value.toLowerCase();
+    const matches = searchIndex.filter(item =>
+      item.label.toLowerCase().includes(query)
+    );
+    renderSuggestions(matches);
+    activeIndex = -1;
+  });
+
+  searchInput.addEventListener("keydown", (e) => {
+    const items = suggestionsEl.querySelectorAll(".suggestion-item");
+
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      activeIndex = (activeIndex + 1) % items.length;
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      activeIndex = (activeIndex - 1 + items.length) % items.length;
+    } else if (e.key === "Enter") {
+      e.preventDefault();
+      if (activeIndex >= 0 && items[activeIndex]) {
+        items[activeIndex].click();
+      } else {
+        handleSearch(searchInput.value);
+      }
+    }
+
+    items.forEach((item, index) => {
+      item.classList.toggle("active", index === activeIndex);
+    });
+  });
+}
 
 function renderSuggestions(matches) {
   const suggestionsEl = document.getElementById("search-suggestions");
@@ -55,7 +131,6 @@ function handleSearch(label) {
   if (!match) return;
 
   document.getElementById("place-search").value = label;
-
   const suggestionsEl = document.getElementById("search-suggestions");
   suggestionsEl.innerHTML = "";
   suggestionsEl.style.display = "none";
@@ -72,95 +147,23 @@ function handleSearch(label) {
   }
 }
 
-let activeIndex = -1;
-const searchInput = document.getElementById("place-search");
-const suggestionsEl = document.getElementById("search-suggestions");
+// -------------------- KARTFOKUS --------------------
 
-searchInput.addEventListener("keydown", (e) => {
-  const items = suggestionsEl.querySelectorAll(".suggestion-item");
-
-  if (e.key === "ArrowDown") {
-    e.preventDefault();
-    activeIndex = (activeIndex + 1) % items.length;
-  } else if (e.key === "ArrowUp") {
-    e.preventDefault();
-    activeIndex = (activeIndex - 1 + items.length) % items.length;
-  } else if (e.key === "Enter") {
-    e.preventDefault();
-    if (activeIndex >= 0 && items[activeIndex]) {
-      items[activeIndex].click();
-    } else {
-      handleSearch(searchInput.value);
-    }
-  }
-
-  items.forEach((item, index) => {
-    item.classList.toggle("active", index === activeIndex);
-  });
-});
-
-
-async function renderAllHytteMarkers() {
-  if (!cabins || cabins.length === 0) return;
-
-  const prisområder = ["NO1", "NO2", "NO3", "NO4", "NO5"];
-  const strømpriser = {};
-  const nå = new Date();
-  const år = nå.getFullYear();
-  const måned = String(nå.getMonth() + 1).padStart(2, "0");
-  const dag = String(nå.getDate()).padStart(2, "0");
-  const time = nå.getHours();
-
-  // 1. Hent strømpris for alle prisområder
-  await Promise.all(prisområder.map(async sone => {
-    const url = `https://www.hvakosterstrommen.no/api/v1/prices/${år}/${måned}-${dag}_${sone}.json`;
-    try {
-      const res = await fetch(url);
-      const data = await res.json();
-      strømpriser[sone] = data;
-    } catch (err) {
-      console.warn(`⚠️ Klarte ikke å hente pris for ${sone}:`, err);
-    }
-  }));
-
-  // 2. Beregn landsgjennomsnitt
-  const priserNå = prisområder
-    .map(sone => strømpriser[sone]?.[time]?.NOK_per_kWh)
-    .filter(p => typeof p === "number");
-
-  const snittpris = priserNå.reduce((a, b) => a + b, 0) / priserNå.length;
-  console.log("⚡ Strømpris nå:", priserNå, "Snitt:", snittpris.toFixed(2));
-
-  // 3. Tegn hytter med fargekodet ikon
-  cabins.forEach(h => {
-    const lat = parseFloat(String(h.h_lat).replace(",", "."));
-    const lon = parseFloat(String(h.h_lon).replace(",", "."));
-    const sone = h.t_sone;
-
-    if (!lat || !lon || !sone || !strømpriser[sone]) return;
-
-    const pris = strømpriser[sone][time]?.NOK_per_kWh;
-    if (typeof pris !== "number") return;
-
-    let farge = "orange";
-    if (pris < snittpris - 0.05) farge = "green";
-    else if (pris > snittpris + 0.05) farge = "red";
-
-    const ikon = L.icon({
-      iconUrl: `image/cabin16_${farge}.png`,
-      iconSize: [18, 18],
-      iconAnchor: [9, 9]
-    });
-
-    const marker = L.marker([lat, lon], {
-      icon: ikon,
-      title: `${h.h_navn} (${h.h_type || "ukjent"})`
-    });
-
-    marker.on("mouseover", () => updateInfoBoxWithCabin(h));
-    marker.addTo(map);
-  });
+function focusOnPlace(place) {
+  const lat = parseFloat(String(place.k_lat_decimal).replace(",", "."));
+  const lon = parseFloat(String(place.k_lon_decimal).replace(",", "."));
+  if (!lat || !lon) return;
+  map.setView([lat, lon], 11);
 }
+
+function focusOnCabin(hytte) {
+  const lat = parseFloat(String(hytte.h_lat).replace(",", "."));
+  const lon = parseFloat(String(hytte.h_lon).replace(",", "."));
+  if (!lat || !lon) return;
+  map.setView([lat, lon], 13);
+}
+
+// -------------------- INFOBOKSER --------------------
 
 function updateBox1(place) {
   const el = document.getElementById("box1");
@@ -182,7 +185,7 @@ function updateBox2(hytte) {
   el.innerHTML = `
     <p><strong>Navn:</strong> ${hytte.h_navn}</p>
     <p><strong>Type:</strong> ${hytte.h_type}</p>
-    <p><a href="${hytte.h_url}" target="_blank">Se mer</a></p>
+    <p><a href="${hytte.h_url}" target="_blank">Se mer på UT.no</a></p>
   `;
 }
 
@@ -193,7 +196,7 @@ function updateBox3(place) {
   el.innerHTML = `
     <p><strong>K.nr:</strong> ${place["t_k.nr"]}</p>
     <p><strong>Fylke:</strong> ${place.t_fnavn}</p>
-    <p><strong>Antall:</strong> ${place.k_ansatte}</p>
+    <p><strong>Antall ansatte:</strong> ${place.k_ansatte}</p>
     <p><strong>Areal:</strong> ${place.k_areal} km²</p>
     <p><strong>Tilskudd:</strong> ${place.k_tilskudd} kr</p>
     <p><strong>Språk:</strong> ${place.k_språk}</p>
@@ -205,140 +208,44 @@ function updateBox3(place) {
 function updateBox4() {
   const el = document.getElementById("box4");
   if (!el || !facts.length) return;
-
   const random = facts[Math.floor(Math.random() * facts.length)];
   el.textContent = random.fact;
 }
 
-if (match.type === "t") {
-  focusOnPlace(match.ref);
-  updateBox1(match.ref);
-  updateBox3(match.ref);
-  updateBox4();
-} else if (match.type === "h") {
-  focusOnCabin(match.ref);
-  updateBox2(match.ref);
-  updateBox4();
+// -------------------- STRØMPRIS --------------------
+
+function buildPriceUrl(priceArea) {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  return `https://www.hvakosterstrommen.no/api/v1/prices/${year}/${month}-${day}_${priceArea}.json`;
 }
 
-searchInput.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") {
-    e.preventDefault();
-    const first = suggestionsEl.querySelector(".suggestion-item");
-    if (first) {
-      first.click();
-    } else {
-      const label = searchInput.value;
-      handleSearch(label);
-
-      searchInput.value = label;
-      suggestionsEl.innerHTML = "";
-      suggestionsEl.style.display = "none";
-    }
-  }
-});
-
-
-function handleSearch(label) {
-  const match = searchIndex.find(item =>
-    item.label.toLowerCase() === label.toLowerCase()
-  );
-
-  if (!match) return;
-
-  document.getElementById("place-search").value = label;
-
-  const suggestionsEl = document.getElementById("search-suggestions");
-  suggestionsEl.innerHTML = "";
-  suggestionsEl.style.display = "none";
-
-  if (match.type === "t") {
-    focusOnPlace(match.ref);
-    updateBox1(match.ref);
-    updateBox3(match.ref);
-    updateBox4();
-  } else if (match.type === "h") {
-    focusOnCabin(match.ref);
-    updateBox2(match.ref);
-    updateBox4();
+async function fetchCurrentPowerPrice(priceArea) {
+  const url = buildPriceUrl(priceArea);
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    const hour = new Date().getHours();
+    const entry = data[hour];
+    return entry?.NOK_per_kWh ?? null;
+  } catch (err) {
+    console.error("Feil ved henting av strømpris:", err);
+    return null;
   }
 }
 
+// -------------------- HYTTE-MARKØRER --------------------
 
-// 🧭 Vis alle hytter med hover
-function visAlleHytter() {
-  const box = document.getElementById("box2");
-  if (!box) return;
+async function renderAllHytteMarkers() {
+  const prisområder = ["NO1", "NO2", "NO3", "NO4", "NO5"];
+  const strømpriser = {};
+  const nå = new Date();
+  const år = nå.getFullYear();
+  const måned = String(nå.getMonth() + 1).padStart(2, "0");
+  const dag = String(nå.getDate()).padStart(2, "0");
+  const time = nå.getHours();
 
-  const gyldige = allCabins.filter(h => typeof h.lat === "number" && typeof h.lon === "number");
-  console.log("🏕️ Gyldige hytter:", gyldige.length);
-
-  gyldige.forEach(hytte => {
-    const marker = L.marker([hytte.lat, hytte.lon], { icon: cabinIcon }).addTo(map);
-
-    marker.on("mouseover", () => visHytteInfo(hytte));
-    marker.on("mouseout", () => {
-      box.classList.add("fade-out");
-      setTimeout(() => {
-        box.innerHTML = "";
-        box.classList.remove("fade-out");
-      }, 300);
-    });
-  });
-}
-
-// 🧾 Vis info om én hytte i #box2
-function visHytteInfo(hytte) {
-  const box = document.getElementById("box2");
-  if (!box) return;
-
-  box.classList.remove("fade-out");
-
-  const navn = hytte.name || "Uten navn";
-  const klassifisering = hytte["dnt:classification"] || "Ukjent type";
-  const nettside = hytte.website
-    ? `<a href="${hytte.website}" target="_blank">${hytte.website}</a>`
-    : "Ingen nettside";
-
-  box.innerHTML = `
-    <h3>${navn}</h3>
-    <p><strong>Type:</strong> ${klassifisering}</p>
-    <p><strong>Nettside:</strong> ${nettside}</p>
-  `;
-}
-
-// 🔍 Dummy-funksjon for søkeindeks (kan utvides senere)
-function buildSearchIndex() {
-  console.log("🔍 Søkeindeks ikke implementert ennå");
-}
-
-// 🌍 Valgfri: vis tettsteder (placeholder)
-function visAlleSteder() {
-  console.log("📍 visAlleSteder() er ikke implementert ennå");
-}
-
-// 🚀 Start når siden er klar
-window.onload = () => {
-  console.log("🚦 Starter app");
-
-  initMap();
-
-  Promise.all([
-    fetch("tettsteder_3.json").then(res => res.json()),
-    fetch("dnt_hytter.json").then(res => res.json())
-  ])
-  .then(([steder, hytter]) => {
-    allPlaces = steder;
-    allCabins = hytter;
-
-    console.log("✅ Tettsteder:", allPlaces.length);
-    console.log("✅ Hytter:", allCabins.length);
-
-    buildSearchIndex();
-    visAlleSteder(); // valgfritt
-    visAlleHytter();
-  })
-  .catch(err => {
-    console.error("❌ Klarte ikke å laste data:", err);
-  });
-};
+  await Promise.all(prisområder.map(async sone => {
+    const url = `https://www.h
