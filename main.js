@@ -1,7 +1,7 @@
 
 
 // --------------------------------------------------
-// GLOBALE VARIABLER - 10.01.2026  - 08:10:58
+// GLOBALE VARIABLER - 10.01.2026  - 08:23:38
 // --------------------------------------------------
 let map;
 let allCabins = [];
@@ -16,13 +16,14 @@ const cabinIcon = L.icon({
   popupAnchor: [0, -18], // hvor popup vises i forhold til ikonet
 });
 
+
 // --------------------------------------------------
 // OPPSTART – Laster både tettsteder og hytter
 // --------------------------------------------------
 
 Promise.all([
   fetch("tettsteder_3.json").then(res => res.json()),
-  fetch("dnt_hytter.json").then(res => res.json())
+  fetch("dnt_hytter.json").then(res => res.json()) // ← endret her
 ])
   .then(([placesData, cabinsData]) => {
     allPlaces = placesData;
@@ -37,6 +38,8 @@ Promise.all([
   .catch(err => {
     console.error("🚨 Klarte ikke å laste data:", err);
   });
+
+
 // --------------------------------------------------
 // KART (Leaflet – tilpass om du bruker noe annet)
 // --------------------------------------------------
