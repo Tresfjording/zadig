@@ -84,7 +84,7 @@ html, body {
     background: #f0f0f0;
 }
 
-/.info-panel {
+.info-panel {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
