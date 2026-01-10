@@ -40,6 +40,10 @@ function visAlleHytter() {
     const marker = L.marker([hytte.lat, hytte.lon], { icon: cabinIcon }).addTo(map);
 
     // 🚫 Ikke bruk .bindPopup()
+marker.on("mouseover", () => {
+  console.log("🖱️ Hover på:", hytte.name || "Uten navn");
+  visHytteInfo(hytte);
+});
 
     // ✅ Hover inn
     marker.on("mouseover", () => {
