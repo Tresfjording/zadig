@@ -1,7 +1,7 @@
 
 
 // --------------------------------------------------
-// GLOBALE VARIABLER - 10.01.2026  - 12:24:16
+// GLOBALE VARIABLER - 10.01.2026  - 16:30:08
 
 // --------------------------------------------------
 let map;
@@ -26,8 +26,8 @@ Promise.all([
   fetch("tettsteder_3.json").then(res => res.json()),
   fetch("dnt_hytter.json").then(res => res.json()) // ← endret her
 ])
-  .then(([allplacesData, cabinsData]) => {
-    allPlaces = placesData;
+  .then(([allPlacesData, cabinsData]) => {
+    allPlaces = allPlacesData;
     allCabins = cabinsData;
 
     console.log("✅ Tettsteder lastet:", allPlaces.length);
