@@ -15,9 +15,6 @@ const cabinIcon = L.icon({
   iconAnchor: [12, 18], // punktet som treffer bakken
   popupAnchor: [0, -18], // hvor popup vises i forhold til ikonet
 });
-// --------------------------------------------------
-// OPPSTART
-// --------------------------------------------------
 
 // --------------------------------------------------
 // OPPSTART – Laster både tettsteder og hytter
