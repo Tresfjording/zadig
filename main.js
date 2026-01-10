@@ -1,7 +1,7 @@
 
 
 // --------------------------------------------------
-// GLOBALE VARIABLER - 10.01.2026  - 12:07:22
+// GLOBALE VARIABLER - 10.01.2026  - 12:17:37
 
 // --------------------------------------------------
 let map;
@@ -58,7 +58,7 @@ function initMap() {
 
 
 function visAlleSteder() {
-  places.forEach(p => {
+  allPlaces.forEach(p => {
     if (p.lat && p.lon) {
       L.marker([p.lat, p.lon]).addTo(map)
         .bindPopup(p.name || p.title || p.navn || "Uten navn");
@@ -120,7 +120,7 @@ async function loadData() {
   allCabins = await cabinsRes.json();
   allPlaces = await placesRes.json();
 
-  console.log("places:", allPlaces.length);
+  console.log("allPlaces:", allPlaces.length);
   console.log("cabins:", allCabins.length);
 }
 
@@ -289,7 +289,7 @@ function handleSearch(queryOrLabel) {
 
   const query = queryOrLabel.trim().toLowerCase();
 
-  const match = places.find(p =>
+  const match = allPlaces.find(p =>
     p.name?.toLowerCase() === query ||
     p.title?.toLowerCase() === query ||
     p.navn?.toLowerCase() === query ||
