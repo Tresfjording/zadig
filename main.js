@@ -28,7 +28,7 @@ function visAlleSteder() {
 });
  allPlaces.forEach(sted => {
   const marker = L.marker([sted.lat, sted.lon], { icon: placeIcon }).addTo(map);
-
+ 
   marker.on("mouseover", () => {
     visStedInfo(sted);
   });
@@ -447,4 +447,4 @@ function visHytteInfo(hytte) {
     <p><strong>Type:</strong> ${klassifisering}</p>
     <p><strong>Nettside:</strong> ${nettside}</p>
   `;
-}
+}}
