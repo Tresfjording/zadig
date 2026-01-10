@@ -2,7 +2,7 @@
 console.log("main.js er lastet");
 
 // --------------------------------------------------
-// GLOBALE VARIABLER - 10.01.2026  - 01:01:09
+// GLOBALE VARIABLER - 10.01.2026  - 01:09:39
 // --------------------------------------------------
 let map;
 let allCabins = [];
@@ -12,9 +12,9 @@ let suggestionActiveIndex = -1;
 
 const cabinIcon = L.icon({
   iconUrl: "/image/cabin16.png",
-  iconSize: [24, 24], // juster etter behov
-  iconAnchor: [12, 24], // punktet som treffer bakken
-  popupAnchor: [0, -24], // hvor popup vises i forhold til ikonet
+  iconSize: [18, 18], // juster etter behov
+  iconAnchor: [12, 18], // punktet som treffer bakken
+  popupAnchor: [0, -18], // hvor popup vises i forhold til ikonet
 });
 // --------------------------------------------------
 // OPPSTART
