@@ -26,7 +26,7 @@ Promise.all([
   fetch("tettsteder_3.json").then(res => res.json()),
   fetch("dnt_hytter.json").then(res => res.json()) // ← endret her
 ])
-  .then(([placesData, cabinsData]) => {
+  .then(([allplacesData, cabinsData]) => {
     allPlaces = placesData;
     allCabins = cabinsData;
 
@@ -141,9 +141,9 @@ function visAlleSteder() {
 async function loadData() {
   // Tilpass URL-er til dine faktiske filer
   const cabinsRes = await fetch("dnt_hytter.json");
-  const placesRes = await fetch("tettsteder_3.json");
+  const allplacesRes = await fetch("tettsteder_3.json");
 
-  if (!cabinsRes.ok || !placesRes.ok) {
+  if (!cabinsRes.ok || !allplacesRes.ok) {
     throw new Error("Kunne ikke laste datafiler");
   }
 
