@@ -57,6 +57,7 @@ allCabins.forEach(() => {
     }, 300);
   });
 });
+}
 
 Promise.all([
   fetch("tettsteder_3.json").then(res => res.json()),
