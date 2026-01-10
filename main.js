@@ -40,26 +40,22 @@ const marker = L.marker([hytte.lat, hytte.lon], { icon: cabinIcon }).addTo(map);
     const marker = L.marker([hytte.lat, hytte.lon], { icon: cabinIcon }).addTo(map);
 
     // 🚫 Ikke bruk .bindPopup()
-marker.on("mouseover", () => {
-  console.log("🖱️ Hover på:", hytte.name || "Uten navn");
-  visHytteInfo(hytte);
-});
+allCabins.forEach(hytte => {
+  const marker = L.marker([hytte.lat, hytte.lon], { icon: cabinIcon }).addTo(map);
 
-    // ✅ Hover inn
-    marker.on("mouseover", () => {
-      visHytteInfo(hytte);
-    });
-
-    // ✅ Hover ut
-    marker.on("mouseout", () => {
-      box.classList.add("fade-out");
-      setTimeout(() => {
-        box.innerHTML = "";
-        box.classList.remove("fade-out");
-      }, 300);
-    });
+  marker.on("mouseover", () => {
+    visHytteInfo(hytte);
   });
-}
+
+  marker.on("mouseout", () => {
+    const box = document.getElementById("box2");
+    box.classList.add("fade-out");
+    setTimeout(() => {
+      box.innerHTML = "";
+      box.classList.remove("fade-out");
+    }, 300);
+  });
+});
 
 Promise.all([
   fetch("tettsteder_3.json").then(res => res.json()),
