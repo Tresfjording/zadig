@@ -2,7 +2,7 @@
 //console.log("main.js er lastet");
 
 // --------------------------------------------------
-// GLOBALE VARIABLER - 10.01.2026  - 06:02:00
+// GLOBALE VARIABLER - a7c37c1ceb0ca39cd5660e8595719d47cf7fc695 - 10.01.2026  - 06:42:19
 // --------------------------------------------------
 let map;
 let allCabins = [];
