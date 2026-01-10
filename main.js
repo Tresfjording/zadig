@@ -1,5 +1,28 @@
 
-console.log("🧪 main.js er lastet");
+window.onload = () => {
+  console.log("🧪 DOM er klar");
+
+  initMap(); // 🧭 må kalles før du bruker map
+
+  Promise.all([
+    fetch("tettsteder_3.json").then(res => res.json()),
+    fetch("dnt_hytter.json").then(res => res.json())
+  ])
+  .then(([steder, hytter]) => {
+    allPlaces = steder;
+    allCabins = hytter;
+
+    console.log("✅ Tettsteder:", allPlaces.length);
+    console.log("✅ Hytter:", allCabins.length);
+
+    buildSearchIndex();
+    visAlleSteder();
+    visAlleHytter();
+  })
+  .catch(err => {
+    console.error("❌ Klarte ikke å laste data:", err);
+  });
+};
 // --------------------------------------------------
 // GLOBALE VARIABLER - 10.01.2026  - 16:32:51
 
