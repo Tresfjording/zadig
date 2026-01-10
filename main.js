@@ -66,7 +66,7 @@ Promise.all([
     console.log("✅ Tettsteder lastet:", allPlaces.length);
     console.log("✅ Hytter lastet:", allCabins.length);
 
-    initMap(); // 👈 må kalles før du bruker map
+    //initMap(); // 👈 må kalles før du bruker map
     buildSearchIndex();
     visAlleSteder(); // valgfritt
     visAlleHytter();
@@ -97,11 +97,14 @@ Promise.all([
 // --------------------------------------------------
 
 function initMap() {
-  map = L.map("map").setView([62.5, 7.5], 8); // Midt i Møre og Romsdal
+  if (map) {
+    map.remove(); // 🔥 Fjern eksisterende kart hvis det finnes
+  }
+
+  map = L.map("map").setView([62.5, 7.5], 8);
 
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    attribution: "© OpenStreetMap",
-    maxZoom: 14,
+    attribution: '&copy; OpenStreetMap-bidragsytere'
   }).addTo(map);
 
   console.log("Kart initialisert");
