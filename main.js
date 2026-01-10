@@ -56,7 +56,7 @@ function initMap() {
   console.log("Kart initialisert");
 }
 
-
+let allPlaces = [];
 function visAlleSteder() {
   allPlaces.forEach(p => {
     if (p.lat && p.lon) {
