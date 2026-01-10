@@ -87,6 +87,64 @@ async function renderAllHytteMarkers() {
   });
 }
 
+function updateBox1(place) {
+  const el = document.getElementById("box1");
+  if (!el || !place) return;
+
+  fetchCurrentPowerPrice(place.t_sone).then(pris => {
+    el.innerHTML = `
+      <p><strong>Tettsted:</strong> ${place.t_knavn}</p>
+      <p><strong>Sone:</strong> ${place.t_sone}</p>
+      <p><strong>Strømpris nå:</strong> ${pris?.toFixed(2) ?? "?"} kr/kWh</p>
+    `;
+  });
+}
+
+function updateBox2(hytte) {
+  const el = document.getElementById("box2");
+  if (!el || !hytte) return;
+
+  el.innerHTML = `
+    <p><strong>Navn:</strong> ${hytte.h_navn}</p>
+    <p><strong>Type:</strong> ${hytte.h_type}</p>
+    <p><a href="${hytte.h_url}" target="_blank">Se mer</a></p>
+  `;
+}
+
+function updateBox3(place) {
+  const el = document.getElementById("box3");
+  if (!el || !place) return;
+
+  el.innerHTML = `
+    <p><strong>K.nr:</strong> ${place["t_k.nr"]}</p>
+    <p><strong>Fylke:</strong> ${place.t_fnavn}</p>
+    <p><strong>Antall:</strong> ${place.k_ansatte}</p>
+    <p><strong>Areal:</strong> ${place.k_areal} km²</p>
+    <p><strong>Tilskudd:</strong> ${place.k_tilskudd} kr</p>
+    <p><strong>Språk:</strong> ${place.k_språk}</p>
+    <p><em>${place.k_slagord}</em></p>
+    <p><em>${place.f_slagord}</em></p>
+  `;
+}
+
+function updateBox4() {
+  const el = document.getElementById("box4");
+  if (!el || !facts.length) return;
+
+  const random = facts[Math.floor(Math.random() * facts.length)];
+  el.textContent = random.fact;
+}
+
+if (match.type === "t") {
+  focusOnPlace(match.ref);
+  updateBox1(match.ref);
+  updateBox3(match.ref);
+  updateBox4();
+} else if (match.type === "h") {
+  focusOnCabin(match.ref);
+  updateBox2(match.ref);
+  updateBox4();
+}
 
 
 // 🧭 Vis alle hytter med hover
