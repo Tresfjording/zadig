@@ -1,8 +1,8 @@
 
-console.log("main.js er lastet");
+//console.log("main.js er lastet");
 
 // --------------------------------------------------
-// GLOBALE VARIABLER - 10.01.2026  - 05:27:25
+// GLOBALE VARIABLER - 10.01.2026  - 05:59:26
 // --------------------------------------------------
 let map;
 let allCabins = [];
