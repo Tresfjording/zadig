@@ -25,7 +25,7 @@ const cabinIcon = L.icon({
 // --------------------------------------------------
 
 Promise.all([
-  fetch("tettsteder_3.json").then(res => res.json()),
+  fetch("tettsteder.json").then(res => res.json()),
   fetch("hytter_3.json").then(res => res.json())
 ])
   .then(([placesData, cabinsData]) => {
