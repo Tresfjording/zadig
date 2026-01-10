@@ -20,20 +20,27 @@ const cabinIcon = L.icon({
 // OPPSTART
 // --------------------------------------------------
 
-let places = [];
+// --------------------------------------------------
+// OPPSTART – Laster både tettsteder og hytter
+// --------------------------------------------------
 
-fetch("tettsteder_3.json")
-  .then(res => res.json())
-  .then(data => {
-    places = data;
-    console.log("Tettsteder lastet:", places.length);
+Promise.all([
+  fetch("tettsteder_3.json").then(res => res.json()),
+  fetch("hytter_3.json").then(res => res.json())
+])
+  .then(([placesData, cabinsData]) => {
+    allPlaces = placesData;
+    allCabins = cabinsData;
 
-    visAlleSteder(); // valgfritt: vis alle hytter/tettsteder på kartet
+    console.log("✅ Tettsteder lastet:", allPlaces.length);
+    console.log("✅ Hytter lastet:", allCabins.length);
+
+    buildSearchIndex();
+    visAlleSteder(); // valgfritt
   })
   .catch(err => {
-    console.error("Klarte ikke å laste tettsteder_3.json:", err);
+    console.error("🚨 Klarte ikke å laste data:", err);
   });
-
 // --------------------------------------------------
 // KART (Leaflet – tilpass om du bruker noe annet)
 // --------------------------------------------------
