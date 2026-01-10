@@ -26,13 +26,24 @@ function visAlleSteder() {
   allCabins.forEach(() => {
   const marker = L.marker([hytte.lat, hytte.lon], { icon: cabinIcon }).addTo(map);
 });
-  allPlaces.forEach(p => {
-    if (p.lat && p.lon) {
-      L.marker([p.lat, p.lon]).addTo(map)
-        .bindPopup(p.tettsted || "Uten navn");
-    }
+ allPlaces.forEach(sted => {
+  const marker = L.marker([sted.lat, sted.lon], { icon: placeIcon }).addTo(map);
+
+  marker.on("mouseover", () => {
+    visStedInfo(sted);
   });
-}
+
+  marker.on("mouseout", () => {
+    const box = document.getElementById("box1");
+    box.classList.add("fade-out");
+    setTimeout(() => {
+      box.innerHTML = "";
+      box.classList.remove("fade-out");
+    }, 300);
+  });
+});
+
+
 function visAlleHytter() {
   const box = document.getElementById("box2");
   const gyldige = allCabins.filter(h => h.lat && h.lon);
