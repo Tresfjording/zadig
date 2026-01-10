@@ -197,20 +197,20 @@ function buildSearchIndex() {
 
   // Tettsteder
   if (Array.isArray(allPlaces)) {
-    const validPlaces = allPlaces.filter(p => typeof p.name === "string" && p.name.trim() !== "");
-    console.log("Gyldige tettsteder:", validPlaces.length);
-    searchIndex.push(
-      ...validPlaces.map(p => ({
-        label: p.name.trim(),
-        type: "sted",
-        ref: p
-      }))
-    );
-  } else {
-    console.warn("⚠️ allPlaces er ikke en array:", allPlaces);
-  }
+  const validPlaces = allPlaces.filter(p =>
+    typeof p.tettsted === "string" && p.tettsted.trim() !== ""
+  );
+  console.log("Gyldige tettsteder:", validPlaces.length);
+  searchIndex.push(
+    ...validPlaces.map(p => ({
+      label: p.tettsted.trim(),
+      type: "sted",
+      ref: p
+    }))
+  );
+}
 
-  console.log("✅ Søkeindeks bygget:", searchIndex.length, "elementer");
+ 
 }
 
 // --------------------------------------------------
