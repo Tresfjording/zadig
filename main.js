@@ -40,6 +40,23 @@ const cabinIcon = L.icon({
   popupAnchor: [0, -18], // hvor popup vises i forhold til ikonet
 });
 
+// --------------------------------------------------
+// KART (Leaflet – tilpass om du bruker noe annet)
+// --------------------------------------------------
+
+function initMap() {
+  if (map) {
+    map.remove(); // 🔥 Fjern eksisterende kart hvis det finnes
+  }
+
+  map = L.map("map").setView([62.5, 7.5], 8);
+
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: '&copy; OpenStreetMap-bidragsytere'
+  }).addTo(map);
+
+  console.log("Kart initialisert");
+}
 
 // --------------------------------------------------
 // OPPSTART – Laster både tettsteder og hytter
@@ -132,23 +149,7 @@ Promise.all([
   `;
 }
 
-// --------------------------------------------------
-// KART (Leaflet – tilpass om du bruker noe annet)
-// --------------------------------------------------
 
-function initMap() {
-  if (map) {
-    map.remove(); // 🔥 Fjern eksisterende kart hvis det finnes
-  }
-
-  map = L.map("map").setView([62.5, 7.5], 8);
-
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    attribution: '&copy; OpenStreetMap-bidragsytere'
-  }).addTo(map);
-
-  console.log("Kart initialisert");
-}
 
 
 
