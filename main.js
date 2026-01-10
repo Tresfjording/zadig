@@ -31,6 +31,30 @@ function visAlleSteder() {
   });
 }
 
+function visAlleHytter() {
+  const box = document.getElementById("box2");
+
+  const gyldige = allCabins.filter(h => h.lat && h.lon);
+  console.log("Gyldige hytter:", gyldige.length);
+
+  gyldige.forEach(hytte => {
+    const marker = L.marker([hytte.lat, hytte.lon], { icon: cabinIcon }).addTo(map);
+
+    marker.on("mouseover", () => {
+      visHytteInfo(hytte);
+    });
+
+    marker.on("mouseout", () => {
+      box.classList.add("fade-out");
+      setTimeout(() => {
+        box.innerHTML = "";
+        box.classList.remove("fade-out");
+      }, 300);
+    });
+  });
+}
+
+
 Promise.all([
   fetch("tettsteder_3.json").then(res => res.json()),
   fetch("dnt_hytter.json").then(res => res.json()) // ← endret her
@@ -67,17 +91,6 @@ Promise.all([
     <p><strong>Nettside:</strong> ${nettside}</p>
   `;
 }
-
-marker.on('mouseout', () => {
-  const box = document.getElementById("box2");
-  box.classList.add("fade-out");
-
-  setTimeout(() => {
-    box.innerHTML = "";
-    box.classList.remove("fade-out");
-  }, 300); // matcher CSS-transition-tid
-});
-
 
 // --------------------------------------------------
 // KART (Leaflet – tilpass om du bruker noe annet)
