@@ -249,4 +249,45 @@ async function renderAllHytteMarkers() {
     const url = `https://www.hvakosterstrommen.no/api/v1/prices/${år}/${måned}-${dag}_${sone}.json`;
     try {
       const res = await fetch(url);
-      strømpriser[sone] = await res.json();
+         strømpriser[sone] = await res.json();
+  }));
+
+  const priserNå = prisområder
+    .map(sone => strømpriser[sone]?.[time]?.NOK_per_kWh)
+    .filter(p => typeof p === "number");
+
+  const snittpris = priserNå.reduce((a, b) => a + b, 0) / priserNå.length;
+
+  cabins.forEach(h => {
+    const lat = parseFloat(String(h.h_lat).replace(",", "."));
+    const lon = parseFloat(String(h.h_lon).replace(",", "."));
+    const sone = h.t_sone;
+
+    if (!lat || !lon || !sone || !strømpriser[sone]) return;
+
+    const pris = strømpriser[sone][time]?.NOK_per_kWh;
+    if (typeof pris !== "number") return;
+
+    let farge = "orange";
+    if (pris < snittpris - 0.05) farge = "green";
+    else if (pris > snittpris + 0.05) farge = "red";
+
+    const ikon = L.icon({
+      iconUrl: `image/cabin16_${farge}.png`,
+      iconSize: [18, 18],
+      iconAnchor: [9, 9]
+    });
+
+    const marker = L.marker([lat, lon], {
+      icon: ikon,
+      title: `${h.h_navn} (${h.h_type || "ukjent"})`
+    });
+
+    marker.on("mouseover", () => {
+      updateBox2(h);
+      updateBox4();
+    });
+
+    marker.addTo(map);
+  });
+}
