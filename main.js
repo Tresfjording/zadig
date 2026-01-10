@@ -1,8 +1,7 @@
 
-//console.log("main.js er lastet");
 
 // --------------------------------------------------
-// GLOBALE VARIABLER - 10.01.2026  - 07:36:29
+// GLOBALE VARIABLER - 10.01.2026  - 07:51:07
 // --------------------------------------------------
 let map;
 let allCabins = [];
@@ -25,8 +24,8 @@ const cabinIcon = L.icon({
 // --------------------------------------------------
 
 Promise.all([
-  fetch("tettsteder.json").then(res => res.json()),
-  fetch("hytter_3.json").then(res => res.json())
+  fetch("tettsteder_3.json").then(res => res.json()),
+  fetch("hytter.json").then(res => res.json())
 ])
   .then(([placesData, cabinsData]) => {
     allPlaces = placesData;
