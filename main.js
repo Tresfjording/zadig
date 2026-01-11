@@ -239,3 +239,36 @@ function updateBox4() {
   const random = facts[Math.floor(Math.random() * facts.length)];
   el.innerHTML = `<p><em>💡 ${random.fact || random}</em></p>`;
 }
+async function renderAllHytteMarkers() {
+  if (!cabins || cabins.length === 0) return;
+
+  const nå = new Date();
+  const time = nå.getHours();
+
+  for (const h of cabins) {
+    const lat = parseFloat(String(h.h_lat).replace(",", "."));
+    const lon = parseFloat(String(h.h_lon).replace(",", "."));
+    if (!lat || !lon) continue;
+
+    const pris = await fetchCurrentPowerPrice(h.t_sone);
+    const farge = getPriceColor(pris);
+
+    const ikon = L.icon({
+      iconUrl: `image/cabin16_${farge}.png`,
+      iconSize: [18, 18],
+      iconAnchor: [9, 9]
+    });
+
+    const marker = L.marker([lat, lon], {
+      title: `${h.h_navn} (${h.h_type || "ukjent"})`,
+      icon: ikon
+    });
+
+    marker.on("mouseover", () => {
+      updateBox2(h);
+      updateBox4();
+    });
+
+    marker.addTo(map);
+  }
+}
