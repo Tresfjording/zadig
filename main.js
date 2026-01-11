@@ -232,8 +232,10 @@ function updateBox3(t) {
   `;
 }
 
-function updateBox4() {
+ffunction updateBox4() {
   const el = document.getElementById("box4");
   if (!el || !facts.length) return;
 
-  const random = facts[Math
+  const random = facts[Math.floor(Math.random() * facts.length)];
+  el.innerHTML = `<p><em>💡 ${random.fact || random}</em></p>`;
+}
