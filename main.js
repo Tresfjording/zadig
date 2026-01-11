@@ -328,10 +328,11 @@ async function renderAllHytteMarkers() {
   }
 }
 
-const pris = strømpriser[sone]?.[time]?.NOK_per_kWh;
-if (typeof pris !== "number") return;
+
   await Promise.all(prisområder.map(async sone => {
     const url = `https://www.hvakosterstrommen.no/api/v1/prices/${år}/${måned}-${dag}_${sone}.json`;
+   const pris = strømpriser[sone]?.[time]?.NOK_per_kWh;
+if (typeof pris !== "number") return; 
     try {
       const res = await fetch(url);
       strømpriser[sone] = await res.json();
