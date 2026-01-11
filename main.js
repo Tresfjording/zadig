@@ -47,22 +47,22 @@ async function loadData() {
 function buildSearchIndex() {
   searchIndex = [];
 
-places.forEach(t => {
-  if (t.tettsted) searchIndex.push({ type: "t", label: t.tettsted, ref: t });
-});
+  places.forEach(t => {
+    if (t.tettsted) searchIndex.push({ type: "t", label: t.tettstad, ref: t });
+  });
 
-cabins.forEach(h => {
-  const lat = parseFloat(h.lat);
-  const lon = parseFloat(h.lon);
-  const navn = h.name;
-  console.log("Hytte:", navn, lat, lon);
+  cabins.forEach(h => {
+    const lat = parseFloat(h.lat);
+    const lon = parseFloat(h.lon);
+    const navn = h.name;
+    console.log("Hytte:", navn, lat, lon);
 
-
-  if (h.name) searchIndex.push({ type: "h", label: h.name, ref: h });
-});
+    if (h.name) searchIndex.push({ type: "h", label: h.name, ref: h });
+  });
 
   searchIndex.sort((a, b) => a.label.localeCompare(b.label));
 }
+
 
 function initSearch() {
   const searchInput = document.getElementById("place-search");
@@ -154,15 +154,15 @@ function handleSearch(label) {
 // -------------------- KARTFOKUS --------------------
 
 function focusOnPlace(place) {
-  const lat = parseFloat(t.lat);
-const lon = parseFloat(t.lon);
+  const lat = parseFloat(place.lat);
+  const lon = parseFloat(place.lon);
   if (!lat || !lon) return;
   map.setView([lat, lon], 11);
 }
 
 function focusOnCabin(hytte) {
-const lat = parseFloat(h.lat);
-const lon = parseFloat(h.lon);
+  const lat = parseFloat(hytte.lat);
+  const lon = parseFloat(hytte.lon);
   if (!lat || !lon) return;
   map.setView([lat, lon], 13);
 }
@@ -173,13 +173,13 @@ function updateBox1(place) {
   const el = document.getElementById("box1");
   if (!el || !place) return;
 
-  fetchCurrentPowerPrice(t.sone).then(pris => {
-  el.innerHTML = `
-    <p><strong>Tettsted:</strong> ${t.tettsted}</p>
-    <p><strong>Sone:</strong> ${t.sone}</p>
-    <p><strong>Strømpris nå:</strong> ${pris?.toFixed(2) ?? "?"} kr/kWh</p>
-  `;
-});
+  fetchCurrentPowerPrice(place.sone).then(pris => {
+    el.innerHTML = `
+      <p><strong>Tettsted:</strong> ${place.tettsted}</p>
+      <p><strong>Sone:</strong> ${place.sone}</p>
+      <p><strong>Strømpris nå:</strong> ${pris?.toFixed(2) ?? "?"} kr/kWh</p>
+    `;
+  });
 }
 
 function updateBox2(hytte) {
@@ -197,17 +197,17 @@ function updateBox3(place) {
   const el = document.getElementById("box3");
   if (!el || !place) return;
 
- el.innerHTML = `
-  <p><strong>K.nr:</strong> ${t.k_nr}</p>
-  <p><strong>Fylke:</strong> ${t.fylke}</p>
-  <p><strong>Antall:</strong> ${t.antall}</p>
-  <p><strong>Areal:</strong> ${t.areal} km²</p>
-  <p><strong>Sysselsatte:</strong> ${t.sysselsatte}</p>
-  <p><strong>Tilskudd:</strong> ${t.tilskudd} kr</p>
-  <p><strong>Språk:</strong> ${t.språk}</p>
-  <p><em>${t.k_slagord}</em></p>
-  <p><em>${t.f_slagord}</em></p>
-`;
+  el.innerHTML = `
+    <p><strong>K.nr:</strong> ${place.k_nr}</p>
+    <p><strong>Fylke:</strong> ${place.fylke}</p>
+    <p><strong>Antall:</strong> ${place.antall}</p>
+    <p><strong>Areal:</strong> ${place.areal} km²</p>
+    <p><strong>Sysselsatte:</strong> ${place.sysselsatte}</p>
+    <p><strong>Tilskudd:</strong> ${place.tilskudd} kr</p>
+    <p><strong>Språk:</strong> ${place.språk}</p>
+    <p><em>${place.k_slagord}</em></p>
+    <p><em>${place.f_slagord}</em></p>
+  `;
 }
 
 function updateBox4() {
@@ -251,7 +251,7 @@ async function renderAllHytteMarkers() {
   const måned = String(nå.getMonth() + 1).padStart(2, "0");
   const dag = String(nå.getDate()).padStart(2, "0");
   const time = nå.getHours();
-console.log("Hytte:", h.h_navn, h.h_lat, h.h_lon, h.t_sone);
+
   await Promise.all(prisområder.map(async sone => {
     const url = `https://www.hvakosterstrommen.no/api/v1/prices/${år}/${måned}-${dag}_${sone}.json`;
     try {
