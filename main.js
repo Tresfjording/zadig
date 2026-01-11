@@ -267,9 +267,7 @@ async function fetchCurrentPowerPrice(priceArea) {
 
 async function renderAllHytteMarkers() {
 
-  
-
-  if (!cabins || cabins.length === 0) return;
+    if (!cabins || cabins.length === 0) return;
 
   const nå = new Date();
   const time = nå.getHours();
