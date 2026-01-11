@@ -180,17 +180,20 @@ function updateBox1(t) {
 
   fetchCurrentPowerPrice(t.sone).then(pris => {
     let prisTekst = "ukjent";
-    let farge = "gray";
+    let farge = "#999";
 
     if (typeof pris === "number") {
-      prisTekst = `${pris.toFixed(2)} kr/kWh`;
+      prisTekst = `${pris.toFixed(2)} kr/kWh ekskl. MVA`;
       farge = pris < 0.8 ? "green" : pris < 1.2 ? "orange" : "red";
     }
 
     el.innerHTML = `
-      <p><strong>📍 ${t.tettsted}</strong></p>
-      <p>Sone: ${t.sone}</p>
-      <p>⚡ Strømpris nå: <span style="color:${farge}">${prisTekst}</span></p>
+      <div style="line-height:1.6">
+        <p><strong>📍 ${t.tettsted}</strong></p>
+        <p>Fylke: ${t.fylke}</p>
+        <p>Sone: ${t.sone}</p>
+        <p>⚡ Strømpris nå: <span style="color:${farge}">${prisTekst}</span></p>
+      </div>
     `;
   });
 }
