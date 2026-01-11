@@ -6,23 +6,17 @@ const { JSDOM } = require("jsdom");
 const app = express();
 const PORT = 3000;
 
-app.use(express.static("public"));
+const http = require('node:http');
 
-app.get("/api/se3-now", async (req, res) => {
-  try {
-    const response = await fetch("https://www.elekt.com/no/spotpriser/sverige/se3");
-    const html = await response.text();
-    const dom = new JSDOM(html);
-    const doc = dom.window.document;
+const hostname = '127.0.0.1';
+const port = 3000;
 
-    const now = doc.querySelector(".price-now .value")?.textContent.trim();
-
-    res.json({ now: now || null });
-  } catch (error) {
-    res.status(500).json({ error: "Kunne ikke hente SE3-prisen" });
-  }
+const server = http.createServer((req, res) => {
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/plain');
+  res.end('Hello, World!\n');
 });
 
-app.listen(PORT, () => {
-  console.log(`Server kjører på http://localhost:${PORT}`);
+server.listen(port, hostname, () => {
+  console.log(`Server running at http://${hostname}:${port}/`);
 });
