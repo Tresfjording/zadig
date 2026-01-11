@@ -5,6 +5,8 @@
   <title>Tresfjording – Norgekart med tettsteder og hytter</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+<!--11.01.2026  - 02:00:36-->
+
   <!-- Leaflet CSS -->
   <link
     rel="stylesheet"
@@ -109,6 +111,15 @@
     <div id="box3" class="info-box"></div>
     <div id="box4" class="info-box"></div>
   </div>
+
+<p><strong>Tettsted:</strong> ${t.tettsted}</p>
+<p><strong>Sone:</strong> ${t.sone}</p>
+<p><strong>Strømpris nå:</strong> ${pris?.toFixed(2) ?? "?"} kr/kWh ekskl. MVA</p>
+
+<p><strong>Navn:</strong> ${h.name}</p>
+<p><strong>Type:</strong> ${h["dnt:classification"]}</p>
+<p><a href="${h.website}" target="_blank">Se mer på UT.no</a></p>
+
 
   <!-- Leaflet JS -->
   <script

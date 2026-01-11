@@ -4,6 +4,8 @@ let cabins = [];
 let facts = [];
 let searchIndex = [];
 
+// 11.01.2026  - 02:00:02
+
 document.addEventListener("DOMContentLoaded", () => {
   initMap();
   loadData()
@@ -172,27 +174,36 @@ function focusOnCabin(hytte) {
 
 // -------------------- INFOBOKSER --------------------
 
-function updateBox1(place) {
+function updateBox1(t) {
   const el = document.getElementById("box1");
-  if (!el || !place) return;
+  if (!el || !t) return;
 
-  fetchCurrentPowerPrice(place.sone).then(pris => {
+  fetchCurrentPowerPrice(t.sone).then(pris => {
+    let prisTekst = "ukjent";
+    let farge = "gray";
+
+    if (typeof pris === "number") {
+      prisTekst = `${pris.toFixed(2)} kr/kWh`;
+      farge = pris < 0.8 ? "green" : pris < 1.2 ? "orange" : "red";
+    }
+
     el.innerHTML = `
-      <p><strong>Tettsted:</strong> ${place.tettsted}</p>
-      <p><strong>Sone:</strong> ${place.sone}</p>
-      <p><strong>Strømpris nå:</strong> ${pris?.toFixed(2) ?? "?"} kr/kWh</p>
+      <p><strong>📍 ${t.tettsted}</strong></p>
+      <p>Sone: ${t.sone}</p>
+      <p>⚡ Strømpris nå: <span style="color:${farge}">${prisTekst}</span></p>
     `;
   });
 }
 
-function updateBox2(hytte) {
+function updateBox2(h) {
   const el = document.getElementById("box2");
-  if (!el || !hytte) return;
+  if (!el || !h) return;
 
   el.innerHTML = `
-    <p><strong>Navn:</strong> ${hytte.h_navn}</p>
-    <p><strong>Type:</strong> ${hytte.h_type}</p>
-    <p><a href="${hytte.h_url}" target="_blank">Se mer på UT.no</a></p>
+    <p><strong>🏕️ ${h.name}</strong></p>
+    <p>Type: ${h["dnt:classification"] || "ukjent"}</p>
+    <p>Driftet av: ${h.operator || "ukjent"}</p>
+    ${h.website ? `<p><a href="${h.website}" target="_blank">🔗 UT.no</a></p>` : ""}
   `;
 }
 
