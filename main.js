@@ -51,10 +51,20 @@ places.forEach(t => {
   if (t.tettsted) searchIndex.push({ type: "t", label: t.tettsted, ref: t });
 });
 
+try {
+  cabins.forEach(h => {
+
 cabins.forEach(h => {
-    console.log("Hytte:", h.name, h.lat, h.lon);
   const lat = parseFloat(h.lat);
   const lon = parseFloat(h.lon);
+  const navn = h.name;
+  console.log("Hytte:", navn, lat, lon);
+  });
+ catch (err) {
+  console.error("Feil i hyttevisning:", err);
+}
+
+
   if (h.name) searchIndex.push({ type: "h", label: h.name, ref: h });
 });
 
