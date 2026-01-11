@@ -31,7 +31,6 @@ function initMap() {
 // -------------------- DATA --------------------
 
 async function loadData() {
-  window.cabins=cabins;
   const [tettstederResp, hytterResp, factsResp] = await Promise.all([
     fetch("tettsteder_3.json"),
     fetch("dnt_hytter.json"),
@@ -41,6 +40,8 @@ async function loadData() {
   places = await tettstederResp.json();
   cabins = await hytterResp.json();
   facts = await factsResp.json();
+
+  window.cabins = cabins; // ← nå er den fylt!
 }
 
 // -------------------- SØK --------------------
