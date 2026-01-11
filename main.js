@@ -267,6 +267,13 @@ async function fetchCurrentPowerPrice(priceArea) {
 
 
 function renderAllHytteMarkers() {
+
+  marker.on("mouseover", () => {
+  updateBox2(h);
+  updateBox3(h.tettsted); // eller tilsvarende
+});
+
+
   if (!cabins || cabins.length === 0) {
     console.warn("Ingen hytter å vise");
     return;
