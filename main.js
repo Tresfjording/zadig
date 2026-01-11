@@ -285,7 +285,13 @@ if (!h.t_sone) continue;
       iconUrl: `image/cabin16_${farge}.png`,
       iconSize: [18, 18],
       iconAnchor: [9, 9]
-    });
+    });const icon = L.icon({
+  iconUrl: `image/cabin16.png`,
+  iconSize: [18, 18],
+  iconAnchor: [9, 9]
+});
+
+
 
     const marker = L.marker([lat, lon], {
       title: `${h.h_navn} (${h.h_type || "ukjent"})`,
