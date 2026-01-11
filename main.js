@@ -1,5 +1,3 @@
-const { snitt } = require("./snitt");
-
 let map;
 let places = [];
 let cabins = [];
@@ -220,7 +218,9 @@ async function updateBox1(t) {
   `;
 }
 
-  export const gyldige = priser.filter(p => typeof p === "number");
+  const gyldige = priser.filter(p => typeof p === "number");
+  const snitt = gyldige.reduce((a, b) => a + b, 0) / gyldige.length;
+
   const lokal = priser[prisområder.indexOf(t.t_sone)];
   const farge = lokal < snitt - 0.05 ? "green" : lokal > snitt + 0.05 ? "red" : "orange";
 
