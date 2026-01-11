@@ -295,17 +295,41 @@ async function fetchCurrentPowerPrice(priceArea) {
 // -------------------- HYTTEMARKØRER --------------------
 
 async function renderAllHytteMarkers() {
-  const prisområder = ["NO1", "NO2", "NO3", "NO4", "NO5"];
-  const strømpriser = {};
+  if (!cabins || cabins.length === 0) return;
+
   const nå = new Date();
-  const år = nå.getFullYear();
-  const måned = String(nå.getMonth() + 1).padStart(2, "0");
-  const dag = String(nå.getDate()).padStart(2, "0");
   const time = nå.getHours();
-marker.on("mouseover", () => {
-  updateBox2(h);
-  updateFactsBox4();
-});
+
+  for (const h of cabins) {
+    const lat = parseFloat(String(h.h_lat).replace(",", "."));
+    const lon = parseFloat(String(h.h_lon).replace(",", "."));
+    if (!lat || !lon) continue;
+
+    const pris = await fetchCurrentPowerPrice(h.t_sone);
+    const farge = getPriceColor(pris);
+
+    const ikon = L.icon({
+      iconUrl: `image/cabin16_${farge}.png`,
+      iconSize: [18, 18],
+      iconAnchor: [9, 9]
+    });
+
+    const marker = L.marker([lat, lon], {
+      title: `${h.h_navn} (${h.h_type || "ukjent"})`,
+      icon: ikon
+    });
+
+    marker.on("mouseover", () => {
+      updateInfoBoxWithCabin(h);
+      updateBox4();
+    });
+
+    marker.addTo(map);
+  }
+}
+
+const pris = strømpriser[sone]?.[time]?.NOK_per_kWh;
+if (typeof pris !== "number") return;
   await Promise.all(prisområder.map(async sone => {
     const url = `https://www.hvakosterstrommen.no/api/v1/prices/${år}/${måned}-${dag}_${sone}.json`;
     try {
