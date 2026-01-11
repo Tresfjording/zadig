@@ -137,6 +137,14 @@ function handleSearch(label) {
     item.label.toLowerCase() === label.toLowerCase()
   );
 
+  if (match.type === "t") {
+  focusOnPlace(match.ref);
+  updateBox1(match.ref);
+  updateBox3(match.ref);
+  updateFactsBox4();
+}
+
+
   if (!match) return;
 
   document.getElementById("place-search").value = label;
@@ -174,28 +182,54 @@ function focusOnCabin(hytte) {
 
 // -------------------- INFOBOKSER --------------------
 
-function updateBox1(t) {
+async function updateBox1(t) {
   const el = document.getElementById("box1");
   if (!el || !t) return;
 
-  fetchCurrentPowerPrice(t.sone).then(pris => {
-    let prisTekst = "ukjent";
-    let farge = "#999";
+  const prisområder = ["NO1", "NO2", "NO3", "NO4", "NO5"];
+  const nå = new Date();
+  const år = nå.getFullYear();
+  const måned = String(nå.getMonth() + 1).padStart(2, "0");
+  const dag = String(nå.getDate()).padStart(2, "0");
+  const time = nå.getHours();
 
-    if (typeof pris === "number") {
-      prisTekst = `${pris.toFixed(2)} kr/kWh ekskl. MVA`;
-      farge = pris < 0.8 ? "green" : pris < 1.2 ? "orange" : "red";
+  const priser = await Promise.all(prisområder.map(async sone => {
+    try {
+      const url = `https://www.hvakosterstrommen.no/api/v1/prices/${år}/${måned}-${dag}_${sone}.json`;
+      const res = await fetch(url);
+      const data = await res.json();
+      return data[time]?.NOK_per_kWh || null;
+    } catch {
+      return null;
     }
+  }));
 
-    el.innerHTML = `
-      <div style="line-height:1.6">
-        <p><strong>📍 ${t.tettsted}</strong></p>
-        <p>Fylke: ${t.fylke}</p>
-        <p>Sone: ${t.sone}</p>
-        <p>⚡ Strømpris nå: <span style="color:${farge}">${prisTekst}</span></p>
-      </div>
-    `;
-  });
+  const gyldige = priser.filter(p => typeof p === "number");
+  const snitt = gyldige.reduce((a, b) => a + b, 0) / gyldige.length;
+
+  const lokal = priser[prisområder.indexOf(t.t_sone)];
+  const farge = lokal < snitt - 0.05 ? "green" : lokal > snitt + 0.05 ? "red" : "orange";
+
+  el.innerHTML = `
+    <p><strong>📍 ${t.tettsted}</strong></p>
+    <p>Sone: ${t.sone}</p>
+    <p>⚡ Strømpris nå: <span style="color:${farge}">${lokal?.toFixed(2) ?? "?"} kr/kWh</span></p>
+    <p>Snittpris nasjonalt: ${snitt?.toFixed(2) ?? "?"} kr/kWh</p>
+  `;
+}
+
+  const gyldige = priser.filter(p => typeof p === "number");
+  const snitt = gyldige.reduce((a, b) => a + b, 0) / gyldige.length;
+
+  const lokal = priser[prisområder.indexOf(t.t_sone)];
+  const farge = lokal < snitt - 0.05 ? "green" : lokal > snitt + 0.05 ? "red" : "orange";
+
+  el.innerHTML = `
+    <p><strong>📍 ${t.tettsted}</strong></p>
+    <p>Sone: ${t.sone}</p>
+    <p>⚡ Strømpris nå: <span style="color:${farge}">${lokal?.toFixed(2) ?? "?"} kr/kWh</span></p>
+    <p>Snittpris nasjonalt: ${snitt?.toFixed(2) ?? "?"} kr/kWh</p>
+  `;
 }
 
 function updateBox2(h) {
@@ -203,35 +237,35 @@ function updateBox2(h) {
   if (!el || !h) return;
 
   el.innerHTML = `
-    <p><strong>🏕️ ${h.name}</strong></p>
-    <p>Type: ${h["dnt:classification"] || "ukjent"}</p>
-    <p>Driftet av: ${h.operator || "ukjent"}</p>
-    ${h.website ? `<p><a href="${h.website}" target="_blank">🔗 UT.no</a></p>` : ""}
+    <p><strong>🏕️ ${h.h_navn}</strong></p>
+    <p>Type: ${h.h_type || "ukjent"}</p>
+    <p>Operatør: ${h.h_operatør || "ukjent"}</p>
+    ${h.h_url ? `<p><a href="${h.h_url}" target="_blank">🔗 UT.no</a></p>` : ""}
   `;
 }
 
-function updateBox3(place) {
+function updateBox3(t) {
   const el = document.getElementById("box3");
-  if (!el || !place) return;
+  if (!el || !t) return;
 
   el.innerHTML = `
-    <p><strong>K.nr:</strong> ${place.k_nr}</p>
-    <p><strong>Fylke:</strong> ${place.fylke}</p>
-    <p><strong>Antall:</strong> ${place.antall}</p>
-    <p><strong>Areal:</strong> ${place.areal} km²</p>
-    <p><strong>Sysselsatte:</strong> ${place.sysselsatte}</p>
-    <p><strong>Tilskudd:</strong> ${place.tilskudd} kr</p>
-    <p><strong>Språk:</strong> ${place.språk}</p>
-    <p><em>${place.k_slagord}</em></p>
-    <p><em>${place.f_slagord}</em></p>
+    <p><strong>K.nr:</strong> ${t.k_nr}</p>
+    <p><strong>Fylke:</strong> ${t.fylke}</p>
+    <p><strong>Innbyggere:</strong> ${t.antall}</p>
+    <p><strong>Areal:</strong> ${t.areal} km²</p>
+    <p><strong>Tilskudd:</strong> ${t.tilskudd} kr</p>
+    <p><strong>Språk:</strong> ${t.språk}</p>
+    <p><em>${t.k_slagord || ""}</em></p>
+    <p><em>${t.f_slagord || ""}</em></p>
   `;
 }
 
-function updateBox4() {
+function updateFactsBox4() {
   const el = document.getElementById("box4");
   if (!el || !facts.length) return;
+
   const random = facts[Math.floor(Math.random() * facts.length)];
-  el.textContent = random.fact;
+  el.innerHTML = `<p><em>💡 ${random.fact || random}</em></p>`;
 }
 
 // -------------------- STRØMPRIS --------------------
@@ -268,7 +302,10 @@ async function renderAllHytteMarkers() {
   const måned = String(nå.getMonth() + 1).padStart(2, "0");
   const dag = String(nå.getDate()).padStart(2, "0");
   const time = nå.getHours();
-
+marker.on("mouseover", () => {
+  updateBox2(h);
+  updateFactsBox4();
+});
   await Promise.all(prisområder.map(async sone => {
     const url = `https://www.hvakosterstrommen.no/api/v1/prices/${år}/${måned}-${dag}_${sone}.json`;
     try {
