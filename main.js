@@ -230,7 +230,7 @@ async function updateBox1(t) {
     <p>⚡ Strømpris nå: <span style="color:${farge}">${lokal?.toFixed(2) ?? "?"} kr/kWh</span></p>
     <p>Snittpris nasjonalt: ${snitt?.toFixed(2) ?? "?"} kr/kWh</p>
   `;
-}
+
 
 function updateBox2(h) {
   const el = document.getElementById("box2");
