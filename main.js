@@ -13,11 +13,11 @@ document.addEventListener("DOMContentLoaded", () => {
       buildSearchIndex();
       initSearch();
       renderAllHytteMarkers();
-      updateBox4();
+      updateFactsBox4();
     })
     .catch(err => {
       console.error("Feil ved lasting:", err);
-      updateBox4();
+      updateFactsBox4();
     });
 });
 
@@ -192,7 +192,7 @@ async function updateBox1(t) {
   const måned = String(nå.getMonth() + 1).padStart(2, "0");
   const dag = String(nå.getDate()).padStart(2, "0");
   const time = nå.getHours();
-
+  
   const priser = await Promise.all(prisområder.map(async sone => {
     try {
       const url = `https://www.hvakosterstrommen.no/api/v1/prices/${år}/${måned}-${dag}_${sone}.json`;
