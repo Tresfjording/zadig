@@ -378,4 +378,3 @@ if (typeof pris !== "number") return;
 
     marker.addTo(map);
   });
-}
