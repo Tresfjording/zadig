@@ -265,6 +265,9 @@ async function fetchCurrentPowerPrice(priceArea) {
 
 
 async function renderAllHytteMarkers() {
+
+  
+
   if (!cabins || cabins.length === 0) return;
 
   const nå = new Date();
@@ -274,7 +277,7 @@ async function renderAllHytteMarkers() {
     const lat = parseFloat(String(h.h_lat).replace(",", "."));
     const lon = parseFloat(String(h.h_lon).replace(",", "."));
     if (!lat || !lon) continue;
-
+if (!h.t_sone) continue;
     const pris = await fetchCurrentPowerPrice(h.t_sone);
     const farge = getPriceColor(pris);
 
