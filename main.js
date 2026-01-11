@@ -54,6 +54,8 @@ function buildSearchIndex() {
   cabins.forEach(h => {
     searchIndex.push({ type: "h", label: h.name, ref: h });
   });
+searchIndex = searchIndex.filter(item => typeof item.label === "string");
+
 
   searchIndex.sort((a, b) => a.label.localeCompare(b.label));
 }
