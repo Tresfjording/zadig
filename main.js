@@ -13,11 +13,11 @@ document.addEventListener("DOMContentLoaded", () => {
       renderAllHytteMarkers();
       updateBox4();
     })
-    .catch(err => {
-      console.error("Feil ved lasting:", err);
-      updateBox4();
+    
+console.log("Antall hytter:", cabins.length);
+console.log("Eksempelhytte:", cabins[0]);
     });
-});
+;
 
 // -------------------- KART --------------------
 
