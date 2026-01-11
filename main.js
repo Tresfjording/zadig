@@ -52,12 +52,7 @@ function buildSearchIndex() {
   });
 
   cabins.forEach(h => {
-    const lat = parseFloat(h.lat);
-    const lon = parseFloat(h.lon);
-    const navn = h.name;
-    console.log("Hytte:", navn, lat, lon);
-
-    if (h.name) searchIndex.push({ type: "h", label: h.name, ref: h });
+    searchIndex.push({ type: "h", label: h.name, ref: h });
   });
 
   searchIndex.sort((a, b) => a.label.localeCompare(b.label));
