@@ -18,82 +18,7 @@
   <!-- Egen stil -->
   <link rel="stylesheet" href="style.css" />
 
-  <style>
-    :root {
-      --fontStack-monospace: Consolas, "Monaspace Neon", ui-monospace, SFMono-Regular, Menlo, monospace;
-    }
-
-    body {
-      margin: 0;
-      font-family: var(--fontStack-monospace);
-    }
-
-    #map {
-      height: 100vh;
-      width: 100%;
-      z-index: 0;
-    }
-
-    .search-container {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      z-index: 1000;
-      background: white;
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-
-    .search-input {
-      width: 250px;
-      padding: 4px;
-    }
-
-    .search-suggestions {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      max-height: 200px;
-      overflow-y: auto;
-      border: 1px solid #ccc;
-      background: white;
-    }
-
-    .suggestion-item {
-      padding: 4px 8px;
-      cursor: pointer;
-    }
-
-    .suggestion-item.active {
-      background-color: #e0e0e0;
-    }
-
-    .info-panel {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      z-index: 1000;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
-      max-width: 440px;
-    }
-
-    .info-box {
-      width: 200px;
-      min-height: 100px;
-      border: 1px solid #ccc;
-      padding: 8px;
-      background: #f9f9f9;
-      font-family: var(--fontStack-monospace);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-  </style>
+ 
 </head>
 
 <body>
@@ -105,22 +30,13 @@
     <ul id="search-suggestions" class="search-suggestions"></ul>
   </div>
 
+
 <div id="info-boxes" class="infobox-grid">
   <div id="box1" class="infobox"></div>
   <div id="box2" class="infobox"></div>
   <div id="box3" class="infobox-wide"></div>
   <div id="box4" class="infobox-wide"></div>
 </div>
-
-
-<p><strong>Tettsted:</strong> ${t.tettsted}</p>
-<p><strong>Sone:</strong> ${t.sone}</p>
-<p><strong>Strømpris nå:</strong> ${pris?.toFixed(2) ?? "?"} kr/kWh ekskl. MVA</p>
-
-<p><strong>Navn:</strong> ${h.name}</p>
-<p><strong>Type:</strong> ${h["dnt:classification"]}</p>
-<p><a href="${h.website}" target="_blank">Se mer på UT.no</a></p>
-
 
   <!-- Leaflet JS -->
   <script

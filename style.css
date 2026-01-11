@@ -107,39 +107,36 @@ body {
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.infobox-wide {
-  width: 420px;
-  background: white;
-  border: 1px solid #ccc;
-  padding: 10px;
-  font-size: 14px;
-  line-height: 1.5;
-  text-align: center;
-}
-
 .info-panel {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
   display: flex;
   flex-wrap: wrap;
+  gap: 8px;
   justify-content: center;
   align-items: center;
-  gap: 10px;
-  max-width: 420px;
-  margin: 0 auto;
+  max-width: 440px;
 }
 
 .info-box {
   width: 200px;
   min-height: 100px;
-  border: 1px solid #ccc;
   padding: 8px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid #ccc;
+  border-radius: 6px;
   font-family: Consolas, monospace;
-  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-/* === MARKER ANIMASJON === */
-.marker-selected {
-    animation: pulse 1.4s infinite;
-    transform-origin: center;
+.wide-box {
+  width: 420px;
 }
 
 @keyframes pulse {
