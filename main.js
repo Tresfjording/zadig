@@ -239,6 +239,31 @@ function updateBox4() {
   const random = facts[Math.floor(Math.random() * facts.length)];
   el.innerHTML = `<p><em>💡 ${random.fact || random}</em></p>`;
 }
+
+function buildPriceUrl(priceArea) {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  return `https://www.hvakosterstrommen.no/api/v1/prices/${year}/${month}-${day}_${priceArea}.json`;
+}
+
+async function fetchCurrentPowerPrice(priceArea) {
+  const url = buildPriceUrl(priceArea);
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    const hour = new Date().getHours();
+    const entry = data[hour];
+    return entry?.NOK_per_kWh ?? null;
+  } catch (err) {
+    console.error("Feil ved henting av strømpris:", err);
+    return null;
+  }
+}
+
+
+
 async function renderAllHytteMarkers() {
   if (!cabins || cabins.length === 0) return;
 
