@@ -232,7 +232,7 @@ function updateBox3(t) {
   `;
 }
 
-ffunction updateBox4() {
+function updateBox4() {
   const el = document.getElementById("box4");
   if (!el || !facts.length) return;
 
