@@ -48,12 +48,18 @@ function buildSearchIndex() {
   searchIndex = [];
 
   places.forEach(t => {
-    if (t.tettsted) searchIndex.push({ type: "t", label: t.tettstad, ref: t });
+    if (t.tettsted) {
+      searchIndex.push({ type: "t", label: t.tettsted, ref: t });
+    }
   });
 
   cabins.forEach(h => {
-    searchIndex.push({ type: "h", label: h.name, ref: h });
+    if (h.name) {
+      searchIndex.push({ type: "h", label: h.name, ref: h });
+    }
   });
+
+
 searchIndex = searchIndex.filter(item => typeof item.label === "string");
 
 
