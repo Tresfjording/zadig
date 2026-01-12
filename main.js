@@ -169,6 +169,21 @@ function focusOnCabin(hytte) {
 }
 
 // -------------------- INFOBOKSER --------------------
+function showInfoBox(cabin) {
+  const name = cabin.name || "Ukjent hytte";
+  const operator = cabin.operator || "Ukjent operatør";
+  const classification = cabin["dnt:classification"] || "Ukjent type";
+  const website = cabin.website || "#";
+
+  const html = `
+    <h3>${name}</h3>
+    <p><strong>Operatør:</strong> ${operator}</p>
+    <p><strong>Type:</strong> ${classification}</p>
+    <p><a href="${website}" target="_blank">Mer info</a></p>
+  `;
+
+  document.getElementById("infobox").innerHTML = html;
+}
 
 async function updateBox1(t) {
   const el = document.getElementById("box1");
