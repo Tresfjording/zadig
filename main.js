@@ -172,7 +172,7 @@ function focusOnCabin(hytte) {
 
 // -------------------- INFOBOKSER --------------------
 function showInfoBox(cabin) {
-  const name = cabin.name || "svukurisetUkjent hytte";
+  const name = cabin.name || "svukuriset";
   const operator = cabin.operator || "Ukjent operatør";
   const classification = cabin["dnt:classification"] || "Ukjent type";
   const website = cabin.website || "#";
