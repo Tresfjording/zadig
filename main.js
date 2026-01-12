@@ -4,22 +4,21 @@ let cabins = [];
 let facts = [];
 let searchIndex = [];
 
-// 12.01.2026  - 16:02:46
+// 12.01.2026  - 20:45:01
 
 document.addEventListener("DOMContentLoaded", () => {
   initMap();
   loadData()
     .then(() => {
+      console.log("Antall hytter:", cabins.length);
+      console.log("Eksempelhytte:", cabins[0]);
+
       buildSearchIndex();
       initSearch();
       renderAllHytteMarkers();
       updateBox4();
-    })
-    
-console.log("Antall hytter:", cabins.length);
-console.log("Eksempelhytte:", cabins[0]);
     });
-;
+});
 
 // -------------------- KART --------------------
 
@@ -58,8 +57,8 @@ function buildSearchIndex() {
   });
 
   cabins.forEach(h => {
-    if (h.name) {
-      searchIndex.push({ type: "h", label: h.name, ref: h });
+    if (h.h_name) {
+      searchIndex.push({ type: "h", label: h.h_name, ref: h });
     }
   });
 
@@ -233,29 +232,20 @@ async function updateInfoBoxWithCabin(hytte) {
     return;
   }
 
-  // Strømpris (hvis hytta har t_sone)
   const priceArea = hytte.t_sone;
   const strømpris = priceArea ? await fetchCurrentPowerPrice(priceArea) : null;
 
-  titleEl.textContent = hytte.name || "Ukjent hytte";
+  titleEl.textContent = hytte.h.h_name || "Ukjent hytte";
 
   contentEl.innerHTML = `
-    <p><strong>Operatør:</strong> ${hytte.operator || "Ukjent"}</p>
-    <p><strong>Type:</strong> ${hytte.dnt_classification || "Ukjent"}</p>
+    <p><strong>Operatør:</strong> ${hytte.h_operator || "Ukjent"}</p>
+    <p><strong>Type:</strong> ${hytte["h_dnt:classification"] || "Ukjent"}</p>
     <p><strong>Koordinater:</strong> ${hytte.h_lat}, ${hytte.h_lon}</p>
-    <p><a href="${hytte.website}" target="_blank">Besøk UT.no</a></p>
+    <p><a href="${hytte.h_website}" target="_blank">Besøk UT.no</a></p>
     <p><strong>Strømpris nå:</strong> ${
-      strømpris ? strømpris.toFixed(2) + " kr/kWh" : "Ikke tilgjengelig"
+      strømpris ? strømpris.toFixed(2) + " kr/kWh ekskl. mva" : "Ikke tilgjengelig"
     }</p>
   `;
-}
-
-function updateBox4() {
-  const el = document.getElementById("box4");
-  if (!el || !facts.length) return;
-
-  const random = facts[Math.floor(Math.random() * facts.length)];
-  el.innerHTML = `<p><em>💡 ${random.fact || random}</em></p>`;
 }
 
 function buildPriceUrl(priceArea) {
@@ -283,8 +273,6 @@ async function fetchCurrentPowerPrice(priceArea) {
 
 
 function renderAllHytteMarkers() {
-
-  
   if (!cabins || cabins.length === 0) {
     console.warn("Ingen hytter å vise");
     return;
@@ -295,12 +283,22 @@ function renderAllHytteMarkers() {
     const lon = parseFloat(String(h.h_lon).replace(",", "."));
 
     if (!lat || !lon) {
-      console.warn("Ugyldige koordinater:", h.h_navn, h.h_lat, h.h_lon);
+      console.warn("Ugyldige koordinater:", h.h_name, h.h_lat, h.h_lon);
       return;
     }
 
-    const marker = L.marker([lat, lon]).addTo(map);
-    marker.bindTooltip(h.h_navn || "Ukjent hytte");
+    const marker = L.marker([lat, lon], {
+      title: h.h_name || "Ukjent hytte",
+      icon: hytteikon
+    });
+
+    marker.bindTooltip(
+      `${h.h_name || "Ukjent hytte"} – ${h["h_dnt:classification"] || "Ukjent type"}`,
+      { direction: "top", offset: [0, -10] }
+    );
+
+    marker.on("mouseover", () => updateInfoBoxWithCabin(h));
+    marker.addTo(map);
   });
 
   console.log("Tegnet", cabins.length, "hytter");

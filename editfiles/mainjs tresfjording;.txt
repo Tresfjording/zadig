@@ -4,7 +4,7 @@ let cabins = [];
 let facts = [];
 let searchIndex = [];
 
-// 11.01.2026  - 02:00:02
+// 12.01.2026  - 16:02:46
 
 document.addEventListener("DOMContentLoaded", () => {
   initMap();
@@ -13,13 +13,13 @@ document.addEventListener("DOMContentLoaded", () => {
       buildSearchIndex();
       initSearch();
       renderAllHytteMarkers();
-      updateFactsBox4();
+      updateBox4();
     })
-    .catch(err => {
-      console.error("Feil ved lasting:", err);
-      updateFactsBox4();
+    
+console.log("Antall hytter:", cabins.length);
+console.log("Eksempelhytte:", cabins[0]);
     });
-});
+;
 
 // -------------------- KART --------------------
 
@@ -42,6 +42,8 @@ async function loadData() {
   places = await tettstederResp.json();
   cabins = await hytterResp.json();
   facts = await factsResp.json();
+
+  window.cabins = cabins; // ← nå er den fylt!
 }
 
 // -------------------- SØK --------------------
@@ -61,13 +63,9 @@ function buildSearchIndex() {
     }
   });
 
-
-searchIndex = searchIndex.filter(item => typeof item.label === "string");
-
-
+  searchIndex = searchIndex.filter(item => typeof item.label === "string");
   searchIndex.sort((a, b) => a.label.localeCompare(b.label));
 }
-
 
 function initSearch() {
   const searchInput = document.getElementById("place-search");
@@ -137,14 +135,6 @@ function handleSearch(label) {
     item.label.toLowerCase() === label.toLowerCase()
   );
 
-  if (match.type === "t") {
-  focusOnPlace(match.ref);
-  updateBox1(match.ref);
-  updateBox3(match.ref);
-  updateFactsBox4();
-}
-
-
   if (!match) return;
 
   document.getElementById("place-search").value = label;
@@ -167,20 +157,31 @@ function handleSearch(label) {
 // -------------------- KARTFOKUS --------------------
 
 function focusOnPlace(place) {
-  const lat = parseFloat(place.lat);
-  const lon = parseFloat(place.lon);
+  const lat = parseFloat(place.t_lat);
+  const lon = parseFloat(place.t_lon);
   if (!lat || !lon) return;
   map.setView([lat, lon], 11);
 }
 
 function focusOnCabin(hytte) {
-  const lat = parseFloat(hytte.lat);
-  const lon = parseFloat(hytte.lon);
+  const lat = parseFloat(hytte.h_lat);
+  const lon = parseFloat(hytte.h_lon);
   if (!lat || !lon) return;
   map.setView([lat, lon], 13);
 }
 
 // -------------------- INFOBOKSER --------------------
+function showInfoBox(cabin) {
+
+  const html = `
+    <h3>${name}</h3>
+    <p><strong>Operatør:</strong> ${operator}</p>
+    <p><strong>Type:</strong> ${classification}</p>
+    <p><a href="${website}" target="_blank">Mer info</a></p>
+  `;
+
+  document.getElementById("infobox").innerHTML = html;
+}
 
 async function updateBox1(t) {
   const el = document.getElementById("box1");
@@ -192,7 +193,7 @@ async function updateBox1(t) {
   const måned = String(nå.getMonth() + 1).padStart(2, "0");
   const dag = String(nå.getDate()).padStart(2, "0");
   const time = nå.getHours();
-  
+
   const priser = await Promise.all(prisområder.map(async sone => {
     try {
       const url = `https://www.hvakosterstrommen.no/api/v1/prices/${år}/${måned}-${dag}_${sone}.json`;
@@ -212,63 +213,50 @@ async function updateBox1(t) {
 
   el.innerHTML = `
     <p><strong>📍 ${t.tettsted}</strong></p>
-    <p>Sone: ${t.sone}</p>
+    <p>Sone: ${t.t_sone}</p>
     <p>⚡ Strømpris nå: <span style="color:${farge}">${lokal?.toFixed(2) ?? "?"} kr/kWh</span></p>
     <p>Snittpris nasjonalt: ${snitt?.toFixed(2) ?? "?"} kr/kWh</p>
   `;
 }
 
-  const gyldige = priser.filter(p => typeof p === "number");
-  const snitt = gyldige.reduce((a, b) => a + b, 0) / gyldige.length;
+async function updateInfoBoxWithCabin(hytte) {
+  if (!hytte) {
+    console.warn("Ingen hytte valgt");
+    return;
+  }
 
-  const lokal = priser[prisområder.indexOf(t.t_sone)];
-  const farge = lokal < snitt - 0.05 ? "green" : lokal > snitt + 0.05 ? "red" : "orange";
+  const titleEl = document.getElementById("info-title");
+  const contentEl = document.getElementById("info-content");
 
-  el.innerHTML = `
-    <p><strong>📍 ${t.tettsted}</strong></p>
-    <p>Sone: ${t.sone}</p>
-    <p>⚡ Strømpris nå: <span style="color:${farge}">${lokal?.toFixed(2) ?? "?"} kr/kWh</span></p>
-    <p>Snittpris nasjonalt: ${snitt?.toFixed(2) ?? "?"} kr/kWh</p>
-  `;
+  if (!titleEl || !contentEl) {
+    console.error("Infoboks mangler i HTML");
+    return;
+  }
 
+  // Strømpris (hvis hytta har t_sone)
+  const priceArea = hytte.t_sone;
+  const strømpris = priceArea ? await fetchCurrentPowerPrice(priceArea) : null;
 
-function updateBox2(h) {
-  const el = document.getElementById("box2");
-  if (!el || !h) return;
+  titleEl.textContent = hytte.name || "Ukjent hytte";
 
-  el.innerHTML = `
-    <p><strong>🏕️ ${h.h_navn}</strong></p>
-    <p>Type: ${h.h_type || "ukjent"}</p>
-    <p>Operatør: ${h.h_operatør || "ukjent"}</p>
-    ${h.h_url ? `<p><a href="${h.h_url}" target="_blank">🔗 UT.no</a></p>` : ""}
-  `;
-}
-
-function updateBox3(t) {
-  const el = document.getElementById("box3");
-  if (!el || !t) return;
-
-  el.innerHTML = `
-    <p><strong>K.nr:</strong> ${t.k_nr}</p>
-    <p><strong>Fylke:</strong> ${t.fylke}</p>
-    <p><strong>Innbyggere:</strong> ${t.antall}</p>
-    <p><strong>Areal:</strong> ${t.areal} km²</p>
-    <p><strong>Tilskudd:</strong> ${t.tilskudd} kr</p>
-    <p><strong>Språk:</strong> ${t.språk}</p>
-    <p><em>${t.k_slagord || ""}</em></p>
-    <p><em>${t.f_slagord || ""}</em></p>
+  contentEl.innerHTML = `
+    <p><strong>Operatør:</strong> ${hytte.operator || "Ukjent"}</p>
+    <p><strong>Type:</strong> ${hytte.dnt_classification || "Ukjent"}</p>
+    <p><strong>Koordinater:</strong> ${hytte.h_lat}, ${hytte.h_lon}</p>
+    <p><a href="${hytte.website}" target="_blank">Besøk UT.no</a></p>
+    <p><strong>Strømpris nå:</strong> ${
+      strømpris ? strømpris.toFixed(2) + " kr/kWh ekskl. mva" : "Ikke tilgjengelig"
+    }</p>
   `;
 }
 
-function updateFactsBox4() {
+function updateBox4() {
   const el = document.getElementById("box4");
   if (!el || !facts.length) return;
 
   const random = facts[Math.floor(Math.random() * facts.length)];
   el.innerHTML = `<p><em>💡 ${random.fact || random}</em></p>`;
 }
-
-// -------------------- STRØMPRIS --------------------
 
 function buildPriceUrl(priceArea) {
   const now = new Date();
@@ -292,90 +280,34 @@ async function fetchCurrentPowerPrice(priceArea) {
   }
 }
 
-// -------------------- HYTTEMARKØRER --------------------
 
-async function renderAllHytteMarkers() {
-  if (!cabins || cabins.length === 0) return;
 
-  const nå = new Date();
-  const time = nå.getHours();
-
-  for (const h of cabins) {
-    const lat = parseFloat(String(h.h_lat).replace(",", "."));
-    const lon = parseFloat(String(h.h_lon).replace(",", "."));
-    if (!lat || !lon) continue;
-
-    const pris = await fetchCurrentPowerPrice(h.t_sone);
-    const farge = getPriceColor(pris);
-
-    const ikon = L.icon({
-      iconUrl: `image/cabin16_${farge}.png`,
-      iconSize: [18, 18],
-      iconAnchor: [9, 9]
-    });
-
-    const marker = L.marker([lat, lon], {
-      title: `${h.h_navn} (${h.h_type || "ukjent"})`,
-      icon: ikon
-    });
-
-    marker.on("mouseover", () => {
-      updateInfoBoxWithCabin(h);
-      updateBox4();
-    });
-
-    marker.addTo(map);
+function renderAllHytteMarkers() {
+  if (!cabins || cabins.length === 0) {
+    console.warn("Ingen hytter å vise");
+    return;
   }
-}
-
-
-  await Promise.all(prisområder.map(async sone => {
-    const url = `https://www.hvakosterstrommen.no/api/v1/prices/${år}/${måned}-${dag}_${sone}.json`;
-   const pris = strømpriser[sone]?.[time]?.NOK_per_kWh;
-if (typeof pris !== "number") return; 
-    try {
-      const res = await fetch(url);
-      strømpriser[sone] = await res.json();
-    } catch (err) {
-      console.warn(`⚠️ Klarte ikke hente pris for ${sone}:`, err);
-    }
-  }));
-
-  const priserNå = prisområder
-    .map(sone => strømpriser[sone]?.[time]?.NOK_per_kWh)
-    .filter(p => typeof p === "number");
-
-  const snittpris = priserNå.reduce((a, b) => a + b, 0) / priserNå.length;
 
   cabins.forEach(h => {
-    const lat = parseFloat(String(h.h_lat).replace(",", "."));
-    const lon = parseFloat(String(h.h_lon).replace(",", "."));
-    const sone = h.t_sone;
+    const lat = parseFloat(String(h_lat).replace(",", "."));
+    const lon = parseFloat(String(h_lon).replace(",", "."));
 
-    if (!lat || !lon || !sone || !strømpriser[sone]) return;
-
-    const pris = strømpriser[sone][time]?.NOK_per_kWh;
-    if (typeof pris !== "number") return;
-
-    let farge = "orange";
-    if (pris < snittpris - 0.05) farge = "green";
-    else if (pris > snittpris + 0.05) farge = "red";
-
-    const ikon = L.icon({
-      iconUrl: `image/cabin16_${farge}.png`,
-      iconSize: [18, 18],
-      iconAnchor: [9, 9]
-    });
+    if (!lat || !lon) {
+      console.warn("Ugyldige koordinater:", h.name, h_lat, h_lon);
+      return;
+    }
 
     const marker = L.marker([lat, lon], {
-      icon: ikon,
-      title: `${h.h_navn} (${h.h_type || "ukjent"})`
+      title: h.name || "Ukjent hytte",
+      icon: hytteikon
     });
 
-    marker.on("mouseover", () => {
-      updateBox2(h);
-      updateBox4();
-    });
+    marker.bindTooltip(
+      `${h.name || "Ukjent hytte"} – ${h.dnt_classification || "Ukjent type"}`,
+      { direction: "top", offset: [0, -10] }
+    );
 
+    marker.on("mouseover", () => updateInfoBoxWithCabin(h));
     marker.addTo(map);
   });
+}
