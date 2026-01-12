@@ -4,7 +4,7 @@ let cabins = [];
 let facts = [];
 let searchIndex = [];
 
-// 12.01.2026  - 15:45:32
+// 12.01.2026  - 16:02:46
 
 document.addEventListener("DOMContentLoaded", () => {
   initMap();
@@ -52,14 +52,14 @@ function buildSearchIndex() {
   searchIndex = [];
 
   places.forEach(t => {
-    if (tettsted) {
-      searchIndex.push({ label: tettsted, ref: t });
+    if (t.tettsted) {
+      searchIndex.push({ type: "t", label: t.tettsted, ref: t });
     }
   });
 
   cabins.forEach(h => {
-    if (name) {
-      searchIndex.push({ label: name, ref: h });
+    if (h.name) {
+      searchIndex.push({ type: "h", label: h.name, ref: h });
     }
   });
 
@@ -212,7 +212,7 @@ async function updateBox1(t) {
   const farge = lokal < snitt - 0.05 ? "green" : lokal > snitt + 0.05 ? "red" : "orange";
 
   el.innerHTML = `
-    <p><strong>📍 ${tettsted}</strong></p>
+    <p><strong>📍 ${t.tettsted}</strong></p>
     <p>Sone: ${t.t_sone}</p>
     <p>⚡ Strømpris nå: <span style="color:${farge}">${lokal?.toFixed(2) ?? "?"} kr/kWh</span></p>
     <p>Snittpris nasjonalt: ${snitt?.toFixed(2) ?? "?"} kr/kWh</p>
