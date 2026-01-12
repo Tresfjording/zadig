@@ -157,8 +157,8 @@ function handleSearch(label) {
 // -------------------- KARTFOKUS --------------------
 
 function focusOnPlace(place) {
-  const lat = parseFloat(place.lat);
-  const lon = parseFloat(place.lon);
+  const lat = parseFloat(place.t_lat);
+  const lon = parseFloat(place.t_lon);
   if (!lat || !lon) return;
   map.setView([lat, lon], 11);
 }
