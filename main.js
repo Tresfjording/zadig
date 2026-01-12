@@ -219,31 +219,34 @@ async function updateBox1(t) {
   `;
 }
 
-function updateBox2(h) {
-  const el = document.getElementById("box2");
-  if (!el || !h) return;
+async function updateInfoBoxWithCabin(hytte) {
+  if (!hytte) {
+    console.warn("Ingen hytte valgt");
+    return;
+  }
 
-  el.innerHTML = `
-    <p><strong>🏕️ ${h.h_navn}</strong></p>
-    <p>Type: ${h.h_type || "ukjent"}</p>
-    <p>Operatør: ${h.h_operatør || "ukjent"}</p>
-    ${h.h_url ? `<p><a href="${h.h_url}" target="_blank">🔗 UT.no</a></p>` : ""}
-  `;
-}
+  const titleEl = document.getElementById("info-title");
+  const contentEl = document.getElementById("info-content");
 
-function updateBox3(t) {
-  const el = document.getElementById("box3");
-  if (!el || !t) return;
+  if (!titleEl || !contentEl) {
+    console.error("Infoboks mangler i HTML");
+    return;
+  }
 
-  el.innerHTML = `
-    <p><strong>K.nr:</strong> ${t.k_nr}</p>
-    <p><strong>Fylke:</strong> ${t.fylke}</p>
-    <p><strong>Innbyggere:</strong> ${t.antall}</p>
-    <p><strong>Areal:</strong> ${t.areal} km²</p>
-    <p><strong>Tilskudd:</strong> ${t.tilskudd} kr</p>
-    <p><strong>Språk:</strong> ${t.språk}</p>
-    <p><em>${t.k_slagord || ""}</em></p>
-    <p><em>${t.f_slagord || ""}</em></p>
+  // Strømpris (hvis hytta har t_sone)
+  const priceArea = hytte.t_sone;
+  const strømpris = priceArea ? await fetchCurrentPowerPrice(priceArea) : null;
+
+  titleEl.textContent = hytte.name || "Ukjent hytte";
+
+  contentEl.innerHTML = `
+    <p><strong>Operatør:</strong> ${hytte.operator || "Ukjent"}</p>
+    <p><strong>Type:</strong> ${hytte.dnt_classification || "Ukjent"}</p>
+    <p><strong>Koordinater:</strong> ${hytte.h_lat}, ${hytte.h_lon}</p>
+    <p><a href="${hytte.website}" target="_blank">Besøk UT.no</a></p>
+    <p><strong>Strømpris nå:</strong> ${
+      strømpris ? strømpris.toFixed(2) + " kr/kWh" : "Ikke tilgjengelig"
+    }</p>
   `;
 }
 
