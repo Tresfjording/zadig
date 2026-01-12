@@ -53,13 +53,13 @@ function buildSearchIndex() {
 
   places.forEach(t => {
     if (tettsted) {
-      searchIndex.push({ type: "t", label: tettsted, ref: t });
+      searchIndex.push({ label: tettsted, ref: t });
     }
   });
 
   cabins.forEach(h => {
-    if (h.name) {
-      searchIndex.push({ type: "h", label: h.name, ref: h });
+    if (name) {
+      searchIndex.push({ label: name, ref: h });
     }
   });
 
