@@ -4,6 +4,8 @@ let cabins = [];
 let facts = [];
 let searchIndex = [];
 
+// 12.01.2026  - 15:39:55
+
 document.addEventListener("DOMContentLoaded", () => {
   initMap();
   loadData()
@@ -170,7 +172,7 @@ function focusOnCabin(hytte) {
 
 // -------------------- INFOBOKSER --------------------
 function showInfoBox(cabin) {
-  const name = cabin.name || "svukurist";
+  const name = cabin.name || "svukurisetUkjent hytte";
   const operator = cabin.operator || "Ukjent operatør";
   const classification = cabin["dnt:classification"] || "Ukjent type";
   const website = cabin.website || "#";
