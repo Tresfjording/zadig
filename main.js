@@ -4,7 +4,7 @@ let cabins = [];
 let facts = [];
 let searchIndex = [];
 
-// 12.01.2026  - 15:39:55
+// 12.01.2026  - 15:45:32
 
 document.addEventListener("DOMContentLoaded", () => {
   initMap();
@@ -52,8 +52,8 @@ function buildSearchIndex() {
   searchIndex = [];
 
   places.forEach(t => {
-    if (t.tettsted) {
-      searchIndex.push({ type: "t", label: t.tettsted, ref: t });
+    if (tettsted) {
+      searchIndex.push({ type: "t", label: tettsted, ref: t });
     }
   });
 
@@ -172,10 +172,6 @@ function focusOnCabin(hytte) {
 
 // -------------------- INFOBOKSER --------------------
 function showInfoBox(cabin) {
-  const name = cabin.name || "svukuriset";
-  const operator = cabin.operator || "Ukjent operatør";
-  const classification = cabin["dnt:classification"] || "Ukjent type";
-  const website = cabin.website || "#";
 
   const html = `
     <h3>${name}</h3>
@@ -216,7 +212,7 @@ async function updateBox1(t) {
   const farge = lokal < snitt - 0.05 ? "green" : lokal > snitt + 0.05 ? "red" : "orange";
 
   el.innerHTML = `
-    <p><strong>📍 ${t.tettsted}</strong></p>
+    <p><strong>📍 ${tettsted}</strong></p>
     <p>Sone: ${t.t_sone}</p>
     <p>⚡ Strømpris nå: <span style="color:${farge}">${lokal?.toFixed(2) ?? "?"} kr/kWh</span></p>
     <p>Snittpris nasjonalt: ${snitt?.toFixed(2) ?? "?"} kr/kWh</p>
