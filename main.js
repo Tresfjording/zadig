@@ -1,3 +1,12 @@
+
+document.addEventListener("DOMContentLoaded", () => {
+  initMap();
+  loadData();
+  initSearch();
+  initPrices();
+  setRandomFact();
+});
+
 import kommuner from "./data/to_kommuner.js";
 // -------------------- MARKØRER --------------------
 
