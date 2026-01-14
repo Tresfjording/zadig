@@ -47,7 +47,8 @@ Promise.all([
 // KART (Leaflet – tilpass om du bruker noe annet)
 // --------------------------------------------------
 
-function initMap() {
+
+initMap(); {
   map = L.map("map").setView([62.5, 7.5], 8); // Midt i Møre og Romsdal
 
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -110,26 +111,27 @@ function visAlleSteder() {
 // --------------------------------------------------
 // DATAINNLESSING – TILPASS STIER TIL DINE JSON-FILER
 // --------------------------------------------------
+
+
 async function loadData() {
 
-  // 1. Last alt parallelt
   const [tettstederResp, hytterResp, faktaResp] = await Promise.all([
     fetch("tettsteder_3.json"),
     fetch("dnt_hytter.json"),
     fetch("facts_all.json")
   ]);
 
-  // 2. Les JSON
   const tettstederData = await tettstederResp.json();
   const hytterData = await hytterResp.json();
   const faktaData = await faktaResp.json();
 
-  // 3. Nå kan du bruke dem
   console.log("Tettsteder:", tettstederData.length);
   console.log("Hytter:", hytterData.length);
-
-  // osv…
 }
+
+loadData();
+
+
 // --------------------------------------------------
 // STRØMPRISER / RANDOM FACT – STUBS DU KAN ERSTATTE
 // --------------------------------------------------
