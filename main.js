@@ -139,6 +139,9 @@ async function lastData() {
   // 1. Last kommuner separat
   const kommuneResp = await fetch("https://opencom.no/dataset/bbf88dbb-816e-44da-8a2b-c440e16ef128/resource/14274bc9-fb1e-49bf-880d-b7b3a23541d7/download/kommunernorgeillustrasjonskart.geojson");
   const kommuneData = await kommuneResp.json();
+  console.log("GeoJSON type:", kommuneData.type);
+console.log("Har features:", Array.isArray(kommuneData.features));
+console.log("Antall features:", kommuneData.features?.length);
   renderGeoJsonLayer(kommuneData);
 
   // 2. Last resten parallelt
@@ -434,14 +437,23 @@ function prisFarge(pris, snitt) {
   }
 }
 
-
 function renderGeoJsonLayer(data) {
-  console.log("Antall features:", Array.isArray(data) ? data.length : "Ikke en liste");
-console.log("Første feature:", data[0]);
+  if (!data) return;
 
-if (!data) return;
+  // Håndter FeatureCollection
+  const features =
+    data.type === "FeatureCollection"
+      ? data.features
+      : Array.isArray(data)
+      ? data
+      : [];
 
-  L.geoJSON(data, {
+  if (!features.length) {
+    console.warn("Ingen features funnet i GeoJSON");
+    return;
+  }
+
+  L.geoJSON(features, {
     style: {
       color: "#555",
       weight: 1,
@@ -449,42 +461,8 @@ if (!data) return;
       fillOpacity: 0.1
     },
     onEachFeature: (feature, layer) => {
-      const navn = feature.properties?.navn || "Ukjent kommune";
-
-      layer.on("click", async () => {
-        const sone = feature.properties?.sone || null;
-        const pris = sone ? await hentPrisForSone(sone) : null;
-        const snitt = await hentNasjonaltSnitt();
-        const farge = prisFarge(pris, snitt);
-
-        const prisTekst = typeof pris === "number" ? pris.toFixed(2) : "?";
-        const snittTekst = typeof snitt === "number" ? snitt.toFixed(2) : "?";
-
-        const innholdEl = document.getElementById("info-content");
-        const tittelEl = document.getElementById("info-title");
-        
-        kart.fitBounds(layer.getBounds());
-
-        if (!innholdEl || !tittelEl) return;
-
-        tittelEl.textContent = navn;
-        innholdEl.innerHTML = `
-          <p><strong>Strømpris nå:</strong> <span style="color:${farge}">${prisTekst} kr/kWh</span></p>
-          <p>Snittpris nasjonalt: ${snittTekst} kr/kWh</p>
-        `;
-
-        if (!innholdEl.innerHTML.includes("legend")) {
-          innholdEl.innerHTML += legendHTML;
-        }
-
-        if (sitat) {
-          innholdEl.innerHTML += `<p class="sitat">📝 ${sitat}</p>`;
-        }
-      });
-
-      layer.bindTooltip(navn, {
-        direction: "center",
-        permanent: false
+      layer.on("click", () => {
+        visKommuneInfo(feature.properties);
       });
     }
   }).addTo(kart);
