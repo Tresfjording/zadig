@@ -94,15 +94,12 @@ Promise.all([
   fetch("dnt_hytter.json"),
   fetch("facts_all.json")
 ])
-  .then(async ([tettstederResp, hytterResp, faktaResp]) => {
+   .then(async ([tettstederResp, ...]) => {
     const tettstederData = await tettstederResp.json();
     places = tettstederData;
-    initMap();
-    visAlleSteder();
-  })
-  .catch(err => {
-    console.error("🚨 Klarte ikke å laste data:", err);
+    visAlleSteder(); // nå er places definert
   });
+
 
   
 
@@ -217,6 +214,9 @@ const positronLayer = L.tileLayer(
 );
 
 positronLayer.addTo(map);
+
+
+
 
 // --------------------------------------------------
 // SØK
