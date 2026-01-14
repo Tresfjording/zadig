@@ -1936,10 +1936,10 @@
  },
  {
    "@id": 1356401886,
-   "name": "Slirabu",
-   "operator": "Sandefjord og Oplands Turistforening",
-   "dnt:classification": "ubetjent",
-   "website": "https://ut.no/hytte/101298/slirabu",
+   "h_name": "Slirabu",
+   "h_operator": "Sandefjord og Oplands Turistforening",
+   "h_dnt:classification": "ubetjent",
+   "h_website": "https://ut.no/hytte/101298/slirabu",
    "h_lat": 59.2720594,
    "h_lon": 10.0141223
  },
