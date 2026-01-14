@@ -133,6 +133,31 @@ kart = L.map('map').setView([63.1, 7.7], 6);
   renderGeoJsonLayer(kommuner);
 }
 
+function getLatLon(obj) {
+  // Hent LAT
+  let lat = null;
+
+  if (typeof obj.lat === "number") lat = obj.lat;
+  else if (typeof obj.latitude === "number") lat = obj.latitude;
+  else if (obj.h_lat !== undefined)
+    lat = parseFloat(String(obj.h_lat).replace(",", "."));
+
+  // Hent LON
+  let lon = null;
+
+  if (typeof obj.lon === "number") lon = obj.lon;
+  else if (typeof obj.longitude === "number") lon = obj.longitude;
+  else if (obj.h_lon !== undefined)
+    lon = parseFloat(String(obj.h_lon).replace(",", "."));
+
+  // Returner koordinater hvis gyldige
+  if (typeof lat === "number" && typeof lon === "number" && !isNaN(lat) && !isNaN(lon)) {
+    return { lat, lon };
+  }
+
+  return null;
+}
+
 // -------------------- DATA --------------------
 
 async function lastData() {
