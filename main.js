@@ -1,4 +1,4 @@
-
+import kommuner from "./data/to_kommuner.js";
 // -------------------- MARKØRER --------------------
 
 function tegnAlleHyttemarkorer() {
@@ -137,7 +137,7 @@ kart = L.map('map').setView([63.1, 7.7], 6);
 
 async function lastData() {
   // 1. Last kommuner separat
- const kommuneResp = await fetch("./data/to_kommuner.json");
+ const kommuneResp = await fetch("./data/kommuner.json");
  const kommuneData = await kommuneResp.json();
  renderGeoJsonLayer(kommuneData);
 
