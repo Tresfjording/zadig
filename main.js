@@ -136,11 +136,33 @@ kart = L.map('map').setView([63.1, 7.7], 6);
 // -------------------- DATA --------------------
 
 async function lastData() {
+  // 1. Last kommuner separat
+  const kommuneResp = await fetch("https://opencom.no/dataset/bbf88dbb-816e-44da-8a2b-c440e16ef128/resource/14274bc9-fb1e-49bf-880d-b7b3a23541d7/download/kommunernorgeillustrasjonskart.geojson");
+  const kommuneData = await kommuneResp.json();
+  renderGeoJsonLayer(kommuneData);
+
+  // 2. Last resten parallelt
   const [tettstederResp, hytterResp, faktaResp] = await Promise.all([
     fetch("tettsteder_3.json"),
     fetch("dnt_hytter.json"),
     fetch("facts_all.json")
   ]);
+
+  const tettstederData = await tettstederResp.json();
+  const hytterData = await hytterResp.json();
+  const faktaData = await faktaResp.json();
+
+  // 3. Lagre dataene
+  tettsteder = Array.isArray(tettstederData)
+    ? tettstederData
+    : (tettstederData.places || tettstederData.tettsteder || []);
+
+  hytter = Array.isArray(hytterData)
+    ? hytterData
+    : (hytterData.hytter || hytterData.cabins || []);
+
+  sitat = faktaData.sitat || faktaData.quote || "";
+}
 
   const tettstederData = await tettstederResp.json();
   const hytterData = await hytterResp.json();
