@@ -1,6 +1,6 @@
 
 document.addEventListener("DOMContentLoaded", () => {
-  initMap();
+  initKart();
   loadData();
   initSearch();
   initPrices();
