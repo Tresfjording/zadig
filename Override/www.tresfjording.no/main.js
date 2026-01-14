@@ -111,21 +111,25 @@ function visAlleSteder() {
 // DATAINNLESSING – TILPASS STIER TIL DINE JSON-FILER
 // --------------------------------------------------
 async function loadData() {
-  // Tilpass URL-er til dine faktiske filer
-  const cabinsRes = await fetch("dnt_hytter.json");
-  const placesRes = await fetch("tettsteder_3.json");
 
-  if (!cabinsRes.ok || !placesRes.ok) {
-    throw new Error("Kunne ikke laste datafiler");
-  }
+  // 1. Last alt parallelt
+  const [tettstederResp, hytterResp, faktaResp] = await Promise.all([
+    fetch("tettsteder_3.json"),
+    fetch("dnt_hytter.json"),
+    fetch("facts_all.json")
+  ]);
 
-  allCabins = await cabinsRes.json();
-  allPlaces = await placesRes.json();
+  // 2. Les JSON
+  const tettstederData = await tettstederResp.json();
+  const hytterData = await hytterResp.json();
+  const faktaData = await faktaResp.json();
 
-  console.log("places:", allPlaces.length);
-  console.log("cabins:", allCabins.length);
+  // 3. Nå kan du bruke dem
+  console.log("Tettsteder:", tettstederData.length);
+  console.log("Hytter:", hytterData.length);
+
+  // osv…
 }
-
 // --------------------------------------------------
 // STRØMPRISER / RANDOM FACT – STUBS DU KAN ERSTATTE
 // --------------------------------------------------
