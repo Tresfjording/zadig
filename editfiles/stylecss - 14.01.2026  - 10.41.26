@@ -1,0 +1,231 @@
+/* === GLOBALT === */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: "Inter", Arial, sans-serif;
+    background: #f5f5f5;
+}
+
+/* === KART === */
+#map {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    z-index: 1;
+}
+
+
+#box2 {
+  transition: opacity 0.3s ease;
+  opacity: 1;
+}
+
+#box2.fade-out {
+  opacity: 0;
+}
+
+.suggestion-item.active {
+  background-color: #e0e0e0;
+}
+
+/* === SØKEBOKS === */
+.search-container {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 9999;
+    background: white;
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(0,0,0,0.15);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    width: 260px;
+}
+
+.search-container input {
+    width: 100%;
+    padding: 6px 8px;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+#box2 {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: white;
+  padding: 10px;
+  border: 1px solid #ccc;
+  z-index: 1000;
+  pointer-events: none; /* viktig! */
+  transition: opacity 0.3s ease;
+}
+
+/* === AUTOCOMPLETE LISTE === */
+.autocomplete-list {
+    margin-top: 4px;
+    background: white;
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 4px;
+    max-height: 200px;
+    overflow-y: auto;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.autocomplete-item {
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.autocomplete-item:hover {
+    background: #f0f0f0;
+}
+
+body {
+  font-family: Consolas, monospace;
+}
+#map {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+#info-box {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 280px;
+  max-height: 80vh;
+  overflow-y: auto;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  z-index: 1000;
+  font-family: sans-serif;
+}
+
+#info-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+#info-content p {
+  margin: 4px 0;
+}
+
+.sitat {
+  font-style: italic;
+  color: #555;
+  margin-top: 8px;
+}
+
+/* === CABIN MARKER === */
+.cabin-marker {
+    background: #ff8800;
+    border: 2px solid white;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    box-shadow: 0 0 6px rgba(0,0,0,0.3);
+}
+
+/* === MUNICIPALITY MARKER === */
+.muni-marker {
+    background: #0077ff;
+    border: 2px solid white;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    box-shadow: 0 0 6px rgba(0,0,0,0.3);
+}
+
+/* === SCROLLBAR (for autocomplete) === */
+.autocomplete-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.autocomplete-list::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.25);
+    border-radius: 3px;
+}
+    :root {
+      --fontStack-monospace: Consolas, "Monaspace Neon", ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--fontStack-monospace);
+    }
+
+    #map {
+      height: 100vh;
+      width: 100%;
+      z-index: 0;
+    }
+
+    .search-container {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 1000;
+      background: white;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .search-input {
+      width: 250px;
+      padding: 4px;
+    }
+
+    .search-suggestions {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      max-height: 200px;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      background: white;
+    }
+
+    .suggestion-item {
+      padding: 4px 8px;
+      cursor: pointer;
+    }
+
+    .suggestion-item.active {
+      background-color: #e0e0e0;
+    }
+
+    .info-panel {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 1000;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      max-width: 440px;
+    }
+
+    .info-box {
+      width: 200px;
+      min-height: 100px;
+      border: 1px solid #ccc;
+      padding: 8px;
+      background: #f9f9f9;
+      font-family: var(--fontStack-monospace);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+  
