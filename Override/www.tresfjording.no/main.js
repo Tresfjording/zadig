@@ -206,6 +206,18 @@ function buildSearchIndex() {
   console.log("✅ Søkeindeks bygget:", searchIndex.length, "elementer");
 }
 
+const positronLayer = L.tileLayer(
+  "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+  {
+    attribution:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/">CARTO</a>',
+    subdomains: "abcd",
+    maxZoom: 19,
+  }
+);
+
+positronLayer.addTo(map);
+
 // --------------------------------------------------
 // SØK
 // --------------------------------------------------
@@ -373,3 +385,4 @@ function showInfo(place) {
 
   infoBox.style.display = "block";
 }
+
