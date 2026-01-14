@@ -137,11 +137,13 @@ kart = L.map('map').setView([63.1, 7.7], 6);
 
 async function lastData() {
   // 1. Last kommuner separat
-  const kommuneResp = await fetch("https://opencom.no/dataset/bbf88dbb-816e-44da-8a2b-c440e16ef128/resource/14274bc9-fb1e-49bf-880d-b7b3a23541d7/download/kommunernorgeillustrasjonskart.geojson");
-  const kommuneData = await kommuneResp.json();
+ const kommuneResp = await fetch("./data/to_kommuner.json");
+ const kommuneData = await kommuneResp.json();
+ renderGeoJsonLayer(kommuneData);
+
   console.log("GeoJSON type:", kommuneData.type);
-console.log("Har features:", Array.isArray(kommuneData.features));
-console.log("Antall features:", kommuneData.features?.length);
+  console.log("Har features:", Array.isArray(kommuneData.features));
+  console.log("Antall features:", kommuneData.features?.length);
   renderGeoJsonLayer(kommuneData);
 
   // 2. Last resten parallelt
