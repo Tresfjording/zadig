@@ -8,6 +8,9 @@ let allCabins = [];
 let allPlaces = [];
 let searchIndex = [];
 let suggestionActiveIndex = -1;
+let places;
+const tettstederData = await tettstederResp.json();
+places = tettstederData;
 
 const cabinIcon = L.icon({
   iconUrl: "/image/cabin16.png",
