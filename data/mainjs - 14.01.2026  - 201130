@@ -6,10 +6,8 @@ let allCabins = [];
 let allPlaces = [];
 let searchIndex = [];
 let suggestionActiveIndex = -1;
+let places;
 
-// --------------------------------------------------
-// IKONER
-// --------------------------------------------------
 const cabinIcon = L.icon({
   iconUrl: "/image/cabin16.png",
   iconSize: [18, 18],
@@ -17,129 +15,145 @@ const cabinIcon = L.icon({
   popupAnchor: [0, -18],
 });
 
-// Basiskart (lys, moderne)
-const positronLayer = L.tileLayer(
-  "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
-  {
-    attribution:
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/">CARTO</a>',
-    subdomains: "abcd",
-    maxZoom: 19,
-  }
-);
-
 // --------------------------------------------------
-// INIT – Kalles når skriptet lastes
+// OPPSTART – Laster både tettsteder og hytter
 // --------------------------------------------------
-initMap();
-loadData();
-initSearch();
-initPrices();
-setRandomFact();
 
-// --------------------------------------------------
-// KART (Leaflet)
-// --------------------------------------------------
-function initMap() {
-  if (map) {
-    map.remove();
-  }
-
-  map = L.map("map", {
-    center: [62.501432, 7.1444801], // Tresfjord
-    zoom: 8,
-    layers: [positronLayer],
-  });
-
-  console.log("Kart initialisert");
-}
-
-// Hjelpefunksjon: hent lat/lon fra et "sted" (tettsted/hytte)
-function getLatLon(obj) {
-  const lat =
-    typeof obj.lat === "number"
-      ? obj.lat
-      : typeof obj.latitude === "number"
-      ? obj.latitude
-      : typeof obj.h_lot === "number"
-      ? obj.h_lot
-      : null;
-
-  const lon =
-    typeof obj.lon === "number"
-      ? obj.lon
-      : typeof obj.longitude === "number"
-      ? obj.longitude
-      : typeof obj.h_lon === "number"
-      ? obj.h_lon
-      : null;
-
-  if (typeof lat === "number" && typeof lon === "number") {
-    return { lat, lon };
-  }
-  return null;
-}
-
-// --------------------------------------------------
-// DATAINNLESING
-// --------------------------------------------------
-async function loadData() {
-  try {
-    const [tettstederResp, hytterResp, faktaResp] = await Promise.all([
-      fetch("tettsteder_3.json"),
-      fetch("dnt_hytter.json"),
-      fetch("facts_all.json"),
-    ]);
+Promise.all([
+  fetch("tettsteder_3.json"),
+  fetch("dnt_hytter.json"),
+  fetch("facts_all.json")
+])
+  .then(async ([tettstederResp, hytterResp, faktaResp]) => {
 
     const tettstederData = await tettstederResp.json();
     const hytterData = await hytterResp.json();
-    const faktaData = await faktaResp.json(); // foreløpig ikke brukt, men klart
+    
 
-    allPlaces = Array.isArray(tettstederData) ? tettstederData : [];
-    allCabins = Array.isArray(hytterData) ? hytterData : [];
+    console.log("Tettsteder lastet:", tettstederData.length);
+    console.log("Hytter lastet:", hytterData.length);
+
+    // Her kan du fortsette med:
+    // - validering
+    // - bygging av søkeindeks
+    // - visAlleSteder()
+    // - visHytter()
+  })
+  .catch(err => {
+    console.error("🚨 Klarte ikke å laste data:", err);
+  });
+
+
+
+Promise.all([
+  fetch("tettsteder_3.json").then(res => res.json()),
+  fetch("dnt_hytter.json").then(res => res.json())
+])
+  .then(([placesData, cabinsData]) => {
+    allPlaces = placesData;
+    allCabins = cabinsData;
 
     console.log("✅ Tettsteder lastet:", allPlaces.length);
     console.log("✅ Hytter lastet:", allCabins.length);
 
     buildSearchIndex();
-    visAlleSteder();
-  } catch (err) {
+    visAlleSteder(); // valgfritt
+  })
+  .catch(err => {
     console.error("🚨 Klarte ikke å laste data:", err);
-  }
+  });
+// --------------------------------------------------
+// KART (Leaflet – tilpass om du bruker noe annet)
+// --------------------------------------------------
+  initMap();
+
+function initMap() {
+  map = L.map("map").setView([62.5, 7.5], 8); // Midt i Møre og Romsdal
+
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "© OpenStreetMap",
+    maxZoom: 14,
+  }).addTo(map);
+
+  console.log("Kart initialisert");
 }
 
-// --------------------------------------------------
-// VIS ALLE STEDER PÅ KARTET
-// --------------------------------------------------
+
+
 function visAlleSteder() {
-  if (!Array.isArray(allPlaces)) {
-    console.warn("allPlaces er ikke en array:", allPlaces);
-    return;
-  }
+  places.forEach(p => {
+    if (p.h_lot && p.h_lon) {
+      L.marker([p.h_lot, p.h_lon]).addTo(map)
+        .bindPopup(p.navn || p.name || "Uten navn");
+    }
+  });
+}
 
-  allPlaces.forEach((p) => {
-    const coords = getLatLon(p);
-    if (!coords) return;
-
-    const navn = p.name || p.title || p.navn || "Uten navn";
-
-    const marker = L.marker([coords.lat, coords.lon]).addTo(map);
-    marker.bindPopup(navn);
-
-    // Klikk på markør → infoboks
-    marker.on("click", () => {
-      showInfo(p);
-    });
+Promise.all([
+  fetch("tettsteder_3.json"),
+  fetch("dnt_hytter.json"),
+  fetch("facts_all.json")
+])
+   .then(async ([tettstederResp,]) => {
+    const tettstederData = await tettstederResp.json();
+    places = tettstederData;
+    visAlleSteder(); // nå er places definert
   });
 
-  console.log("Viste alle steder på kartet:", allPlaces.length);
+
+  if (map) {
+  map.remove(); // fjerner eksisterende kart
 }
 
+map = L.map("map").setView([62.5, 7.5], 8);
+
+  // Initialiser kartet med terreng som default
+  map = L.map("map", {
+    center: [62.501432, 7.1444801], // Tresfjord
+    zoom: 10,
+    layers: [positronLayer]
+  });
+
+  // Lagvelger
+  const baseMaps = {
+    "Standard": standardLayer,
+    "Terreng": topoLayer,
+    "Lys moderne": positronLayer,
+    "Satelitt": satelliteLayer
+  };
+
+  L.control.layers(baseMaps).addTo(map);
+
+
 // --------------------------------------------------
-// STRØMPRISER / RANDOM FACT – STUBS
+// DATAINNLESSING – TILPASS STIER TIL DINE JSON-FILER
+// --------------------------------------------------
+
+
+async function loadData() {
+
+  const [tettstederResp, hytterResp, faktaResp] = await Promise.all([
+    fetch("tettsteder_3.json"),
+    fetch("dnt_hytter.json"),
+    fetch("facts_all.json")
+  ]);
+
+  const tettstederData = await tettstederResp.json();
+  const hytterData = await hytterResp.json();
+  const faktaData = await faktaResp.json();
+
+  console.log("Tettsteder:", tettstederData.length);
+  console.log("Hytter:", hytterData.length);
+}
+
+loadData();
+
+
+// --------------------------------------------------
+// STRØMPRISER / RANDOM FACT – STUBS DU KAN ERSTATTE
 // --------------------------------------------------
 async function initPrices() {
-  // Her kan du hente strømpriser og oppdatere #power-price senere
+  // Her kan du hente strømpriser og oppdatere #power-price
   console.log("initPrices: stub");
 }
 
@@ -147,7 +161,7 @@ function setRandomFact() {
   const facts = [
     "Visste du at Norge har over 400 000 hytter?",
     "Møre og Romsdal har noen av de fineste fjordene i verden.",
-    "Tresfjordbrua kortet ned reisetida mellom Vestnes og Ålesund betydelig.",
+    "Tresfjordbrua kortet ned reisetida mellom Vestnes og Ålesund betydelig."
   ];
   const fact = facts[Math.floor(Math.random() * facts.length)];
   const factEl = document.getElementById("random-fact");
@@ -162,18 +176,13 @@ function buildSearchIndex() {
 
   // Hytter
   if (Array.isArray(allCabins)) {
-    const validCabins = allCabins.filter((c) => {
-      const name = c.name || c.navn || c.title;
-      return typeof name === "string" && name.trim() !== "";
-    });
-
+    const validCabins = allCabins.filter(c => typeof c.name === "string" && c.name.trim() !== "");
     console.log("Gyldige hytter:", validCabins.length);
-
     searchIndex.push(
-      ...validCabins.map((c) => ({
-        label: (c.name || c.navn || c.title).trim(),
+      ...validCabins.map(c => ({
+        label: c.name.trim(),
         type: "hytte",
-        ref: c,
+        ref: c
       }))
     );
   } else {
@@ -182,18 +191,13 @@ function buildSearchIndex() {
 
   // Tettsteder
   if (Array.isArray(allPlaces)) {
-    const validPlaces = allPlaces.filter((p) => {
-      const name = p.name || p.navn || p.title;
-      return typeof name === "string" && name.trim() !== "";
-    });
-
+    const validPlaces = allPlaces.filter(p => typeof p.name === "string" && p.name.trim() !== "");
     console.log("Gyldige tettsteder:", validPlaces.length);
-
     searchIndex.push(
-      ...validPlaces.map((p) => ({
-        label: (p.name || p.navn || p.title).trim(),
+      ...validPlaces.map(p => ({
+        label: p.name.trim(),
         type: "sted",
-        ref: p,
+        ref: p
       }))
     );
   } else {
@@ -203,8 +207,23 @@ function buildSearchIndex() {
   console.log("✅ Søkeindeks bygget:", searchIndex.length, "elementer");
 }
 
+const positronLayer = L.tileLayer(
+  "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+  {
+    attribution:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/">CARTO</a>',
+    subdomains: "abcd",
+    maxZoom: 19,
+  }
+);
+
+positronLayer.addTo(map);
+
+
+
+
 // --------------------------------------------------
-// SØK – INPUT & TASTATUR
+// SØK
 // --------------------------------------------------
 function initSearch() {
   const searchInput = document.getElementById("searchBox");
@@ -213,21 +232,6 @@ function initSearch() {
     return;
   }
 
-  // Live forslag
-  searchInput.addEventListener("input", () => {
-    const query = searchInput.value.trim().toLowerCase();
-    if (query.length < 2) {
-      clearSuggestions();
-      return;
-    }
-
-    const matches = searchIndex.filter((item) =>
-      item.label.toLowerCase().includes(query)
-    );
-    renderSuggestions(matches);
-  });
-
-  // Piltaster/enter
   searchInput.addEventListener("keydown", (e) => {
     const suggestionsEl = document.getElementById("autocomplete");
     const items = suggestionsEl
@@ -325,51 +329,36 @@ function handleSearch(queryOrLabel) {
 
   const query = queryOrLabel.trim().toLowerCase();
 
-  // 1. Prøv å finne i søkeindeks (eksakt label)
-  let matchItem =
-    searchIndex.find((item) => item.label.toLowerCase() === query) || null;
+  const match = places.find(p =>
+    p.name?.toLowerCase() === query ||
+    p.title?.toLowerCase() === query ||
+    p.navn?.toLowerCase() === query ||
+    p.kommune?.toLowerCase() === query
+  );
 
-  // 2. Hvis ikke eksakt i indeks: prøv å finne i places/cabins
-  if (!matchItem) {
-    const placeMatch = allPlaces.find((p) => {
-      const name = (p.name || p.navn || p.title || "").toLowerCase();
-      const kommune = (p.kommune || p.municipality || "").toLowerCase();
-      return name === query || kommune === query;
-    });
-
-    if (placeMatch) {
-      matchItem = { type: "sted", ref: placeMatch };
-    }
-  }
-
-  if (!matchItem) {
+  if (!match) {
     console.warn("Fant ikke sted:", query);
     return;
   }
 
-  const obj = matchItem.ref;
-  const coords = getLatLon(obj);
+  const lat = match.lat;
+  const lon = match.lon;
 
-  if (!coords) {
-    console.warn("Ugyldige koordinater for:", obj);
+  if (typeof lat !== "number" || typeof lon !== "number") {
+    console.warn("Ugyldige koordinater for:", match);
     return;
   }
 
-  const navn = obj.name || obj.title || obj.navn || "Uten navn";
+  const navn = match.name || match.title || match.navn || "Uten navn";
 
   console.log("Fant sted:", navn);
-
-  map.setView([coords.lat, coords.lon], 12);
-  const marker =
-    matchItem.type === "hytte"
-      ? L.marker([coords.lat, coords.lon], { icon: cabinIcon }).addTo(map)
-      : L.marker([coords.lat, coords.lon]).addTo(map);
-
-  marker.bindPopup(navn).openPopup();
-  marker.on("click", () => showInfo(obj));
+  map.setView([lat, lon], 12);
+  L.marker([lat, lon]).addTo(map)
+    .bindPopup(navn)
+    .openPopup();
 }
 
-// --------------------------------------------------
+ // --------------------------------------------------
 // INFOBOKS
 // --------------------------------------------------
 function showInfo(place) {
@@ -382,10 +371,9 @@ function showInfo(place) {
     return;
   }
 
-  const name = place.name || place.navn || place.title || "Uten navn";
-  const municipality =
-    place.municipality || place.kommune || "Ukjent kommune";
-  const county = place.county || place.fylke || "Ukjent fylke";
+  const name = place.name || "Uten navn";
+  const municipality = place.municipality || "Ukjent kommune";
+  const county = place.county || "Ukjent fylke";
   const website = place.website || null;
 
   titleEl.textContent = name;
@@ -398,5 +386,7 @@ function showInfo(place) {
   }
 
   contentEl.innerHTML = html;
+
   infoBox.style.display = "block";
 }
+
