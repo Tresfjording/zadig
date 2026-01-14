@@ -43,7 +43,7 @@ Promise.all([
     console.error("🚨 Klarte ikke å laste data:", err);
   });
 
-  initMap();
+
 
 Promise.all([
   fetch("tettsteder_3.json").then(res => res.json()),
@@ -65,9 +65,9 @@ Promise.all([
 // --------------------------------------------------
 // KART (Leaflet – tilpass om du bruker noe annet)
 // --------------------------------------------------
+  initMap();
 
-
-initMap(); {
+function initMap() {
   map = L.map("map").setView([62.5, 7.5], 8); // Midt i Møre og Romsdal
 
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
