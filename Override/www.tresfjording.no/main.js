@@ -43,6 +43,7 @@ Promise.all([
     console.error("🚨 Klarte ikke å laste data:", err);
   });
 
+  initMap();
 
 Promise.all([
   fetch("tettsteder_3.json").then(res => res.json()),
@@ -78,33 +79,30 @@ initMap(); {
 }
 
 
+
 function visAlleSteder() {
-  tettstederData.forEach(p => {
+  places.forEach(p => {
     if (p.h_lot && p.h_lon) {
       L.marker([p.h_lot, p.h_lon]).addTo(map)
         .bindPopup(p.navn || p.name || "Uten navn");
     }
   });
 }
-  // Kartlag
-  const standardLayer = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    maxZoom: 18,
-    attribution: "© OpenStreetMap"
-  });
 
-  const topoLayer = L.tileLayer("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png", {
-    maxZoom: 17,
-    attribution: "© OpenTopoMap contributors"
+Promise.all([
+  fetch("tettsteder_3.json"),
+  fetch("dnt_hytter.json"),
+  fetch("facts_all.json")
+])
+  .then(async ([tettstederResp, hytterResp, faktaResp]) => {
+    const tettstederData = await tettstederResp.json();
+    places = tettstederData;
+    initMap();
+    visAlleSteder();
+  })
+  .catch(err => {
+    console.error("🚨 Klarte ikke å laste data:", err);
   });
-
-  const positronLayer = L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png", {
-    attribution: "© CartoDB"
-  });
-
-  const satelliteLayer = L.tileLayer(
-    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-    { attribution: "Tiles © Esri" }
-  );
 
   
 
