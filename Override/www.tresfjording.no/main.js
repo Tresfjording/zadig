@@ -57,10 +57,10 @@ function initMap() {
 
 
 function visAlleSteder() {
-  allPlaces.forEach(p => {
-    if (p.lat && p.lon) {
-      L.marker([p.lat, p.lon]).addTo(map)
-        .bindPopup(p.name || p.title || p.navn || "Uten navn");
+  tettstederData.forEach(p => {
+    if (p.h_lot && p.h_lon) {
+      L.marker([p.h_lot, p.h_lon]).addTo(map)
+        .bindPopup(p.navn || p.name || "Uten navn");
     }
   });
 }
