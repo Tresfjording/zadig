@@ -152,23 +152,7 @@ async function lastData() {
   const hytterData = await hytterResp.json();
   const faktaData = await faktaResp.json();
 
-  // 3. Lagre dataene
-  tettsteder = Array.isArray(tettstederData)
-    ? tettstederData
-    : (tettstederData.places || tettstederData.tettsteder || []);
-
-  hytter = Array.isArray(hytterData)
-    ? hytterData
-    : (hytterData.hytter || hytterData.cabins || []);
-
-  sitat = faktaData.sitat || faktaData.quote || "";
-}
-
-  const tettstederData = await tettstederResp.json();
-  const hytterData = await hytterResp.json();
-  const faktaData = await faktaResp.json();
-
-  // Støtt både ren liste og { places: [...] } / { tettsteder: [...] }
+  // 3. Lagre dataene - Støtt både ren liste og { places: [...] } / { tettsteder: [...] }
   tettsteder = Array.isArray(tettstederData)
     ? tettstederData
     : (tettstederData.places || tettstederData.tettsteder || []);
