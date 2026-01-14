@@ -101,7 +101,11 @@ Promise.all([
   });
 
 
-  
+  if (map) {
+  map.remove(); // fjerner eksisterende kart
+}
+
+map = L.map("map").setView([62.5, 7.5], 8);
 
   // Initialiser kartet med terreng som default
   map = L.map("map", {
