@@ -28,9 +28,7 @@ Promise.all([
 
     const tettstederData = await tettstederResp.json();
     const hytterData = await hytterResp.json();
-    const faktaData = await faktaResp.json();
-
-    places = tettstederData;   // Nå er places definert riktig
+    
 
     console.log("Tettsteder lastet:", tettstederData.length);
     console.log("Hytter lastet:", hytterData.length);
@@ -45,7 +43,7 @@ Promise.all([
     console.error("🚨 Klarte ikke å laste data:", err);
   });
 
-  
+
 Promise.all([
   fetch("tettsteder_3.json").then(res => res.json()),
   fetch("dnt_hytter.json").then(res => res.json())
