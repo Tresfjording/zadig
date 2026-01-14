@@ -94,7 +94,7 @@ Promise.all([
   fetch("dnt_hytter.json"),
   fetch("facts_all.json")
 ])
-   .then(async ([tettstederResp, ...]) => {
+   .then(async ([tettstederResp,]) => {
     const tettstederData = await tettstederResp.json();
     places = tettstederData;
     visAlleSteder(); // nå er places definert
