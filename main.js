@@ -17,11 +17,11 @@ function tegnAlleHyttemarkorer() {
   }
 
   hytter.forEach(h => {
-    const lat = parseFloat(String(h_lat).replace(",", "."));
-    const lon = parseFloat(String(h_lon).replace(",", "."));
+    const lat = parseFloat(String(h.lat).replace(",", "."));
+    const lon = parseFloat(String(h.lon).replace(",", "."));
 
     if (!lat || !lon) {
-      console.warn("Ugyldige koordinater for hytte:", h_name, h_lat, h_lon);
+      console.warn("Ugyldige koordinater for hytte:", h.name, h.lat, h.lon);
       return;
     }
 
@@ -34,7 +34,7 @@ function tegnAlleHyttemarkorer() {
     });
 
     markor.bindTooltip(
-      `${h_name || "Ukjent hytte"} – ${h["h_dnt:classification"] || "Ukjent type"}`,
+      `${h.name || "Ukjent hytte"} – ${h["h_dnt:classification"] || "Ukjent type"}`,
       { direction: "top", offset: [0, -6] }
     );
 
@@ -207,27 +207,34 @@ async function lastData() {
 
 // -------------------- SØK --------------------
 
-function byggSokeindeks() {
+function søkeIndeks() {
   sokeIndeks = [];
 
-  // Tettsteder
-  tettsteder.forEach(t => {
-    const navn = t.t_tettsted || t.tettsted;
-    if (typeof navn === "string" && navn.trim() !== "") {
-      sokeIndeks.push({ type: "t", etikett: navn, ref: t });
-    }
+  // TETTSTEDER
+  allPlaces.forEach(p => {
+    const navn = p.t_tettsted; // riktig felt
+    if (!navn) return;
+
+    sokeIndeks.push({
+      etikett: navn.trim(),
+      type: "t",
+      ref: p
+    });
   });
 
-  // Hytter
-  hytter.forEach(h => {
-    if (typeof h_name === "string" && h_name.trim() !== "") {
-      sokeIndeks.push({ type: "h", etikett: h_name, ref: h });
-    }
+  // HYTTER
+  allCabins.forEach(h => {
+    const navn = h.h_name; // riktig felt
+    if (!navn) return;
+
+    sokeIndeks.push({
+      etikett: navn.trim(),
+      type: "h",
+      ref: h
+    });
   });
 
-  sokeIndeks.sort((a, b) => a.etikett.localeCompare(b.etikett));
-
-  console.log("Søkeindeks bygget, antall elementer:", sokeIndeks.length);
+  console.log("Søkeindeks bygget:", sokeIndeks.length, "elementer");
 }
 
 function initSok() {
@@ -402,13 +409,13 @@ function oppdaterInfoboksHytte(h) {
   const tittelEl = document.getElementById("info-title");
   if (!innholdEl || !tittelEl || !h) return;
 
-  tittelEl.textContent = h_name || "Ukjent hytte";
+  tittelEl.textContent = h.name || "Ukjent hytte";
 
   innholdEl.innerHTML = `
-    <p><strong>Operatør:</strong> ${h["h_dnt:operator"] || h_operator || "Ukjent"}</p>
+    <p><strong>Operatør:</strong> ${h["h_dnt:operator"] || h.operator || "Ukjent"}</p>
     <p><strong>Type:</strong> ${h["h_dnt:classification"] || "Ukjent"}</p>
-    <p><strong>Koordinater:</strong> ${h_lat}, ${h_lon}</p>
-    <p><a href="${h_link || h_website || "#"}" target="_blank">Besøk UT.no</a></p>
+    <p><strong>Koordinater:</strong> ${h.lat}, ${h.lon}</p>
+    <p><a href="${h.link || h.website || "#"}" target="_blank">Besøk UT.no</a></p>
   `;
 
   if (!innholdEl.innerHTML.includes("legend")) {
