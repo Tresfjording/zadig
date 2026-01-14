@@ -17,11 +17,11 @@ function tegnAlleHyttemarkorer() {
   }
 
   hytter.forEach(h => {
-    const lat = parseFloat(String(h.h_lat).replace(",", "."));
-    const lon = parseFloat(String(h.h_lon).replace(",", "."));
+    const lat = parseFloat(String(h.lat).replace(",", "."));
+    const lon = parseFloat(String(h.lon).replace(",", "."));
 
     if (!lat || !lon) {
-      console.warn("Ugyldige koordinater for hytte:", h.h_name, h.h_lat, h.h_lon);
+      console.warn("Ugyldige koordinater for hytte:", h.name, h.lat, h.lon);
       return;
     }
 
@@ -34,7 +34,7 @@ function tegnAlleHyttemarkorer() {
     });
 
     markor.bindTooltip(
-      `${h.h_name || "Ukjent hytte"} – ${h["h_dnt:classification"] || "Ukjent type"}`,
+      `${h.name || "Ukjent hytte"} – ${h["h_dnt:classification"] || "Ukjent type"}`,
       { direction: "top", offset: [0, -6] }
     );
 
@@ -220,8 +220,8 @@ function byggSokeindeks() {
 
   // Hytter
   hytter.forEach(h => {
-    if (typeof h.h_name === "string" && h.h_name.trim() !== "") {
-      sokeIndeks.push({ type: "h", etikett: h.h_name, ref: h });
+    if (typeof h.name === "string" && h.name.trim() !== "") {
+      sokeIndeks.push({ type: "h", etikett: h.name, ref: h });
     }
   });
 
@@ -402,13 +402,13 @@ function oppdaterInfoboksHytte(h) {
   const tittelEl = document.getElementById("info-title");
   if (!innholdEl || !tittelEl || !h) return;
 
-  tittelEl.textContent = h.h_name || "Ukjent hytte";
+  tittelEl.textContent = h.name || "Ukjent hytte";
 
   innholdEl.innerHTML = `
-    <p><strong>Operatør:</strong> ${h["h_dnt:operator"] || h.h_operator || "Ukjent"}</p>
+    <p><strong>Operatør:</strong> ${h["h_dnt:operator"] || h.operator || "Ukjent"}</p>
     <p><strong>Type:</strong> ${h["h_dnt:classification"] || "Ukjent"}</p>
-    <p><strong>Koordinater:</strong> ${h.h_lat}, ${h.h_lon}</p>
-    <p><a href="${h.h_link || h.h_website || "#"}" target="_blank">Besøk UT.no</a></p>
+    <p><strong>Koordinater:</strong> ${h.lat}, ${h.lon}</p>
+    <p><a href="${h.link || h.website || "#"}" target="_blank">Besøk UT.no</a></p>
   `;
 
   if (!innholdEl.innerHTML.includes("legend")) {
