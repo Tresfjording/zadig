@@ -1,7 +1,5 @@
-
-
 // --------------------------------------------------
-// GLOBALE VARIABLER - 10.01.2026  - 07:51:07
+// GLOBALE VARIABLER
 // --------------------------------------------------
 let map;
 let allCabins = [];
@@ -9,23 +7,45 @@ let allPlaces = [];
 let searchIndex = [];
 let suggestionActiveIndex = -1;
 let places;
-const tettstederData = await tettstederResp.json();
-places = tettstederData;
 
 const cabinIcon = L.icon({
   iconUrl: "/image/cabin16.png",
-  iconSize: [18, 18], // juster etter behov
-  iconAnchor: [12, 18], // punktet som treffer bakken
-  popupAnchor: [0, -18], // hvor popup vises i forhold til ikonet
+  iconSize: [18, 18],
+  iconAnchor: [12, 18],
+  popupAnchor: [0, -18],
 });
-// --------------------------------------------------
-// OPPSTART
-// --------------------------------------------------
 
 // --------------------------------------------------
 // OPPSTART – Laster både tettsteder og hytter
 // --------------------------------------------------
 
+Promise.all([
+  fetch("tettsteder_3.json"),
+  fetch("dnt_hytter.json"),
+  fetch("facts_all.json")
+])
+  .then(async ([tettstederResp, hytterResp, faktaResp]) => {
+
+    const tettstederData = await tettstederResp.json();
+    const hytterData = await hytterResp.json();
+    const faktaData = await faktaResp.json();
+
+    places = tettstederData;   // Nå er places definert riktig
+
+    console.log("Tettsteder lastet:", tettstederData.length);
+    console.log("Hytter lastet:", hytterData.length);
+
+    // Her kan du fortsette med:
+    // - validering
+    // - bygging av søkeindeks
+    // - visAlleSteder()
+    // - visHytter()
+  })
+  .catch(err => {
+    console.error("🚨 Klarte ikke å laste data:", err);
+  });
+
+  
 Promise.all([
   fetch("tettsteder_3.json").then(res => res.json()),
   fetch("dnt_hytter.json").then(res => res.json())
