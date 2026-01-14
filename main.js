@@ -1,6 +1,6 @@
 
 document.addEventListener("DOMContentLoaded", () => {
-  initKart();
+  init();
   loadData();
   initSearch();
   initPrices();
@@ -143,23 +143,21 @@ kart = L.map('map').setView([63.1, 7.7], 6);
 }
 
 function getLatLon(obj) {
-  // Hent LAT
   let lat = null;
-
-  if (typeof obj.lat === "number") lat = obj.lat;
-  else if (typeof obj.latitude === "number") lat = obj.latitude;
-  else if (obj.h_lat !== undefined)
-    lat = parseFloat(String(obj.h_lat).replace(",", "."));
-
-  // Hent LON
   let lon = null;
 
+  // LAT
+  if (typeof obj.lat === "number") lat = obj.lat;
+  else if (typeof obj.latitude === "number") lat = obj.latitude;
+  else if (obj.h_lat !== undefined) lat = parseFloat(String(obj.h_lat).replace(",", "."));
+  else if (obj.t_lat !== undefined) lat = parseFloat(String(obj.t_lat).replace(",", "."));
+
+  // LON
   if (typeof obj.lon === "number") lon = obj.lon;
   else if (typeof obj.longitude === "number") lon = obj.longitude;
-  else if (obj.h_lon !== undefined)
-    lon = parseFloat(String(obj.h_lon).replace(",", "."));
+  else if (obj.h_lon !== undefined) lon = parseFloat(String(obj.h_lon).replace(",", "."));
+  else if (obj.t_lon !== undefined) lon = parseFloat(String(obj.t_lon).replace(",", "."));
 
-  // Returner koordinater hvis gyldige
   if (typeof lat === "number" && typeof lon === "number" && !isNaN(lat) && !isNaN(lon)) {
     return { lat, lon };
   }
