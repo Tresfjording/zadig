@@ -42,7 +42,7 @@ function initMap() {
 async function loadData() {
   try {
     const [tettstederResp, hytterResp, factsResp] = await Promise.all([
-      fetch("tettsteder_3.json"),
+      fetch("tettsteder.json"),
       fetch("dnt_hytter.json"),
       fetch("facts_all.json")
     ]);
@@ -213,7 +213,7 @@ async function updateInfoBoxPlace(place) {
 
   if (!titleEl || !contentEl) return;
 
-  const placeName = place.t_knavn || place.tettsted || place.name || "Ukjent";
+  const placeName = place.t_tettsted || place.t_knavn || place.tettsted || place.name || "Ukjent";
   titleEl.textContent = placeName;
 
   const zone = place.t_sone || place.sone || "NO1";
@@ -222,9 +222,9 @@ async function updateInfoBoxPlace(place) {
 
   const priceColor = getPriceColor(currentPrice, nationalAvg);
 
-  const fylke = place.t_fnavn || place.fylke || "?";
-  const kommune = place.t_knavn || place.kommune || "?";
-  const innbyggere = place.t_innbyggere || place.k_antall || "?";
+  const fylke = place.t_fylke || place.t_fnavn || place.fylke || "?";
+  const kommune = place.t_tettsted || place.t_knavn || place.kommune || "?";
+  const innbyggere = place.t_antall || place.t_innbyggere || place.k_antall || "?";
   const areal = place.t_areal || place.k_areal || "?";
 
   contentEl.innerHTML = `
@@ -345,7 +345,7 @@ function renderPlaceMarkers() {
         fillOpacity: 0.7,
         weight: 1
       });
-      const name = t.t_knavn || t.tettsted || t.name || "Ukjent";
+      const name = t.t_tettsted || t.t_knavn || t.tettsted || t.name || "Ukjent";
       marker.bindTooltip(name, { direction: "top" });
       marker.on("mouseover", () => updateInfoBoxPlace(t));
       marker.addTo(map);

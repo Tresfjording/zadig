@@ -55,7 +55,7 @@ function initKart() {
 
 async function lastData() {
   const [tettstederResp, hytterResp, factsResp] = await Promise.all([
-    fetch("tettsteder_3.json"),
+    fetch("tettsteder.json"),
     fetch("dnt_hytter.json"),
     fetch("facts_all.json")
   ]);
@@ -215,15 +215,15 @@ async function oppdaterInfoboksTettsted(t) {
   const tittelEl = document.getElementById("info-title");
   if (!innholdEl || !t || !tittelEl) return;
 
-  tittelEl.textContent = t.tettsted || "Ukjent tettsted";
+  tittelEl.textContent = t.t_tettsted || t.tettsted || "Ukjent tettsted";
 
   const lokalPris = await hentPrisForSone(t.t_sone);
   const snittPris = await hentNasjonaltSnitt();
   const farge = prisFarge(lokalPris, snittPris);
 
   const kommuneTekst =
-    t.t_kommune && String(t.t_kommune).trim() !== ""
-      ? t.t_kommune
+    t.t_tettsted && String(t.t_tettsted).trim() !== ""
+      ? t.t_tettsted
       : "Ukjent";
 
   const fylkeTekst =
@@ -232,8 +232,8 @@ async function oppdaterInfoboksTettsted(t) {
       : "Ukjent";
 
   const innbyggereTekst =
-    t.t_innbyggere !== undefined && t.t_innbyggere !== null && String(t.t_innbyggere).trim() !== ""
-      ? t.t_innbyggere
+    t.t_antall !== undefined && t.t_antall !== null && String(t.t_antall).trim() !== ""
+      ? t.t_antall
       : "?";
 
   const arealTekst =
@@ -362,11 +362,11 @@ function renderAllTettstedMarkers() {
   }
 
   tettsteder.forEach(t => {
-    const lat = parseFloat(t.t_lat);
-    const lon = parseFloat(t.t_lon);
+    const lat = parseFloat(String(t.t_lat || "").replace(",", "."));
+    const lon = parseFloat(String(t.t_lon || "").replace(",", "."));
 
     if (!lat || !lon) {
-      console.warn("Ugyldige koordinater for tettsted:", t.tettsted, t.t_lat, t.t_lon);
+      console.warn("Ugyldige koordinater for tettsted:", t.t_tettsted || t.tettsted, t.t_lat, t.t_lon);
       return;
     }
 
@@ -378,7 +378,7 @@ function renderAllTettstedMarkers() {
       weight: 1
     });
 
-    markor.bindTooltip(`${t.tettsted}`, {
+    markor.bindTooltip(`${t.t_tettsted || t.tettsted}`, {
       direction: "top",
       offset: [0, -6]
     });
