@@ -42,7 +42,7 @@ function initMap() {
 async function loadData() {
   try {
     const [kommunerResp, hytterResp, factsResp] = await Promise.all([
-      fetch("data/kommuner.json"),
+      fetch("kommuner.json"),
       fetch("dnt_hytter.json"),
       fetch("facts_all.json")
     ]);
