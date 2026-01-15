@@ -1,4 +1,4 @@
-// 15.01.2026 - Fixed version
+// 15.01.2026  - 17:30:00
 let map;
 let tettsteder = [];
 let hytter = [];
