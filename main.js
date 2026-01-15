@@ -177,6 +177,11 @@ function updateSuggestionHighlight(items, index) {
   items.forEach((item, i) => {
     item.classList.toggle("active", i === index);
   });
+
+  // Scroll aktiv item til synlig område
+  if (items[index]) {
+    items[index].scrollIntoView({ block: "nearest" });
+  }
 }
 
 function renderSuggestions(matches) {
