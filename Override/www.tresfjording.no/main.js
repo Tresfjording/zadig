@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setRandomFact();
 });
 
-import kommuner from "./data/to_kommuner.js";
+import kommuner from "./data/kommuner.js";
 // -------------------- MARKØRER --------------------
 
 function tegnAlleHyttemarkorer() {
