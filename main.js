@@ -142,8 +142,13 @@ function initSearch() {
     } else if (e.key === "Enter") {
       e.preventDefault();
       if (currentIndex >= 0 && items[currentIndex]) {
+        // Velg aktiv item
         items[currentIndex].click();
+      } else if (items.length > 0) {
+        // Hvis ingen er valgt, velg første item
+        items[0].click();
       } else if (searchInput.value) {
+        // Hvis ingen forslag, søk på det som er skrevet
         handleSearch(searchInput.value);
       }
     }
