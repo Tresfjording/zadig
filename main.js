@@ -10,12 +10,29 @@ let hytteMarkører = []; // Lagre hytte-markører for toggle
 let kommunePolygoner = []; // Lagre kommune-grenser for toggle
 let facts = [];
 let searchIndex = [];
+let currentTileLayer = null; // Lagre gjeldende tile layer
 
 const hytteIcon = L.icon({
   iconUrl: "image/cabin16.png",
   iconSize: [16, 16],
   iconAnchor: [8, 8]
 });
+
+// Tile layer definisjoner
+const tileLayers = {
+  osm: {
+    url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+    attribution: "© OpenStreetMap contributors"
+  },
+  sat: {
+    url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    attribution: "© Esri, DigitalGlobe, Earthstar Geographics"
+  },
+  topo: {
+    url: "https://tile.opentopomap.org/{z}/{x}/{y}.png",
+    attribution: "© OpenTopoMap contributors"
+  }
+};
 
 // -------------------- STARTUP --------------------
 document.addEventListener("DOMContentLoaded", () => {
@@ -39,8 +56,10 @@ document.addEventListener("DOMContentLoaded", () => {
 // -------------------- MAP --------------------
 function initMap() {
   map = L.map("map").setView([63.0, 11.0], 6);
-  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    attribution: "© OpenStreetMap"
+  
+  // Last OSM som standard
+  currentTileLayer = L.tileLayer(tileLayers.osm.url, {
+    attribution: tileLayers.osm.attribution
   }).addTo(map);
   
   // Lukk forslagslisten når det klikkes på tomme områder på kartet
@@ -48,7 +67,43 @@ function initMap() {
     closeSuggestions();
   });
   
+  // Init layout selector
+  initLayoutSelector();
+  
   console.log("Kart initialisert");
+}
+
+// -------------------- LAYOUT SELECTOR --------------------
+function initLayoutSelector() {
+  const layoutDropdown = document.getElementById("map-layout");
+  
+  if (!layoutDropdown) {
+    console.error("Layout dropdown ikke funnet i HTML");
+    return;
+  }
+  
+  layoutDropdown.addEventListener("change", (e) => {
+    changeMapLayout(e.target.value);
+  });
+}
+
+function changeMapLayout(layoutKey) {
+  if (!tileLayers[layoutKey]) {
+    console.error("Ukjent kartkart:", layoutKey);
+    return;
+  }
+  
+  // Fjern gammelt tile layer
+  if (currentTileLayer) {
+    map.removeLayer(currentTileLayer);
+  }
+  
+  // Legg til nytt tile layer
+  currentTileLayer = L.tileLayer(tileLayers[layoutKey].url, {
+    attribution: tileLayers[layoutKey].attribution
+  }).addTo(map);
+  
+  console.log("Kartkart byttet til:", layoutKey);
 }
 
 // -------------------- DATA LOADING --------------------
