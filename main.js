@@ -1,6 +1,7 @@
 // 15.01.2026  - 17:30:00
 let map;
 let kommuner = [];
+let kommunerGeoJSON = []; // Lagre originale GeoJSON features
 let hytter = [];
 let facts = [];
 let searchIndex = [];
@@ -58,12 +59,12 @@ async function loadData() {
     // Håndter både liste og GeoJSON-format
     if (Array.isArray(kommunerData)) {
       kommuner = kommunerData;
+      kommunerGeoJSON = [];
     } else if (kommunerData.features) {
-      // GeoJSON format - konverter til liste med navn og sentralkoordinater
+      // GeoJSON format - lagre features og konverter til liste med navn og sentralkoordinater
+      kommunerGeoJSON = kommunerData.features;
       kommuner = kommunerData.features.map(feature => {
         const props = feature.properties;
-        const coords = feature.geometry.coordinates[0][0]; // Få første polygon ring, første punkt for eksempel
-        // Bruk første punkt som marker, eller beregn sentrum
         const allCoords = feature.geometry.coordinates[0]; // Alle punkter i første ring
         const lon = allCoords.reduce((sum, c) => sum + c[0], 0) / allCoords.length;
         const lat = allCoords.reduce((sum, c) => sum + c[1], 0) / allCoords.length;
@@ -71,11 +72,13 @@ async function loadData() {
           ...props,
           t_knavn: props.kommunenavn,
           k_lat_decimal: lat,
-          k_lon_decimal: lon
+          k_lon_decimal: lon,
+          geometry: feature.geometry // Lagre geometry for tegning av grenser
         };
       });
     } else {
       kommuner = (kommunerData.places || kommunerData.kommuner || []);
+      kommunerGeoJSON = [];
     }
     
     hytter = Array.isArray(hytterData)
@@ -323,8 +326,31 @@ function getPriceColor(price, national) {
 
 // -------------------- MARKERS --------------------
 function renderAllMarkers() {
+  renderKommunePolygons();
   renderCabinMarkers();
   renderKommuneMarkers();
+}
+
+function renderKommunePolygons() {
+  if (!kommuner || kommuner.length === 0) return;
+
+  kommuner.forEach(k => {
+    if (k.geometry && k.geometry.coordinates) {
+      const coords = k.geometry.coordinates[0]; // Første ring av polygon
+      const latLngs = coords.map(c => [c[1], c[0]]); // Konverter fra [lon, lat] til [lat, lon]
+      const polygon = L.polygon(latLngs, {
+        color: "#0077cc",
+        weight: 2,
+        opacity: 0.6,
+        fillOpacity: 0.1
+      });
+      polygon.bindTooltip(k.t_knavn, { direction: "center" });
+      polygon.on("mouseover", () => updateInfoBoxKommune(k));
+      polygon.addTo(map);
+    }
+  });
+
+  console.log(`Tegnet ${kommuner.length} kommunegrenser`);
 }
 
 function renderCabinMarkers() {
