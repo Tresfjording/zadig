@@ -62,15 +62,16 @@ async function loadData() {
       // GeoJSON format - konverter til liste med navn og sentralkoordinater
       kommuner = kommunerData.features.map(feature => {
         const props = feature.properties;
-        const coords = feature.geometry.coordinates[0]; // Polygon coordinates
-        // Beregn sentrum (gjennomsnitt av alle koordinater)
-        const lat = coords.reduce((sum, c) => sum + c[1], 0) / coords.length;
-        const lon = coords.reduce((sum, c) => sum + c[0], 0) / coords.length;
+        const coords = feature.geometry.coordinates[0][0]; // Få første polygon ring, første punkt for eksempel
+        // Bruk første punkt som marker, eller beregn sentrum
+        const allCoords = feature.geometry.coordinates[0]; // Alle punkter i første ring
+        const lon = allCoords.reduce((sum, c) => sum + c[0], 0) / allCoords.length;
+        const lat = allCoords.reduce((sum, c) => sum + c[1], 0) / allCoords.length;
         return {
           ...props,
           t_knavn: props.kommunenavn,
-          t_lat: lat,
-          t_lon: lon
+          k_lat_decimal: lat,
+          k_lon_decimal: lon
         };
       });
     } else {
