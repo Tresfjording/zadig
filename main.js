@@ -80,7 +80,7 @@ function buildSearchIndex() {
   searchIndex = [];
 
   tettsteder.forEach(t => {
-    const navn = t.t_tettsted || t.t_knavn || t.tettsted || t.name;
+    const navn = t_tettsted || t_knavn || t_tettsted || t.name;
     if (navn) {
       searchIndex.push({ type: "t", label: navn, ref: t });
     }
@@ -213,7 +213,7 @@ async function updateInfoBoxPlace(place) {
 
   if (!titleEl || !contentEl) return;
 
-  const placeName = place.t_tettsted || place.t_knavn || place.tettsted || place.name || "Ukjent";
+  const placeName = place.t_b|| place.t_knavn || place.tettsted || place.name || "Ukjent";
   titleEl.textContent = placeName;
 
   const zone = place.t_sone || place.sone || "NO1";
@@ -345,7 +345,7 @@ function renderPlaceMarkers() {
         fillOpacity: 0.7,
         weight: 1
       });
-      const name = t.t_tettsted || t.t_knavn || t.tettsted || t.name || "Ukjent";
+      const name = t_tettsted || t_knavn || t_tettsted || t.name || "Ukjent";
       marker.bindTooltip(name, { direction: "top" });
       marker.on("mouseover", () => updateInfoBoxPlace(t));
       marker.addTo(map);
