@@ -30,7 +30,7 @@ lastData()
     buildSearchIndex();
     initSearch();
     renderAllHytteMarkers();
-    updateBox4();
+    renderAllTettstedMarkers();
 
 loadGeoJson("https://www/tresfjording.no/data/kommuner.json").then(renderGeoJsonLayer);
 
@@ -49,21 +49,15 @@ function initKart() {
 // -------------------- DATA --------------------
 
 async function lastData() {
- async function lastData() {
   const [tettstederResp, hytterResp, factsResp] = await Promise.all([
     fetch("tettsteder_3.json"),
     fetch("dnt_hytter.json"),
     fetch("facts_all.json")
   ]);
 
-  places = await tettsteder_3Resp.json();
-  cabins = await hytterResp.json();
-  facts = await factsResp.json();
-}
-
- const tettstederData = await tettstederResp.json();
- const hytterData = await hytterResp.json();
- const faktaData = await faktaResp.json();
+  const tettstederData = await tettstederResp.json();
+  const hytterData = await hytterResp.json();
+  const faktaData = await factsResp.json();
 
   // Støtt både ren liste og { places: [...] } / { hytter: [...] }
   tettsteder = Array.isArray(tettstederData)
@@ -82,7 +76,7 @@ async function lastData() {
 
 // -------------------- SØK --------------------
 
-function byggSokeindeks() {
+function buildSearchIndex() {
   sokeIndeks = [];
 
   tettsteder.forEach(t => {
@@ -101,7 +95,7 @@ function byggSokeindeks() {
   sokeIndeks.sort((a, b) => a.etikett.localeCompare(b.etikett));
 }
 
-function initSok() {
+function initSearch() {
   const sokInput = document.getElementById("place-search");
   const forslagEl = document.getElementById("search-suggestions");
   let aktivIndeks = -1;
@@ -336,7 +330,7 @@ function prisFarge(pris, snitt) {
 
 // -------------------- MARKØRER --------------------
 
-function tegnAlleHyttemarkorer() {
+function renderAllHytteMarkers() {
   if (!hytter || hytter.length === 0) {
     console.warn("Ingen hytter å vise");
     return;
@@ -371,7 +365,7 @@ function tegnAlleHyttemarkorer() {
   console.log("Tegnet", hytter.length, "hytter");
 }
 
-function tegnAlleTettstedmarkorer() {
+function renderAllTettstedMarkers() {
   if (!tettsteder || tettsteder.length === 0) {
     console.warn("Ingen tettsteder å vise");
     return;
