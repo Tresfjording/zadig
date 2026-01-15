@@ -179,6 +179,9 @@ function renderSuggestions(matches) {
     div.addEventListener("mousedown", () => {
       handleSearch(item.label);
     });
+    div.addEventListener("click", () => {
+      handleSearch(item.label);
+    });
     suggestionsEl.appendChild(div);
   });
 }
