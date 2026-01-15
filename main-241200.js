@@ -115,7 +115,7 @@ const legendHTML = `
 // -------------------- OPPSTART --------------------
 
 document.addEventListener("DOMContentLoaded", () => {
-  initKart();
+ // initKart();
 
   lastData()
     .then(() => {
