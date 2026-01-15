@@ -222,25 +222,23 @@ async function updateInfoBoxKommune(k) {
 
   if (!titleEl || !contentEl) return;
 
-  const placeName = k.t_tettsted || k.t_knavn || k.tettsted || k.name || "Ukjent";
+  const placeName = k.t_tettsted || "Ukjent";
   titleEl.textContent = placeName;
 
-  const zone = k.t_sone || k.sone || "NO1";
+  const zone = k.t_sone || "NO1";
   const currentPrice = await fetchPriceForZone(zone);
   const nationalAvg = await fetchNationalAverage();
 
   const priceColor = getPriceColor(currentPrice, nationalAvg);
 
-  const fylke = k.t_fylke || k.t_fnavn || k.fylke || "?";
-  const kommune = k.t_tettsted || k.t_knavn || k.kommune || "?";
-  const innbyggere = k.t_antall || k.t_innbyggere || k.k_antall || "?";
-  const areal = k.t_areal || k.k_areal || "?";
+  const fylke = k.t_fylke || "?";
+  const innbyggere = k.t_antall || "?";
+  const areal = k.t_areal || "?";
 
   contentEl.innerHTML = `
     <p><strong>Kommune:</strong> ${placeName}</p>
     <p><strong>Sone:</strong> ${zone}</p>
     <p><strong>Fylke:</strong> ${fylke}</p>
-    <p><strong>Kommune:</strong> ${kommune}</p>
     <p><strong>Innbyggere:</strong> ${innbyggere}</p>
     <p><strong>Areal:</strong> ${areal} km²</p>
     <p><strong>Strømpris nå:</strong> <span style="color: ${priceColor};">${currentPrice ? currentPrice.toFixed(2) : "?"} kr/kWh</span></p>
@@ -371,11 +369,11 @@ function renderKommuneMarkers() {
   if (!kommuner || kommuner.length === 0) return;
 
   kommuner.forEach(k => {
-    const lat = parseFloat(String(k.t_lat || k.k_lat_decimal || "").replace(",", "."));
-    const lon = parseFloat(String(k.t_lon || k.k_lon_decimal || "").replace(",", "."));
+    const lat = parseFloat(String(k.t_lat || "").replace(",", "."));
+    const lon = parseFloat(String(k.t_lon || "").replace(",", "."));
 
     if (!isNaN(lat) && !isNaN(lon)) {
-      const zone = k.t_sone || k.sone || "NO1";
+      const zone = k.t_sone || "NO1";
       const marker = L.circleMarker([lat, lon], {
         radius: 5,
         color: "#333",
@@ -383,7 +381,7 @@ function renderKommuneMarkers() {
         fillOpacity: 0.7,
         weight: 1
       });
-      const name = k.t_tettsted || k.t_knavn || k.tettsted || k.name || "Ukjent";
+      const name = k.t_tettsted || "Ukjent";
       marker.bindTooltip(name, { direction: "top" });
       marker.on("mouseover", () => updateInfoBoxKommune(k));
       marker.addTo(map);
