@@ -3,6 +3,8 @@ let map;
 let kommuner = []; // Kommune-info fra tettsteder.json
 let kommunerGeometri = []; // Kommune-grenser fra kommuner.json
 let hytter = [];
+let fjelltopper = []; // Fjelltopper fra fjelltopper.json
+let fjellmarkører = []; // Lagre markører for toggle
 let facts = [];
 let searchIndex = [];
 
@@ -20,6 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("Data lastet!");
       buildSearchIndex();
       initSearch();
+      initMountainToggle();
       renderAllMarkers();
       setRandomFact();
     })
@@ -42,11 +45,12 @@ function initMap() {
 // -------------------- DATA LOADING --------------------
 async function loadData() {
   try {
-    const [tettstederResp, kommunerGeoResp, hytterResp, factsResp] = await Promise.all([
+    const [tettstederResp, kommunerGeoResp, hytterResp, factsResp, fjellResp] = await Promise.all([
       fetch("tettsteder.json"),
       fetch("kommuner.json"),
       fetch("dnt_hytter.json"),
-      fetch("facts_all.json")
+      fetch("facts_all.json"),
+      fetch("fjelltopper.json")
     ]);
 
     if (!tettstederResp.ok || !kommunerGeoResp.ok || !hytterResp.ok || !factsResp.ok) {
@@ -57,6 +61,7 @@ async function loadData() {
     const kommunerGeoData = await kommunerGeoResp.json();
     const hytterData = await hytterResp.json();
     const factsData = await factsResp.json();
+    const fjellData = fjellResp.ok ? await fjellResp.json() : [];
 
     // Last kommune-info fra tettsteder.json
     kommuner = Array.isArray(tettstederData) ? tettstederData : [];
@@ -77,7 +82,10 @@ async function loadData() {
       ? factsData
       : (factsData.facts || []);
 
-    console.log(`Lastet: ${kommuner.length} kommuner, ${kommunerGeometri.length} kommune-grenser, ${hytter.length} hytter, ${facts.length} fakta`);
+    // Last fjelltopper
+    fjelltopper = Array.isArray(fjellData) ? fjellData : [];
+
+    console.log(`Lastet: ${kommuner.length} kommuner, ${kommunerGeometri.length} kommune-grenser, ${hytter.length} hytter, ${fjelltopper.length} fjelltopper, ${facts.length} fakta`);
   } catch (err) {
     console.error("Feil ved dataloading:", err);
     throw err;
@@ -418,4 +426,56 @@ function setRandomFact() {
   if (fact) {
     el.innerHTML = `<p><strong>Visste du:</strong> ${fact}</p>`;
   }
+}
+
+// -------------------- FJELLTOPPER --------------------
+function initMountainToggle() {
+  const toggle = document.getElementById("toggle-mountains");
+  if (!toggle) return;
+
+  toggle.addEventListener("change", (e) => {
+    if (e.target.checked) {
+      renderMountainMarkers();
+    } else {
+      clearMountainMarkers();
+    }
+  });
+
+  // Tegn fjellene ved oppstart hvis toggle er av
+  if (toggle.checked) {
+    renderMountainMarkers();
+  }
+}
+
+function renderMountainMarkers() {
+  if (!fjelltopper || fjelltopper.length === 0) return;
+
+  fjelltopper.forEach(fjell => {
+    const lat = parseFloat(String(fjell.Lat || "").replace(",", "."));
+    const lon = parseFloat(String(fjell.Lon || "").replace(",", "."));
+
+    if (!isNaN(lat) && !isNaN(lon)) {
+      const marker = L.circleMarker([lat, lon], {
+        radius: 4,
+        color: "#8B4513",
+        fillColor: "#D2B48C",
+        fillOpacity: 0.8,
+        weight: 1.5
+      });
+
+      const navn = fjell.Namn || fjell.Name || "Ukjent";
+      const høyde = fjell["Høgde over havet"] || "?";
+      marker.bindTooltip(`${navn} - ${høyde} m`, { direction: "top" });
+      marker.addTo(map);
+      fjellmarkører.push(marker);
+    }
+  });
+
+  console.log(`Tegnet ${fjellmarkører.length} fjelltopper`);
+}
+
+function clearMountainMarkers() {
+  fjellmarkører.forEach(marker => map.removeLayer(marker));
+  fjellmarkører = [];
+  console.log("Fjelltopper skjult");
 }
