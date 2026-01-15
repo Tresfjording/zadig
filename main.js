@@ -1,6 +1,6 @@
 // 15.01.2026  - 17:30:00
 let map;
-let tettsteder = [];
+let kommuner = [];
 let hytter = [];
 let facts = [];
 let searchIndex = [];
@@ -41,24 +41,24 @@ function initMap() {
 // -------------------- DATA LOADING --------------------
 async function loadData() {
   try {
-    const [tettstederResp, hytterResp, factsResp] = await Promise.all([
-      fetch("tettsteder.json"),
+    const [kommunerResp, hytterResp, factsResp] = await Promise.all([
+      fetch("kommuner.json"),
       fetch("dnt_hytter.json"),
       fetch("facts_all.json")
     ]);
 
-    if (!tettstederResp.ok || !hytterResp.ok || !factsResp.ok) {
+    if (!kommunerResp.ok || !hytterResp.ok || !factsResp.ok) {
       throw new Error("En eller flere datafiler kunne ikke hentes");
     }
 
-    const tettstederData = await tettstederResp.json();
+    const kommunerData = await kommunerResp.json();
     const hytterData = await hytterResp.json();
     const factsData = await factsResp.json();
 
     // Håndter både liste og objekt-format
-    tettsteder = Array.isArray(tettstederData)
-      ? tettstederData
-      : (tettstederData.places || tettstederData.tettsteder || []);
+    kommuner = Array.isArray(kommunerData)
+      ? kommunerData
+      : (kommunerData.places || kommunerData.kommuner || []);
     
     hytter = Array.isArray(hytterData)
       ? hytterData
@@ -68,7 +68,7 @@ async function loadData() {
       ? factsData
       : (factsData.facts || []);
 
-    console.log(`Lastet: ${tettsteder.length} tettsteder, ${hytter.length} hytter, ${facts.length} fakta`);
+    console.log(`Lastet: ${kommuner.length} kommuner, ${hytter.length} hytter, ${facts.length} fakta`);
   } catch (err) {
     console.error("Feil ved dataloading:", err);
     throw err;
@@ -79,10 +79,10 @@ async function loadData() {
 function buildSearchIndex() {
   searchIndex = [];
 
-  tettsteder.forEach(t => {
-    const navn = t.t_tettsted || t.t_knavn || t.tettsted || t.name;
+  kommuner.forEach(k => {
+    const navn = k.t_tettsted || k.t_knavn || k.tettsted || k.name;
     if (navn) {
-      searchIndex.push({ type: "t", label: navn, ref: t });
+      searchIndex.push({ type: "k", label: navn, ref: k });
     }
   });
 
@@ -180,9 +180,9 @@ function handleSearch(label) {
   document.getElementById("search-suggestions").innerHTML = "";
   document.getElementById("search-suggestions").style.display = "none";
 
-  if (match.type === "t") {
-    focusOnPlace(match.ref);
-    updateInfoBoxPlace(match.ref);
+  if (match.type === "k") {
+    focusOnKommune(match.ref);
+    updateInfoBoxKommune(match.ref);
   } else if (match.type === "h") {
     focusOnCabin(match.ref);
     updateInfoBoxCabin(match.ref);
@@ -190,9 +190,9 @@ function handleSearch(label) {
 }
 
 // -------------------- MAP FOCUS --------------------
-function focusOnPlace(t) {
-  const lat = parseFloat(String(t.t_lat || t.k_lat_decimal || "").replace(",", "."));
-  const lon = parseFloat(String(t.t_lon || t.k_lon_decimal || "").replace(",", "."));
+function focusOnKommune(k) {
+  const lat = parseFloat(String(k.t_lat || k.k_lat_decimal || "").replace(",", "."));
+  const lon = parseFloat(String(k.t_lon || k.k_lon_decimal || "").replace(",", "."));
   if (!isNaN(lat) && !isNaN(lon)) {
     map.setView([lat, lon], 11);
   }
@@ -207,28 +207,28 @@ function focusOnCabin(cabin) {
 }
 
 // -------------------- INFO BOX --------------------
-async function updateInfoBoxPlace(t) {
+async function updateInfoBoxKommune(k) {
   const titleEl = document.getElementById("info-title");
   const contentEl = document.getElementById("info-content");
 
   if (!titleEl || !contentEl) return;
 
-  const placeName = t.t_tettsted || t.t_knavn || t.tettsted || t.name || "Ukjent";
+  const placeName = k.t_tettsted || k.t_knavn || k.tettsted || k.name || "Ukjent";
   titleEl.textContent = placeName;
 
-  const zone = t.t_sone || t.sone || "NO1";
+  const zone = k.t_sone || k.sone || "NO1";
   const currentPrice = await fetchPriceForZone(zone);
   const nationalAvg = await fetchNationalAverage();
 
   const priceColor = getPriceColor(currentPrice, nationalAvg);
 
-  const fylke = t.t_fylke || t.t_fnavn || t.fylke || "?";
-  const kommune = t.t_tettsted || t.t_knavn || t.kommune || "?";
-  const innbyggere = t.t_antall || t.t_innbyggere || t.k_antall || "?";
-  const areal = t.t_areal || t.k_areal || "?";
+  const fylke = k.t_fylke || k.t_fnavn || k.fylke || "?";
+  const kommune = k.t_tettsted || k.t_knavn || k.kommune || "?";
+  const innbyggere = k.t_antall || k.t_innbyggere || k.k_antall || "?";
+  const areal = k.t_areal || k.k_areal || "?";
 
   contentEl.innerHTML = `
-    <p><strong>Tettsted:</strong> ${placeName}</p>
+    <p><strong>Kommune:</strong> ${placeName}</p>
     <p><strong>Sone:</strong> ${zone}</p>
     <p><strong>Fylke:</strong> ${fylke}</p>
     <p><strong>Kommune:</strong> ${kommune}</p>
@@ -306,7 +306,7 @@ function getPriceColor(price, national) {
 // -------------------- MARKERS --------------------
 function renderAllMarkers() {
   renderCabinMarkers();
-  renderPlaceMarkers();
+  renderKommuneMarkers();
 }
 
 function renderCabinMarkers() {
@@ -329,15 +329,15 @@ function renderCabinMarkers() {
   console.log(`Tegnet ${hytter.length} hyttemarkører`);
 }
 
-function renderPlaceMarkers() {
-  if (!tettsteder || tettsteder.length === 0) return;
+function renderKommuneMarkers() {
+  if (!kommuner || kommuner.length === 0) return;
 
-  tettsteder.forEach(t => {
-    const lat = parseFloat(String(t.t_lat || t.k_lat_decimal || "").replace(",", "."));
-    const lon = parseFloat(String(t.t_lon || t.k_lon_decimal || "").replace(",", "."));
+  kommuner.forEach(k => {
+    const lat = parseFloat(String(k.t_lat || k.k_lat_decimal || "").replace(",", "."));
+    const lon = parseFloat(String(k.t_lon || k.k_lon_decimal || "").replace(",", "."));
 
     if (!isNaN(lat) && !isNaN(lon)) {
-      const zone = t.t_sone || t.sone || "NO1";
+      const zone = k.t_sone || k.sone || "NO1";
       const marker = L.circleMarker([lat, lon], {
         radius: 5,
         color: "#333",
@@ -345,14 +345,14 @@ function renderPlaceMarkers() {
         fillOpacity: 0.7,
         weight: 1
       });
-      const name = t.t_tettsted || t.t_knavn || t.tettsted || t.name || "Ukjent";
+      const name = k.t_tettsted || k.t_knavn || k.tettsted || k.name || "Ukjent";
       marker.bindTooltip(name, { direction: "top" });
-      marker.on("mouseover", () => updateInfoBoxPlace(t));
+      marker.on("mouseover", () => updateInfoBoxKommune(k));
       marker.addTo(map);
     }
   });
 
-  console.log(`Tegnet ${tettsteder.length} tettstedmarkører`);
+  console.log(`Tegnet ${kommuner.length} kommunemarkører`);
 }
 
 // -------------------- FACTS --------------------
