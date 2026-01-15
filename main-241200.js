@@ -210,7 +210,7 @@ async function lastData() {
 // -------------------- SØK --------------------
 
 function søkeIndeks() {
-  sokeIndeks = [];
+  search-input = [];
 
   // TETTSTEDER
   allPlaces.forEach(p => {
