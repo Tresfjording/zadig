@@ -19,7 +19,7 @@ const legendHTML = `
 
 
 const hytteIkon = L.icon({
-  iconUrl: "image/hytteikon.jpg",
+  iconUrl: "image/caabin16.png",
   iconSize: [32, 32],
   iconAnchor: [16, 32]
 });
