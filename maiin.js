@@ -1,104 +1,10 @@
-//----------------------------------------------
-//15.01.2026  - 13:39:49
-//----------------------------------------------
-document.addEventListener("DOMContentLoaded", () => {
-//  loadData();
-  initSok();
-//  initPrices();
-  setRandomFact();
-});
-
-import kommuner from "./data/to_kommuner.js";
-// -------------------- MARKØRER --------------------
-
-function tegnAlleHyttemarkorer() {
-  if (!hytter || hytter.length === 0) {
-    console.warn("Ingen hytter å vise");
-    return;
-  }
-
-  hytter.forEach(h => {
-    const lat = parseFloat(String(h.lat).replace(",", "."));
-    const lon = parseFloat(String(h.lon).replace(",", "."));
-
-    if (!lat || !lon) {
-      console.warn("Ugyldige koordinater for hytte:", h.name, h.lat, h.lon);
-      return;
-    }
-
-    const markor = L.circleMarker([lat, lon], {
-      radius: 6,
-      color: "#228B22",
-      fillColor: "#90EE90",
-      fillOpacity: 0.8,
-      weight: 1
-    });
-
-    markor.bindTooltip(
-      `${h.name || "Ukjent hytte"} – ${h["h_dnt:classification"] || "Ukjent type"}`,
-      { direction: "top", offset: [0, -6] }
-    );
-
-    markor.on("mouseover", () => oppdaterInfoboksHytte(h));
-    markor.addTo(kart);
-  });
-
-  console.log("Tegnet", hytter.length, "hytter");
-}
-
-function tegnAlleTettstedmarkorer() {
-  if (!tettsteder || tettsteder.length === 0) {
-    console.warn("Ingen tettsteder å vise");
-    return;
-  }
-
-  tettsteder.forEach(t => {
-    const lat = parseFloat(t.t_lat);
-    const lon = parseFloat(t.t_lon);
-
-    if (!lat || !lon) {
-      console.warn("Ugyldige koordinater for tettsted:", t.t_tettsted || t.tettsted, t.t_lat, t.t_lon);
-      return;
-    }
-
-    const markor = L.circleMarker([lat, lon], {
-      radius: 6,
-      color: "#0077cc",
-      fillColor: "#66ccff",
-      fillOpacity: 0.8,
-      weight: 1
-    });
-
-    const navn = t.t_tettsted || t.tettsted || "Ukjent tettsted";
-
-    markor.bindTooltip(navn, {
-      direction: "top",
-      offset: [0, -6]
-    });
-
-    markor.on("mouseover", () => oppdaterInfoboksTettsted(t));
-
-    markor.addTo(kart);
-  });
-
-  console.log("Tegnet", tettsteder.length, "tettsteder");
-}
-
-// -------------------- GEOJSON --------------------
-
-async function loadGeoJson(url) {
-  try {
-    const response = await fetch(url);
-// -------------------- GLOBALE VARIABLER --------------------
-
 let kart;
 let tettsteder = [];
 let hytter = [];
 let sitat = "";
 let sokeIndeks = [];
 
-// 13.01.2026  - 21:54:05 (ren og ryddig versjon)
-
+// 13.01.2026  - 21:09:40
 
 const legendHTML = `
   <div class="legend">
@@ -111,95 +17,63 @@ const legendHTML = `
   </div>
 `;
 
-// -------------------- OPPSTART --------------------
+
+const hytteIkon = L.icon({
+  iconUrl: "image/hytteikon.jpg",
+  iconSize: [32, 32],
+  iconAnchor: [16, 32]
+});
 
 document.addEventListener("DOMContentLoaded", () => {
- initKart();
+lastData()
+  .then(() => {
+    buildSearchIndex();
+    initSearch();
+    renderAllHytteMarkers();
+    updateBox4();
 
-  lastData()
-    .then(() => {
-      byggSokeindeks();
-      initSok();
-      tegnAlleHyttemarkorer();
-      tegnAlleTettstedmarkorer();
+loadGeoJson("https://www/tresfjording.no/data/kommuner.json").then(renderGeoJsonLayer);
 
-
-    })
-    .catch(err => {
-      console.error("Feil under lasting av data:", err);
-    });
+});
 });
 
 // -------------------- KART --------------------
 
 function initKart() {
-kart = L.map('map').setView([63.1, 7.7], 6);
-
-
+  kart = L.map("map").setView([63.0, 11.0], 6);
   L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution: "© OpenStreetMap"
   }).addTo(kart);
-
-  renderGeoJsonLayer(kommuner);
-}
-
-function getLatLon(obj) {
-  let lat = null;
-  let lon = null;
-
-  // LAT
-  if (typeof obj.lat === "number") lat = obj.lat;
-  else if (typeof obj.latitude === "number") lat = obj.latitude;
-  else if (obj.h_lat !== undefined) lat = parseFloat(String(obj.h_lat).replace(",", "."));
-  else if (obj.t_lat !== undefined) lat = parseFloat(String(obj.t_lat).replace(",", "."));
-
-  // LON
-  if (typeof obj.lon === "number") lon = obj.lon;
-  else if (typeof obj.longitude === "number") lon = obj.longitude;
-  else if (obj.h_lon !== undefined) lon = parseFloat(String(obj.h_lon).replace(",", "."));
-  else if (obj.t_lon !== undefined) lon = parseFloat(String(obj.t_lon).replace(",", "."));
-
-  if (typeof lat === "number" && typeof lon === "number" && !isNaN(lat) && !isNaN(lon)) {
-    return { lat, lon };
-  }
-
-  return null;
 }
 
 // -------------------- DATA --------------------
 
 async function lastData() {
-  // 1. Last kommuner separat
- const kommuneResp = await fetch("./data/kommuner.json");
- const kommuneData = await kommuneResp.json();
- renderGeoJsonLayer(kommuneData);
-
-  console.log("GeoJSON type:", kommuneData.type);
-  console.log("Har features:", Array.isArray(kommuneData.features));
-  console.log("Antall features:", kommuneData.features?.length);
-  renderGeoJsonLayer(kommuneData);
-
-  // 2. Last resten parallelt
-  const [tettstederResp, hytterResp, faktaResp] = await Promise.all([
+ async function lastData() {
+  const [tettstederResp, hytterResp, factsResp] = await Promise.all([
     fetch("tettsteder_3.json"),
     fetch("dnt_hytter.json"),
     fetch("facts_all.json")
   ]);
 
-  const tettstederData = await tettstederResp.json();
-  const hytterData = await hytterResp.json();
-  const faktaData = await faktaResp.json();
+  places = await tettsteder_3Resp.json();
+  cabins = await hytterResp.json();
+  facts = await factsResp.json();
+}
 
-  // 3. Lagre dataene - Støtt både ren liste og { places: [...] } / { tettsteder: [...] }
+ const tettstederData = await tettstederResp.json();
+ const hytterData = await hytterResp.json();
+ const faktaData = await faktaResp.json();
+
+  // Støtt både ren liste og { places: [...] } / { hytter: [...] }
   tettsteder = Array.isArray(tettstederData)
     ? tettstederData
-    : (tettstederData.places || tettstederData.tettsteder || []);
-
+    : (tettstederData.places || []);
   hytter = Array.isArray(hytterData)
     ? hytterData
-    : (hytterData.hytter || hytterData.cabins || []);
+    : (hytterData.hytter || []);
 
-  sitat = faktaData.sitat || faktaData.quote || "";
+  sitat = faktaData.sitat || "";
 
   console.log("Tettsteder lastet:", tettsteder.length);
   console.log("Hytter lastet:", hytter.length);
@@ -208,34 +82,23 @@ async function lastData() {
 
 // -------------------- SØK --------------------
 
-function søkeIndeks() {
+function byggSokeindeks() {
   sokeIndeks = [];
 
-  // TETTSTEDER
-  allPlaces.forEach(p => {
-    const navn = p.t_tettsted; // riktig felt
-    if (!navn) return;
-
-    sokeIndeks.push({
-      etikett: navn.trim(),
-      type: "t",
-      ref: p
-    });
+  tettsteder.forEach(t => {
+    if (t.tettsted) {
+      sokeIndeks.push({ type: "t", etikett: t.tettsted, ref: t });
+    }
   });
 
-  // HYTTER
-  allCabins.forEach(h => {
-    const navn = h.h_name; // riktig felt
-    if (!navn) return;
-
-    sokeIndeks.push({
-      etikett: navn.trim(),
-      type: "h",
-      ref: h
-    });
+  hytter.forEach(h => {
+    if (h.h_name) {
+      sokeIndeks.push({ type: "h", etikett: h.h_name, ref: h });
+    }
   });
 
-  console.log("Søkeindeks bygget:", sokeIndeks.length, "elementer");
+  sokeIndeks = sokeIndeks.filter(item => typeof item.etikett === "string");
+  sokeIndeks.sort((a, b) => a.etikett.localeCompare(b.etikett));
 }
 
 function initSok() {
@@ -338,8 +201,8 @@ function fokuserPaTettsted(tettsted) {
 }
 
 function fokuserPaHytte(hytte) {
-  const lat = parseFloat(String(hytte.h_lat).replace(",", "."));
-  const lon = parseFloat(String(hytte.h_lon).replace(",", "."));
+  const lat = parseFloat(hytte.h_lat);
+  const lon = parseFloat(hytte.h_lon);
   if (!lat || !lon) return;
   kart.setView([lat, lon], 13);
 }
@@ -350,10 +213,9 @@ function fokuserPaHytte(hytte) {
 async function oppdaterInfoboksTettsted(t) {
   const innholdEl = document.getElementById("info-content");
   const tittelEl = document.getElementById("info-title");
-  if (!innholdEl || !tittelEl || !t) return;
+  if (!innholdEl || !t || !tittelEl) return;
 
-  const navn = t.t_tettsted || t.tettsted || "Ukjent tettsted";
-  tittelEl.textContent = navn;
+  tittelEl.textContent = t.tettsted || "Ukjent tettsted";
 
   const lokalPris = await hentPrisForSone(t.t_sone);
   const snittPris = await hentNasjonaltSnitt();
@@ -393,11 +255,10 @@ async function oppdaterInfoboksTettsted(t) {
     <p><strong>Koordinater:</strong> ${t.t_lat}, ${t.t_lon}</p>
     <p><strong>Strømpris nå:</strong> <span style="color:${farge}">${prisTekst} kr/kWh</span></p>
     <p>Snittpris nasjonalt: ${snittTekst} kr/kWh</p>
+
+}
   `;
 
-  if (!innholdEl.innerHTML.includes("legend")) {
-    innholdEl.innerHTML += legendHTML;
-  }
 
   if (sitat) {
     innholdEl.innerHTML += `<p class="sitat">📝 ${sitat}</p>`;
@@ -408,29 +269,30 @@ async function oppdaterInfoboksTettsted(t) {
 function oppdaterInfoboksHytte(h) {
   const innholdEl = document.getElementById("info-content");
   const tittelEl = document.getElementById("info-title");
-  if (!innholdEl || !tittelEl || !h) return;
+  if (!innholdEl || !h || !tittelEl) return;
 
-  tittelEl.textContent = h.name || "Ukjent hytte";
+  tittelEl.textContent = h.h_name || "Ukjent hytte";
 
   innholdEl.innerHTML = `
-    <p><strong>Operatør:</strong> ${h["h_dnt:operator"] || h.operator || "Ukjent"}</p>
+    <p><strong>Operatør:</strong> ${h["h_dnt:operator"] || "Ukjent"}</p>
     <p><strong>Type:</strong> ${h["h_dnt:classification"] || "Ukjent"}</p>
-    <p><strong>Koordinater:</strong> ${h.lat}, ${h.lon}</p>
-    <p><a href="${h.link || h.website || "#"}" target="_blank">Besøk UT.no</a></p>
-  `;
+    <p><strong>Koordinater:</strong> ${h.h_lat}, ${h.h_lon}</p>
+    <p><a href="${h.h_link}" target="_blank">Besøk UT.no</a></p>
 
+
+  `;
   if (!innholdEl.innerHTML.includes("legend")) {
-    innholdEl.innerHTML += legendHTML;
-  }
+  innholdEl.innerHTML += legendHTML;}
 
   if (sitat) {
     innholdEl.innerHTML += `<p class="sitat">📝 ${sitat}</p>`;
   }
+  
 }
 
 // -------------------- STRØMPRIS --------------------
 
-function byggStromprisUrl(sone) {
+function byggStrømprisUrl(sone) {
   const nå = new Date();
   const år = nå.getFullYear();
   const måned = String(nå.getMonth() + 1).padStart(2, "0");
@@ -440,7 +302,7 @@ function byggStromprisUrl(sone) {
 
 async function hentPrisForSone(sone) {
   if (!sone) return null;
-  const url = byggStromprisUrl(sone);
+  const url = byggStrømprisUrl(sone);
   try {
     const respons = await fetch(url);
     const data = await respons.json();
@@ -471,6 +333,83 @@ function prisFarge(pris, snitt) {
   if (pris > snitt + 0.05) return "red";
   return "orange";
 }
+
+// -------------------- MARKØRER --------------------
+
+function tegnAlleHyttemarkorer() {
+  if (!hytter || hytter.length === 0) {
+    console.warn("Ingen hytter å vise");
+    return;
+  }
+
+  hytter.forEach(h => {
+    const lat = parseFloat(String(h.h_lat).replace(",", "."));
+    const lon = parseFloat(String(h.h_lon).replace(",", "."));
+
+    if (!lat || !lon) {
+      console.warn("Ugyldige koordinater for hytte:", h.h_name, h.h_lat, h.h_lon);
+      return;
+    }
+
+    const markor = L.circleMarker([lat, lon], {
+      radius: 6,
+      color: "#228B22",         // mørk grønn kant
+      fillColor: "#90EE90",     // lys grønn fyll (LightGreen)
+      fillOpacity: 0.8,
+      weight: 1
+    });
+
+    markor.bindTooltip(
+      `${h.h_name || "Ukjent hytte"} – ${h["h_dnt:classification"] || "Ukjent type"}`,
+      { direction: "top", offset: [0, -6] }
+    );
+
+    markor.on("mouseover", () => oppdaterInfoboksHytte(h));
+    markor.addTo(kart);
+  });
+
+  console.log("Tegnet", hytter.length, "hytter");
+}
+
+function tegnAlleTettstedmarkorer() {
+  if (!tettsteder || tettsteder.length === 0) {
+    console.warn("Ingen tettsteder å vise");
+    return;
+  }
+
+  tettsteder.forEach(t => {
+    const lat = parseFloat(t.t_lat);
+    const lon = parseFloat(t.t_lon);
+
+    if (!lat || !lon) {
+      console.warn("Ugyldige koordinater for tettsted:", t.tettsted, t.t_lat, t.t_lon);
+      return;
+    }
+
+    const markor = L.circleMarker([lat, lon], {
+      radius: 6,
+      color: "#0077cc",
+      fillColor: "#66ccff",
+      fillOpacity: 0.8,
+      weight: 1
+    });
+
+    markor.bindTooltip(`${t.tettsted}`, {
+      direction: "top",
+      offset: [0, -6]
+    });
+
+    markor.on("mouseover", () => oppdaterInfoboksTettsted(t));
+
+    markor.addTo(kart);
+  });
+
+  console.log("Tegnet", tettsteder.length, "tettsteder");
+}
+
+async function loadGeoJson(url) {
+  try {
+    const response = await fetch(url);
     if (!response.ok) throw new Error("Kunne ikke laste GeoJSON");
     return await response.json();
   } catch (err) {
@@ -478,34 +417,14 @@ function prisFarge(pris, snitt) {
     return null;
   }
 }
-
 function renderGeoJsonLayer(data) {
   if (!data) return;
 
-  // Håndter FeatureCollection
-  const features =
-    data.type === "FeatureCollection"
-      ? data.features
-      : Array.isArray(data)
-      ? data
-      : [];
-
-  if (!features.length) {
-    console.warn("Ingen features funnet i GeoJSON");
-    return;
-  }
-
-  L.geoJSON(features, {
+  L.geoJSON(data, {
     style: {
       color: "#555",
       weight: 1,
-      opacity: 0.8,
-      fillOpacity: 0.1
-    },
-    onEachFeature: (feature, layer) => {
-      layer.on("click", () => {
-        visKommuneInfo(feature.properties);
-      });
+      opacity: 0.8
     }
-  }).addTo(kart);
+  }).addTo(map);
 }
