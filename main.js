@@ -241,8 +241,8 @@ async function updateInfoBoxKommune(k) {
     <p><strong>Fylke:</strong> ${fylke}</p>
     <p><strong>Innbyggere:</strong> ${innbyggere}</p>
     <p><strong>Areal:</strong> ${areal} km²</p>
-    <p><strong>Strømpris nå:</strong> <span style="color: ${priceColor};">${currentPrice ? currentPrice.toFixed(2) : "?"} kr/kWh</span></p>
-    <p><strong>Landsnitt:</strong> ${nationalAvg ? nationalAvg.toFixed(2) : "?"} kr/kWh</p>
+    <p><strong>Strømpris nå:</strong> <span style="color: ${priceColor};">${currentPrice ? currentPrice.toFixed(2) : "?"} kr/kWh ekskl. moms</span></p>
+    <p><strong>Landsnitt:</strong> ${nationalAvg ? nationalAvg.toFixed(2) : "?"} kr/kWh ekskl. moms</p>
   `;
 }
 
