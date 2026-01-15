@@ -2,7 +2,7 @@
 //15.01.2026  - 10:42:33
 //----------------------------------------------
 document.addEventListener("DOMContentLoaded", () => {
-  initKart();
+  init();
   loadData();
   initSearch();
   initPrices();
@@ -115,7 +115,7 @@ const legendHTML = `
 // -------------------- OPPSTART --------------------
 
 document.addEventListener("DOMContentLoaded", () => {
- // initKart();
+ initKart();
 
   lastData()
     .then(() => {
@@ -210,7 +210,7 @@ async function lastData() {
 // -------------------- SØK --------------------
 
 function søkeIndeks() {
-  search-input = [];
+  sokeIndeks = [];
 
   // TETTSTEDER
   allPlaces.forEach(p => {
