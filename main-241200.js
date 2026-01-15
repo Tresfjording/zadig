@@ -2,7 +2,7 @@
 //15.01.2026  - 10:42:33
 //----------------------------------------------
 document.addEventListener("DOMContentLoaded", () => {
-  initMap();
+  initKart();
   loadData();
   initSearch();
   initPrices();
