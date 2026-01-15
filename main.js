@@ -42,6 +42,12 @@ function initMap() {
   L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution: "© OpenStreetMap"
   }).addTo(map);
+  
+  // Lukk forslagslisten når det klikkes på tomme områder på kartet
+  map.on("click", () => {
+    closeSuggestions();
+  });
+  
   console.log("Kart initialisert");
 }
 
@@ -184,6 +190,12 @@ function updateSuggestionHighlight(items, index) {
   }
 }
 
+function closeSuggestions() {
+  const suggestionsEl = document.getElementById("search-suggestions");
+  suggestionsEl.innerHTML = "";
+  suggestionsEl.style.display = "none";
+}
+
 function renderSuggestions(matches) {
   const suggestionsEl = document.getElementById("search-suggestions");
   suggestionsEl.innerHTML = "";
@@ -217,8 +229,7 @@ function handleSearch(label) {
   if (!match) return;
 
   document.getElementById("place-search").value = label;
-  document.getElementById("search-suggestions").innerHTML = "";
-  document.getElementById("search-suggestions").style.display = "none";
+  closeSuggestions();
 
   if (match.type === "k") {
     focusOnKommune(match.ref);
