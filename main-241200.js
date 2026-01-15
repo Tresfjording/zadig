@@ -1,8 +1,8 @@
 //----------------------------------------------
-//15.01.2026  - 00:07:05
+//15.01.2026  - 10:07:18
 //----------------------------------------------
 document.addEventListener("DOMContentLoaded", () => {
-  init();
+  initMap();
   loadData();
   initSearch();
   initPrices();
