@@ -5,6 +5,9 @@ let kommunerGeometri = []; // Kommune-grenser fra kommuner.json
 let hytter = [];
 let fjelltopper = []; // Fjelltopper fra fjelltopper.json
 let fjellmarkører = []; // Lagre markører for toggle
+let tettstedMarkører = []; // Lagre tettsteds-markører for toggle
+let hytteMarkører = []; // Lagre hytte-markører for toggle
+let kommunePolygoner = []; // Lagre kommune-grenser for toggle
 let facts = [];
 let searchIndex = [];
 
@@ -22,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("Data lastet!");
       buildSearchIndex();
       initSearch();
-      initMountainToggle();
+      initToggleControls();
       renderAllMarkers();
       setRandomFact();
     })
@@ -375,6 +378,8 @@ function renderAllMarkers() {
 function renderKommunePolygons() {
   if (!kommunerGeometri || kommunerGeometri.length === 0) return;
 
+  kommunePolygoner = []; // Reset liste
+
   kommunerGeometri.forEach(geom => {
     if (geom.geometry && geom.geometry.coordinates) {
       const coords = geom.geometry.coordinates[0]; // Første ring av polygon
@@ -394,14 +399,17 @@ function renderKommunePolygons() {
       }
       
       polygon.addTo(map);
+      kommunePolygoner.push(polygon); // Lagre for toggle
     }
   });
 
-  console.log(`Tegnet ${kommunerGeometri.length} kommunegrenser`);
+  console.log(`Tegnet ${kommunePolygoner.length} kommunegrenser`);
 }
 
 function renderCabinMarkers() {
   if (!hytter || hytter.length === 0) return;
+
+  hytteMarkører = []; // Reset liste
 
   hytter.forEach(h => {
     const lat = parseFloat(String(h.h_lat || "").replace(",", "."));
@@ -414,14 +422,17 @@ function renderCabinMarkers() {
       marker.bindTooltip(`${name} - ${type}`, { direction: "top" });
       marker.on("mouseover", () => updateInfoBoxCabin(h));
       marker.addTo(map);
+      hytteMarkører.push(marker); // Lagre for toggle
     }
   });
 
-  console.log(`Tegnet ${hytter.length} hyttemarkører`);
+  console.log(`Tegnet ${hytteMarkører.length} hyttemarkører`);
 }
 
 function renderKommuneMarkers() {
   if (!kommuner || kommuner.length === 0) return;
+
+  tettstedMarkører = []; // Reset liste
 
   kommuner.forEach(k => {
     const lat = parseFloat(String(k.t_lat || "").replace(",", "."));
@@ -440,10 +451,11 @@ function renderKommuneMarkers() {
       marker.bindTooltip(name, { direction: "top" });
       marker.on("mouseover", () => updateInfoBoxKommune(k));
       marker.addTo(map);
+      tettstedMarkører.push(marker); // Lagre for toggle
     }
   });
 
-  console.log(`Tegnet ${kommuner.length} kommunemarkører`);
+  console.log(`Tegnet ${tettstedMarkører.length} kommunemarkører`);
 }
 
 // -------------------- FACTS --------------------
@@ -465,6 +477,72 @@ function setRandomFact() {
   if (fact) {
     el.innerHTML = `<p><strong>Visste du:</strong> ${fact}</p>`;
   }
+}
+
+// -------------------- TOGGLE CONTROLS --------------------
+function initToggleControls() {
+  const toggleMountains = document.getElementById("toggle-mountains");
+  const toggleCommunities = document.getElementById("toggle-communities");
+  const toggleCabins = document.getElementById("toggle-cabins");
+  const toggleBorders = document.getElementById("toggle-borders");
+
+  if (toggleMountains) {
+    toggleMountains.addEventListener("change", (e) => {
+      if (e.target.checked) {
+        renderMountainMarkers();
+      } else {
+        clearMountainMarkers();
+      }
+    });
+  }
+
+  if (toggleCommunities) {
+    toggleCommunities.addEventListener("change", (e) => {
+      if (e.target.checked) {
+        renderKommuneMarkers();
+      } else {
+        clearKommuneMarkers();
+      }
+    });
+  }
+
+  if (toggleCabins) {
+    toggleCabins.addEventListener("change", (e) => {
+      if (e.target.checked) {
+        renderCabinMarkers();
+      } else {
+        clearCabinMarkers();
+      }
+    });
+  }
+
+  if (toggleBorders) {
+    toggleBorders.addEventListener("change", (e) => {
+      if (e.target.checked) {
+        renderKommunePolygons();
+      } else {
+        clearKommunePolygons();
+      }
+    });
+  }
+}
+
+function clearKommuneMarkers() {
+  tettstedMarkører.forEach(marker => map.removeLayer(marker));
+  tettstedMarkører = [];
+  console.log("Tettsteder skjult");
+}
+
+function clearCabinMarkers() {
+  hytteMarkører.forEach(marker => map.removeLayer(marker));
+  hytteMarkører = [];
+  console.log("Hytter skjult");
+}
+
+function clearKommunePolygons() {
+  kommunePolygoner.forEach(polygon => map.removeLayer(polygon));
+  kommunePolygoner = [];
+  console.log("Kommune-grenser skjult");
 }
 
 // -------------------- FJELLTOPPER --------------------
