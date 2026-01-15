@@ -190,9 +190,9 @@ function handleSearch(label) {
 }
 
 // -------------------- MAP FOCUS --------------------
-function focusOnPlace(place) {
-  const lat = parseFloat(String(place.t_lat || place.k_lat_decimal || "").replace(",", "."));
-  const lon = parseFloat(String(place.t_lon || place.k_lon_decimal || "").replace(",", "."));
+function focusOnPlace(t) {
+  const lat = parseFloat(String(t.t_lat || t.k_lat_decimal || "").replace(",", "."));
+  const lon = parseFloat(String(t.t_lon || t.k_lon_decimal || "").replace(",", "."));
   if (!isNaN(lat) && !isNaN(lon)) {
     map.setView([lat, lon], 11);
   }
@@ -207,25 +207,25 @@ function focusOnCabin(cabin) {
 }
 
 // -------------------- INFO BOX --------------------
-async function updateInfoBoxPlace(place) {
+async function updateInfoBoxPlace(t) {
   const titleEl = document.getElementById("info-title");
   const contentEl = document.getElementById("info-content");
 
   if (!titleEl || !contentEl) return;
 
-  const placeName = place.t_tettsted || place.t_knavn || place.tettsted || place.name || "Ukjent";
+  const placeName = t.t_tettsted || t.t_knavn || t.tettsted || t.name || "Ukjent";
   titleEl.textContent = placeName;
 
-  const zone = place.t_sone || place.sone || "NO1";
+  const zone = t.t_sone || t.sone || "NO1";
   const currentPrice = await fetchPriceForZone(zone);
   const nationalAvg = await fetchNationalAverage();
 
   const priceColor = getPriceColor(currentPrice, nationalAvg);
 
-  const fylke = place.t_fylke || place.t_fnavn || place.fylke || "?";
-  const kommune = place.t_tettsted || place.t_knavn || place.kommune || "?";
-  const innbyggere = place.t_antall || place.t_innbyggere || place.k_antall || "?";
-  const areal = place.t_areal || place.k_areal || "?";
+  const fylke = t.t_fylke || t.t_fnavn || t.fylke || "?";
+  const kommune = t.t_tettsted || t.t_knavn || t.kommune || "?";
+  const innbyggere = t.t_antall || t.t_innbyggere || t.k_antall || "?";
+  const areal = t.t_areal || t.k_areal || "?";
 
   contentEl.innerHTML = `
     <p><strong>Tettsted:</strong> ${placeName}</p>
