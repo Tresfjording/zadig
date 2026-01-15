@@ -55,10 +55,27 @@ async function loadData() {
     const hytterData = await hytterResp.json();
     const factsData = await factsResp.json();
 
-    // Håndter både liste og objekt-format
-    kommuner = Array.isArray(kommunerData)
-      ? kommunerData
-      : (kommunerData.places || kommunerData.kommuner || []);
+    // Håndter både liste og GeoJSON-format
+    if (Array.isArray(kommunerData)) {
+      kommuner = kommunerData;
+    } else if (kommunerData.features) {
+      // GeoJSON format - konverter til liste med navn og sentralkoordinater
+      kommuner = kommunerData.features.map(feature => {
+        const props = feature.properties;
+        const coords = feature.geometry.coordinates[0]; // Polygon coordinates
+        // Beregn sentrum (gjennomsnitt av alle koordinater)
+        const lat = coords.reduce((sum, c) => sum + c[1], 0) / coords.length;
+        const lon = coords.reduce((sum, c) => sum + c[0], 0) / coords.length;
+        return {
+          ...props,
+          t_knavn: props.kommunenavn,
+          t_lat: lat,
+          t_lon: lon
+        };
+      });
+    } else {
+      kommuner = (kommunerData.places || kommunerData.kommuner || []);
+    }
     
     hytter = Array.isArray(hytterData)
       ? hytterData
