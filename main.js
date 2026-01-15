@@ -213,7 +213,7 @@ async function updateInfoBoxPlace(place) {
 
   if (!titleEl || !contentEl) return;
 
-  const placeName = place.t_b|| place.t_knavn || place.tettsted || place.name || "Ukjent";
+  const placeName = place.t_tettsted || place.t_knavn || place.tettsted || place.name || "Ukjent";
   titleEl.textContent = placeName;
 
   const zone = place.t_sone || place.sone || "NO1";
