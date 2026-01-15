@@ -1,7 +1,8 @@
 //----------------------------------------------
-//15.01.2026  - 10:42:33
+//14.01.2026  - 21:46:11
 //----------------------------------------------
 document.addEventListener("DOMContentLoaded", () => {
+  init();
   loadData();
   initSearch();
   initPrices();
@@ -114,7 +115,7 @@ const legendHTML = `
 // -------------------- OPPSTART --------------------
 
 document.addEventListener("DOMContentLoaded", () => {
- initKart();
+  initKart();
 
   lastData()
     .then(() => {
