@@ -86,8 +86,9 @@ function buildSearchIndex() {
   searchIndex = [];
 
   tettsteder.forEach(t => {
-    if (t.tettsted) {
-      searchIndex.push({ type: "t", etikett: t.tettsted, ref: t });
+    const navn = t.t_tettsted || t.tettsted;
+    if (navn) {
+      searchIndex.push({ type: "t", etikett: navn, ref: t });
     }
   });
 

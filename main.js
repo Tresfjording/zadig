@@ -80,7 +80,7 @@ function buildSearchIndex() {
   searchIndex = [];
 
   tettsteder.forEach(t => {
-    const navn = t.t_knavn || t.tettsted || t.name;
+    const navn = t.t_tettsted || t.t_knavn || t.tettsted || t.name;
     if (navn) {
       searchIndex.push({ type: "t", label: navn, ref: t });
     }
