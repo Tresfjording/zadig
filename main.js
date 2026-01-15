@@ -110,6 +110,13 @@ function buildSearchIndex() {
     }
   });
 
+  fjelltopper.forEach(f => {
+    const navn = f.Namn || f.Name;
+    if (navn) {
+      searchIndex.push({ type: "f", label: navn, ref: f });
+    }
+  });
+
   searchIndex.sort((a, b) => a.label.localeCompare(b.label));
   console.log(`Søkeindeks bygget med ${searchIndex.length} elementer`);
 }
@@ -211,6 +218,9 @@ function handleSearch(label) {
   } else if (match.type === "h") {
     focusOnCabin(match.ref);
     updateInfoBoxCabin(match.ref);
+  } else if (match.type === "f") {
+    focusOnMountain(match.ref);
+    updateInfoBoxMountain(match.ref);
   }
 }
 
@@ -228,6 +238,14 @@ function focusOnCabin(cabin) {
   const lon = parseFloat(String(cabin.h_lon || "").replace(",", "."));
   if (!isNaN(lat) && !isNaN(lon)) {
     map.setView([lat, lon], 13);
+  }
+}
+
+function focusOnMountain(fjell) {
+  const lat = parseFloat(String(fjell.Lat || "").replace(",", "."));
+  const lon = parseFloat(String(fjell.Lon || "").replace(",", "."));
+  if (!isNaN(lat) && !isNaN(lon)) {
+    map.setView([lat, lon], 12);
   }
 }
 
@@ -286,6 +304,27 @@ async function updateInfoBoxCabin(cabin) {
   }
 
   contentEl.innerHTML = html;
+}
+
+function updateInfoBoxMountain(fjell) {
+  const titleEl = document.getElementById("info-title");
+  const contentEl = document.getElementById("info-content");
+
+  if (!titleEl || !contentEl) return;
+
+  const navn = fjell.Namn || fjell.Name || "Ukjent fjell";
+  const høyde = fjell["Høgde over havet"] || "?";
+  const kommune = fjell.Kommune || "?";
+  const fylke = fjell.Fylke || "?";
+
+  titleEl.textContent = navn;
+
+  contentEl.innerHTML = `
+    <p><strong>Fjell:</strong> ${navn}</p>
+    <p><strong>Høyde:</strong> ${høyde} m</p>
+    <p><strong>Kommune:</strong> ${kommune}</p>
+    <p><strong>Fylke:</strong> ${fylke}</p>
+  `;
 }
 
 // -------------------- PRICE --------------------
