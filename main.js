@@ -6,7 +6,7 @@ let facts = [];
 let searchIndex = [];
 
 const hytteIcon = L.icon({
-  iconUrl: "image/hytteikon16.png",
+  iconUrl: "image/cabin16.png",
   iconSize: [16, 16],
   iconAnchor: [8, 8]
 });

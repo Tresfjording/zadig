@@ -4,7 +4,7 @@ let hytter = [];
 let sitat = "";
 let sokeIndeks = [];
 
-// 13.01.2026  - 21:09:40
+// 15.01.2026  - 17:17:10
 
 const legendHTML = `
   <div class="legend">
