@@ -1,8 +1,8 @@
 let kart;
-let t_tettsted = [];
+let tettsteder = [];
 let hytter = [];
-let sitat = "";
-let sokeIndeks = [];
+let facts = [];
+let searchIndex = [];
 
 // 15.01.2026  - 17:17:10
 
@@ -18,23 +18,28 @@ const legendHTML = `
 `;
 
 
-const hytteIkon = L.icon({
-  iconUrl: "image/caabin16.png",
-  iconSize: [32, 32],
-  iconAnchor: [16, 32]
+const hytteIcon = L.icon({
+  iconUrl: "image/cabin16.png",
+  iconSize: [16, 16],
+  iconAnchor: [8, 8]
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-lastData()
-  .then(() => {
-    buildSearchIndex();
-    initSearch();
-    renderAllHytteMarkers();
-    renderAllTettstedMarkers();
-
-loadGeoJson("https://www/tresfjording.no/data/kommuner.json").then(renderGeoJsonLayer);
-
-});
+  initKart();
+  lastData()
+    .then(() => {
+      buildSearchIndex();
+      initSearch();
+      renderAllHytteMarkers();
+      renderAllTettstedMarkers();
+      setRandomFact();
+    })
+    .catch(err => {
+      console.error("Feil ved dataloading:", err);
+      renderAllHytteMarkers();
+      renderAllTettstedMarkers();
+      setRandomFact();
+    });
 });
 
 // -------------------- KART --------------------
@@ -57,7 +62,7 @@ async function lastData() {
 
   const tettstederData = await tettstederResp.json();
   const hytterData = await hytterResp.json();
-  const faktaData = await factsResp.json();
+  const factsData = await factsResp.json();
 
   // Støtt både ren liste og { places: [...] } / { hytter: [...] }
   tettsteder = Array.isArray(tettstederData)
@@ -66,33 +71,34 @@ async function lastData() {
   hytter = Array.isArray(hytterData)
     ? hytterData
     : (hytterData.hytter || []);
-
-  sitat = faktaData.sitat || "";
+  facts = Array.isArray(factsData)
+    ? factsData
+    : (factsData.facts || []);
 
   console.log("Tettsteder lastet:", tettsteder.length);
   console.log("Hytter lastet:", hytter.length);
-  console.log("Sitat lastet:", sitat);
+  console.log("Fakta lastet:", facts.length);
 }
 
 // -------------------- SØK --------------------
 
 function buildSearchIndex() {
-  sokeIndeks = [];
+  searchIndex = [];
 
   tettsteder.forEach(t => {
     if (t.tettsted) {
-      sokeIndeks.push({ type: "t", etikett: t.tettsted, ref: t });
+      searchIndex.push({ type: "t", etikett: t.tettsted, ref: t });
     }
   });
 
   hytter.forEach(h => {
     if (h.h_name) {
-      sokeIndeks.push({ type: "h", etikett: h.h_name, ref: h });
+      searchIndex.push({ type: "h", etikett: h.h_name, ref: h });
     }
   });
 
-  sokeIndeks = sokeIndeks.filter(item => typeof item.etikett === "string");
-  sokeIndeks.sort((a, b) => a.etikett.localeCompare(b.etikett));
+  searchIndex = searchIndex.filter(item => typeof item.etikett === "string");
+  searchIndex.sort((a, b) => a.etikett.localeCompare(b.etikett));
 }
 
 function initSearch() {
@@ -104,7 +110,7 @@ function initSearch() {
 
   sokInput.addEventListener("input", () => {
     const sporring = sokInput.value.toLowerCase();
-    const treff = sokeIndeks.filter(item =>
+    const treff = searchIndex.filter(item =>
       item.etikett.toLowerCase().includes(sporring)
     );
     visForslag(treff);
@@ -161,7 +167,7 @@ function visForslag(treff) {
 }
 
 function handterSok(etikett) {
-  const treff = sokeIndeks.find(item =>
+  const treff = searchIndex.find(item =>
     item.etikett.toLowerCase() === etikett.toLowerCase()
   );
 
@@ -249,14 +255,7 @@ async function oppdaterInfoboksTettsted(t) {
     <p><strong>Koordinater:</strong> ${t.t_lat}, ${t.t_lon}</p>
     <p><strong>Strømpris nå:</strong> <span style="color:${farge}">${prisTekst} kr/kWh</span></p>
     <p>Snittpris nasjonalt: ${snittTekst} kr/kWh</p>
-
-}
   `;
-
-
-  if (sitat) {
-    innholdEl.innerHTML += `<p class="sitat">📝 ${sitat}</p>`;
-  }
 }
 
 // Hytte (uten strømpris)
@@ -272,16 +271,7 @@ function oppdaterInfoboksHytte(h) {
     <p><strong>Type:</strong> ${h["h_dnt:classification"] || "Ukjent"}</p>
     <p><strong>Koordinater:</strong> ${h.h_lat}, ${h.h_lon}</p>
     <p><a href="${h.h_link}" target="_blank">Besøk UT.no</a></p>
-
-
   `;
-  if (!innholdEl.innerHTML.includes("legend")) {
-  innholdEl.innerHTML += legendHTML;}
-
-  if (sitat) {
-    innholdEl.innerHTML += `<p class="sitat">📝 ${sitat}</p>`;
-  }
-  
 }
 
 // -------------------- STRØMPRIS --------------------
@@ -420,5 +410,23 @@ function renderGeoJsonLayer(data) {
       weight: 1,
       opacity: 0.8
     }
-  }).addTo(map);
+  }).addTo(kart);
+}
+
+function setRandomFact() {
+  const el = document.getElementById("random-fact");
+  if (!el || !facts || facts.length === 0) return;
+
+  let fact;
+  if (Array.isArray(facts)) {
+    if (facts[0] && facts[0].fact) {
+      fact = facts[Math.floor(Math.random() * facts.length)].fact;
+    } else {
+      fact = facts[Math.floor(Math.random() * facts.length)];
+    }
+  }
+
+  if (fact) {
+    el.innerHTML = `<p><strong>Visste du:</strong> ${fact}</p>`;
+  }
 }
