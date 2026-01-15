@@ -4,7 +4,7 @@ let cabins = [];
 let facts = [];
 let searchIndex = [];
 
-// 11.01.2026  - 02:00:02
+// 15.01.2026  - 03:48:25
 
 document.addEventListener("DOMContentLoaded", () => {
   initMap();
