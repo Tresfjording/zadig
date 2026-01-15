@@ -1,7 +1,7 @@
 // 15.01.2026  - 17:30:00
 let map;
-let kommuner = [];
-let kommunerGeoJSON = []; // Lagre originale GeoJSON features
+let kommuner = []; // Kommune-info fra tettsteder.json
+let kommunerGeometri = []; // Kommune-grenser fra kommuner.json
 let hytter = [];
 let facts = [];
 let searchIndex = [];
@@ -42,45 +42,33 @@ function initMap() {
 // -------------------- DATA LOADING --------------------
 async function loadData() {
   try {
-    const [kommunerResp, hytterResp, factsResp] = await Promise.all([
+    const [tettstederResp, kommunerGeoResp, hytterResp, factsResp] = await Promise.all([
+      fetch("tettsteder.json"),
       fetch("kommuner.json"),
       fetch("dnt_hytter.json"),
       fetch("facts_all.json")
     ]);
 
-    if (!kommunerResp.ok || !hytterResp.ok || !factsResp.ok) {
+    if (!tettstederResp.ok || !kommunerGeoResp.ok || !hytterResp.ok || !factsResp.ok) {
       throw new Error("En eller flere datafiler kunne ikke hentes");
     }
 
-    const kommunerData = await kommunerResp.json();
+    const tettstederData = await tettstederResp.json();
+    const kommunerGeoData = await kommunerGeoResp.json();
     const hytterData = await hytterResp.json();
     const factsData = await factsResp.json();
 
-    // Håndter både liste og GeoJSON-format
-    if (Array.isArray(kommunerData)) {
-      kommuner = kommunerData;
-      kommunerGeoJSON = [];
-    } else if (kommunerData.features) {
-      // GeoJSON format - lagre features og konverter til liste med navn og sentralkoordinater
-      kommunerGeoJSON = kommunerData.features;
-      kommuner = kommunerData.features.map(feature => {
-        const props = feature.properties;
-        const allCoords = feature.geometry.coordinates[0]; // Alle punkter i første ring
-        const lon = allCoords.reduce((sum, c) => sum + c[0], 0) / allCoords.length;
-        const lat = allCoords.reduce((sum, c) => sum + c[1], 0) / allCoords.length;
-        return {
-          ...props,
-          t_knavn: props.kommunenavn,
-          k_lat_decimal: lat,
-          k_lon_decimal: lon,
-          geometry: feature.geometry // Lagre geometry for tegning av grenser
-        };
-      });
-    } else {
-      kommuner = (kommunerData.places || kommunerData.kommuner || []);
-      kommunerGeoJSON = [];
+    // Last kommune-info fra tettsteder.json
+    kommuner = Array.isArray(tettstederData) ? tettstederData : [];
+
+    // Last kommune-geometri fra kommuner.json
+    if (kommunerGeoData.features) {
+      kommunerGeometri = kommunerGeoData.features.map(feature => ({
+        navn: feature.properties.kommunenavn,
+        nummer: feature.properties.kommunenummer,
+        geometry: feature.geometry
+      }));
     }
-    
     hytter = Array.isArray(hytterData)
       ? hytterData
       : (hytterData.cabins || hytterData.hytter || []);
@@ -89,7 +77,7 @@ async function loadData() {
       ? factsData
       : (factsData.facts || []);
 
-    console.log(`Lastet: ${kommuner.length} kommuner, ${hytter.length} hytter, ${facts.length} fakta`);
+    console.log(`Lastet: ${kommuner.length} kommuner, ${kommunerGeometri.length} kommune-grenser, ${hytter.length} hytter, ${facts.length} fakta`);
   } catch (err) {
     console.error("Feil ved dataloading:", err);
     throw err;
@@ -101,7 +89,7 @@ function buildSearchIndex() {
   searchIndex = [];
 
   kommuner.forEach(k => {
-    const navn = k.t_tettsted || k.t_knavn || k.tettsted || k.name;
+    const navn = k.t_tettsted || k.name;
     if (navn) {
       searchIndex.push({ type: "k", label: navn, ref: k });
     }
@@ -212,8 +200,8 @@ function handleSearch(label) {
 
 // -------------------- MAP FOCUS --------------------
 function focusOnKommune(k) {
-  const lat = parseFloat(String(k.t_lat || k.k_lat_decimal || "").replace(",", "."));
-  const lon = parseFloat(String(k.t_lon || k.k_lon_decimal || "").replace(",", "."));
+  const lat = parseFloat(String(k.t_lat || "").replace(",", "."));
+  const lon = parseFloat(String(k.t_lon || "").replace(",", "."));
   if (!isNaN(lat) && !isNaN(lon)) {
     map.setView([lat, lon], 11);
   }
@@ -332,11 +320,11 @@ function renderAllMarkers() {
 }
 
 function renderKommunePolygons() {
-  if (!kommuner || kommuner.length === 0) return;
+  if (!kommunerGeometri || kommunerGeometri.length === 0) return;
 
-  kommuner.forEach(k => {
-    if (k.geometry && k.geometry.coordinates) {
-      const coords = k.geometry.coordinates[0]; // Første ring av polygon
+  kommunerGeometri.forEach(geom => {
+    if (geom.geometry && geom.geometry.coordinates) {
+      const coords = geom.geometry.coordinates[0]; // Første ring av polygon
       const latLngs = coords.map(c => [c[1], c[0]]); // Konverter fra [lon, lat] til [lat, lon]
       const polygon = L.polygon(latLngs, {
         color: "#0077cc",
@@ -344,13 +332,19 @@ function renderKommunePolygons() {
         opacity: 0.6,
         fillOpacity: 0.1
       });
-      polygon.bindTooltip(k.t_knavn, { direction: "center" });
-      polygon.on("mouseover", () => updateInfoBoxKommune(k));
+      polygon.bindTooltip(geom.navn, { direction: "center" });
+      
+      // Finn tilsvarende kommune-info fra tettsteder.json
+      const kommune = kommuner.find(k => k.t_tettsted === geom.navn);
+      if (kommune) {
+        polygon.on("mouseover", () => updateInfoBoxKommune(kommune));
+      }
+      
       polygon.addTo(map);
     }
   });
 
-  console.log(`Tegnet ${kommuner.length} kommunegrenser`);
+  console.log(`Tegnet ${kommunerGeometri.length} kommunegrenser`);
 }
 
 function renderCabinMarkers() {
