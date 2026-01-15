@@ -49,7 +49,7 @@ body {
   left: 60px;
   z-index: 1000;
   background: rgba(255, 255, 255, 0.98);
-  padding: 12px;
+  padding: 10px;
   border: 1px solid var(--color-border);
   border-radius: 6px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
@@ -58,7 +58,7 @@ body {
 
 .search-label {
   display: block;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: bold;
   margin-bottom: 6px;
   color: #333;
@@ -109,7 +109,7 @@ body {
   left: 400px;
   z-index: 1000;
   background: rgba(255, 255, 255, 0.95);
-  padding: 12px 16px;
+  padding: 10px 16px;
   border: 1px solid var(--color-border);
   border-radius: 4px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
@@ -180,7 +180,7 @@ body {
 #info-title {
   font-size: 18px;
   font-weight: bold;
-  margin: 0 0 12px 0;
+  margin: 0 0 10px 0;
   color: #222;
   border-bottom: 2px solid var(--color-primary);
   padding-bottom: 8px;
@@ -218,22 +218,22 @@ body {
 
 /* === POWER PRICE === */
 .power-price {
-  margin-top: 12px;
+  margin-top: 10px;
   padding: 8px;
   background-color: #f5f5f5;
   border-left: 3px solid var(--color-primary);
   border-radius: 2px;
-  font-size: 12px;
+  font-size: 10px;
 }
 
 /* === RANDOM FACT === */
 .random-fact {
-  margin-top: 12px;
+  margin-top: 10px;
   padding: 8px;
   background-color: #fff9e6;
   border-left: 3px solid var(--color-accent);
   border-radius: 2px;
-  font-size: 12px;
+  font-size: 10px;
   font-style: italic;
   color: #666;
 }
@@ -246,7 +246,7 @@ body {
 /* === LEAFLET OVERRIDES === */
 .leaflet-popup {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 10px;
 }
 
 .leaflet-popup-content {
@@ -260,7 +260,7 @@ body {
   border-radius: 3px;
   padding: 4px 8px;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 10px;
 }
 
 .leaflet-tooltip-left::before {
