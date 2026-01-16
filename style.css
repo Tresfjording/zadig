@@ -105,8 +105,8 @@ body {
 /* === CONTROLS CONTAINER === */
 .controls-container {
   position: absolute;
-  top: 380px;
-  left: 975px;
+  top: 385px;
+  left: 965px;
   z-index: 1000;
   background: rgba(255, 255, 255, 0.95);
   padding: 10px 16px;
