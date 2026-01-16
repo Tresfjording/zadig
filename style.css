@@ -106,7 +106,7 @@ body {
 .controls-container {
   position: absolute;
   top: 380px;
-  left: 950px;
+  left: 975px;
   z-index: 1000;
   background: rgba(255, 255, 255, 0.95);
   padding: 10px 16px;
