@@ -1,4 +1,4 @@
 {
-  "sftp://tresfjording.no@tresfjording.no:21": {},
+  "sftp://tresfjording.no@ssh.tresfjording.no:22": {},
   "$version": 1
 }

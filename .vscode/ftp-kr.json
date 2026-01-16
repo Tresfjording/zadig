@@ -4,7 +4,7 @@
     "password": "one33324",
     "remotePath": "httpd/www",
     "protocol": "sftp",
-    "port": 21,
+    "port": 22,
     "fileNameEncoding": "utf8",
     "autoUpload": true,
     "autoDelete": false,
