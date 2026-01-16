@@ -1,27 +1,63 @@
 ﻿<!DOCTYPE html>
 <html lang="no">
-  <head
-    lang="en"
-    data-color-mode="auto"
-    data-light-theme="light"
-    data-dark-theme="dark"
-    data-a11y-animated-images="system"
-    data-a11y-link-underlines="true"
-  >
+  <head>
     <meta charset="UTF-8" />
-    <title>Tresfjording – DNT Fjellhytter</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="DNT kart" content="Interaktivt kart over Norge med tettsteder og hytter, inkludert strømpriser og interessante fakta." />
+    <meta http-equiv="content-language" content="nb-NO" />
+    <meta name="language" content="Norwegian" />
+    
+    <!-- SEO Meta Tags -->
+    <title>Tresfjording – Interaktivt Kart over DNT Fjellhytter, Strømpriser og Fjelltopper</title>
+    <meta name="description" content="Utforsk interaktivt kart over Norge med DNT fjellhytter, strømpriser, fjelltopper, tettsteder og interessante fakta. Perfekt for fjellturiaster og DNT-medlemmer." />
+    <meta name="keywords" content="DNT hytter, fjellhytter, strømpriser, fjelltopper, fjellturer, Norge kart, tettsteder, turistforeningen, kommuner, fjell" />
     <meta name="author" content="Øyvind Granberg" />
-    <meta name="robots" content="Hytte,turistforening,tettsted,fjell,fjelltur,DNT,strømpris,steddsnavn,sone,fakta" />
-    <meta http-equiv="content-language" content="nb-NO">
-    <meta name="topic" content="fjellhytte, DNT,strømpris,fakta">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <link rel="canonical" href="https://www.tresfjording.no" />
+    
+    <!-- Mobile & App Meta Tags -->
     <meta name="HandheldFriendly" content="True" />
     <meta name="MobileOptimized" content="320" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta keywords="fjell,natur,hytte,dnt,turistforening,">
-    <meta name="owner" content="Øyvind Arthurson Forness Granberg" />
+    <meta name="apple-mobile-web-app-title" content="Tresfjording Kart" />
     
+    <!-- Open Graph for Social Media -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Tresfjording – Interaktivt Kart over DNT Fjellhytter" />
+    <meta property="og:description" content="Utforsk fjellhytter, strømpriser, fjelltopper og tettsteder på interaktivt kart over Norge." />
+    <meta property="og:image" content="https://www.tresfjording.no/image/cabin.png" />
+    <meta property="og:url" content="https://www.tresfjording.no" />
+    <meta property="og:site_name" content="Tresfjording" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Tresfjording – DNT Fjellhytter Kart" />
+    <meta name="twitter:description" content="Interaktivt kart over Norge med DNT hytter, strømpriser og fjelltopper." />
+    <meta name="twitter:image" content="https://www.tresfjording.no/image/cabin.png" />
+    
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Tresfjording – DNT Fjellhytter Kart",
+      "description": "Interaktivt kart over Norge med DNT fjellhytter, strømpriser, fjelltopper og interessante fakta",
+      "url": "https://www.tresfjording.no",
+      "author": {
+        "@type": "Person",
+        "name": "Øyvind Granberg"
+      },
+      "applicationCategory": "WebApplication",
+      "inLanguage": "no"
+    }
+    </script>
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" as="style" href="style.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="image/cabin16.png">
+
+  </head>
 
 
     <!-- Leaflet CSS -->
@@ -61,6 +97,7 @@
           class="search-input"
           placeholder="F.eks. Tresfjord, hyttenavn …"
           autocomplete="off"
+          aria-label="Søk etter sted, hytte eller fjelltopp"
         />
 
         <ul id="search-suggestions" class="search-suggestions"></ul>
