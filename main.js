@@ -238,7 +238,7 @@ function initSearch() {
 
 function updateSuggestionHighlight(items, index) {
   items.forEach((item, i) => {
-    item.classList.toggle("inactive", i === index);
+    item.classList.toggle("active", i === index);
   });
 
   // Scroll aktiv item til synlig område
