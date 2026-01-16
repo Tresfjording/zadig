@@ -45,11 +45,13 @@ document.addEventListener("DOMContentLoaded", () => {
       initToggleControls();
       renderAllMarkers();
       setRandomFact();
+      updateNordicPrices(); // Hent Stockholm og København priser
     })
     .catch(err => {
       console.error("Feil ved dataloading:", err);
       renderAllMarkers();
       setRandomFact();
+      updateNordicPrices(); // Hent Stockholm og København priser selv om noe annet feilet
     });
 });
 
@@ -439,6 +441,73 @@ function getPriceColor(price, national) {
   return "orange";
 }
 
+// -------------------- NORDIC PRICES --------------------
+async function fetchStockholmPrice() {
+  try {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+    // SE3 er Stockholm-området i Sverige
+    const url = `https://www.hvakosterstrommen.no/api/v1/prices/${year}/${month}-${day}_SE3.json`;
+    const response = await fetch(url);
+    const data = await response.json();
+    const hour = new Date().getHours();
+    return data[hour]?.NOK_per_kWh ?? null;
+  } catch (err) {
+    console.error("Feil ved henting av pris for Stockholm:", err);
+    return null;
+  }
+}
+
+async function fetchCopenhagenPrice() {
+  try {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+    // DK1 er København/Danmark-området
+    const url = `https://www.hvakosterstrommen.no/api/v1/prices/${year}/${month}-${day}_DK1.json`;
+    const response = await fetch(url);
+    const data = await response.json();
+    const hour = new Date().getHours();
+    return data[hour]?.NOK_per_kWh ?? null;
+  } catch (err) {
+    console.error("Feil ved henting av pris for København:", err);
+    return null;
+  }
+}
+
+async function updateNordicPrices() {
+  const el = document.getElementById("nordic-prices");
+  if (!el) return;
+
+  const stockholmPrice = await fetchStockholmPrice();
+  const copenhagenPrice = await fetchCopenhagenPrice();
+
+  if (stockholmPrice || copenhagenPrice) {
+    let html = '<div style="font-size: 8px; color: #666;">';
+    
+    if (stockholmPrice) {
+      html += `<p style="margin: 2px 0;">📍 Stockholm: <strong>${stockholmPrice.toFixed(2)}</strong> kr/kWh</p>`;
+    } else {
+      html += `<p style="margin: 2px 0;">📍 Stockholm: – kr/kWh</p>`;
+    }
+    
+    if (copenhagenPrice) {
+      html += `<p style="margin: 2px 0;">📍 København: <strong>${copenhagenPrice.toFixed(2)}</strong> kr/kWh</p>`;
+    } else {
+      html += `<p style="margin: 2px 0;">📍 København: – kr/kWh</p>`;
+    }
+    
+    html += '</div>';
+    el.innerHTML = html;
+  }
+}
+
+// Oppdater priser hvert 5. minutt
+setInterval(updateNordicPrices, 5 * 60 * 1000);
+
 // -------------------- MARKERS --------------------
 function renderAllMarkers() {
   renderKommunePolygons();
@@ -543,7 +612,7 @@ function setRandomFact() {
       // Hvis facts er en liste med strings
       fact = facts[Math.floor(Math.random() * facts.length)];
     }
-  }
+   }
 
   if (fact) {
     el.innerHTML = `<p><strong>Visste du:</strong> ${fact}</p>`;
