@@ -158,6 +158,13 @@ body {
   flex-direction: column;
   gap: 8px;
    line-height: 8px;
+   position: absolute;
+  top: 200px;
+  right: 20px;
+  z-index: 999;
+  width: 200px;
+  max-height: 80vh;
+   
 }
 
 .toggle-label {
