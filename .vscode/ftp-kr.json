@@ -1,5 +1,5 @@
 {
-    "host": "tresfjording.no",
+    "host": "ssh.tresfjording.no",
     "username": "tresfjording.no",
     "password": "one33324",
     "remotePath": "httpd/www",
