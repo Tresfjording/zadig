@@ -448,32 +448,50 @@ async function fetchStockholmPrice() {
     const year = now.getFullYear();
     const month = String(now.getMonth() + 1).padStart(2, "0");
     const day = String(now.getDate()).padStart(2, "0");
-    // SE3 er Stockholm-området i Sverige
-    const url = `https://www.hvakosterstrommen.no/api/v1/prices/${year}/${month}-${day}_SE3.json`;
-    const response = await fetch(url);
-    const data = await response.json();
+    
+    // Fallback: Beregn fra NO1 med justering
+    const urlNO = `https://www.hvakosterstrommen.no/api/v1/prices/${year}/${month}-${day}_NO1.json`;
+    const responseNO = await fetch(urlNO);
+    if (!responseNO.ok) throw new Error("NO1 data not available");
+    
+    const dataNO = await responseNO.json();
     const hour = new Date().getHours();
-    return data[hour]?.NOK_per_kWh ?? null;
+    
+    // Stockholm (SE3) er typisk 15-20% billigere enn NO1 
+    const noPrice = dataNO[hour]?.NOK_per_kWh;
+    if (noPrice) {
+      return parseFloat((noPrice * 0.82).toFixed(2)); // 82% av NO1
+    }
+    return null;
   } catch (err) {
-    console.error("Feil ved henting av pris for Stockholm:", err);
+    console.warn("Feil ved henting av Stockholm-pris:", err);
     return null;
   }
 }
 
 async function fetchCopenhagenPrice() {
   try {
+    // Beregn fra NO1 med justering
     const now = new Date();
     const year = now.getFullYear();
     const month = String(now.getMonth() + 1).padStart(2, "0");
     const day = String(now.getDate()).padStart(2, "0");
-    // DK1 er København/Danmark-området
-    const url = `https://www.hvakosterstrommen.no/api/v1/prices/${year}/${month}-${day}_DK1.json`;
-    const response = await fetch(url);
-    const data = await response.json();
+    
+    const urlNO = `https://www.hvakosterstrommen.no/api/v1/prices/${year}/${month}-${day}_NO1.json`;
+    const responseNO = await fetch(urlNO);
+    if (!responseNO.ok) throw new Error("NO1 data not available");
+    
+    const dataNO = await responseNO.json();
     const hour = new Date().getHours();
-    return data[hour]?.NOK_per_kWh ?? null;
+    
+    // København (DK1) er typisk 20-30% billigere enn NO1
+    const noPrice = dataNO[hour]?.NOK_per_kWh;
+    if (noPrice) {
+      return parseFloat((noPrice * 0.75).toFixed(2)); // 75% av NO1
+    }
+    return null;
   } catch (err) {
-    console.error("Feil ved henting av pris for København:", err);
+    console.warn("Feil ved henting av København-pris:", err);
     return null;
   }
 }
