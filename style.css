@@ -117,10 +117,10 @@ body {
 
 /* Layout selector */
 .layout-selector {
-  position: absolute;
+  position: relative;
   bottom: 20px;
   right: 20px;
-  z-index: 1100;
+  z-index: 2000;
   width: 200px;
   display: flex;
   align-items: center;
