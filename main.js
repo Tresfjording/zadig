@@ -645,7 +645,7 @@ function initToggleControls() {
   const toggleBorders = document.getElementById("toggle-borders");
 
   if (toggleMountains) {
-    toggleMountains.addEventListener("", (e) => {
+    toggleMountains.addEventListener("change", (e) => {
       if (e.target.checked) {
         renderMountainMarkers();
       } else {
@@ -655,7 +655,7 @@ function initToggleControls() {
   }
 
   if (toggleCommunities) {
-    toggleCommunities.addEventListener("", (e) => {
+    toggleCommunities.addEventListener("change", (e) => {
       if (e.target.checked) {
         renderKommuneMarkers();
       } else {
@@ -665,7 +665,7 @@ function initToggleControls() {
   }
 
   if (toggleCabins) {
-    toggleCabins.addEventListener("", (e) => {
+    toggleCabins.addEventListener("change", (e) => {
       if (e.target.checked) {
         renderCabinMarkers();
       } else {
@@ -675,7 +675,7 @@ function initToggleControls() {
   }
 
   if (toggleBorders) {
-    toggleBorders.addEventListener("", (e) => {
+    toggleBorders.addEventListener("change", (e) => {
       if (e.target.checked) {
         renderKommunePolygons();
       } else {
