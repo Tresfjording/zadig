@@ -118,6 +118,11 @@ body {
 /* Layout selector */
 .layout-selector {
   display: flex;
+    position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 999;
+  width: 200px;
   align-items: center;
   gap: 8px;
   margin-bottom: 10px;
