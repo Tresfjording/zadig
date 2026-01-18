@@ -665,7 +665,7 @@ function initToggleControls() {
   }
 
   if (toggleCabins) {
-    toggleCabins.addEventListener("change", (e) => {
+    toggleCabins.addEventListener("", (e) => {
       if (e.target.checked) {
         renderCabinMarkers();
       } else {
@@ -675,7 +675,7 @@ function initToggleControls() {
   }
 
   if (toggleBorders) {
-    toggleBorders.addEventListener("change", (e) => {
+    toggleBorders.addEventListener("", (e) => {
       if (e.target.checked) {
         renderKommunePolygons();
       } else {
