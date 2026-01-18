@@ -160,8 +160,9 @@ body {
   z-index: 999;
   width: 200px;
   display: flex;
-    gap: 8px;
-   line-height: 8px;
+  flex-direction: column;
+  gap: 8px;
+  line-height: 8px;
    
    
 }
