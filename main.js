@@ -645,7 +645,7 @@ function initToggleControls() {
   const toggleBorders = document.getElementById("toggle-borders");
 
   if (toggleMountains) {
-    toggleMountains.addEventListener("change", (e) => {
+    toggleMountains.addEventListener("", (e) => {
       if (e.target.checked) {
         renderMountainMarkers();
       } else {
@@ -655,7 +655,7 @@ function initToggleControls() {
   }
 
   if (toggleCommunities) {
-    toggleCommunities.addEventListener("change", (e) => {
+    toggleCommunities.addEventListener("", (e) => {
       if (e.target.checked) {
         renderKommuneMarkers();
       } else {
