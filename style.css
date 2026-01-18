@@ -117,11 +117,6 @@ body {
 
 /* Layout selector */
 .layout-selector {
-    position: absolute;
-  top: 20px;
-  right: 20px;
-  z-index: 999;
-  width: 200px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -159,7 +154,6 @@ body {
 }
 
 .toggles-group {
-  position: absolute;
   display: flex;
   flex-direction: column;
   gap: 8px;
