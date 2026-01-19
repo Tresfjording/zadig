@@ -293,7 +293,7 @@ body {
   background-color: #fff9e6;
   border-left: 3px solid var(--color-accent);
   border-radius: 2px;
-  font-size: 8%;
+  font-size: 10px;
   font-style: italic;
   color: #666;
 }
