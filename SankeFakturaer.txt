@@ -1,0 +1,129 @@
+import fitz
+import os
+import re
+from openpyxl import Workbook, load_workbook
+from openpyxl.utils import get_column_letter
+import shutil
+from datetime import datetime
+
+base = r"C:\Strømfakturaer"
+innboks = os.path.join(base, "Innboks")
+arkiv = os.path.join(base, "Arkiv")
+excel_fil = os.path.join(base, "faktura_data.xlsx")
+
+# ---------------------------
+# 1. Opprett Excel-fil hvis den ikke finnes
+# ---------------------------
+if not os.path.exists(excel_fil):
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Fakturaer"
+
+    ws.append([
+        "Filnavn", "Fakturanummer", "Fakturadato", "Forfallsdato",
+        "Å betale", "KID", "Målepunkt-ID", "kWh", "Spotpris øre/kWh",
+        "Påslag øre/kWh", "Fastbeløp", "MVA", "Sum inkl mva",
+        "Periode", "År-Måned"
+    ])
+
+    wb.save(excel_fil)
+
+wb = load_workbook(excel_fil)
+ws = wb["Fakturaer"]
+
+# ---------------------------
+# 2. Hent eksisterende filnavn for å unngå duplikater
+# ---------------------------
+eksisterende = {row[0].value for row in ws.iter_rows(min_row=2)}
+
+# ---------------------------
+# 3. Funksjon for å hente tekst fra PDF
+# ---------------------------
+def hent_pdf_tekst(path):
+    doc = fitz.open(path)
+    tekst = ""
+    for side in doc:
+        tekst += side.get_text()
+    return tekst
+
+# ---------------------------
+# 4. Regex-mønstre tilpasset Wattn
+# ---------------------------
+patterns = {
+    "fakturanummer": r"Fakturanr[:\s]*([0-9]+)",
+    "fakturadato": r"Fakturadato[:\s]*([0-9.]+)",
+    "forfallsdato": r"Forfallsdato[:\s]*([0-9.]+)",
+    "a_betale": r"Å betale[:\s]*([0-9.,]+)",
+    "kid": r"KID-nummer[:\s]*([0-9]+)",
+    "malepunkt": r"Målepunkt-ID[:\s]*([0-9]+)",
+    "kwh": r"([0-9\s]+,\d+)\s*kWh",
+    "spotpris": r"Spot timepris.*?([0-9.,]+)\s*øre/kWh",
+    "paslag": r"Påslag.*?([0-9.,]+)\s*øre/kWh",
+    "fastbelop": r"Fastbeløp.*?([0-9.,]+)\s*kr/mnd",
+    "mva": r"Herav mva\.\s*([0-9.,]+)",
+    "sum_inkl": r"Sum.*?([0-9.,]+)",
+    "periode": r"([0-9.]{10}-[0-9.]{10})"
+}
+
+# ---------------------------
+# 5. Behandle PDF-er
+# ---------------------------
+for fil in os.listdir(innboks):
+    if not fil.lower().endswith(".pdf"):
+        continue
+
+    if fil in eksisterende:
+        continue  # hopp over duplikater
+
+    pdf_path = os.path.join(innboks, fil)
+    tekst = hent_pdf_tekst(pdf_path)
+
+    data = {}
+
+    for key, pattern in patterns.items():
+        m = re.search(pattern, tekst, re.DOTALL)
+        data[key] = m.group(1).strip() if m else ""
+
+    # Lag År-Måned basert på fakturadato
+    try:
+        dt = datetime.strptime(data["fakturadato"], "%d.%m.%Y")
+        data["aar_maned"] = dt.strftime("%Y-%m")
+    except:
+        data["aar_maned"] = ""
+
+    # Legg inn i Excel
+    ws.append([
+        fil,
+        data["fakturanummer"],
+        data["fakturadato"],
+        data["forfallsdato"],
+        data["a_betale"],
+        data["kid"],
+        data["malepunkt"],
+        data["kwh"],
+        data["spotpris"],
+        data["paslag"],
+        data["fastbelop"],
+        data["mva"],
+        data["sum_inkl"],
+        data["periode"],
+        data["aar_maned"]
+    ])
+
+    # Flytt PDF til arkiv
+    shutil.move(pdf_path, os.path.join(arkiv, fil))
+
+# ---------------------------
+# 6. Sorter Excel etter forfallsdato
+# ---------------------------
+rows = list(ws.iter_rows(min_row=2, values_only=True))
+rows.sort(key=lambda r: datetime.strptime(r[3], "%d.%m.%Y") if r[3] else datetime.max)
+
+# Skriv tilbake sortert
+for i, row in enumerate(rows, start=2):
+    for j, value in enumerate(row, start=1):
+        ws.cell(row=i, column=j, value=value)
+
+wb.save(excel_fil)
+
+print("Ferdig! Alt er oppdatert, sortert og lagret.")
