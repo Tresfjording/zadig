@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Huskeapp – Ordliste på GitHub</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f0f4f8;
+      color: #222;
+      padding: 30px 16px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      color: #1a3a5c;
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      color: #555;
+      font-size: 0.95rem;
+      margin-bottom: 28px;
+    }
+
+    .seksjon {
+      background: white;
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .seksjon h2 {
+      font-size: 1.1rem;
+      color: #1a3a5c;
+      margin-bottom: 14px;
+      border-bottom: 2px solid #d0e4f7;
+      padding-bottom: 8px;
+    }
+
+    .steg {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .steg:last-child { margin-bottom: 0; }
+
+    .stegnr {
+      background: #1a3a5c;
+      color: white;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .steg-innhold p {
+      font-size: 0.9rem;
+      color: #444;
+      margin-bottom: 6px;
+    }
+
+    .cmd {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    code {
+      background: #1e1e2e;
+      color: #a9dc76;
+      padding: 7px 14px;
+      border-radius: 6px;
+      font-size: 0.92rem;
+      font-family: 'Consolas', 'Courier New', monospace;
+      flex: 1;
+    }
+
+    .kopier-btn {
+      background: #1a3a5c;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 7px 12px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+
+    .kopier-btn:hover { background: #2a5a8c; }
+    .kopier-btn.kopiert { background: #2e7d32; }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .info-kort {
+      background: #f0f4f8;
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+
+    .info-kort .etikett {
+      font-size: 0.75rem;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .info-kort .verdi {
+      font-size: 0.88rem;
+      color: #1a3a5c;
+      font-weight: 600;
+      word-break: break-all;
+    }
+
+    .lenke-btn {
+      display: inline-block;
+      background: #2e7d32;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-size: 0.9rem;
+      margin-top: 8px;
+      transition: background 0.15s;
+    }
+
+    .lenke-btn:hover { background: #1b5e20; }
+
+    .tips {
+      background: #fff8e1;
+      border-left: 4px solid #f9a825;
+      padding: 10px 14px;
+      border-radius: 0 6px 6px 0;
+      font-size: 0.88rem;
+      color: #555;
+      margin-top: 10px;
+    }
+
+    .mappe-rad {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .mappe-rad code { font-size: 0.85rem; }
+
+    footer {
+      text-align: center;
+      color: #999;
+      font-size: 0.8rem;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>📋 Huskeapp – Ordliste på GitHub</h1>
+  <p class="subtitle">Enkel guide for å laste opp endringer til GitHub</p>
+
+  <!-- VIKTIG INFO -->
+  <div class="seksjon">
+    <h2>📌 Viktig info</h2>
+    <div class="info-grid">
+      <div class="info-kort">
+        <div class="etikett">GitHub-bruker</div>
+        <div class="verdi">Tresfjording</div>
+      </div>
+      <div class="info-kort">
+        <div class="etikett">Gren (branch)</div>
+        <div class="verdi">ordliste-upload</div>
+      </div>
+      <div class="info-kort">
+        <div class="etikett">Mappe på PC</div>
+        <div class="verdi">Dokumenter\Ordliste</div>
+      </div>
+      <div class="info-kort">
+        <div class="etikett">Repository</div>
+        <div class="verdi">zadig</div>
+      </div>
+    </div>
+    <br>
+    <a class="lenke-btn" href="https://github.com/Tresfjording/zadig/tree/ordliste-upload" target="_blank">🔗 Åpne GitHub-siden</a>
+  </div>
+
+  <!-- GIT-KOMMANDOER -->
+  <div class="seksjon">
+    <h2>🚀 Slik laster du opp endringer (3 steg)</h2>
+
+    <div class="steg">
+      <div class="stegnr">1</div>
+      <div class="steg-innhold">
+        <p>Legg til alle endrede filer:</p>
+        <div class="cmd">
+          <code>git add -A</code>
+          <button class="kopier-btn" onclick="kopier(this, 'git add -A')">Kopier</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="steg">
+      <div class="stegnr">2</div>
+      <div class="steg-innhold">
+        <p>Lagre med en beskrivelse (endre teksten etter <strong>-m</strong>):</p>
+        <div class="cmd">
+          <code>git commit -m "Oppdatert ordliste"</code>
+          <button class="kopier-btn" onclick="kopier(this, 'git commit -m &quot;Oppdatert ordliste&quot;')">Kopier</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="steg">
+      <div class="stegnr">3</div>
+      <div class="steg-innhold">
+        <p>Last opp til GitHub:</p>
+        <div class="cmd">
+          <code>git push</code>
+          <button class="kopier-btn" onclick="kopier(this, 'git push')">Kopier</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="tips">
+      💡 <strong>Tips:</strong> Åpne Terminal (PowerShell) i riktig mappe: høyreklikk i Ordliste-mappen i Filutforsker → <em>"Åpne i Terminal"</em>
+    </div>
+  </div>
+
+  <!-- ÅPNE TERMINAL I RIKTIG MAPPE -->
+  <div class="seksjon">
+    <h2>💻 Åpne terminal i riktig mappe</h2>
+    <div class="steg">
+      <div class="stegnr">→</div>
+      <div class="steg-innhold">
+        <p>Alternativt, skriv dette i PowerShell for å gå til riktig mappe:</p>
+        <div class="cmd">
+          <code>cd "$env:USERPROFILE\Documents\Ordliste"</code>
+          <button class="kopier-btn" onclick="kopier(this, 'cd &quot;$env:USERPROFILE\\Documents\\Ordliste&quot;')">Kopier</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATUS-SJEKK -->
+  <div class="seksjon">
+    <h2>🔍 Nyttige tilleggskommandoer</h2>
+
+    <div class="mappe-rad">
+      <div style="width:110px;color:#666;font-size:0.85rem;">Sjekk status:</div>
+      <code>git status</code>
+      <button class="kopier-btn" onclick="kopier(this, 'git status')">Kopier</button>
+    </div>
+
+    <div class="mappe-rad">
+      <div style="width:110px;color:#666;font-size:0.85rem;">Se historikk:</div>
+      <code>git log --oneline</code>
+      <button class="kopier-btn" onclick="kopier(this, 'git log --oneline')">Kopier</button>
+    </div>
+
+    <div class="mappe-rad">
+      <div style="width:110px;color:#666;font-size:0.85rem;">Slett duplikater:</div>
+      <code>python fjern_duplikater.py</code>
+      <button class="kopier-btn" onclick="kopier(this, 'python fjern_duplikater.py')">Kopier</button>
+    </div>
+  </div>
+
+  <footer>Huskeapp for Øyvind · Ordliste-prosjektet · GitHub: Tresfjording/zadig</footer>
+
+  <script>
+    function kopier(knapp, tekst) {
+      navigator.clipboard.writeText(tekst).then(() => {
+        const orig = knapp.textContent;
+        knapp.textContent = '✓ Kopiert!';
+        knapp.classList.add('kopiert');
+        setTimeout(() => {
+          knapp.textContent = orig;
+          knapp.classList.remove('kopiert');
+        }, 1800);
+      }).catch(() => {
+        // fallback for eldre nettlesere
+        const el = document.createElement('textarea');
+        el.value = tekst;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+        knapp.textContent = '✓ Kopiert!';
+        knapp.classList.add('kopiert');
+        setTimeout(() => { knapp.textContent = 'Kopier'; knapp.classList.remove('kopiert'); }, 1800);
+      });
+    }
+  </script>
+
+</body>
+</html>

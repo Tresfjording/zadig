@@ -25,8 +25,8 @@ COLUMN_END = "AC"
 DB_PATH = Path(__file__).with_name("ordliste_cache.sqlite3")
 HOST = "127.0.0.1"
 PORT = 8765
-UI_VERSION = "v2026-03-22-wildcards"
-DEFAULT_SAMPLE_LIMIT = 200
+UI_VERSION = "v2026-03-26-wildcards-limitfix"
+DEFAULT_SAMPLE_LIMIT = 0
 
 
 def resolve_excel_path() -> Path:
@@ -40,8 +40,8 @@ def resolve_excel_path() -> Path:
         Path.cwd() / "Ordlista HovedFil.xlsm",
         Path.cwd() / "Ordliste Norsk.xlsm",
         # Originale OneDrive-steder
-        Path(r"C:\Users\ØyvindGranberg\OneDrive\Dokumenter\Annet\Ordlista HovedFil.xlsm"),
-        Path(r"C:\Users\ØyvindGranberg\OneDrive\Dokumenter\Annet\Ordliste Norsk.xlsm"),
+        # Path(r"C:\Users\ØyvindGranberg\OneDrive\Dokumenter\Annet\Ordlista HovedFil.xlsm"),
+        # Path(r"C:\Users\ØyvindGranberg\OneDrive\Dokumenter\Annet\Ordliste Norsk.xlsm"),
     ]
 
     valid_candidates = [path for path in candidates if path is not None]
@@ -568,19 +568,19 @@ class SearchApp:
         </div>
       </section>
 
-      <form method=\"get\" action=\"/\">
+    <form method=\"get\" action=\"/\" autocomplete=\"off\">
         <div>
           <label for=\"term\">Manuelt søk</label>
           <input id=\"term\" name=\"term\" type=\"text\" value=\"\" placeholder=\"Skriv inn ordet du vil sjekke\">
         </div>
                 <div>
                     <label for=\"limit\">Maks treff i liste (0 = alle)</label>
-                    <input id=\"limit\" name=\"limit\" type=\"number\" min=\"0\" value=\"{result.sample_limit}\">
+                                        <input id=\"limit\" name=\"limit\" type=\"number\" min=\"0\" value=\"{result.sample_limit}\" autocomplete=\"off\">
                 </div>
         <div class=\"actions\">
           <button type=\"submit\">Søk i ordlisten</button>
-                    <a class=\"button-link button-secondary\" href=\"/?source=sheet&limit={result.sample_limit}\">Les SearchWords!D3</a>
-                    <a class=\"button-link\" href=\"/rebuild?limit={result.sample_limit}\">Bygg indeks på nytt</a>
+                                        <a class=\"button-link button-secondary\" href=\"/?source=sheet&limit={DEFAULT_SAMPLE_LIMIT}\">Les SearchWords!D3</a>
+                                        <a class=\"button-link\" href=\"/rebuild?limit={DEFAULT_SAMPLE_LIMIT}\">Bygg indeks på nytt</a>
         </div>
                 <div class=\"samples-block\">
                     <p class=\"samples-title\">Treffliste (viser inntil {sample_limit} ord)</p>
@@ -701,7 +701,7 @@ def main() -> int:
     app = SearchApp(index)
     handler = make_handler(app)
     server = HTTPServer((HOST, PORT), handler)
-    url = f"http://{HOST}:{PORT}/?source=sheet"
+    url = f"http://{HOST}:{PORT}/?source=sheet&limit={DEFAULT_SAMPLE_LIMIT}"
 
     print(f"Excel-fil i bruk: {EXCEL_PATH}")
     print("Sjekker om indeksen er oppdatert ...")
