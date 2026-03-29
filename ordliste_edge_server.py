@@ -28,20 +28,26 @@ PORT = 8765
 UI_VERSION = "v2026-03-26-wildcards-limitfix"
 DEFAULT_SAMPLE_LIMIT = 0
 
+def do_GET(self) -> None:
+    self.send_response(200)
+    self.send_header("Content-Type", "text/html; charset=utf-8")
+    self.end_headers()
+    self.wfile.write(b"<h1>Serveren svarer!</h1>")
 
 def resolve_excel_path() -> Path:
     env_path = os.environ.get("ORDLISTE_XLSM")
     candidates = [
         Path(env_path) if env_path else None,
-        # Prøv nye filer fra samlet mappe først
-        Path.cwd() / "G-Ordliste Norsk.xlsm",
+        # Prioriter ny hovedfil først:
+        Path.cwd() / "Ordliste_Norsk_ny.xlsx",
+        # Deretter gamle filer om ny ikke finnes:
         Path.cwd() / "G-Ordliste.xlsm",
-        Path.cwd() / "Ordliste Norsk v. 30.6.xlsm",
-        Path.cwd() / "Ordlista HovedFil.xlsm",
-        Path.cwd() / "Ordliste Norsk.xlsm",
+        # Path.cwd() / "Ordliste Norsk v. 30.6.xlsm",
+        # Path.cwd() / "Ordlista HovedFil.xlsm",
+        # Path.cwd() / "Ordliste Norsk.xlsm",
         # Originale OneDrive-steder
-        # Path(r"C:\Users\ØyvindGranberg\OneDrive\Dokumenter\Annet\Ordlista HovedFil.xlsm"),
-        # Path(r"C:\Users\ØyvindGranberg\OneDrive\Dokumenter\Annet\Ordliste Norsk.xlsm"),
+        # Path(r"C:\Users\Øyvind – ZaGal ote\OneDrive\Dokumenter\Annet\Ordlista HovedFil.xlsm"),
+        # Path(r"C:\Users\Øyvind – ZaGal ote\OneDrive\Dokumenter\Annet\Ordliste Norsk.xlsm"),
     ]
 
     valid_candidates = [path for path in candidates if path is not None]
@@ -49,7 +55,7 @@ def resolve_excel_path() -> Path:
         if candidate.is_file():
             return candidate
 
-    # Fallback to the first candidate so the error message points to a concrete path.
+    # Fallback to the first candidate so the error message points til en konkret path.
     return valid_candidates[0]
 
 
@@ -317,66 +323,23 @@ class WordIndex:
 
 
 class SearchApp:
-    def __init__(self, index: WordIndex) -> None:
-        self.index = index
-
     def make_result(self, query: str, source: str, sample_limit: int = DEFAULT_SAMPLE_LIMIT) -> SearchResult:
-        try:
-            rebuilt = self.index.rebuild_if_needed()
-        except Exception as exc:
-            return SearchResult(
-                query=query,
-                normalized_query=normalize_word(query),
-                found=False,
-                wildcard_used=False,
-                match_count=0,
-                sample_matches=[],
-                sample_limit=sample_limit,
-                total_words=self.index.count_words(),
-                source=source,
-                indexed_at=self.index.indexed_at(),
-                message=f"Klarte ikke lese Excel-filen: {exc}",
-            )
-
-        normalized = normalize_word(query)
-        if not normalized:
-            return SearchResult(
-                query=query,
-                normalized_query=normalized,
-                found=False,
-                wildcard_used=False,
-                match_count=0,
-                sample_matches=[],
-                sample_limit=sample_limit,
-                total_words=self.index.count_words(),
-                source=source,
-                indexed_at=self.index.indexed_at(),
-                message="Ingen verdi å søke etter.",
-            )
-
-        wildcard_used = "*" in normalized or "?" in normalized
-        if wildcard_used:
-            match_count, sample_matches = self.index.find_wildcard_matches(query, limit=sample_limit)
+        normalized_query = normalize_word(query)
+        wildcard_used = '*' in normalized_query or '?' in normalized_query
+        found = False
+        match_count = 0
+        sample_matches = []
+        message = ""
+        if normalized_query:
+            match_count, sample_matches = self.index.find_wildcard_matches(normalized_query, limit=sample_limit)
             found = match_count > 0
-            if found:
-                message = f"Wildcard-sok ga {match_count:,} treff.".replace(",", " ")
-            else:
-                message = "Wildcard-sok ga ingen treff."
+            if not found:
+                message = f"Fant ingen treff for '{query}'."
         else:
-            found = self.index.contains(query)
-            match_count = 1 if found else 0
-            sample_matches = [normalized] if found else []
-            if found:
-                message = "Treff i ordlisten."
-            else:
-                message = "Ingen eksakt treff i ordlisten."
-
-        if rebuilt:
-            message += " Indeksen ble oppdatert fra Excel-filen."
-
+            message = "Skriv inn et søkeord. Bruk * og ? for jokertegn om ønskelig."
         return SearchResult(
             query=query,
-            normalized_query=normalized,
+            normalized_query=normalized_query,
             found=found,
             wildcard_used=wildcard_used,
             match_count=match_count,
@@ -387,138 +350,105 @@ class SearchApp:
             indexed_at=self.index.indexed_at(),
             message=message,
         )
+    def __init__(self, index: WordIndex):
+        self.index = index
 
+    def result_from_sheet_or_error(self, sample_limit=DEFAULT_SAMPLE_LIMIT):
+        try:
+            query = self.index.read_search_cell()
+            return self.make_result(query, "Excel SearchWords!D3", sample_limit=sample_limit)
+        except Exception as exc:
+            return SearchResult(
+    query="",
+    normalized_query="",
+    found=False,
+    wildcard_used=False,
+    match_count=0,
+    sample_matches=[],
+    sample_limit=sample_limit,
+    total_words=self.index.count_words(),
+    source="sheet",
+    indexed_at=self.index.indexed_at(),
+    message="",  # <-- behold denne, evt. tom streng
+)
     def render_page(self, result: SearchResult) -> str:
-        status_class = "found" if result.found else "missing"
-        status_label = "FUNNET" if result.found else "IKKE FUNNET"
-        safe_query = html.escape(result.query)
-        safe_normalized = html.escape(result.normalized_query)
-        safe_message = html.escape(result.message)
-        safe_samples = "".join(f"<li>{html.escape(item)}</li>" for item in result.sample_matches)
-        indexed_at = html.escape(result.indexed_at or "ikke bygget ennå")
-        source = html.escape(result.source)
-        total_words = f"{result.total_words:,}".replace(",", " ")
-        match_count = f"{result.match_count:,}".replace(",", " ")
+        safe_query = html.escape(result.query or "")
+        safe_samples = "".join(f"<li>{html.escape(word)}</li>" for word in (result.sample_matches or []))
+        samples_style = "" if result.found else "color: #7c4a03;"
+        sample_limit = "alle" if result.sample_limit == 0 else f"{result.sample_limit:,}".replace(",", " ")
+        # Vis kun feilmelding hvis source er 'sheet' og det faktisk er en feilmelding
+        show_message = bool(result.message and result.source == "sheet")
+        message = html.escape(result.message) if show_message else ""
+        return f"""<!doctype html>
+<html lang=\"no\">
+<head>
+    <meta charset=\"utf-8\">
+    <title>Ordliste-søk</title>
+    <style>
+        body {{ font-family: Arial, sans-serif; background: #fff8e1; margin: 0; padding: 0; }}
+        .card {{ background: #fff3e0; max-width: 600px; margin: 40px auto; padding: 24px 32px; border-radius: 12px; box-shadow: 0 2px 8px rgba(140, 70, 0, 0.10); }}
+        .hero {{ margin-bottom: 18px; }}
+        .actions {{ display: flex; gap: 10px; margin-top: 12px; margin-bottom: 12px; }}
+        .button-link, button {{ border: none; border-radius: 999px; padding: 14px 18px; font-size: 0.95rem; cursor: pointer; text-decoration: none; color: #fffbe6; background: #e65100; transition: background 0.2s; }}
+        .button-link:hover, button:hover {{ background: #ff9800; color: #4e2600; }}
+        .button-secondary {{ background: #a1887f; color: #fffbe6; }}
+        .button-secondary:hover {{ background: #bcaaa4; color: #4e2600; }}
+        .message {{ font-size: 1rem; line-height: 1.5; color: #b71c1c; margin-bottom: 10px; }}
+        .samples-block {{ margin-top: 6px; border-top: 1px solid #bcaaa4; padding-top: 14px; }}
+        .samples-title {{ margin: 0 0 8px; font-size: 0.92rem; color: #a1887f; letter-spacing: 0.02em; }}
+        .samples {{ margin: 0; padding-left: 20px; {samples_style} }}
+        .samples li {{ margin-bottom: 2px; }}
+        .footer {{ font-size: 0.88rem; color: #a1887f; margin-top: 18px; }}
+        .match-count {{ font-size: 1.05rem; color: #e65100; font-weight: bold; margin-bottom: 6px; }}
+        input[type="text"], input[type="number"] {{ border: 1px solid #ff9800; border-radius: 6px; padding: 6px 10px; background: #fffbe6; color: #4e2600; margin-right: 8px; }}
+        input[type="text"]:focus, input[type="number"]:focus {{ outline: 2px solid #e65100; }}
+        h1 {{ color: #e65100; }}
+        label {{ color: #7c4a03; }}
+        @media (max-width: 640px) {{ body {{ padding: 16px; }} .hero, .card {{ padding-left: 10px; padding-right: 10px; }} .actions {{ flex-direction: column; }} button, .button-link {{ width: 100%; text-align: center; }} }}
+    </style>
+</head>
+<body>
+    <main class=\"card\">
+        <section class=\"hero\">
+            <h1>Ordliste-søk</h1>
+            <form method=\"get\" action=\"/\">
+                <label for=\"term\">Søk etter ord:</label>
+                <input type=\"text\" id=\"term\" name=\"term\" value=\"{safe_query}\" autocomplete=\"off\" autofocus>
+                <label for=\"limit\">Antall eksempler:</label>
+                <input type=\"number\" id=\"limit\" name=\"limit\" value=\"{result.sample_limit}\" min=\"0\" max=\"1000\">
+                <div class=\"actions\">
+                    <button type=\"submit\">Søk i ordlisten</button>
+                    <a class=\"button-link button-secondary\" href=\"/?source=sheet&limit={DEFAULT_SAMPLE_LIMIT}\">Les SearchWords!D3</a>
+                    <a class=\"button-link\" href=\"/rebuild?limit={DEFAULT_SAMPLE_LIMIT}\">Bygg indeks på nytt</a>
+                </div>
+                <div class=\"samples-block\">
+                    <div class=\"match-count\">Antall treff: {result.match_count:,}</div>
+                    <p class=\"samples-title\">Treffliste (viser inntil {sample_limit} ord)</p>
+                    <ul class=\"samples\">{safe_samples or '<li>Ingen treff å vise</li>'}</ul>
+                </div>
+            </form>
+            {f'<div class="message">{message}</div>' if message else ''}
+            <div class=\"footer\">Excel-fil: {html.escape(str(EXCEL_PATH))} | UI {UI_VERSION}</div>
+        </section>
+    </main>
+</body>
+</html>"""
         sample_limit = "alle" if result.sample_limit == 0 else f"{result.sample_limit:,}".replace(",", " ")
         return f"""<!doctype html>
 <html lang=\"no\">
 <head>
-  <meta charset=\"utf-8\">
-  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">
-  <title>Ordliste-søk</title>
-  <style>
-    :root {{
-      --bg: #f7f3ea;
-      --panel: rgba(255,255,255,0.88);
-      --text: #1c1a17;
-      --muted: #665f53;
-      --accent: #0d5c63;
-      --accent-2: #d1495b;
-      --ok: #1f7a4d;
-      --warn: #ad2e24;
-      --shadow: 0 24px 80px rgba(30, 24, 14, 0.12);
-    }}
-    * {{ box-sizing: border-box; }}
-    body {{
-      margin: 0;
-      min-height: 100vh;
-      font-family: Georgia, 'Times New Roman', serif;
-      color: var(--text);
-      background:
-        radial-gradient(circle at top left, rgba(13,92,99,0.16), transparent 38%),
-        radial-gradient(circle at top right, rgba(209,73,91,0.18), transparent 28%),
-        linear-gradient(180deg, #f9f6ef 0%, #efe8dc 100%);
-      display: grid;
-      place-items: center;
-      padding: 32px;
-    }}
-    .card {{
-      width: min(920px, 100%);
-      background: var(--panel);
-      border: 1px solid rgba(28,26,23,0.08);
-      border-radius: 28px;
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
-      overflow: hidden;
-    }}
-    .hero {{
-      padding: 32px 32px 20px;
-      background: linear-gradient(135deg, rgba(13,92,99,0.10), rgba(209,73,91,0.08));
-      border-bottom: 1px solid rgba(28,26,23,0.08);
-    }}
-    h1 {{
-      margin: 0 0 10px;
-      font-size: clamp(2rem, 4vw, 3.4rem);
-      line-height: 0.95;
-      letter-spacing: -0.04em;
-    }}
-    p {{ margin: 0; color: var(--muted); font-size: 1rem; }}
-    .content {{ padding: 28px 32px 32px; display: grid; gap: 24px; }}
-    .status {{
-      display: grid;
-      gap: 12px;
-      padding: 22px;
-      border-radius: 22px;
-      background: white;
-      border: 1px solid rgba(28,26,23,0.08);
-    }}
-    .pill {{
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      width: fit-content;
-      padding: 10px 16px;
-      border-radius: 999px;
-      font-size: 0.85rem;
-      letter-spacing: 0.16em;
-      font-weight: 700;
-      color: white;
-      background: var(--{'ok' if result.found else 'warn'});
-    }}
-    .grid {{
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 14px;
-    }}
-    .metric {{
-      padding: 16px;
-      border-radius: 18px;
-      background: #f5f0e6;
-    }}
-    .metric strong {{ display: block; font-size: 0.78rem; color: var(--muted); margin-bottom: 8px; }}
-    .metric span {{ font-size: 1.15rem; }}
-    form {{ display: grid; gap: 14px; }}
-    label {{ font-size: 0.9rem; color: var(--muted); }}
-    input[type=text] {{
-      width: 100%;
-      padding: 16px 18px;
-      border-radius: 16px;
-      border: 1px solid rgba(28,26,23,0.14);
-      font-size: 1rem;
-      background: #fffefb;
-    }}
-        input[type=number] {{
-            width: 100%;
-            padding: 16px 18px;
-            border-radius: 16px;
-            border: 1px solid rgba(28,26,23,0.14);
-            font-size: 1rem;
-            background: #fffefb;
+    <meta charset=\"utf-8\">
+            border-radius: 999px;
+            border-radius: 999px;
+            padding: 14px 18px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+            background: var(--accent);
         }}
-    .actions {{ display: flex; flex-wrap: wrap; gap: 12px; }}
-    button, .button-link {{
-      appearance: none;
-      border: 0;
-      border-radius: 999px;
-      padding: 14px 18px;
-      font-size: 0.95rem;
-      cursor: pointer;
-      text-decoration: none;
-      color: white;
-      background: var(--accent);
-    }}
-    .button-secondary {{ background: var(--accent-2); }}
-    .message {{ font-size: 1rem; line-height: 1.5; }}
+        .button-secondary {{ background: var(--accent-2); }}
+        .message {{ font-size: 1rem; line-height: 1.5; }}
         .samples-block {{
             margin-top: 6px;
             border-top: 1px solid rgba(28,26,23,0.1);
@@ -533,71 +463,47 @@ class SearchApp:
         .samples {{
             margin: 0;
             padding-left: 20px;
-            max-height: 220px;
-            overflow: auto;
-            line-height: 1.45;
+            {samples_style}
         }}
         .samples li {{ margin-bottom: 2px; }}
-    .footer {{ font-size: 0.88rem; color: var(--muted); }}
-    @media (max-width: 640px) {{
-      body {{ padding: 16px; }}
-      .hero, .content {{ padding-left: 20px; padding-right: 20px; }}
-      .actions {{ flex-direction: column; }}
-      button, .button-link {{ width: 100%; text-align: center; }}
-    }}
-  </style>
+        .footer {{ font-size: 0.88rem; color: var(--muted); }}
+        @media (max-width: 640px) {{
+            body {{ padding: 16px; }}
+            .hero, .content {{ padding-left: 20px; padding-right: 20px; }}
+            .actions {{ flex-direction: column; }}
+            button, .button-link {{ width: 100%; text-align: center; }}
+        }}
+    </style>
 </head>
 <body>
-  <main class=\"card\">
+    <main class=\"card\">
         <section class=\"hero\">
-            <h1>Ordliste i Edge</h1>
-                        <p>Leser søkeord fra SearchWords!D3 eller manuelt felt. Bruk * for mange tegn og ? for ett tegn.</p>
-                        <p style=\"margin-top:8px;font-size:.85rem;opacity:.8;\">UI {UI_VERSION}</p>
-    </section>
-    <section class=\"content\">
-      <section class=\"status {status_class}\">
-        <div class=\"pill\">{status_label}</div>
-        <div class=\"message\">{safe_message}</div>
-        <div class=\"grid\">
-          <div class=\"metric\"><strong>Søkeord</strong><span>{safe_query or '&nbsp;'}</span></div>
-          <div class=\"metric\"><strong>Normalisert</strong><span>{safe_normalized or '&nbsp;'}</span></div>
-          <div class=\"metric\"><strong>Kilde</strong><span>{source}</span></div>
-                    <div class=\"metric\"><strong>Treff</strong><span>{match_count}</span></div>
-          <div class=\"metric\"><strong>Indekserte ord</strong><span>{total_words}</span></div>
-          <div class=\"metric\"><strong>Sist indeksert</strong><span>{indexed_at}</span></div>
-        </div>
-      </section>
-
-    <form method=\"get\" action=\"/\" autocomplete=\"off\">
-        <div>
-          <label for=\"term\">Manuelt søk</label>
-          <input id=\"term\" name=\"term\" type=\"text\" value=\"\" placeholder=\"Skriv inn ordet du vil sjekke\">
-        </div>
-                <div>
-                    <label for=\"limit\">Maks treff i liste (0 = alle)</label>
-                                        <input id=\"limit\" name=\"limit\" type=\"number\" min=\"0\" value=\"{result.sample_limit}\" autocomplete=\"off\">
+            <h1>Ordliste-søk</h1>
+            <form method=\"get\" action=\"/\">
+                <label for=\"term\">Søk etter ord:</label>
+                <input type=\"text\" id=\"term\" name=\"term\" value=\"{safe_query}\" autocomplete=\"off\" autofocus>
+                <label for=\"limit\">Antall eksempler:</label>
+                <input type=\"number\" id=\"limit\" name=\"limit\" value=\"{sample_limit}\" min=\"0\" max=\"1000\">
+                <div class=\"actions\">
+                    <button type=\"submit\">Søk i ordlisten</button>
+                    <a class=\"button-link button-secondary\" href=\"/?source=sheet&limit={DEFAULT_SAMPLE_LIMIT}\">Les SearchWords!D3</a>
+                    <a class=\"button-link\" href=\"/rebuild?limit={DEFAULT_SAMPLE_LIMIT}\">Bygg indeks på nytt</a>
                 </div>
-        <div class=\"actions\">
-          <button type=\"submit\">Søk i ordlisten</button>
-                                        <a class=\"button-link button-secondary\" href=\"/?source=sheet&limit={DEFAULT_SAMPLE_LIMIT}\">Les SearchWords!D3</a>
-                                        <a class=\"button-link\" href=\"/rebuild?limit={DEFAULT_SAMPLE_LIMIT}\">Bygg indeks på nytt</a>
-        </div>
                 <div class=\"samples-block\">
                     <p class=\"samples-title\">Treffliste (viser inntil {sample_limit} ord)</p>
                     <ul class=\"samples\">{safe_samples or '<li>Ingen treff å vise</li>'}</ul>
                 </div>
-      </form>
-
-    <div class=\"footer\">Excel-fil: {html.escape(str(EXCEL_PATH))} | UI {UI_VERSION}</div>
-    </section>
-  </main>
+            </form>
+            <div class=\"footer\">Excel-fil: {html.escape(str(EXCEL_PATH))} | UI {UI_VERSION}</div>
+        </section>
+    </main>
 </body>
-</html>
-"""
+</html>"""
 
-    def result_from_sheet_or_error(self, sample_limit: int = DEFAULT_SAMPLE_LIMIT) -> SearchResult:
+def result_from_sheet_or_error(self, sample_limit=DEFAULT_SAMPLE_LIMIT):
         try:
             query = self.index.read_search_cell()
+            return self.make_result(query, "Excel SearchWords!D3", sample_limit=sample_limit)
         except Exception as exc:
             return SearchResult(
                 query="",
@@ -608,76 +514,86 @@ class SearchApp:
                 sample_matches=[],
                 sample_limit=sample_limit,
                 total_words=self.index.count_words(),
-                source=f"{SEARCH_SHEET_CANDIDATES[0]}!{SEARCH_CELL}",
+                source="sheet",
                 indexed_at=self.index.indexed_at(),
-                message=f"Klarte ikke lese søkecellen {SEARCH_SHEET_CANDIDATES[0]}!{SEARCH_CELL}: {exc}",
+                message=f"Klarte ikke lese fra SearchWords!D3: {exc}",
             )
-        source_sheet = self.index.active_search_sheet or SEARCH_SHEET_CANDIDATES[0]
-        return self.make_result(query, f"{source_sheet}!{SEARCH_CELL}", sample_limit=sample_limit)
-
-
 def make_handler(app: SearchApp) -> type[BaseHTTPRequestHandler]:
+
+
     class Handler(BaseHTTPRequestHandler):
         def do_GET(self) -> None:
-            parsed = urlparse(self.path)
-            params = parse_qs(parsed.query)
-            raw_limit = params.get("limit", [str(DEFAULT_SAMPLE_LIMIT)])[0]
+            print(f"do_GET: Forespørsel mottatt: {self.path}")
             try:
-                sample_limit = max(0, int(raw_limit))
-            except ValueError:
-                sample_limit = DEFAULT_SAMPLE_LIMIT
-
-            if parsed.path == "/rebuild":
+                app = self.server.app  # type: ignore[attr-defined]
+                print("do_GET: Parsed app OK")
+                from urllib.parse import urlparse, parse_qs
+                parsed = urlparse(self.path)
+                print(f"do_GET: Parsed URL: {parsed}")
+                params = parse_qs(parsed.query)
+                print(f"do_GET: Params: {params}")
+                sample_limit = 0
                 try:
-                    if app.index.db_path.exists():
-                        app.index.db_path.unlink()
-                    wal_path = app.index.db_path.with_suffix(app.index.db_path.suffix + "-wal")
-                    shm_path = app.index.db_path.with_suffix(app.index.db_path.suffix + "-shm")
-                    if wal_path.exists():
-                        wal_path.unlink()
-                    if shm_path.exists():
-                        shm_path.unlink()
-                    app.index._ensure_schema()
-                    result = app.result_from_sheet_or_error(sample_limit=sample_limit)
-                except Exception as exc:
-                    result = SearchResult(
-                        query="",
-                        normalized_query="",
-                        found=False,
-                        wildcard_used=False,
-                        match_count=0,
-                        sample_matches=[],
-                        sample_limit=sample_limit,
-                        total_words=0,
-                        source="rebuild",
-                        indexed_at=None,
-                        message=f"Klarte ikke bygge indeksen på nytt: {exc}",
-                    )
-                self._send_html(app.render_page(result))
-                return
+                    if "limit" in params:
+                        sample_limit = int(params["limit"][0])
+                except Exception as e:
+                    print(f"do_GET: Feil ved parsing av limit: {e}")
+                    sample_limit = 0
 
-            source = params.get("source", [""])[0]
-            if source == "sheet":
-                result = app.result_from_sheet_or_error(sample_limit=sample_limit)
-            else:
-                query = params.get("term", [""])[0]
-                result = app.make_result(query, "manuell input", sample_limit=sample_limit)
-            self._send_html(app.render_page(result))
+                if parsed.path == "/rebuild":
+                    print("do_GET: Rebuild path")
+                    try:
+                        app.index.rebuild_from_excel()
+                        message = "Indeksen ble bygget på nytt fra Excel."
+                    except Exception as exc:
+                        print(f"do_GET: Feil ved rebuild: {exc}")
+                        result = SearchResult(
+                            query="",
+                            normalized_query="",
+                            found=False,
+                            wildcard_used=False,
+                            match_count=0,
+                            sample_matches=[],
+                            sample_limit=sample_limit,
+                            total_words=0,
+                            source="rebuild",
+                            indexed_at=None,
+                            message=f"Klarte ikke bygge indeksen på nytt: {exc}",
+                        )
+                        self._send_html(app.render_page(result))
+                        return
+                    result = app.make_result("", "rebuild", sample_limit=sample_limit)
+                    self._send_html(app.render_page(result))
+                    return
+
+                source = params.get("source", [""])[0]
+                print(f"do_GET: source={source}")
+                if source == "sheet":
+                    print("do_GET: Henter fra sheet")
+                    result = app.result_from_sheet_or_error(sample_limit=sample_limit)
+                else:
+                    query = params.get("term", [""])[0]
+                    print(f"do_GET: Henter fra manuell input, query={query}")
+                    result = app.make_result(query, "manuell input", sample_limit=sample_limit)
+                print("do_GET: Sender HTML-svar")
+                self._send_html(app.render_page(result))
+            except Exception as e:
+                print(f"do_GET: Uventet feil: {e}")
+                self.send_response(500)
+                self.send_header("Content-Type", "text/plain; charset=utf-8")
+                self.end_headers()
+                self.wfile.write(f"Serverfeil: {e}".encode("utf-8"))
 
         def log_message(self, format: str, *args: object) -> None:
             return
 
         def _send_html(self, body: str) -> None:
             encoded = body.encode("utf-8")
-            try:
-                self.send_response(HTTPStatus.OK)
-                self.send_header("Content-Type", "text/html; charset=utf-8")
-                self.send_header("Content-Length", str(len(encoded)))
-                self.end_headers()
-                self.wfile.write(encoded)
-            except (BrokenPipeError, ConnectionResetError, ConnectionAbortedError):
-                # Browser-tab refresh/close can abort local HTTP responses; ignore quietly.
-                return
+            self.send_response(200)
+            self.send_header("Content-Type", "text/html; charset=utf-8")
+            self.send_header("Content-Length", str(len(encoded)))
+            self.end_headers()
+            self.wfile.write(encoded)
 
     return Handler
 
@@ -697,10 +613,12 @@ def open_in_edge(url: str) -> None:
 
 
 def main() -> int:
+
     index = WordIndex(EXCEL_PATH, DB_PATH)
     app = SearchApp(index)
     handler = make_handler(app)
     server = HTTPServer((HOST, PORT), handler)
+    server.app = app  # Attach the app to the server for handler access
     url = f"http://{HOST}:{PORT}/?source=sheet&limit={DEFAULT_SAMPLE_LIMIT}"
 
     print(f"Excel-fil i bruk: {EXCEL_PATH}")
@@ -713,6 +631,43 @@ def main() -> int:
     except Exception as exc:
         print(f"Kunne ikke forhåndsbygge indeks: {exc}")
 
+    # Tell antall unike ord direkte fra Excel-arket (A:AC, Ordliste)
+    try:
+        from openpyxl import load_workbook
+        from openpyxl.utils import column_index_from_string
+        SHEET_CANDIDATES = ["Ordliste", "AlleOrd", "Kolonner"]
+        COLUMN_START = "A"
+        COLUMN_END = "AC"
+        def normalize_word(value):
+            if value is None:
+                return ""
+            text = str(value).strip().upper()
+            return " ".join(text.split())
+        wb = load_workbook(EXCEL_PATH, read_only=True, data_only=True, keep_vba=True, keep_links=False)
+        try:
+            normalized_map = {name.strip().casefold(): name for name in wb.sheetnames}
+            for candidate in SHEET_CANDIDATES:
+                key = candidate.strip().casefold()
+                if key in normalized_map:
+                    sheet = wb[normalized_map[key]]
+                    break
+            else:
+                raise KeyError(f"Fant ikke ordliste-ark. Prøvde: {SHEET_CANDIDATES}. Tilgjengelige ark: {wb.sheetnames}")
+            min_col = column_index_from_string(COLUMN_START)
+            max_col = column_index_from_string(COLUMN_END)
+            words = set()
+            for row in sheet.iter_rows(min_col=min_col, max_col=max_col, values_only=True):
+                for value in row:
+                    word = normalize_word(value)
+                    if word:
+                        words.add(word)
+            print(f"Antall unike ord i Excel-arket: {len(words):,}")
+        finally:
+            wb.close()
+    except Exception as exc:
+        print(f"Klarte ikke telle ord direkte fra Excel: {exc}")
+
+    print(f"Antall ord i SQLite-indeksen: {index.count_words():,}")
     print(f"Starter lokal server på {url}")
     print("Trykk Ctrl+C for å stoppe serveren.")
 
@@ -724,8 +679,7 @@ def main() -> int:
     finally:
         server.server_close()
 
-    return 0
-
+    # return 0
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+        raise SystemExit(main())
