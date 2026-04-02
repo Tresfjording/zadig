@@ -423,83 +423,20 @@ class SearchApp:
                 </div>
                 <div class=\"samples-block\">
                     <div class=\"match-count\">Antall treff: {result.match_count:,}</div>
-                    <p class=\"samples-title\">Treffliste (viser inntil {sample_limit} ord)</p>
+                    <p class=\"samples-title\">Treffliste (viser inntil {result.total_words} ord)</p>
                     <ul class=\"samples\">{safe_samples or '<li>Ingen treff å vise</li>'}</ul>
                 </div>
             </form>
             {f'<div class="message">{message}</div>' if message else ''}
-            <div class=\"footer\">Excel-fil: {html.escape(str(EXCEL_PATH))} | UI {UI_VERSION}</div>
+            <div class=\"footer\">Excel-fil: {html.escape(str(EXCEL_PATH))} </div>
         </section>
     </main>
 </body>
 </html>"""
-        sample_limit = "alle" if result.sample_limit == 0 else f"{result.sample_limit:,}".replace(",", " ")
+        #sample_limit = "alle" if result.sample_limit == 0 else f"{result.sample_limit:,}".replace(",", " ")
         return f"""<!doctype html>
 <html lang=\"no\">
-<head>
-    <meta charset=\"utf-8\">
-            border-radius: 999px;
-            border-radius: 999px;
-            padding: 14px 18px;
-            font-size: 0.95rem;
-            cursor: pointer;
-            text-decoration: none;
-            color: white;
-            background: var(--accent);
-        }}
-        .button-secondary {{ background: var(--accent-2); }}
-        .message {{ font-size: 1rem; line-height: 1.5; }}
-        .samples-block {{
-            margin-top: 6px;
-            border-top: 1px solid rgba(28,26,23,0.1);
-            padding-top: 14px;
-        }}
-        .samples-title {{
-            margin: 0 0 8px;
-            font-size: 0.92rem;
-            color: var(--muted);
-            letter-spacing: 0.02em;
-        }}
-        .samples {{
-            margin: 0;
-            padding-left: 20px;
-            {samples_style}
-        }}
-        .samples li {{ margin-bottom: 2px; }}
-        .footer {{ font-size: 0.88rem; color: var(--muted); }}
-        @media (max-width: 640px) {{
-            body {{ padding: 16px; }}
-            .hero, .content {{ padding-left: 20px; padding-right: 20px; }}
-            .actions {{ flex-direction: column; }}
-            button, .button-link {{ width: 100%; text-align: center; }}
-        }}
-    </style>
-</head>
-<body>
-    <main class=\"card\">
-        <section class=\"hero\">
-            <h1>Ordliste-søk</h1>
-            <form method=\"get\" action=\"/\">
-                <label for=\"term\">Søk etter ord:</label>
-                <input type=\"text\" id=\"term\" name=\"term\" value=\"{safe_query}\" autocomplete=\"off\" autofocus>
-                <label for=\"limit\">Antall eksempler:</label>
-                <input type=\"number\" id=\"limit\" name=\"limit\" value=\"{sample_limit}\" min=\"0\" max=\"1000\">
-                <div class=\"actions\">
-                    <button type=\"submit\">Søk i ordlisten</button>
-                    <a class=\"button-link button-secondary\" href=\"/?source=sheet&limit={DEFAULT_SAMPLE_LIMIT}\">Les SearchWords!D3</a>
-                    <a class=\"button-link\" href=\"/rebuild?limit={DEFAULT_SAMPLE_LIMIT}\">Bygg indeks på nytt</a>
-                </div>
-                <div class=\"samples-block\">
-                    <p class=\"samples-title\">Treffliste (viser inntil {sample_limit} ord)</p>
-                    <ul class=\"samples\">{safe_samples or '<li>Ingen treff å vise</li>'}</ul>
-                </div>
-            </form>
-            <div class=\"footer\">Excel-fil: {html.escape(str(EXCEL_PATH))} | UI {UI_VERSION}</div>
-        </section>
-    </main>
-</body>
-</html>"""
-
+"""
 def result_from_sheet_or_error(self, sample_limit=DEFAULT_SAMPLE_LIMIT):
         try:
             query = self.index.read_search_cell()
