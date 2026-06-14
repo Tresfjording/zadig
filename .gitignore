@@ -16,5 +16,7 @@ __pycache__/
 # Midlertidige filer
 ~$*
 
-# Diger json fil
+# Digre fil er
 post_nr.json
+tettsteder_norge.json
+postal-codes.json
