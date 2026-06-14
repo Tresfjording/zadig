@@ -6,9 +6,11 @@ import sqlite3
 import threading
 import time
 import webbrowser
+from collections import defaultdict
 from dataclasses import dataclass
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from importlib import import_module
 from pathlib import Path
 from typing import Iterable
 from urllib.parse import parse_qs, urlparse
@@ -16,17 +18,26 @@ from urllib.parse import parse_qs, urlparse
 from openpyxl import load_workbook
 from openpyxl.utils import column_index_from_string
 
+try:
+    pythoncom = import_module("pythoncom")
+    win32_client = import_module("win32com.client")
+except ImportError:
+    pythoncom = None
+    win32_client = None
+
 
 ORDLISTE_SHEET_CANDIDATES = ["Ordliste", "AlleOrd", "Kolonner"]
-SEARCH_SHEET_CANDIDATES = ["SearchWords", "test"]
-SEARCH_CELL = "D3"
+SEARCH_SHEET_CANDIDATES = ["data"]
+SEARCH_CELL = "A1"
 COLUMN_START = "A"
 COLUMN_END = "AC"
 DB_PATH = Path(__file__).with_name("ordliste_cache.sqlite3")
+SYNONYMS_DB_PATH = Path(__file__).with_name("ordliste_synonyms.sqlite3")
 HOST = "127.0.0.1"
 PORT = 8765
 UI_VERSION = "v2026-03-26-wildcards-limitfix"
 DEFAULT_SAMPLE_LIMIT = 0
+SEARCH_CELL_LABEL = f"{SEARCH_SHEET_CANDIDATES[0]}!{SEARCH_CELL}"
 
 def do_GET(self) -> None:
     self.send_response(200)
@@ -104,10 +115,12 @@ class SearchResult:
     match_count: int
     sample_matches: list[str]
     sample_limit: int
+    length: int | None
     total_words: int
     source: str
     indexed_at: str | None
     message: str
+    synonyms: list[str] | None = None
 
 
 class WordIndex:
@@ -157,6 +170,74 @@ class WordIndex:
                 (key, value),
             )
 
+    def _read_search_cell_via_excel(self) -> str:
+        if pythoncom is None or win32_client is None:
+            raise RuntimeError("pywin32 er ikke tilgjengelig")
+
+        pythoncom.CoInitialize()
+        excel = None
+        workbook = None
+
+        try:
+            target_path = str(self.excel_path.resolve()).lower()
+            try:
+                excel = win32_client.GetActiveObject("Excel.Application")
+                print(f"Leser {SEARCH_CELL_LABEL} fra aktiv Excel-instans ...")
+            except Exception:
+                print(f"Ingen aktiv Excel-instans funnet. Starter skjult Excel for lesing av {SEARCH_CELL_LABEL} ...")
+                excel = win32_client.DispatchEx("Excel.Application")
+                excel.Visible = False
+
+            excel.DisplayAlerts = False
+            excel.EnableEvents = False
+
+            for candidate in list(excel.Workbooks):
+                try:
+                    if str(candidate.FullName).lower() == target_path:
+                        workbook = candidate
+                        break
+                except Exception:
+                    continue
+
+            opened_here = False
+            if workbook is None:
+                workbook = excel.Workbooks.Open(str(self.excel_path), UpdateLinks=0, ReadOnly=True)
+                opened_here = True
+
+            try:
+                sheet = None
+                actual_name = None
+                for candidate_name in SEARCH_SHEET_CANDIDATES:
+                    for worksheet in workbook.Worksheets:
+                        if worksheet.Name.strip().casefold() == candidate_name.strip().casefold():
+                            sheet = worksheet
+                            actual_name = worksheet.Name
+                            break
+                    if sheet is not None:
+                        break
+
+                if sheet is None or actual_name is None:
+                    available = ", ".join(worksheet.Name for worksheet in workbook.Worksheets)
+                    wanted = ", ".join(SEARCH_SHEET_CANDIDATES)
+                    raise KeyError(f"Fant ikke søkeark. Prøvde: {wanted}. Tilgjengelige ark: {available}")
+
+                self.active_search_sheet = actual_name
+                value = sheet.Range(SEARCH_CELL).Value
+                return "" if value is None else str(value)
+            finally:
+                if opened_here:
+                    workbook.Close(SaveChanges=False)
+                workbook = None
+
+        finally:
+            if excel is not None:
+                try:
+                    if excel.Workbooks.Count == 0:
+                        excel.Quit()
+                except Exception:
+                    pass
+            pythoncom.CoUninitialize()
+
     @staticmethod
     def _get_sheet_from_candidates_or_raise(workbook, candidates: list[str], label: str):
         normalized_map = {name.strip().casefold(): name for name in workbook.sheetnames}
@@ -197,18 +278,24 @@ class WordIndex:
             workbook.close()
 
     def rebuild_if_needed(self) -> bool:
+        return self._rebuild_from_excel(force=False)
+
+    def rebuild_from_excel(self) -> bool:
+        return self._rebuild_from_excel(force=True)
+
+    def _rebuild_from_excel(self, force: bool) -> bool:
         if not self.excel_path.is_file():
             raise FileNotFoundError(f"Fant ikke Excel-filen: {self.excel_path}")
 
         stat = self.excel_path.stat()
         signature = f"{stat.st_mtime_ns}:{stat.st_size}"
         cached_signature = self._get_metadata("excel_signature")
-        if cached_signature == signature:
+        if not force and cached_signature == signature:
             return False
 
         with self._lock:
             cached_signature = self._get_metadata("excel_signature")
-            if cached_signature == signature:
+            if not force and cached_signature == signature:
                 return False
 
             print("Bygger indeks fra Excel ...")
@@ -275,33 +362,83 @@ class WordIndex:
             row = connection.execute("SELECT 1 FROM words WHERE word = ? LIMIT 1", (normalized,)).fetchone()
         return row is not None
 
-    def find_wildcard_matches(self, query: str, limit: int = 50) -> tuple[int, list[str]]:
+    def find_wildcard_matches(self, query: str, limit: int = 50, length: int | None = None) -> tuple[int, list[str]]:
         normalized = normalize_word(query)
         if not normalized:
             return 0, []
 
         like_pattern = wildcard_to_sql_like(normalized)
+        length_clause = " AND LENGTH(word) = ?" if length and length > 0 else ""
+        params = (like_pattern, length) if length and length > 0 else (like_pattern,)
+
         with self._connect() as connection:
             count_row = connection.execute(
-                "SELECT COUNT(*) FROM words WHERE word LIKE ? ESCAPE '\\'",
-                (like_pattern,),
+                f"SELECT COUNT(*) FROM words WHERE word LIKE ? ESCAPE '\\'{length_clause}",
+                params,
             ).fetchone()
             if limit <= 0:
                 sample_rows = connection.execute(
-                    "SELECT word FROM words WHERE word LIKE ? ESCAPE '\\' ORDER BY word",
-                    (like_pattern,),
+                    f"SELECT word FROM words WHERE word LIKE ? ESCAPE '\\'{length_clause} ORDER BY LENGTH(word), word",
+                    params,
                 ).fetchall()
             else:
                 sample_rows = connection.execute(
-                    "SELECT word FROM words WHERE word LIKE ? ESCAPE '\\' ORDER BY word LIMIT ?",
-                    (like_pattern, limit),
+                    f"SELECT word FROM words WHERE word LIKE ? ESCAPE '\\'{length_clause} ORDER BY LENGTH(word), word LIMIT ?",
+                    params + (limit,) if length and length > 0 else params + (limit,),
                 ).fetchall()
 
         total = int(count_row[0]) if count_row else 0
         samples = [row[0] for row in sample_rows]
         return total, samples
 
+    def get_synonyms(self, word: str) -> list[str]:
+        """Get synonyms for a word from the synonym database."""
+        if not SYNONYMS_DB_PATH.is_file():
+            return []
+        
+        normalized = normalize_word(word)
+        if not normalized:
+            return []
+        
+        try:
+            conn = sqlite3.connect(str(SYNONYMS_DB_PATH), check_same_thread=False)
+            conn.execute("PRAGMA encoding = 'UTF-8'")
+            conn.row_factory = sqlite3.Row
+            
+            # Find the lemma for this word
+            lemma_row = conn.execute(
+                "SELECT lemma FROM variants WHERE variant = ? LIMIT 1",
+                (normalized,)
+            ).fetchone()
+            
+            if not lemma_row:
+                conn.close()
+                return []
+            
+            lemma = lemma_row[0]
+            
+            # Get all variants for this lemma
+            variant_rows = conn.execute(
+                "SELECT variant FROM variants WHERE lemma = ? ORDER BY variant",
+                (lemma,)
+            ).fetchall()
+            
+            conn.close()
+            
+            # Return synonyms (excluding the original word)
+            synonyms = [row[0] for row in variant_rows if row[0] != normalized]
+            return synonyms
+        except Exception as e:
+            print(f"Feil ved henting av synonymer: {e}")
+            return []
+
     def read_search_cell(self) -> str:
+        if pythoncom is not None and win32_client is not None:
+            try:
+                return self._read_search_cell_via_excel()
+            except Exception as exc:
+                print(f"COM-lesing av {SEARCH_CELL_LABEL} feilet, faller tilbake til openpyxl: {exc}")
+
         workbook = load_workbook(
             self.excel_path,
             read_only=True,
@@ -323,20 +460,34 @@ class WordIndex:
 
 
 class SearchApp:
-    def make_result(self, query: str, source: str, sample_limit: int = DEFAULT_SAMPLE_LIMIT) -> SearchResult:
+    def __init__(self, index: WordIndex):
+        self.index = index
+
+    def make_result(self, query: str, source: str, sample_limit: int = DEFAULT_SAMPLE_LIMIT, length: int | None = None) -> SearchResult:
         normalized_query = normalize_word(query)
         wildcard_used = '*' in normalized_query or '?' in normalized_query
         found = False
         match_count = 0
         sample_matches = []
         message = ""
+        synonyms: list[str] | None = None
+        
         if normalized_query:
-            match_count, sample_matches = self.index.find_wildcard_matches(normalized_query, limit=sample_limit)
+            match_count, sample_matches = self.index.find_wildcard_matches(
+                normalized_query,
+                limit=sample_limit,
+                length=length,
+            )
             found = match_count > 0
             if not found:
                 message = f"Fant ingen treff for '{query}'."
+            else:
+                # Get synonyms for the first match (if it's an exact match)
+                if not wildcard_used and match_count > 0:
+                    synonyms = self.index.get_synonyms(query)
         else:
             message = "Skriv inn et søkeord. Bruk * og ? for jokertegn om ønskelig."
+        
         return SearchResult(
             query=query,
             normalized_query=normalized_query,
@@ -345,40 +496,80 @@ class SearchApp:
             match_count=match_count,
             sample_matches=sample_matches,
             sample_limit=sample_limit,
+            length=length,
             total_words=self.index.count_words(),
             source=source,
             indexed_at=self.index.indexed_at(),
             message=message,
+            synonyms=synonyms,
         )
-    def __init__(self, index: WordIndex):
-        self.index = index
 
-    def result_from_sheet_or_error(self, sample_limit=DEFAULT_SAMPLE_LIMIT):
+    def result_from_sheet_or_error(self, sample_limit=DEFAULT_SAMPLE_LIMIT, length: int | None = None):
         try:
             query = self.index.read_search_cell()
-            return self.make_result(query, "Excel SearchWords!D3", sample_limit=sample_limit)
+            return self.make_result(
+                query,
+                f"Excel {SEARCH_CELL_LABEL}",
+                sample_limit=sample_limit,
+                length=length,
+            )
         except Exception as exc:
             return SearchResult(
-    query="",
-    normalized_query="",
-    found=False,
-    wildcard_used=False,
-    match_count=0,
-    sample_matches=[],
-    sample_limit=sample_limit,
-    total_words=self.index.count_words(),
-    source="sheet",
-    indexed_at=self.index.indexed_at(),
-    message="",  # <-- behold denne, evt. tom streng
-)
+                query="",
+                normalized_query="",
+                found=False,
+                wildcard_used=False,
+                match_count=0,
+                sample_matches=[],
+                sample_limit=sample_limit,
+                length=length,
+                total_words=self.index.count_words(),
+                source="sheet",
+                indexed_at=self.index.indexed_at(),
+                message=f"Klarte ikke lese fra {SEARCH_CELL_LABEL}: {exc}",
+                synonyms=None,
+            )
+
     def render_page(self, result: SearchResult) -> str:
         safe_query = html.escape(result.query or "")
-        safe_samples = "".join(f"<li>{html.escape(word)}</li>" for word in (result.sample_matches or []))
+        grouped = defaultdict(list)
+        for word in result.sample_matches or []:
+            grouped[len(word)].append(word)
+        safe_samples = ""
+        for length in sorted(grouped.keys()):
+            safe_samples += f"<h3>{length} bokstaver:</h3><ul>"
+            for word in grouped[length]:
+                safe_samples += f"<li>{html.escape(word)}</li>"
+            safe_samples += "</ul>"
+        if not safe_samples:
+            safe_samples = '<li>Ingen treff å vise</li>'
         samples_style = "" if result.found else "color: #7c4a03;"
         sample_limit = "alle" if result.sample_limit == 0 else f"{result.sample_limit:,}".replace(",", " ")
         # Vis kun feilmelding hvis source er 'sheet' og det faktisk er en feilmelding
         show_message = bool(result.message and result.source == "sheet")
         message = html.escape(result.message) if show_message else ""
+        
+        # Build synonyms section grouped by word length
+        synonyms_html = ""
+        if result.synonyms:
+            grouped_synonyms = defaultdict(list)
+            for synonym in result.synonyms:
+                grouped_synonyms[len(synonym)].append(synonym)
+
+            synonyms_rows = ""
+            for length in sorted(grouped_synonyms.keys()):
+                synonyms_rows += f"<h3>{length} bokstaver:</h3><ul>"
+                for synonym in grouped_synonyms[length]:
+                    synonyms_rows += f"<li>{html.escape(synonym)}</li>"
+                synonyms_rows += "</ul>"
+
+            synonyms_html = f"""
+                <div class=\"synonyms-block\">
+                    <p class=\"synonyms-title\">Synonymer:</p>
+                    {synonyms_rows}
+                </div>
+            """
+
         return f"""<!doctype html>
 <html lang=\"no\">
 <head>
@@ -398,11 +589,16 @@ class SearchApp:
         .samples-title {{ margin: 0 0 8px; font-size: 0.92rem; color: #a1887f; letter-spacing: 0.02em; }}
         .samples {{ margin: 0; padding-left: 20px; {samples_style} }}
         .samples li {{ margin-bottom: 2px; }}
+        .synonyms-block {{ margin-top: 12px; padding-top: 12px; border-top: 1px solid #d4af85; }}
+        .synonyms-title {{ margin: 0 0 8px; font-size: 0.92rem; color: #a1887f; letter-spacing: 0.02em; font-weight: bold; }}
+        .synonyms {{ margin: 0; padding-left: 20px; }}
+        .synonyms li {{ margin-bottom: 2px; color: #6d4c41; }}
         .footer {{ font-size: 0.88rem; color: #a1887f; margin-top: 18px; }}
         .match-count {{ font-size: 1.05rem; color: #e65100; font-weight: bold; margin-bottom: 6px; }}
         input[type="text"], input[type="number"] {{ border: 1px solid #ff9800; border-radius: 6px; padding: 6px 10px; background: #fffbe6; color: #4e2600; margin-right: 8px; }}
         input[type="text"]:focus, input[type="number"]:focus {{ outline: 2px solid #e65100; }}
         h1 {{ color: #e65100; }}
+        h3 {{ color: #e65100; font-size: 1.1rem; margin-top: 20px; margin-bottom: 5px; }}
         label {{ color: #7c4a03; }}
         @media (max-width: 640px) {{ body {{ padding: 16px; }} .hero, .card {{ padding-left: 10px; padding-right: 10px; }} .actions {{ flex-direction: column; }} button, .button-link {{ width: 100%; text-align: center; }} }}
     </style>
@@ -414,18 +610,19 @@ class SearchApp:
             <form method=\"get\" action=\"/\">
                 <label for=\"term\">Søk etter ord:</label>
                 <input type=\"text\" id=\"term\" name=\"term\" value=\"{safe_query}\" autocomplete=\"off\" autofocus>
-                <label for=\"limit\">Antall eksempler:</label>
-                <input type=\"number\" id=\"limit\" name=\"limit\" value=\"{result.sample_limit}\" min=\"0\" max=\"1000\">
+                <br><label for=\"length\">Lengde på ord (bokstaver, 0 = alle):</label>
+                <input type=\"number\" id=\"length\" name=\"length\" value=\"{result.length or 0}\" min=\"0\" max=\"100\">
                 <div class=\"actions\">
                     <button type=\"submit\">Søk i ordlisten</button>
-                    <a class=\"button-link button-secondary\" href=\"/?source=sheet&limit={DEFAULT_SAMPLE_LIMIT}\">Les SearchWords!D3</a>
-                    <a class=\"button-link\" href=\"/rebuild?limit={DEFAULT_SAMPLE_LIMIT}\">Bygg indeks på nytt</a>
+                    <a class=\"button-link button-secondary\" href=\"/?source=sheet&length={result.length or 0}\">Les {SEARCH_CELL_LABEL}</a>
+                    <a class=\"button-link\" href=\"/rebuild?length={result.length or 0}\">Bygg indeks på nytt</a>
                 </div>
                 <div class=\"samples-block\">
                     <div class=\"match-count\">Antall treff: {result.match_count:,}</div>
                     <p class=\"samples-title\">Treffliste (viser inntil {result.total_words} ord)</p>
                     <ul class=\"samples\">{safe_samples or '<li>Ingen treff å vise</li>'}</ul>
                 </div>
+                {synonyms_html}
             </form>
             {f'<div class="message">{message}</div>' if message else ''}
             <div class=\"footer\">Excel-fil: {html.escape(str(EXCEL_PATH))} </div>
@@ -433,28 +630,8 @@ class SearchApp:
     </main>
 </body>
 </html>"""
-        #sample_limit = "alle" if result.sample_limit == 0 else f"{result.sample_limit:,}".replace(",", " ")
-        return f"""<!doctype html>
-<html lang=\"no\">
-"""
-def result_from_sheet_or_error(self, sample_limit=DEFAULT_SAMPLE_LIMIT):
-        try:
-            query = self.index.read_search_cell()
-            return self.make_result(query, "Excel SearchWords!D3", sample_limit=sample_limit)
-        except Exception as exc:
-            return SearchResult(
-                query="",
-                normalized_query="",
-                found=False,
-                wildcard_used=False,
-                match_count=0,
-                sample_matches=[],
-                sample_limit=sample_limit,
-                total_words=self.index.count_words(),
-                source="sheet",
-                indexed_at=self.index.indexed_at(),
-                message=f"Klarte ikke lese fra SearchWords!D3: {exc}",
-            )
+
+
 def make_handler(app: SearchApp) -> type[BaseHTTPRequestHandler]:
 
 
@@ -470,12 +647,15 @@ def make_handler(app: SearchApp) -> type[BaseHTTPRequestHandler]:
                 params = parse_qs(parsed.query)
                 print(f"do_GET: Params: {params}")
                 sample_limit = 0
+                length: int | None = None
                 try:
-                    if "limit" in params:
-                        sample_limit = int(params["limit"][0])
+                    if "length" in params:
+                        length_val = int(params["length"][0])
+                        if length_val > 0:
+                            length = length_val
                 except Exception as e:
-                    print(f"do_GET: Feil ved parsing av limit: {e}")
-                    sample_limit = 0
+                    print(f"do_GET: Feil ved parsing av length: {e}")
+                    length = None
 
                 if parsed.path == "/rebuild":
                     print("do_GET: Rebuild path")
@@ -492,14 +672,16 @@ def make_handler(app: SearchApp) -> type[BaseHTTPRequestHandler]:
                             match_count=0,
                             sample_matches=[],
                             sample_limit=sample_limit,
+                            length=length,
                             total_words=0,
                             source="rebuild",
                             indexed_at=None,
                             message=f"Klarte ikke bygge indeksen på nytt: {exc}",
+                            synonyms=None,
                         )
                         self._send_html(app.render_page(result))
                         return
-                    result = app.make_result("", "rebuild", sample_limit=sample_limit)
+                    result = app.make_result("", "rebuild", sample_limit=sample_limit, length=length)
                     self._send_html(app.render_page(result))
                     return
 
@@ -507,11 +689,11 @@ def make_handler(app: SearchApp) -> type[BaseHTTPRequestHandler]:
                 print(f"do_GET: source={source}")
                 if source == "sheet":
                     print("do_GET: Henter fra sheet")
-                    result = app.result_from_sheet_or_error(sample_limit=sample_limit)
+                    result = app.result_from_sheet_or_error(sample_limit=sample_limit, length=length)
                 else:
                     query = params.get("term", [""])[0]
                     print(f"do_GET: Henter fra manuell input, query={query}")
-                    result = app.make_result(query, "manuell input", sample_limit=sample_limit)
+                    result = app.make_result(query, "manuell input", sample_limit=sample_limit, length=length)
                 print("do_GET: Sender HTML-svar")
                 self._send_html(app.render_page(result))
             except Exception as e:
@@ -556,7 +738,7 @@ def main() -> int:
     handler = make_handler(app)
     server = HTTPServer((HOST, PORT), handler)
     server.app = app  # Attach the app to the server for handler access
-    url = f"http://{HOST}:{PORT}/?source=sheet&limit={DEFAULT_SAMPLE_LIMIT}"
+    url = f"http://{HOST}:{PORT}/"
 
     print(f"Excel-fil i bruk: {EXCEL_PATH}")
     print("Sjekker om indeksen er oppdatert ...")
@@ -567,42 +749,6 @@ def main() -> int:
             print("Indeksen er allerede oppdatert.")
     except Exception as exc:
         print(f"Kunne ikke forhåndsbygge indeks: {exc}")
-
-    # Tell antall unike ord direkte fra Excel-arket (A:AC, Ordliste)
-    try:
-        from openpyxl import load_workbook
-        from openpyxl.utils import column_index_from_string
-        SHEET_CANDIDATES = ["Ordliste", "AlleOrd", "Kolonner"]
-        COLUMN_START = "A"
-        COLUMN_END = "AC"
-        def normalize_word(value):
-            if value is None:
-                return ""
-            text = str(value).strip().upper()
-            return " ".join(text.split())
-        wb = load_workbook(EXCEL_PATH, read_only=True, data_only=True, keep_vba=True, keep_links=False)
-        try:
-            normalized_map = {name.strip().casefold(): name for name in wb.sheetnames}
-            for candidate in SHEET_CANDIDATES:
-                key = candidate.strip().casefold()
-                if key in normalized_map:
-                    sheet = wb[normalized_map[key]]
-                    break
-            else:
-                raise KeyError(f"Fant ikke ordliste-ark. Prøvde: {SHEET_CANDIDATES}. Tilgjengelige ark: {wb.sheetnames}")
-            min_col = column_index_from_string(COLUMN_START)
-            max_col = column_index_from_string(COLUMN_END)
-            words = set()
-            for row in sheet.iter_rows(min_col=min_col, max_col=max_col, values_only=True):
-                for value in row:
-                    word = normalize_word(value)
-                    if word:
-                        words.add(word)
-            print(f"Antall unike ord i Excel-arket: {len(words):,}")
-        finally:
-            wb.close()
-    except Exception as exc:
-        print(f"Klarte ikke telle ord direkte fra Excel: {exc}")
 
     print(f"Antall ord i SQLite-indeksen: {index.count_words():,}")
     print(f"Starter lokal server på {url}")
