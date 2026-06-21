@@ -15,7 +15,7 @@ from openpyxl import load_workbook
 from openpyxl.utils import column_index_from_string, get_column_letter
 
 BASE_DIR = Path(__file__).resolve().parent
-EXCEL_FIL = "C:\Python314\python.exe C:\Users\ØyvindGranberg\.git\zadig\Ordliste_Norsk_ny.xlsx"
+EXCEL_FIL = "Ordliste_Norsk_ny.xlsx"
 EXCEL_PATH = BASE_DIR / EXCEL_FIL
 ARK = "Ordliste"
 KILDEKOLONNE = "AG"
