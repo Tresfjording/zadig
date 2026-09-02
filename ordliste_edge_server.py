@@ -47,27 +47,43 @@ def do_GET(self) -> None:
 
 def resolve_excel_path() -> Path:
     env_path = os.environ.get("ORDLISTE_XLSM")
-    candidates = [
-        Path(env_path) if env_path else None,
-        # Prioriter ny hovedfil først:
-        Path.cwd() / "Ordliste_Norsk_ny.xlsx",
-        # Deretter gamle filer om ny ikke finnes:
-        Path.cwd() / "G-Ordliste.xlsm",
-        # Path.cwd() / "Ordliste Norsk v. 30.6.xlsm",
-        # Path.cwd() / "Ordlista HovedFil.xlsm",
-        # Path.cwd() / "Ordliste Norsk.xlsm",
-        # Originale OneDrive-steder
-        # Path(r"C:\Users\Øyvind – ZaGal ote\OneDrive\Dokumenter\Annet\Ordlista HovedFil.xlsm"),
-        # Path(r"C:\Users\Øyvind – ZaGal ote\OneDrive\Dokumenter\Annet\Ordliste Norsk.xlsm"),
-    ]
+    candidates = []
 
-    valid_candidates = [path for path in candidates if path is not None]
-    for candidate in valid_candidates:
+    if env_path:
+        candidates.append(Path(env_path))
+
+    # Prioriter den faktiske hovedfilen i dette prosjektet. Det finnes flere
+    # varianter av samme arbeidsbok, men den generiske "G-Ordliste.xlsm" er den
+    # mest sannsynlige kilden når den finnes i prosjektmappen.
+    candidates.extend(
+        [
+           # Path.cwd() / "G-Ordliste.xlsm",
+           # Path.cwd() / "G-Ordliste - vbo.xlsm",
+           # Path.cwd() / "G-Ordliste - vbo-2.xlsm",
+           # Path.cwd() / "G-Ordliste reserve.xlsm",
+           # Path.cwd() / "G-Ordliste_importert.xlsm",
+           # Path.cwd() / "Ordliste_Norsk_ny.xlsx",
+           # Path.cwd() / "Ordlista HovedFil.xlsm",
+           # Path.cwd() / "Ordliste Norsk.xlsm",
+           # Path.cwd() / "Ordliste Norsk v. 30.6.xlsm",
+           # Originale OneDrive-steder som fallback
+            Path(r"C:\Users\ØyvindGranberg\Projects\zadig\Ordlista HovedFil.xlsm"),
+           # Path(r"C:\Users\ØyvindGranberg\OneDrive\Dokumenter\Annet\Ordliste Norsk.xlsm"),
+        ]
+    )
+
+    seen: set[Path] = set()
+    for candidate in candidates:
+        normalized = candidate.expanduser().resolve(strict=False)
+        if normalized in seen:
+            continue
+        seen.add(normalized)
         if candidate.is_file():
             return candidate
 
-    # Fallback to the first candidate so the error message points til en konkret path.
-    return valid_candidates[0]
+    if candidates:
+        return candidates[0]
+    return Path.cwd() / "G-Ordliste.xlsm"
 
 
 EXCEL_PATH = resolve_excel_path()

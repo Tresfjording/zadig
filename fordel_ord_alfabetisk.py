@@ -48,39 +48,69 @@ def sett_restart_vakt():
     RESTART_VAKT_FIL.write_text(str(time.time()), encoding="utf-8")
 
 
-def lukk_excel_if_open():
-    """Lukker Excel hvis den er åpen (bruker taskkill som fallback)."""
-    print("Lukker Excel hvis den er åpen...")
+def lagre_og_lukk_excel_fil_hvis_apen():
+    """Lagrer og lukker bare målfilen dersom den er åpen i Excel."""
+    print("Sjekker om Excel-filen er åpen...")
     try:
         import subprocess
-        
-        # Sjekk først om Excel kjører
-        check_result = subprocess.run(
-            ["tasklist"],
+        miljo = os.environ.copy()
+        miljo["ORDLISTE_EXCEL_PATH"] = str(EXCEL_PATH)
+        powershell_skript = r"""
+$ErrorActionPreference = 'Stop'
+$targetPath = [System.IO.Path]::GetFullPath($env:ORDLISTE_EXCEL_PATH)
+try {
+    $excel = [Runtime.InteropServices.Marshal]::GetActiveObject('Excel.Application')
+} catch [System.Runtime.InteropServices.COMException] {
+    exit 0
+} catch {
+    Write-Error $_
+    exit 1
+}
+
+$arbeidsbok = $null
+foreach ($bok in @($excel.Workbooks)) {
+    try {
+        if (-not $bok.FullName) {
+            continue
+        }
+
+        $fullPath = [System.IO.Path]::GetFullPath($bok.FullName)
+        if ($fullPath -ieq $targetPath) {
+            $arbeidsbok = $bok
+            break
+        }
+    } catch {
+        continue
+    }
+}
+
+if ($arbeidsbok) {
+    $arbeidsbok.Save()
+    $arbeidsbok.Close($false)
+    Write-Output 'Excel-filen ble lagret og lukket.'
+} else {
+    Write-Output 'Excel-filen var ikke åpen.'
+}
+"""
+        resultat = subprocess.run(
+            ["powershell", "-NoProfile", "-NonInteractive", "-Command", powershell_skript],
             capture_output=True,
             text=True,
-            timeout=5
+            timeout=30,
+            env=miljo,
         )
-        
-        if "excel.exe" not in check_result.stdout.lower():
-            print("Excel var ikke kjørende.")
-            return
-        
-        # Excel kjører, så lukk den
-        result = subprocess.run(
-            ["taskkill", "/IM", "excel.exe", "/F"],
-            capture_output=True,
-            text=True,
-            timeout=5
-        )
-        if result.returncode == 0:
-            print("Excel avsluttet.")
-            time.sleep(1)  # Gi systemet tid til å frigjøre filen
-        else:
-            print(f"Advarsel ved forsøk på å lukke Excel: {result.stderr}")
+
+        if resultat.returncode != 0:
+            print(f"FEIL: Kunne ikke lagre og lukke Excel-filen: {resultat.stderr.strip()}")
+            return False
+
+        if resultat.stdout.strip():
+            print(resultat.stdout.strip())
+        time.sleep(1)
+        return True
     except Exception as e:
-        print(f"Kunne ikke lukke Excel via taskkill: {e}")
-        print("Vennligst lukk Excel manuelt og kjør scriptets igjen.")
+        print(f"FEIL: Kunne ikke lagre og lukke Excel-filen: {e}")
+        return False
 
 
 def apne_excel_fil_pa_nytt():
@@ -220,8 +250,26 @@ def fordel_ord(ordliste, ws):
     print(f"Antall ord hentet fra AG: {len(ordliste)}")
     print(f"Antall nye ord lagt inn: {antall_nye_ord}")
     print(f"Antall duplikater hoppet over: {antall_duplikater_hoppet_over}")
+
+    if len(ordliste) > 0 and antall_nye_ord == 0:
+        print(
+            "OBS: Det fantes ord i AG, men ingen nye ord ble lagt inn i A:AC. "
+            "Dette tyder på at alle ordene allerede finnes der, eller at de ble vurdert som duplikater."
+        )
+
     print("Fordeling av ord er fullført.")
     return antall_nye_ord, antall_duplikater_hoppet_over
+
+
+def skal_tomme_kildekolonne(antall_nye_ord):
+    """Returnerer True når det faktisk ble lagt inn minst ett nytt ord."""
+    if antall_nye_ord is None:
+        return False
+
+    try:
+        return int(antall_nye_ord) > 0
+    except (TypeError, ValueError):
+        return False
 
 
 def tom_kildekolonne(ws):
@@ -294,6 +342,10 @@ def main():
         print(f"FEIL: Excel-filen ble ikke funnet: {EXCEL_PATH}")
         return
 
+    if not lagre_og_lukk_excel_fil_hvis_apen():
+        print("Avslutter for å unngå å behandle en ulagret versjon av Excel-filen.")
+        return
+
     wb = None
 
     try:
@@ -309,7 +361,19 @@ def main():
         
         ordliste = hent_ordliste(ws, KILDEKOLONNE)
         antall_nye_ord, antall_duplikater_hoppet_over = fordel_ord(ordliste, ws)
-        tom_kildekolonne(ws)
+
+        if skal_tomme_kildekolonne(antall_nye_ord):
+            tom_kildekolonne(ws)
+        else:
+            print(
+                f"Hopper over tømming av kolonne {KILDEKOLONNE} fordi antall_nye_ord={antall_nye_ord!r}."
+            )
+            if len(ordliste) > 0 and antall_nye_ord == 0:
+                print(
+                    "Dette betyr at AG inneholdt verdier, men ingen av dem ble regnet som nye ord "
+                    "i A:AC. Sjekk om de allerede finnes der i annen casing/form eller som duplikater."
+                )
+
         logg_kjoring(
             wb,
             ws,
@@ -317,9 +381,6 @@ def main():
             antall_nye_ord=antall_nye_ord,
             antall_duplikater_hoppet_over=antall_duplikater_hoppet_over,
         )
-        
-        # Lukk Excel før vi prøver å lagre
-        lukk_excel_if_open()
         
         print("Lagrer fil...")
         
