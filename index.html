@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html lang="nb">
+<head>
+    <!-- static deploy test -->
+
+  <meta charset="UTF-8">
+  <title>selsomt.no – tettsteder og strømpris</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+  <style>
+    html, body { margin: 0; height: 100%; }
+    #map { height: 100vh; width: 100%; }
+  </style>
+</head>
+
+<body>
+<div class="main-layout">
+
+  <section class="info-card">
+
+    <div class="container">
+      <h1>Strømpris</h1>
+    </div>
+
+    <div class="search-box">
+      <input id="sokInput" type="text" placeholder="Søk tettsted...">
+      <button id="visInfoBtn">Vis info</button>
+    </div>
+
+    <div id="status" class="status">–</div>
+
+    <div class="info-card">
+      <h2 id="tettstedDisplay2">–</h2>
+      <div class="info-row"><span>Tettsted:</span> <strong id="tettstedDisplay2">–</strong></div>
+      <div class="pris-row"><span>Strømpris nå:</span> <strong id="prisDisplay">–</strong></div>
+      <div class="info-row"><span>Kommune nr:</span> <strong id="kNrDisplay">–</strong></div>
+      <div class="info-row"><span>Fylke:</span> <strong id="fylkeDisplay">–</strong></div>
+      <div class="info-row"><span>Prisområde:</span> <strong id="soneDisplay">–</strong></div>
+    </div>
+
+    <div id="vaermelding" class="vaer-boks">
+      Henter vær…
+    </div>
+
+  </section>
+
+  <div id="map"></div>
+
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.8.0/proj4.js"></script>
+<script src="nowcast.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>

@@ -84,19 +84,37 @@ foreach ($bok in @($excel.Workbooks)) {
     }
 }
 
+function Invoke-Retry([scriptblock]$handling) {
+    for ($forsok = 1; $forsok -le 60; $forsok++) {
+        try {
+            & $handling
+            return
+        } catch [System.Runtime.InteropServices.COMException] {
+            if ($_.Exception.HResult -ne -2147418111 -and $_.Exception.HResult -ne -2147417846) { throw }
+            if ($forsok -eq 60) { throw }
+            Start-Sleep -Seconds 2
+        }
+    }
+}
+
 if ($arbeidsbok) {
-    $arbeidsbok.Save()
-    $arbeidsbok.Close($false)
+    Invoke-Retry { $arbeidsbok.Save() }
+    Invoke-Retry { $arbeidsbok.Close($false) }
     Write-Output 'Excel-filen ble lagret og lukket.'
 } else {
     Write-Output 'Excel-filen var ikke åpen.'
 }
 """
         resultat = subprocess.run(
-            ["powershell", "-NoProfile", "-NonInteractive", "-Command", powershell_skript],
+            [
+                os.path.join(
+                    os.environ.get("SystemRoot", r"C:\Windows"),
+                    "System32", "WindowsPowerShell", "v1.0", "powershell.exe",
+                ),
+                "-NoProfile", "-NonInteractive", "-Command", powershell_skript],
             capture_output=True,
             text=True,
-            timeout=30,
+            timeout=180,
             env=miljo,
         )
 
@@ -389,6 +407,7 @@ def main():
         
         for forsok in range(3):
             try:
+                print(temp_path)
                 wb.save(str(temp_path))
                 print(f"Lagret til temp-fil: {temp_path.name}")
                 
@@ -437,8 +456,10 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
-
-
-if __name__ == "__main__":
-    main()
+    try:
+        main()
+    finally:
+        try:
+            input("\nTrykk Enter for å lukke vinduet...")
+        except EOFError:
+            pass

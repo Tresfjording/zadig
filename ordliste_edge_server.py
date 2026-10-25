@@ -46,47 +46,11 @@ def do_GET(self) -> None:
     self.wfile.write(b"<h1>Serveren svarer!</h1>")
 
 def resolve_excel_path() -> Path:
-    env_path = os.environ.get("ORDLISTE_XLSM")
-    candidates = []
-
-    if env_path:
-        candidates.append(Path(env_path))
-
-    # Prioriter den faktiske hovedfilen i dette prosjektet. Det finnes flere
-    # varianter av samme arbeidsbok, men den generiske "G-Ordliste.xlsm" er den
-    # mest sannsynlige kilden når den finnes i prosjektmappen.
-    candidates.extend(
-        [
-           # Path.cwd() / "G-Ordliste.xlsm",
-           # Path.cwd() / "G-Ordliste - vbo.xlsm",
-           # Path.cwd() / "G-Ordliste - vbo-2.xlsm",
-           # Path.cwd() / "G-Ordliste reserve.xlsm",
-           # Path.cwd() / "G-Ordliste_importert.xlsm",
-           # Path.cwd() / "Ordliste_Norsk_ny.xlsx",
-           # Path.cwd() / "Ordlista HovedFil.xlsm",
-           # Path.cwd() / "Ordliste Norsk.xlsm",
-           # Path.cwd() / "Ordliste Norsk v. 30.6.xlsm",
-           # Originale OneDrive-steder som fallback
-            Path(r"C:\Users\ØyvindGranberg\Projects\zadig\Ordlista HovedFil.xlsm"),
-           # Path(r"C:\Users\ØyvindGranberg\OneDrive\Dokumenter\Annet\Ordliste Norsk.xlsm"),
-        ]
-    )
-
-    seen: set[Path] = set()
-    for candidate in candidates:
-        normalized = candidate.expanduser().resolve(strict=False)
-        if normalized in seen:
-            continue
-        seen.add(normalized)
-        if candidate.is_file():
-            return candidate
-
-    if candidates:
-        return candidates[0]
-    return Path.cwd() / "G-Ordliste.xlsm"
+    return Path(r"C:\Users\ØyvindGranberg\Projects\zadig\ordliste_norsk_ny.xlsx")
 
 
 EXCEL_PATH = resolve_excel_path()
+print(f"Bruker Excel-fil: {EXCEL_PATH}")
 
 
 def normalize_word(value: object) -> str:
